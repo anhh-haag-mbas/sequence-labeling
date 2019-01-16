@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+mkdir -p out
+rm -rf _minted-out
+mkdir -p .minted-out
+
+mv .minted-out _minted-out
+latexmk -jobname=out/main
+mv _minted-out .minted-out
