@@ -9,3 +9,6 @@
 * Curriculum: 1100 Pages (2400 characters / page)
 * Writing: 32 pages (+- 10%)
 * Supervisor: 45 hours
+
+## Other sources
+* [Understanding LSTM Networks](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
