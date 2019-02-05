@@ -19,6 +19,9 @@ En lang og vist nok ret forrygende forklaring af, hvorfor RNNs er the shit
 #### [Sequence Labelling using CRF in Python]( http://www.albertauyeung.com/post/python-sequence-labelling-with-crf/ )
 Hands-on gennemgang af at bruge CRF med sequence labelling og Python
 
+#### [Sequence Tagging with Tensorflow](https://guillaumegenthial.github.io/sequence-tagging-with-tensorflow.html)
+Gennemgang af POS tagging i Tensorflow med CRF og bi-LSTM
+
 
 ## Diverse
 
