@@ -10,3 +10,4 @@
 /report/**/*.xdv
 /report/out
 .env
+/dynet/denmark/data
