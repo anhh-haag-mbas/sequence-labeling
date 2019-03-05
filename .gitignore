@@ -10,4 +10,6 @@
 /report/**/*.xdv
 /report/out
 .env
-/dynet/denmark/data
+/code/dynet/denmark/data/*
+/code/dynet/denmark/.ipynb_checkpoints/*
+/code/dynet/denmark/__pycache__/*
