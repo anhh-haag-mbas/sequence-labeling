@@ -9,3 +9,4 @@
 /report/**/*.toc
 /report/**/*.xdv
 /report/out
+.env
