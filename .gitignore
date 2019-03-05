@@ -13,3 +13,4 @@
 /code/dynet/denmark/data/*
 /code/dynet/denmark/.ipynb_checkpoints/*
 /code/dynet/denmark/__pycache__/*
+/code/dynet/denmark/embeddings/*
