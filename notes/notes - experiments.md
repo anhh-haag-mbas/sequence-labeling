@@ -19,15 +19,17 @@ Embedding output Dimensionality   (unlimited og fair)
     Eventuelt kun sammenlign store 
     Ikke kun tage laveste fælles nævner
 Lemma vs Form
+LSTM vs GRU !!! (NEW)
+Tasks                   (POS Universal POS tags + NER BIO tags)
 
 Remember to lock down the testing environment and document it thorougly
 Should we use fixed seeds?
 
 ## Testing
 Speed 
+    Training + running
 Accuracy
 Standard deviation (Calculated after)
-Training speed (Total time)
 Convergence time (number of training sets before overfitting)
 
 
@@ -53,3 +55,14 @@ Lemma vs form   2 (1)
 
 result      =   2 * 3 * 3 * 3 * 2 * 3 * 3 * 10
 
+
+## Parameters in order of importance
+
+Tasks
+Languages
+Embeddings + Dictionary size
+Models
+Layers
+Optimizers
+Learning Rates
+...
