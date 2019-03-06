@@ -3,7 +3,7 @@ import ipdb
 
 ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 
-def get_data(filepath):
+def read_conllu(filepath):
     inputs, labels, pos_tags, words = [], [], set(), set()
     with open(filepath, 'r') as training_file:
         current_input, current_label = [], []
@@ -24,4 +24,15 @@ def get_data(filepath):
    
 
     return (inputs, labels, list(pos_tags), list(words))
+
+def read_fasttext(filepath):
+    word2embedding = dict()
+    with open(filepath, 'r') as embedding_file:
+        word_count, embedding_length = embedding_file.readline().split()
+        for line in embedding_file:
+            line = line.split()
+            word2embedding[line[0]] = line[1:]
+
+    return (word2embedding, word_count)
+
 

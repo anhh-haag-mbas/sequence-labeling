@@ -1,15 +1,17 @@
 import sys
-import dynet as dy
+#import dynet as dy
 import ipdb 
-from extractor import get_data
+from extractor import read_conllu, read_fasttext
 from simple_pos_tagger import SimplePOSTagger
 from bi_pos_tagger import BiPosTagger
 from bi_pos_tagger_double import BiPosTaggerDouble
 from helper import time
 
-train_inputs, train_labels, tags, vocab = get_data("data/da_ddt-ud-train.conllu")
-val_inputs, val_labels, _, _ = get_data("data/da_ddt-ud-dev.conllu")
+train_inputs, train_labels, tags, vocab = read_conllu("data/da_ddt-ud-train.conllu")
+val_inputs, val_labels, _, _ = read_conllu("data/da_ddt-ud-dev.conllu")
+embedding, word_count = read_fasttext("embeddings/cc.da.300.vec")
 
+ipdb.set_trace()
 
 int2word = ["<UNK>"] + vocab
 word2int = {w:i for i, w in enumerate(int2word)}
