@@ -29,6 +29,7 @@ Should we use fixed seeds?
 Speed 
     Training + running
 Accuracy
+    Total + OOV accuracy 
 Standard deviation (Calculated after)
 Convergence time (number of training sets before overfitting)
 
