@@ -1,0 +1,24 @@
+There is a lot of theory in this whatever you call it, and we want to go through it all, mostly for ourselves. 
+
+The beggining might be "What is machine learning"
+
+This question has a simple and a not so simple answer.
+
+Machine learning is simply a kind of optimization task where we want to learn some parameters for a function.
+
+If we wanted to learn a specific linear equation based on some training set we could model it as:
+
+y = a * x + b
+
+Where x and y are some observed input and outputs where we want the model to produce y when it is given x.
+
+To do this we need to learn the values for a, and b. 
+
+This can be done using a gradient descent algorithm on the loss function of the equation we want to learn.
+The loss function is the function we use to model how wrong our current parameters a and b are.
+The loss functions calculates a ÿ based on a, x and b, and compares it to the real y. 
+From this comparison we can calculate a error.
+The goal is to minimize the error as much as possible, minimizing the error means that our values a, and b creates ÿ values close to the real y.
+To minimize the error we calculate the gradient of the loss function (a vector of differentials in respect to each parameter, here a and b). 
+The gradient tells us how the function behaves when we make small changes to a and b.
+So we can use the gradient to update a and b, such that the loss function produces smaller and smaller values.
