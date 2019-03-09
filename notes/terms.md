@@ -96,6 +96,11 @@ F1-score
 # G
 Gradient Descent
 
+Gold Standard Data
+
+    "High quality data which is more or less as close as you can get to the ground truth" 
+    https://stats.stackexchange.com/questions/296828/what-is-the-meaning-of-gold-data 
+
 Gold segmentation
 
     ???
