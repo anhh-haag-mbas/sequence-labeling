@@ -165,6 +165,11 @@ Proper Evaluation
 
 Part-of-Speech (POS)
 
+Patience
+
+    The number of epochs to wait before early stop if no progress on the validation set.
+    Often between 10-100, 10-20 being the most common.
+    https://stats.stackexchange.com/questions/231061/how-to-use-early-stopping-properly-for-training-deep-neural-network
 
 # R
 Recurrent/recursive Neural Network
