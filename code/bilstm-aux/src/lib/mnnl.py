@@ -269,15 +269,15 @@ class Layer:
         
     def __call__(self, x, soft_labels=False, temperature=None, train=False):
         if self.mlp:
-            W_mlp = dynet.parameter(self.W_mlp)
-            b_mlp = dynet.parameter(self.b_mlp)
+            W_mlp = self.W_mlp
+            b_mlp = self.b_mlp
             act = self.mlp_activation
             x_in = act(W_mlp * x + b_mlp)
         else:
             x_in = x
         # from params to expressions
-        W = dynet.parameter(self.W)
-        b = dynet.parameter(self.b)
+        W = self.W
+        b = self.b
 
         logits = W*x_in + b
         if soft_labels and temperature:
