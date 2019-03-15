@@ -230,11 +230,8 @@ class NNTagger(object):
             for word in embeddings.keys():
                 if word not in self.w2i:
                     self.w2i[word]=len(self.w2i.keys()) # add new word
-                    self.wembeds.init_row(self.w2i[word], embeddings[word])
-                    init +=1
-                elif word in embeddings:
-                    self.wembeds.init_row(self.w2i[word], embeddings[word])
-                    init += 1
+                self.wembeds.init_row(self.w2i[word], embeddings[word])
+                init +=1
             print("initialized: {}".format(init))
             del embeddings # clean up
         else:
@@ -252,26 +249,10 @@ class NNTagger(object):
         layers = [] # inner layers
         output_layers_dict = {}   # from task_id to actual softmax predictor
         for layer_num in range(0,self.h_layers):
-            if layer_num == 0:
-                if self.c_in_dim > 0:
-                    # in_dim: size of each layer
-                    if self.lex_dim > 0 and self.embed_lex:
-                        lex_embed_size = self.lex_dim * len(self.dictionary_values)
-                        f_builder = self.builder(1, self.in_dim+self.c_h_dim*2+lex_embed_size, self.h_dim, self.model)
-                        b_builder = self.builder(1, self.in_dim+self.c_h_dim*2+lex_embed_size, self.h_dim, self.model)
-                    else:
-                        f_builder = self.builder(1, self.in_dim + self.c_h_dim * 2 + self.lex_dim, self.h_dim, self.model)
-                        b_builder = self.builder(1, self.in_dim + self.c_h_dim * 2 + self.lex_dim, self.h_dim, self.model)
-                else:
-                    f_builder = self.builder(1, self.in_dim+self.lex_dim, self.h_dim, self.model)
-                    b_builder = self.builder(1, self.in_dim+self.lex_dim, self.h_dim, self.model)
-
-                layers.append(BiRNNSequencePredictor(f_builder, b_builder)) #returns forward and backward sequence
-            else:
-                # add inner layers (if h_layers >1)
-                f_builder = self.builder(1, self.h_dim, self.h_dim, self.model)
-                b_builder = self.builder(1, self.h_dim, self.h_dim, self.model)
-                layers.append(BiRNNSequencePredictor(f_builder, b_builder))
+            input_size = self.get_input_size(layer_num)
+            f_builder = self.builder(1, input_size, self.h_dim, self.model)
+            b_builder = self.builder(1, input_size, self.h_dim, self.model)
+            layers.append(BiRNNSequencePredictor(f_builder, b_builder))
 
         # store at which layer to predict task
         task2layer = {task_id: out_layer for task_id, out_layer in zip(self.task2tag2idx, self.pred_layer)}
@@ -297,6 +278,26 @@ class NNTagger(object):
         self.predictors["inner"] = layers
         self.predictors["output_layers_dict"] = output_layers_dict
         self.predictors["task_expected_at"] = task2layer
+
+    def get_input_size(self, layer_num):
+        """
+        Helper function to calculate the input size of an LSTM layer
+        """
+        # Hidden layer input size
+        if layer_num > 0:
+            return self.h_dim
+
+        # First layer, no character embedding
+        if not (self.c_h_dim > 0):
+            return self.in_dim + self.lex_dim 
+       
+        # First layer, character, and lex embedding (dictionary)
+        if self.lex_dim > 0 and self.embed_lex:
+            lex_embed_size = self.lex_dim * len(self.dictionary_values)
+            return self.in_dim + self.c_h_dim * 2 + lex_embed_size
+
+        # First layer, character, and lex embedding (no dictionary)
+        return self.in_dim + self.c_h_dim * 2 + self.lex_dim
 
     def _drop(self, x, xcount, dropout_rate):
         """
