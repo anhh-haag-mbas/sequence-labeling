@@ -119,32 +119,25 @@ class CRFSequencePredictor(OutputSequencePredictor):
                 OUT.write("{} {} {}\n".format(tag_prev_name, tag_i_name, " ".join([str(x) for x in tag2tag_expression.npvalue()])))
         OUT.close()
 
-        #np.savetxt(out_filename+'.matrix.out', self.trans_mat.npvalue(), delimiter=',')
         print("done.")
 
     def predict_sequence(self, seq, inputs, train=False, output_confidences=False, unk_tag=None, dictionary=None, type_constraint=False, **kwargs):
         score_vecs = [self.network_builder(x, **kwargs) for x in inputs]
 
         if not train:
-            #pred_tag_indices = self.viterbi(start_b, T, end_b, score_vecs)
             pred_tag_indices, tag_scores = self.viterbi(score_vecs, unk_tag=unk_tag, dictionary=dictionary)
             seq.pred_tags = [self.index2tag[t] for t in pred_tag_indices]
-            if output_confidences:
-                print("not implemented")
             return
+
+        if self.viterbi_loss:
+            pred_tag_indices, instance_score = self.viterbi(score_vecs)
         else:
-            if self.viterbi_loss:
-                pred_tag_indices, path_score = self.viterbi(score_vecs)
-                instance_score = path_score #viterbi score
-            else:
-                forward_score = self.forward(score_vecs)
-                instance_score = forward_score
-            # return loss
-            gold_tag_indices = array.array('I',[self.tag2index[t] for t in seq.tags])
-            # decode CRF
-            gold_score = self.score_sentence(score_vecs, gold_tag_indices)
-            return instance_score - gold_score
-            # return normalizer - gold_score
+            instance_score = self.forward(score_vecs)
+        # return loss
+        gold_tag_indices = array.array('I',[self.tag2index[t] for t in seq.tags])
+        # decode CRF
+        gold_score = self.score_sentence(score_vecs, gold_tag_indices)
+        return instance_score - gold_score
 
     # code adapted from K.Stratos' code basis
     def score_sentence(self, score_vecs, tags):
@@ -159,9 +152,7 @@ class CRFSequencePredictor(OutputSequencePredictor):
         return total
 
     # code based on https://github.com/rguthrie3/BiLSTM-CRF
-    def viterbi(self, observations, unk_tag=None, dictionary=None):
-        #if dictionary:
-        #    raise NotImplementedError("type constraints not yet implemented for CRF")
+    def viterbi(self, observations, unk_tag=None):
         backpointers = []
         init_vvars   = [-1e10] * self.num_tags
         init_vvars[START_TAG] = 0 # <Start> has all the probability

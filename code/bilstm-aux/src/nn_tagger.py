@@ -107,7 +107,7 @@ class NNTagger(object):
         self.build_computation_graph(len(self.w2i),  len(self.c2i))
 
         update_embeds = True
-        if self.backprob_embeds == False: ## disable backprob into embeds
+        if not self.backprob_embeds: ## disable backprob into embeds
             print(">>> disable wembeds update <<<")
             update_embeds = False
             
@@ -150,12 +150,14 @@ class NNTagger(object):
 
                         loss.backward()
                         self.trainer.update()
+
                         dynet.renew_cg()  # use new computational graph for each BATCH when batching is active
                         batch = []
                 else:
                     dynet.renew_cg() # new graph per item
                     loss1 = self.predict(seq, train=True, update_embeds=update_embeds)
                     total_tagged += len(seq.words)
+
                     lv = loss1.value()
                     total_loss += lv
 
@@ -176,7 +178,7 @@ class NNTagger(object):
                 dill.dump(losses_log, open(model_path + ".model" + ".losses.pickle", "wb"))
 
             if dev:
-                # evaluate after every epoch
+                # evaluate after every iteration (epoch)
                 correct, total = self.evaluate(dev, "task0")
                 val_accuracy = correct/total
                 print("dev accuracy: {0:.4f}".format(val_accuracy))
@@ -191,10 +193,9 @@ class NNTagger(object):
                     print('Accuracy {0:.4f} is worse than best val loss {1:.4f}.'.format(val_accuracy, best_val_acc))
                     epochs_no_improvement += 1
 
-                if patience > 0:
-                    if epochs_no_improvement == patience:
-                        print('No improvement for {} epochs. Early stopping...'.format(epochs_no_improvement))
-                        break
+                if patience > 0 and epochs_no_improvement == patience:
+                    print('No improvement for {} epochs. Early stopping...'.format(epochs_no_improvement))
+                    break
 
     def set_indices(self, w2i, c2i, task2t2i, w2c_cache, l2i=None):
         """ helper function for loading model"""
@@ -214,7 +215,7 @@ class NNTagger(object):
 
     def build_computation_graph(self, num_words, num_chars):
         """
-        build graph and link to parameters
+        build graph and link to parameters (doesn't actually build a graph????)
         self.predictors, self.char_rnn, self.wembeds, self.cembeds =
         """
         ## initialize word embeddings
@@ -247,17 +248,16 @@ class NNTagger(object):
 
         # make it more flexible to add number of layers as specified by parameter
         layers = [] # inner layers
-        output_layers_dict = {}   # from task_id to actual softmax predictor
         for layer_num in range(0,self.h_layers):
-            input_size = self.get_input_size(layer_num)
+            input_size = self._get_input_size(layer_num)
             f_builder = self.builder(1, input_size, self.h_dim, self.model)
             b_builder = self.builder(1, input_size, self.h_dim, self.model)
             layers.append(BiRNNSequencePredictor(f_builder, b_builder))
 
+
         # store at which layer to predict task
+        output_layers_dict = {}   # from task_id to actual softmax predictor
         task2layer = {task_id: out_layer for task_id, out_layer in zip(self.task2tag2idx, self.pred_layer)}
-        if len(task2layer) > 1:
-            print("task2layer", task2layer)
         for task_id in task2layer:
             task_num_labels= len(self.task2tag2idx[task_id])
             if not self.crf:
@@ -279,7 +279,7 @@ class NNTagger(object):
         self.predictors["output_layers_dict"] = output_layers_dict
         self.predictors["task_expected_at"] = task2layer
 
-    def get_input_size(self, layer_num):
+    def _get_input_size(self, layer_num):
         """
         Helper function to calculate the input size of an LSTM layer
         """
@@ -296,7 +296,7 @@ class NNTagger(object):
             lex_embed_size = self.lex_dim * len(self.dictionary_values)
             return self.in_dim + self.c_h_dim * 2 + lex_embed_size
 
-        # First layer, character, and lex embedding (no dictionary)
+        # First layer, character, with or without lex embedding (no dictionary)
         return self.in_dim + self.c_h_dim * 2 + self.lex_dim
 
     def _drop(self, x, xcount, dropout_rate):
@@ -350,7 +350,7 @@ class NNTagger(object):
         for i in range(0,num_layers):
             predictor = self.predictors["inner"][i]
             forward_sequence, backward_sequence = predictor.predict_sequence(prev, prev_rev)        
-            if i > 0 and self.activation:
+            if i > 0 and self.activation: # BUT THIS IGNORES THE FIRST LAYER ????
                 # activation between LSTM layers
                 forward_sequence = [self.activation(s) for s in forward_sequence]
                 backward_sequence = [self.activation(s) for s in backward_sequence]
@@ -417,19 +417,17 @@ class NNTagger(object):
         """
         Get representation of word (word embedding)
         """
-        if train:
-            if self.w_dropout_rate > 0.0:
-                w_id = self.w2i[UNK] if self._drop(word, self.wcount, self.w_dropout_rate) else self.w2i.get(word, self.w2i[UNK])
-        else:
-            if self.mimickx_model_path: # if given use MIMICKX
-                if word not in self.w2i: #
-                    #print("predict with MIMICKX for: ", word)
-                    return dynet.inputVector(self.mimickx_model.predict(word).npvalue())
+        if train and self.w_dropout_rate > 0.0:
+            w_id = self.w2i[UNK] if self._drop(word, self.wcount, self.w_dropout_rate) else self.w2i.get(word, self.w2i[UNK])
+        elif self.mimickx_model_path and word not in self.w2i: # if given use MIMICKX
+            return dynet.inputVector(self.mimickx_model.predict(word).npvalue())
+        else: # Vanilla
             w_id = self.w2i.get(word, self.w2i[UNK])
-        if not update:
-            return dynet.nobackprop(self.wembeds[w_id])
-        else:
+
+        if update:
             return self.wembeds[w_id] 
+        else:
+            return dynet.nobackprop(self.wembeds[w_id])
 
     def get_c_repr(self, word, train=False):
         """

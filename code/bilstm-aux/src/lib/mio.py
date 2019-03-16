@@ -100,7 +100,6 @@ def read_conll_file(file_name, raw=False):
     ws_pattern = re.compile("^\s+$") # match emtpy lines that contain some whitespace
     
     for line in codecs.open(file_name, encoding='utf-8'):
-        #line = line.strip()
         line = line[:-1]
 
         if not line or ws_pattern.match(line):
