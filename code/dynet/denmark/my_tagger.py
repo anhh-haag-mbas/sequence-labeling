@@ -11,7 +11,6 @@ train_inputs, train_labels, tags, vocab = read_conllu("data/da_ddt-ud-train.conl
 val_inputs, val_labels, _, _ = read_conllu("data/da_ddt-ud-dev.conllu")
 embedding, word_count = read_fasttext("embeddings/cc.da.300.vec")
 
-ipdb.set_trace()
 
 int2word = ["<UNK>"] + vocab
 word2int = {w:i for i, w in enumerate(int2word)}
@@ -37,7 +36,7 @@ train_labels = [[tag2int[t] for t in ts] for ts in train_labels]
 val_inputs = [[to_input(w) for w in ws] for ws in val_inputs]
 val_labels = [[tag2int[t] for t in ts] for ts in val_labels]
 
-test_iterations = 20
+test_iterations = 1
 data = [dict() for _ in range(test_iterations)]
 train_output = "train_result"
 train_time  = "train_time"

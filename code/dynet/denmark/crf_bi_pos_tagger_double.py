@@ -7,7 +7,10 @@ class CrfBiPosTaggerDouble:
         self.model = dy.ParameterCollection()
         self.trainer = dy.SimpleSGDTrainer(self.model)
 
+        # Embedding
         self.lookup = self.model.add_lookup_parameters((vocab_size, embed_size))
+
+        # Bi-LSTM
         self.lstmf = dy.LSTMBuilder(
                         layers = 1,
                         input_dim = embed_size,
@@ -20,10 +23,12 @@ class CrfBiPosTaggerDouble:
                         hidden_dim = hidden_size,
                         model = self.model)
 
-
+        # Dense layer
         self.w = self.model.add_parameters((output_size, hidden_size * 2))
         self.b = self.model.add_parameters(output_size)
-
+        # For CRF
+        self.trans_matrix = self.model.add_parameters((output_size, output_size))
+        
     def fit(self, inputs, labels, mini_batch_size = 1, epochs = 1):
         """
         Expects the inputs and labels to be transformed to integers beforehand
@@ -31,22 +36,18 @@ class CrfBiPosTaggerDouble:
         for sentence, sentence_labels in zip(inputs, labels):
             dy.renew_cg()
             inps = [self.lookup[i] for i in sentence]
+           
+            # LSTM
+            f_init = self.lstmf.initial_state()
+            b_init = self.lstmb.initial_state()
+            
+            forward = f_init.transduce(inps)
+            backward = b_init.transduce(reversed(inps))
 
-            sfs = [self.lstmf.initial_state()]
-            sbs = [self.lstmb.initial_state()]
+            concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, backward)]
+            score_vec = [dy.softmax(self.w * layer + self.b) for layer in concat_layer]
 
-            for i in range(len(inps)):
-                sf = sfs[i].add_input(inps[i])
-                sb = sbs[i].add_input(inps[-(i + 1)])
-
-                sfs.append(sf)
-                sbs.append(sb)
-
-            sfs = sfs[1:]
-            sbs = sbs[1:]
-            sbs = sbs[::-1]
-
-            probs = [dy.softmax(self.w * dy.concatenate([sf.output(),sb.output()]) + self.b) for sf, sb in zip(sfs, sbs)]
+            probs = [dy.softmax(self.w * dy.concatenate([sf.output(),sb.output()]) + self.b) for sf, sb in zip(forward, backward)]
             losses = [-dy.log(dy.pick(dist, label)) for dist, label in zip(probs, sentence_labels)]
 
             loss = dy.esum(losses)
