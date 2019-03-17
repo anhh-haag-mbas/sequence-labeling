@@ -1,4 +1,4 @@
-    import sys
+import sys
 #import dynet as dy
 import ipdb 
 from collections import defaultdict
@@ -27,8 +27,8 @@ def to_input(word, unknown = 0):
     return unknown 
 
 VOCAB_SIZE = len(int2word)
-EMBED_SIZE = 86
-HIDDEN_DIM = 16
+EMBED_SIZE = 64
+HIDDEN_DIM = 100
 OUTPUT_DIM = len(tags)
 
 train_inputs = [[word2int[w] for w in ws] for ws in train_inputs] 
@@ -37,7 +37,7 @@ train_labels = [[tag2int[t] for t in ts] for ts in train_labels]
 val_inputs = [[to_input(w) for w in ws] for ws in val_inputs]
 val_labels = [[tag2int[t] for t in ts] for ts in val_labels]
 
-test_iterations = 20
+test_iterations = 1
 data = [dict() for _ in range(test_iterations)]
 train_output = "train_result"
 train_time  = "train_time"
