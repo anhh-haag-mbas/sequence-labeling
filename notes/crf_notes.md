@@ -1,3 +1,9 @@
+# Notes 
+https://www.reddit.com/r/MachineLearning/comments/8g3jsy/d_what_exactly_is_the_difference_between_hidden/
+
+Intelligent Systems Programming ch. 15
+   Not specific to CRF 
+
 # CRF
 
 1. A statistical modeling method for structured prediction.
