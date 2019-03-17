@@ -1,8 +1,8 @@
 import sys
 import ipdb
 
-ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
-
+#ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+FORM, UPOS = 0, 1
 def read_conllu(filepath):
     inputs, labels, pos_tags, words = [], [], set(), set()
     with open(filepath, 'r') as training_file:

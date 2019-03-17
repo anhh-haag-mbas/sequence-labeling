@@ -44,11 +44,10 @@ class CrfBiPosTaggerDouble:
             forward = f_init.transduce(inps)
             backward = b_init.transduce(reversed(inps))
 
-            concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, backward)]
+            concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, reversed(backward))]
             score_vec = [dy.softmax(self.w * layer + self.b) for layer in concat_layer]
 
-            probs = [dy.softmax(self.w * dy.concatenate([sf.output(),sb.output()]) + self.b) for sf, sb in zip(forward, backward)]
-            losses = [-dy.log(dy.pick(dist, label)) for dist, label in zip(probs, sentence_labels)]
+            losses = [-dy.log(dy.pick(dist, label)) for dist, label in zip(score_vec, sentence_labels)]
 
             loss = dy.esum(losses)
             loss.value()
@@ -66,22 +65,33 @@ class CrfBiPosTaggerDouble:
         dy.renew_cg()
         inps = [self.lookup[i] for i in sentence]
 
-        sfs = [self.lstmf.initial_state()]
-        sbs = [self.lstmb.initial_state()]
+        f_init = self.lstmf.initial_state()
+        b_init = self.lstmb.initial_state()
+        
+        forward = f_init.transduce(inps)
+        backward = b_init.transduce(reversed(inps))
 
-        for i in range(len(inps)):
-            sf = sfs[i].add_input(inps[i])
-            sb = sbs[i].add_input(inps[-(i + 1)])
-
-            sfs.append(sf)
-            sbs.append(sb)
-
-        sfs = sfs[1:]    # Remove initial state
-        sbs = sbs[:0:-1] # Reverse and remove initial state
-
-        probs = [dy.softmax(self.w * dy.concatenate([sf.output(),sb.output()]) + self.b) for sf, sb in zip(sfs, sbs)]
-
-        return [np.argmax(dist.value()) for dist in probs]
+        concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, reversed(backward))]
+        score_vec = [dy.softmax(self.w * layer + self.b) for layer in concat_layer]
+        return [np.argmax(dist.value()) for dist in score_vec]
+#
+#
+#        sfs = [self.lstmf.initial_state()]
+#        sbs = [self.lstmb.initial_state()]
+#
+#        for i in range(len(inps)):
+#            sf = sfs[i].add_input(inps[i])
+#            sb = sbs[i].add_input(inps[-(i + 1)])
+#
+#            sfs.append(sf)
+#            sbs.append(sb)
+#
+#        sfs = sfs[1:]    # Remove initial state
+#        sbs = sbs[:0:-1] # Reverse and remove initial state
+#
+#        probs = [dy.softmax(self.w * dy.concatenate([sf.output(),sb.output()]) + self.b) for sf, sb in zip(sfs, sbs)]
+#
+#        return [np.argmax(dist.value()) for dist in probs]
 
     def predict_auto_batch(self, sentences):
         pass

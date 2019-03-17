@@ -1,16 +1,17 @@
-import sys
+    import sys
 #import dynet as dy
 import ipdb 
+from collections import defaultdict
 from extractor import read_conllu, read_fasttext
 from simple_pos_tagger import SimplePOSTagger
 from bi_pos_tagger import BiPosTagger
 from bi_pos_tagger_double import BiPosTaggerDouble
+from crf_bi_pos_tagger_double import CrfBiPosTaggerDouble
 from helper import time
 
-train_inputs, train_labels, tags, vocab = read_conllu("data/da_ddt-ud-train.conllu")
-val_inputs, val_labels, _, _ = read_conllu("data/da_ddt-ud-dev.conllu")
-embedding, word_count = read_fasttext("embeddings/cc.da.300.vec")
-
+train_inputs, train_labels, tags, vocab = read_conllu("data/da-ud-train.conllu")
+val_inputs, val_labels, _, _ = read_conllu("data/da-ud-dev.conllu")
+#embedding, word_count = read_fasttext("embeddings/cc.da.300.vec")
 
 int2word = ["<UNK>"] + vocab
 word2int = {w:i for i, w in enumerate(int2word)}
@@ -36,7 +37,7 @@ train_labels = [[tag2int[t] for t in ts] for ts in train_labels]
 val_inputs = [[to_input(w) for w in ws] for ws in val_inputs]
 val_labels = [[tag2int[t] for t in ts] for ts in val_labels]
 
-test_iterations = 1
+test_iterations = 20
 data = [dict() for _ in range(test_iterations)]
 train_output = "train_result"
 train_time  = "train_time"
@@ -50,6 +51,7 @@ def evaluate(tagger, inputs, labels):
             if pred != label: evaluation[pred] += 1
     return evaluation
 
+
 for testnum in range(test_iterations):
     taggers = []
     taggers.append((SimplePOSTagger(
@@ -62,13 +64,19 @@ for testnum in range(test_iterations):
                         vocab_size = VOCAB_SIZE, 
                         output_size = OUTPUT_DIM, 
                         embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM / 2), "Single LSTM bi"))
+                        hidden_size = HIDDEN_DIM / 2), "Bi-LSTM single"))
 
     taggers.append((BiPosTaggerDouble(
                         vocab_size = VOCAB_SIZE, 
                         output_size = OUTPUT_DIM, 
                         embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM / 2), "Double LSTM bi"))
+                        hidden_size = HIDDEN_DIM / 2), "Bi-LSTM double"))
+
+    taggers.append((CrfBiPosTaggerDouble(
+                        vocab_size = VOCAB_SIZE, 
+                        output_size = OUTPUT_DIM, 
+                        embed_size = EMBED_SIZE, 
+                        hidden_size = HIDDEN_DIM / 2), "CRF bi-LSTM double"))
 
     data[testnum] = {n:dict() for _, n in taggers}
 
@@ -85,6 +93,8 @@ for testnum in range(test_iterations):
 
 total_miss_predictions = {tagger: 0 for _, tagger in taggers}
 total_training_time = {tagger: 0 for _, tagger in taggers}
+total_labels = sum([len(labels) for labels in val_labels])
+
 for i in range(len(data)):
     print(f"Test {i}")
     for tagger in data[i]:
@@ -98,18 +108,8 @@ for i in range(len(data)):
         total_miss_predictions[tagger] += miss_predictions
     print("\n")
 
-
 for tagger in total_training_time:
     print(f"{tagger} tagger:")
     print(f"average_training_time: {total_training_time[tagger]/test_iterations}")
-    print(f"average_miss_predictions: {total_miss_predictions[tagger]/test_iterations}")
-
-    
-
-    
-
-    
-
-    
-
-    
+    print(f"average_miss_predictions: {total_miss_predictions[tagger]/test_iterations} ~ {(total_miss_predictions[tagger]/test_iterations)/total_labels}")
+    print(f"Accuracy: {1 - ((total_miss_predictions[tagger]/test_iterations)/total_labels)}") 
