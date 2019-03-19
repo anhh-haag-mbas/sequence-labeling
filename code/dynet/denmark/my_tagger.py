@@ -11,40 +11,35 @@ from helper import time
 
 train_inputs, train_labels, tags, vocab = read_conllu("data/da-ud-train.conllu")
 val_inputs, val_labels, _, _ = read_conllu("data/da-ud-dev.conllu")
-#embedding, word_count = read_fasttext("embeddings/cc.da.300.vec")
+#(embedding, word_count), elapsed = time(read_fasttext, "embeddings/cc.da.300.vec")
+#model = FastText.load_fasttext_format('cc.en.300.bin')
 
 int2word = ["<UNK>"] + vocab
 word2int = {w:i for i, w in enumerate(int2word)}
-int2tag  = tags
+int2tag  = ["<START>", "<END>"] + tags
 tag2int  = {w:i for i, w in enumerate(int2tag)}
-
-def to_input(word, unknown = 0):
-    """
-    Transforms words to their respective integer representation or unknown if not in dict
-    """
-    if word in word2int.keys():
-        return word2int[word]
-    return unknown 
+UNK = word2int["<UNK>"]
 
 VOCAB_SIZE = len(int2word)
 EMBED_SIZE = 64
 HIDDEN_DIM = 100
-OUTPUT_DIM = len(tags)
+OUTPUT_DIM = len(int2tag)
+
 
 train_inputs = [[word2int[w] for w in ws] for ws in train_inputs] 
 train_labels = [[tag2int[t] for t in ts] for ts in train_labels]
 
-val_inputs = [[to_input(w) for w in ws] for ws in val_inputs]
+val_inputs = [[word2int.get(w, UNK) for w in ws] for ws in val_inputs]
 val_labels = [[tag2int[t] for t in ts] for ts in val_labels]
 
-test_iterations = 1
+test_iterations = 10
 data = [dict() for _ in range(test_iterations)]
 train_output = "train_result"
 train_time  = "train_time"
 evaluation = "eval"
 
 def evaluate(tagger, inputs, labels):
-    evaluation = {t:0 for t in range(len(tags))}
+    evaluation = {t:0 for t in range(len(int2tag))}
     predictions = [tagger.predict(i) for i in inputs]
     for s_preds, s_labs in zip(predictions, labels):
         for pred, label in zip(s_preds, s_labs):
@@ -52,35 +47,38 @@ def evaluate(tagger, inputs, labels):
     return evaluation
 
 
+
 for testnum in range(test_iterations):
     taggers = []
-    taggers.append((SimplePOSTagger(
-                        vocab_size = VOCAB_SIZE, 
-                        output_size = OUTPUT_DIM, 
-                        embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM), "Simple"))
-
-    taggers.append((BiPosTagger(
-                        vocab_size = VOCAB_SIZE, 
-                        output_size = OUTPUT_DIM, 
-                        embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM / 2), "Bi-LSTM single"))
-
-    taggers.append((BiPosTaggerDouble(
-                        vocab_size = VOCAB_SIZE, 
-                        output_size = OUTPUT_DIM, 
-                        embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM / 2), "Bi-LSTM double"))
-
+#    taggers.append((SimplePOSTagger(
+#                        vocab_size = VOCAB_SIZE, 
+#                        output_size = OUTPUT_DIM, 
+#                        embed_size = EMBED_SIZE, 
+#                        hidden_size = HIDDEN_DIM), "Simple"))
+#
+#    taggers.append((BiPosTagger(
+#                        vocab_size = VOCAB_SIZE, 
+#                        output_size = OUTPUT_DIM, 
+#                        embed_size = EMBED_SIZE, 
+#                        hidden_size = HIDDEN_DIM / 2), "Bi-LSTM single"))
+#
+#    taggers.append((BiPosTaggerDouble(
+#                        vocab_size = VOCAB_SIZE, 
+#                        output_size = OUTPUT_DIM, 
+#                        embed_size = EMBED_SIZE, 
+#                        hidden_size = HIDDEN_DIM / 2), "Bi-LSTM double"))
+#
     taggers.append((CrfBiPosTaggerDouble(
                         vocab_size = VOCAB_SIZE, 
                         output_size = OUTPUT_DIM, 
                         embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM / 2), "CRF bi-LSTM double"))
+                        hidden_size = HIDDEN_DIM), "CRF bi-LSTM double"))
 
     data[testnum] = {n:dict() for _, n in taggers}
 
     # print("Training...")
+    #print(f"Train input {[int2word[i] for i in train_inputs[0]]} -> {[train_inputs[0]]}")
+    #print(f"Train labels {[int2tag[i] for i in train_labels[0]]} -> {[train_labels[0]]}")
     results = [time(tagger.fit, train_inputs, train_labels) for tagger, _ in taggers]
     for i, (result , elapsed) in enumerate(results):
         data[testnum][taggers[i][1]][train_output] = result

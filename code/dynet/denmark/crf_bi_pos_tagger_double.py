@@ -6,7 +6,6 @@ import array
 START_TAG = 0
 END_TAG = 1
 
-
 class CrfBiPosTaggerDouble:
     def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8):
         self.model = dy.ParameterCollection()
@@ -28,7 +27,7 @@ class CrfBiPosTaggerDouble:
                         hidden_dim = hidden_size,
                         model = self.model)
 
-        self.num_tags = output_size + 2
+        self.num_tags = output_size
         # Dense layer
         self.w = self.model.add_parameters((self.num_tags, hidden_size * 2))
         self.b = self.model.add_parameters(self.num_tags)
@@ -39,9 +38,9 @@ class CrfBiPosTaggerDouble:
         """
         Expects the inputs and labels to be transformed to integers beforehand
         """
-        for sentence, sentence_labels in zip(inputs, labels):
+        for sentence, sentence_labels in list(zip(inputs, labels)):
             dy.renew_cg()
-            sentence_labels = [l + 2 for l in sentence_labels] # Transform(+2) to account for start and end tag
+            sentence_labels = [l for l in sentence_labels] # Transform(+2) to account for start and end tag
             inps = [self.lookup[i] for i in sentence]
            
             # LSTM
@@ -54,23 +53,18 @@ class CrfBiPosTaggerDouble:
             concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, reversed(backward))]
 
             # Linear layer
-            score_vecs = [dy.softmax(self.w * layer + self.b) for layer in concat_layer]
+            score_vecs = [(self.w * layer + self.b) for layer in concat_layer]
 
             # CRF
-            _, instance_score  = self.viterbi(score_vecs)
-            #instance_score = self.forward(score_vecs)
+            #_, instance_score  = self.viterbi(score_vecs)
+            instance_score = self.forward(score_vecs)
 
             gold_tag_indices = array.array('I', sentence_labels)
-            
+
             gold_score = self.score_sentence(score_vecs, gold_tag_indices)
 
             loss = instance_score - gold_score
 
-
-            # Loss (to be changed)
-            #losses = [-dy.log(dy.pick(dist, label)) for dist, label in zip(score_vecs, sentence_labels)]
-            
-            #loss = dy.esum(losses)
             loss.value()
             loss.backward()
             self.trainer.update()
@@ -96,28 +90,12 @@ class CrfBiPosTaggerDouble:
         concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, reversed(backward))]
 
         # Linear layer
-        score_vecs = [dy.softmax(self.w * layer + self.b) for layer in concat_layer]
+        score_vecs = [dy.rectify(self.w * layer + self.b) for layer in concat_layer]
 
         # CRF
         pred_tag_indices, _  = self.viterbi(score_vecs)
-        return [i - 2 for i in pred_tag_indices]
+        return [i for i in pred_tag_indices]
 
-        #instance_score = self.forward(score_vecs)
-
-
-#        dy.renew_cg()
-#        inps = [self.lookup[i] for i in sentence]
-#
-#        f_init = self.lstmf.initial_state()
-#        b_init = self.lstmb.initial_state()
-#        
-#        forward = f_init.transduce(inps)
-#        backward = b_init.transduce(reversed(inps))
-#
-#        concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, reversed(backward))]
-#        score_vec = [dy.softmax(self.w * layer + self.b) for layer in concat_layer]
-#        return [np.argmax(dist.value()) - 2 for dist in score_vec] # Transform(-2) to account for start and end tag
-#
     # code based on https://github.com/rguthrie3/BiLSTM-CRF
     def viterbi(self, observations, unk_tag=None, dictionary=None):
         backpointers = []
