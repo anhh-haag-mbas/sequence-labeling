@@ -1,0 +1,4 @@
+cython
+dynet
+gensim
+polyglot

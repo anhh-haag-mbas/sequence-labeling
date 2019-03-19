@@ -8,11 +8,16 @@ from bi_pos_tagger import BiPosTagger
 from bi_pos_tagger_double import BiPosTaggerDouble
 from crf_bi_pos_tagger_double import CrfBiPosTaggerDouble
 from helper import time
+#from gensim.models import FastText
+from polyglot.mapping import Embedding
 
 train_inputs, train_labels, tags, vocab = read_conllu("data/da-ud-train.conllu")
 val_inputs, val_labels, _, _ = read_conllu("data/da-ud-dev.conllu")
 #(embedding, word_count), elapsed = time(read_fasttext, "embeddings/cc.da.300.vec")
-#model = FastText.load_fasttext_format('cc.en.300.bin')
+#model = FastText.load_fasttext_format('embeddings/cc.da.300.bin')
+embeddings, elapsed = time(Embedding.load, "embeddings/19bSoRs")
+
+ipdb.set_trace()
 
 int2word = ["<UNK>"] + vocab
 word2int = {w:i for i, w in enumerate(int2word)}
