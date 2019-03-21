@@ -22,6 +22,9 @@ Hands-on gennemgang af at bruge CRF med sequence labelling og Python
 #### [Sequence Tagging with Tensorflow](https://guillaumegenthial.github.io/sequence-tagging-with-tensorflow.html)
 Gennemgang af POS tagging i Tensorflow med CRF og bi-LSTM
 
+#### [CRF Tutorial in PyTorch]( https://towardsdatascience.com/conditional-random-field-tutorial-in-pytorch-ca0d04499463 )
+Teoretisk og praktisk gennemgang af CRF, med implementeringsguide for PyTorch
+
 
 ## Diverse
 
