@@ -7,8 +7,9 @@ import random
 START_TAG = 0
 END_TAG = 1
 
-class CrfBiPosTaggerBuiltin:
+class BiLstmCrfModel:
     def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8, embeddings = None):
+        self.name = self.__class__.__name__
         self.model = dy.ParameterCollection()
         self.trainer = dy.SimpleSGDTrainer(self.model)
 

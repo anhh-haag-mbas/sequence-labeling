@@ -4,13 +4,14 @@ import ipdb
 import array
 import random
 
-class BiPosTaggerBuiltin:
+class BiLstmModel:
+
     def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8, embeddings = None):
+        self.name = self.__class__.__name__
         self.model = dy.ParameterCollection()
         self.trainer = dy.SimpleSGDTrainer(self.model)
 
         # Embedding
-
         if embeddings is None:
             self.lookup = self.model.add_lookup_parameters((vocab_size, embed_size))
         else:
@@ -49,9 +50,9 @@ class BiPosTaggerBuiltin:
             loss.backward()
             self.trainer.update()
 
-
     def fit_auto_batch(self, data, labels, mini_batch_size = 1, epochs = 1):
         train_pairs = list(zip(data, labels))
+        loss_progression = []
 
         for epoch in range(epochs):
             random.shuffle(train_pairs)
@@ -64,9 +65,14 @@ class BiPosTaggerBuiltin:
                     loss = self._calculate_loss(sentence, sentence_labels)
                     losses.append(loss)
                 loss = dy.esum(losses)
-                loss.forward()
+
+                loss_value = loss.value()
                 loss.backward()
                 self.trainer.update()
+
+                loss_progression.append(loss_value)
+
+        return loss_progression
 
     def fit_batch(self, inputs, labels, mini_batch_size = 1, epochs = 1):
         pass

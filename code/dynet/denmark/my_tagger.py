@@ -3,9 +3,8 @@ import sys
 import ipdb 
 from collections import defaultdict
 from extractor import read_conllu, read_fasttext
-from crf_bi_pos_tagger_double import CrfBiPosTaggerDouble
-from crf_bi_pos_tagger_builtin import CrfBiPosTaggerBuiltin
-from bi_pos_tagger_builtin import BiPosTaggerBuiltin
+from bi_lstm_model import BiLstmModel
+from bi_lstm_crf_model import BiLstmCrfModel
 from helper import time
 #from gensim.models import FastText
 from polyglot.mapping import Embedding
@@ -45,7 +44,7 @@ val_inputs = [[word2int.get(w, UNK) for w in ws] for ws in val_inputs]
 val_labels = [[tag2int[t] for t in ts] for ts in val_labels]
 
 test_iterations = 1
-data = [dict() for _ in range(test_iterations)]
+data = [defaultdict(defaultdict) for _ in range(test_iterations)]
 train_output = "train_result"
 train_time  = "train_time"
 evaluation = "eval"
@@ -58,65 +57,35 @@ def evaluate(tagger, inputs, labels):
             if pred != label: evaluation[pred] += 1
     return evaluation
 
-
-
 for testnum in range(test_iterations):
     taggers = []
-#    taggers.append((SimplePOSTagger(
-#                        vocab_size = VOCAB_SIZE, 
-#                        output_size = OUTPUT_DIM, 
-#                        embed_size = EMBED_SIZE, 
-#                        hidden_size = HIDDEN_DIM), "Simple"))
-#
-#    taggers.append((BiPosTagger(
-#                        vocab_size = VOCAB_SIZE, 
-#                        output_size = OUTPUT_DIM, 
-#                        embed_size = EMBED_SIZE, 
-#                        hidden_size = HIDDEN_DIM / 2), "Bi-LSTM single"))
-#
-#    taggers.append((BiPosTaggerDouble(
-#                        vocab_size = VOCAB_SIZE, 
-#                        output_size = OUTPUT_DIM, 
-#                        embed_size = EMBED_SIZE, 
-#                        hidden_size = HIDDEN_DIM), "Bi-LSTM double"))
+    taggers.append(BiLstmModel(
+                        vocab_size = VOCAB_SIZE, 
+                        output_size = OUTPUT_DIM, 
+                        embed_size = EMBED_SIZE, 
+                        hidden_size = HIDDEN_DIM,
+                        embeddings = embeddings))
 
-#    taggers.append((BiPosTaggerBuiltin(
+#    taggers.append(BiLstmCrfModel(
 #                        vocab_size = VOCAB_SIZE, 
 #                        output_size = OUTPUT_DIM, 
 #                        embed_size = EMBED_SIZE, 
 #                        hidden_size = HIDDEN_DIM,
-#                        embeddings = embeddings), "Bi-LSTM builtin"))
-#
-    taggers.append((CrfBiPosTaggerDouble(
-                        vocab_size = VOCAB_SIZE, 
-                        output_size = OUTPUT_DIM, 
-                        embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM,
-                        embeddings = embeddings), "CRF bi-LSTM double"))
-    taggers.append((CrfBiPosTaggerBuiltin(
-                        vocab_size = VOCAB_SIZE, 
-                        output_size = OUTPUT_DIM, 
-                        embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM,
-                        embeddings = embeddings), "CRF bi-LSTM builtin"))
-
-    data[testnum] = {n:dict() for _, n in taggers}
+#                        embeddings = embeddings))
 
     # print("Training...")
-    #print(f"Train input {[int2word[i] for i in train_inputs[0]]} -> {[train_inputs[0]]}")
-    #print(f"Train labels {[int2tag[i] for i in train_labels[0]]} -> {[train_labels[0]]}")
-    results = [time(tagger.fit, train_inputs, train_labels, ) for tagger, _ in taggers]
-    for i, (result , elapsed) in enumerate(results):
-        data[testnum][taggers[i][1]][train_output] = result
-        data[testnum][taggers[i][1]][train_time] = elapsed
+    results = [time(tagger.fit_auto_batch, train_inputs, train_labels, 8, 5) for tagger in taggers]
+    for tagger, (result , elapsed) in zip(taggers, results):
+        data[testnum][tagger.name][train_output] = result
+        data[testnum][tagger.name][train_time] = elapsed
 
-    for tagger, name in taggers: 
+    for tagger in taggers: 
         evals = evaluate(tagger, val_inputs, val_labels)
         evals = {int2tag[i]:evals[i] for i in evals.keys()}
-        data[testnum][name][evaluation] = evals
+        data[testnum][tagger.name][evaluation] = evals
 
-total_miss_predictions = {tagger: 0 for _, tagger in taggers}
-total_training_time = {tagger: 0 for _, tagger in taggers}
+total_miss_predictions = {tagger.name: 0 for tagger in taggers}
+total_training_time = {tagger.name: 0 for tagger in taggers}
 total_labels = sum([len(labels) for labels in val_labels])
 
 for i in range(len(data)):
