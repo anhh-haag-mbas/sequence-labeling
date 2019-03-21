@@ -1,0 +1,6209 @@
+The dy.parameter(...) call is now DEPRECATED.
+        There is no longer need to explicitly add parameters to the computation graph.
+        Any used parameter will be added automatically.
+To	NUM	NUM
+kendte	ADJ	ADJ
+russiske	ADJ	ADJ
+historikere	NOUN	NOUN
+Andronik	PROPN	PROPN
+Mirganjan	PROPN	PROPN
+og	CONJ	CONJ
+Igor	PROPN	PROPN
+Klamkin	PROPN	PROPN
+tror	VERB	VERB
+ikke	ADV	ADV
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Rusland	PROPN	PROPN
+kan	AUX	AUX
+udvikles	VERB	VERB
+uden	ADP	ADP
+en	DET	DET
+"	PUNCT	PUNCT
+jernnæve	NOUN	NOUN
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+De	PRON	PRON
+hævder	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Ruslands	PROPN	PROPN
+vej	NOUN	NOUN
+til	ADP	ADP
+demokrati	NOUN	NOUN
+går	VERB	VERB
+gennem	ADP	ADP
+diktatur	NOUN	NOUN
+.	PUNCT	PUNCT
+
+I	ADP	ADP
+en	PRON	PRON
+af	ADP	ADP
+deres	DET	DET
+artikler	NOUN	NOUN
+hedder	VERB	VERB
+det	PRON	PRON
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+I	ADP	ADP
+et	DET	DET
+autoritært	ADJ	ADJ
+regime	NOUN	NOUN
+lagdeles	VERB	VERB
+samfundet	NOUN	NOUN
+og	CONJ	CONJ
+forskellige	ADJ	ADJ
+interesser	NOUN	NOUN
+modnes	VERB	VERB
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+når	SCONJ	SCONJ
+deres	DET	DET
+repræsentanter	NOUN	NOUN
+er	AUX	AUX
+parate	ADJ	ADJ
+til	ADP	ADP
+at	PART	PART
+gå	VERB	VERB
+i	ADP	ADP
+struben	NOUN	NOUN
+på	ADP	ADP
+hinanden	PRON	PRON
+,	PUNCT	PUNCT
+så	ADV	ADV
+stopper	VERB	VERB
+en	DET	DET
+jernnæve	NOUN	NOUN
+"	PUNCT	PUNCT
+det	PRON	PRON
+.	PUNCT	PUNCT
+
+På	ADP	ADP
+den	DET	DET
+måde	NOUN	NOUN
+skabes	VERB	VERB
+hele	ADJ	ADJ
+tiden	NOUN	NOUN
+betingelserne	NOUN	NOUN
+for	ADP	ADP
+en	DET	DET
+harmonisering	NOUN	NOUN
+af	ADP	ADP
+interesser	NOUN	NOUN
+og	CONJ	CONJ
+følgelig	ADV	ADV
+for	ADP	ADP
+demokratiske	ADJ	ADJ
+reformer	NOUN	NOUN
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+de	PRON	DET
+tilføjede	VERB	VERB
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Netop	ADV	ADV
+fordi	SCONJ	SCONJ
+vi	PRON	PRON
+end	ADP	ADP
+ikke	ADV	ADV
+har	VERB	VERB
+et	DET	DET
+kim	NOUN	NOUN
+af	ADP	ADP
+civilt	ADJ	ADJ
+samfund	NOUN	NOUN
+,	PUNCT	PUNCT
+var	VERB	VERB
+vi	PRON	PRON
+imod	ADP	ADP
+Folkekongressen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Bortset	VERB	VERB
+fra	ADP	ADP
+illusionen	NOUN	NOUN
+om	ADP	ADP
+demokrati	NOUN	NOUN
+kunne	AUX	AUX
+den	PRON	PRON
+ikke	ADV	ADV
+give	VERB	VERB
+noget	DET	PRON
+reelt	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+kunne	VERB	VERB
+den	PRON	PRON
+ikke	ADV	ADV
+helt	ADV	ADV
+objektivt	ADV	ADV
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+var	VERB	AUX
+slet	ADV	ADV
+ikke	ADV	ADV
+på	ADP	ADP
+grund	NOUN	NOUN
+af	ADP	ADP
+apparatets	NOUN	NOUN
+lænker	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Illusioner	NOUN	NOUN
+er	AUX	AUX
+farlige	ADJ	ADJ
+.	PUNCT	PUNCT
+
+De	PRON	PRON
+føder	VERB	VERB
+skuffelser	NOUN	NOUN
+og	CONJ	CONJ
+leder	VERB	NOUN
+til	ADP	ADP
+sidst	ADV	ADV
+til	ADP	ADP
+en	DET	DET
+destabilisering	NOUN	NOUN
+af	ADP	ADP
+samfundet	NOUN	NOUN
+,	PUNCT	PUNCT
+hvad	PRON	PRON
+vi	PRON	PRON
+allerede	ADV	ADV
+har	AUX	AUX
+set	VERB	VERB
+og	CONJ	CONJ
+desværre	ADV	ADV
+vil	AUX	AUX
+komme	VERB	VERB
+til	ADP	ADP
+at	PART	PART
+se	VERB	VERB
+mere	ADJ	ADJ
+af	ADP	ADV
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+De	PRON	PRON
+mener	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Folkekongressen	NOUN	NOUN
+skal	AUX	AUX
+give	VERB	VERB
+præsidenten	NOUN	NOUN
+diktatoriske	ADJ	ADJ
+beføjelser	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Af	ADP	ADP
+Vibeke	PROPN	PROPN
+Scheibel	PROPN	NOUN
+
+Debatten	NOUN	NOUN
+om	ADP	ADP
+udlændinge	NOUN	NOUN
+i	ADP	ADP
+Danmark	PROPN	PROPN
+må	AUX	AUX
+ikke	ADV	ADV
+føre	VERB	VERB
+til	ADP	ADP
+fremmedhad	NOUN	NOUN
+og	CONJ	CONJ
+racisme	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Derfor	ADV	ADV
+skal	AUX	AUX
+lederne	NOUN	NOUN
+af	ADP	ADP
+de	DET	DET
+politiske	ADJ	ADJ
+partier	NOUN	NOUN
+påtage	VERB	VERB
+sig	PRON	PRON
+et	DET	DET
+direkte	ADJ	ADJ
+ansvar	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+mener	VERB	VERB
+Socialdemokratiets	NOUN	NOUN
+næstformand	NOUN	NOUN
+Birte	PROPN	PROPN
+Weiss	PROPN	PROPN
+og	CONJ	CONJ
+foreslår	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+de	DET	DET
+politiske	ADJ	ADJ
+ledere	NOUN	NOUN
+kommer	VERB	VERB
+med	ADV	ADV
+i	ADP	ADP
+det	DET	DET
+ligebehandlingsnævn	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	ADP
+Folketinget	NOUN	NOUN
+kort	ADV	ADV
+før	ADP	ADP
+sommerferien	NOUN	NOUN
+besluttede	VERB	VERB
+at	PART	PART
+nedsætte	VERB	VERB
+.	PUNCT	PUNCT
+
+Birte	PROPN	PROPN
+Weiss	PROPN	PROPN
+henviser	VERB	VERB
+til	ADP	ADP
+Tyskland	PROPN	PROPN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+dialogen	NOUN	NOUN
+kortsluttes	VERB	VERB
+af	ADP	ADP
+brandbomber	NOUN	NOUN
+og	CONJ	CONJ
+dramatiske	ADJ	ADJ
+sammenstød	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Vi	PRON	PRON
+vil	AUX	AUX
+ikke	ADV	ADV
+finde	VERB	VERB
+os	PRON	PRON
+i	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+det	DET	DET
+samme	ADJ	ADJ
+skal	AUX	AUX
+ske	VERB	VERB
+i	ADP	ADP
+Danmark	PROPN	PROPN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+hun	PRON	PRON
+.	PUNCT	PUNCT
+
+Informationssekretær	NOUN	NOUN
+i	ADP	ADP
+Danmarks	PROPN	PROPN
+Socialdemokratiske	ADJ	ADJ
+Ungdom	NOUN	NOUN
+(	PUNCT	PUNCT
+DSU	PROPN	PROPN
+)	PUNCT	PUNCT
+,	PUNCT	PUNCT
+Hans	PROPN	DET
+Stavnsager	PROPN	NOUN
+,	PUNCT	PUNCT
+er	AUX	AUX
+positivt	ADV	ADV
+overrasket	VERB	VERB
+over	ADP	ADP
+ideen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+DSU	PROPN	PROPN
+har	AUX	AUX
+nemlig	ADV	ADV
+længe	ADV	ADV
+ment	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Socialdemokratiet	NOUN	NOUN
+deltog	VERB	VERB
+alt	ADV	ADV
+for	ADV	ADV
+lidt	ADV	ADJ
+i	ADP	ADP
+debatten	NOUN	NOUN
+om	ADP	ADP
+udlændinge	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Derfor	ADV	ADV
+kører	VERB	VERB
+DSU	PROPN	PROPN
+i	ADP	ADP
+disse	DET	DET
+måneder	NOUN	NOUN
+en	DET	DET
+kampagne	NOUN	NOUN
+mod	ADP	ADP
+fremmedhad	NOUN	NOUN
+og	CONJ	CONJ
+racisme	NOUN	NOUN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+de	DET	DET
+unge	ADJ	ADJ
+blandt	ADP	ADP
+andet	PRON	PRON
+via	ADP	ADP
+plakater	NOUN	NOUN
+opfordrer	VERB	VERB
+folk	NOUN	NOUN
+til	ADP	ADP
+at	PART	PART
+tage	VERB	VERB
+stilling	NOUN	NOUN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Hvem	PRON	PRON
+støtter	VERB	VERB
+du	PRON	PRON
+"	PUNCT	PUNCT
+,	PUNCT	PUNCT
+er	AUX	AUX
+teksten	NOUN	NOUN
+over	ADP	ADP
+billederne	NOUN	NOUN
+af	ADP	ADP
+Mogens	PROPN	PROPN
+Glistrup	PROPN	PROPN
+og	CONJ	CONJ
+en	DET	DET
+lille	ADJ	ADJ
+jugoslavisk	ADJ	ADJ
+pige	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Det	PRON	PRON
+er	AUX	AUX
+første	ADJ	ADJ
+gang	NOUN	NOUN
+,	PUNCT	PUNCT
+jeg	PRON	PRON
+har	AUX	AUX
+hørt	VERB	VERB
+så	ADV	ADV
+klar	ADJ	ADJ
+en	DET	DET
+melding	NOUN	NOUN
+fra	ADP	ADP
+Socialdemokratiet	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Hans	PROPN	PROPN
+Stavnsager	PROPN	PROPN
+.	PUNCT	PUNCT
+
+For	ADP	ADP
+første	ADJ	ADJ
+gang	NOUN	NOUN
+i	ADP	ADP
+100	NUM	NUM
+år	NOUN	NOUN
+tabte	VERB	VERB
+Indre	ADJ	PROPN
+Mission	NOUN	PROPN
+menighedsrådsvalget	NOUN	NOUN
+i	ADP	ADP
+Skjern	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Nu	ADV	ADV
+rykker	VERB	VERB
+social-grundtvigianerne	NOUN	NOUN
+ind	ADV	ADV
+
+Af	ADP	ADP
+Steffen	PROPN	PROPN
+Borch	PROPN	PROPN
+
+I	ADP	ADP
+1972	NUM	NUM
+fik	VERB	VERB
+Skjern	PROPN	PROPN
+sit	DET	DET
+første	ADJ	ADJ
+værtshus	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+hed	VERB	VERB
+Kontorets	NOUN	NOUN
+Bodega	NOUN	PROPN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+det	PRON	PRON
+var	AUX	AUX
+ikke	ADV	ADV
+et	DET	DET
+sted	NOUN	NOUN
+,	PUNCT	PUNCT
+man	PRON	PRON
+lod	VERB	VERB
+sig	PRON	PRON
+se	VERB	VERB
+,	PUNCT	PUNCT
+hvis	SCONJ	SCONJ
+man	PRON	PRON
+ville	AUX	AUX
+være	AUX	AUX
+velset	ADJ	VERB
+i	ADP	ADP
+byens	NOUN	NOUN
+herskende	VERB	VERB
+indremissionske	ADJ	ADJ
+kredse	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+var	AUX	AUX
+samme	ADJ	ADJ
+år	NOUN	NOUN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Poul-Erik	PROPN	PROPN
+Billeskov	PROPN	PROPN
+kom	VERB	VERB
+til	ADP	ADP
+byen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Men	CONJ	CONJ
+der	ADV	ADV
+er	VERB	VERB
+ingen	DET	DET
+organisk	ADJ	ADJ
+sammenhæng	NOUN	NOUN
+mellem	ADP	ADP
+de	DET	DET
+to	NUM	NUM
+ting	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+understreger	VERB	VERB
+han	PRON	PRON
+.	PUNCT	PUNCT
+
+20	NUM	NUM
+år	NOUN	NOUN
+senere	ADV	ADV
+tabte	VERB	VERB
+Indre	ADJ	PROPN
+Mission	NOUN	PROPN
+menighedsrådsvalget	NOUN	NOUN
+i	ADP	ADP
+Skjern	PROPN	PROPN
+.	PUNCT	PUNCT
+
+For	ADP	ADP
+første	ADJ	ADJ
+gang	NOUN	NOUN
+i	ADP	ADP
+100	NUM	NUM
+år	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+denne	DET	DET
+gang	NOUN	NOUN
+kan	AUX	AUX
+Poul-Erik	PROPN	PROPN
+Billeskov	PROPN	PROPN
+ikke	ADV	ADV
+sige	VERB	VERB
+sig	PRON	PRON
+fri	ADJ	ADJ
+for	ADP	ADP
+at	PART	PART
+have	AUX	AUX
+haft	VERB	VERB
+en	DET	DET
+finger	NOUN	NOUN
+med	ADV	ADV
+i	ADP	ADP
+spillet	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+var	AUX	AUX
+nemlig	ADV	ADV
+kandidat	NOUN	ADJ
+for	ADP	ADP
+og	CONJ	CONJ
+en	PRON	PRON
+af	ADP	ADP
+initiativtagerne	NOUN	NOUN
+til	ADP	ADP
+det	DET	DET
+grundtvigianske-socialdemokratiske	ADJ	ADJ
+samarbejde	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+har	AUX	AUX
+vundet	VERB	VERB
+flertallet	NOUN	NOUN
+i	ADP	ADP
+Skjerns	PROPN	PROPN
+menighedsråd	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Otte-fem	NUM	ADV
+stod	VERB	VERB
+det	PRON	PRON
+i	ADP	ADP
+gamle	ADJ	ADJ
+dage	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+var	VERB	VERB
+indtil	ADP	ADP
+denne	DET	DET
+uges	NOUN	NOUN
+menighedsrådsvalg	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Nu	ADV	ADV
+står	VERB	VERB
+det	PRON	DET
+syv-seks	NUM	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+det	PRON	PRON
+er	VERB	AUX
+altså	ADV	ADV
+i	ADP	ADP
+de	DET	DET
+helliges	ADJ	ADJ
+disfavør	NOUN	NOUN
+.	PUNCT	PUNCT
+
+2	NUM	NUM
+)	PUNCT	PUNCT
+I	ADP	ADP
+bekræftende	VERB	VERB
+fald	NOUN	NOUN
+findes	VERB	VERB
+der	ADV	ADV
+da	ADV	ADV
+en	DET	DET
+hemmelig	ADJ	ADJ
+agentvirksomhed	NOUN	NOUN
+ved	ADP	ADP
+siden	NOUN	NOUN
+af	ADP	ADP
+FET	PROPN	PROPN
+?	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	AUX	AUX
+ulovligt	ADJ	ADJ
+at	PART	PART
+drive	VERB	VERB
+privat	ADJ	ADJ
+efterretningsvirksomhed	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+ved	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+forsvarsministeren	NOUN	NOUN
+har	AUX	AUX
+vidst	VERB	VERB
+det	PRON	PRON
+.	PUNCT	PUNCT
+
+3	NUM	NUM
+)	PUNCT	PUNCT
+Har	AUX	AUX
+ministeren	NOUN	NOUN
+løjet	VERB	VERB
+om	ADP	ADP
+sit	DET	PRON
+og	CONJ	CONJ
+regeringens	NOUN	NOUN
+kendskab	NOUN	NOUN
+til	ADP	ADP
+virksomheden	NOUN	NOUN
+?	PUNCT	PUNCT
+
+4	NUM	NUM
+)	PUNCT	PUNCT
+Det	PRON	PRON
+er	AUX	AUX
+galt	ADJ	ADJ
+,	PUNCT	PUNCT
+hvis	SCONJ	SCONJ
+det	PRON	PRON
+er	AUX	AUX
+sket	VERB	VERB
+uden	ADP	ADP
+regeringens	NOUN	NOUN
+sikkerhedsudvalgs	NOUN	NOUN
+vidende	NOUN	VERB
+.	PUNCT	PUNCT
+
+5	NUM	NUM
+)	PUNCT	PUNCT
+Hvis	SCONJ	SCONJ
+det	PRON	PRON
+er	AUX	AUX
+sket	VERB	VERB
+med	ADP	ADP
+sikkerhedsudvalgets	NOUN	NOUN
+vidende	NOUN	NOUN
+,	PUNCT	PUNCT
+hvorfor	ADV	ADV
+har	AUX	VERB
+man	PRON	PRON
+så	ADV	ADV
+ikke	ADV	ADV
+grebet	VERB	VERB
+ind	ADV	ADV
+?	PUNCT	PUNCT
+
+6	NUM	NUM
+)	PUNCT	PUNCT
+Eller	CONJ	CONJ
+er	VERB	VERB
+der	ADV	ADV
+så	ADV	ADV
+meget	ADJ	ADJ
+kludder	NOUN	NOUN
+i	ADP	ADP
+efterretningsvæsenet	NOUN	NOUN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+man	PRON	PRON
+kan	AUX	AUX
+sende	VERB	VERB
+folk	NOUN	NOUN
+af	ADP	ADP
+sted	NOUN	NOUN
+på	ADP	ADP
+selvmordsmissioner	NOUN	NOUN
+?	PUNCT	PUNCT
+
+7	NUM	NUM
+)	PUNCT	PUNCT
+Hvis	SCONJ	SCONJ
+der	ADV	ADV
+findes	VERB	VERB
+et	DET	DET
+privat	ADJ	ADJ
+efterretningsvæsen	NOUN	NOUN
+,	PUNCT	PUNCT
+kan	AUX	AUX
+vi	PRON	PRON
+så	ADV	ADV
+være	AUX	AUX
+sikre	ADJ	ADJ
+på	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+de	PRON	PRON
+ikke	ADV	ADV
+også	ADV	ADV
+render	VERB	VERB
+rundt	ADV	ADV
+og	CONJ	CONJ
+snager	VERB	NOUN
+i	ADP	ADP
+almindelige	ADJ	ADJ
+danskeres	NOUN	NOUN
+forhold	NOUN	NOUN
+?	PUNCT	PUNCT
+
+Statsministeren	NOUN	NOUN
+har	AUX	AUX
+nu	ADV	ADV
+bedt	VERB	VERB
+sin	DET	DET
+departementschef	NOUN	NOUN
+,	PUNCT	PUNCT
+Peter	PROPN	PROPN
+Wiese	PROPN	PROPN
+,	PUNCT	PUNCT
+undersøge	VERB	VERB
+sagen	NOUN	NOUN
+?	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Det	PRON	PRON
+virker	VERB	VERB
+"	PUNCT	PUNCT
+fåret	ADJ	NOUN
+"	PUNCT	PUNCT
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+det	PRON	PRON
+er	AUX	AUX
+interessant	ADJ	ADJ
+,	PUNCT	PUNCT
+hvis	SCONJ	SCONJ
+regeringens	NOUN	NOUN
+sikkerhedsudvalg	NOUN	NOUN
+og	CONJ	CONJ
+statsministeren	NOUN	NOUN
+ikke	ADV	ADV
+har	AUX	AUX
+været	AUX	AUX
+underrettet	VERB	VERB
+om	ADP	ADP
+missionen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	AUX	AUX
+ligeledes	ADV	ADV
+interessant	ADJ	ADJ
+,	PUNCT	PUNCT
+hvad	PRON	PRON
+regeringen	NOUN	NOUN
+vil	VERB	VERB
+med	ADP	ADP
+redegørelsen	NOUN	NOUN
+i	ADP	ADP
+det	DET	DET
+udenrigspolitiske	ADJ	ADJ
+nævn	NOUN	NOUN
+:	PUNCT	PUNCT
+Om	SCONJ	SCONJ
+den	PRON	PRON
+vil	AUX	AUX
+søge	VERB	VERB
+at	PART	PART
+lave	VERB	VERB
+en	DET	DET
+dækmanøvre	NOUN	NOUN
+,	PUNCT	PUNCT
+eller	CONJ	CONJ
+om	SCONJ	SCONJ
+det	PRON	PRON
+er	AUX	AUX
+begyndelsen	NOUN	NOUN
+til	ADP	ADP
+en	DET	DET
+egentlig	ADJ	ADJ
+gennemgang	NOUN	NOUN
+af	ADP	ADP
+,	PUNCT	PUNCT
+hvad	PRON	PRON
+FET	PROPN	PROPN
+går	VERB	VERB
+og	CONJ	CONJ
+laver	VERB	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Pelle	PROPN	PROPN
+Voigt	PROPN	PROPN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Besluttet	VERB	NOUN
+er	AUX	AUX
+så	ADV	ADV
+meget	ADJ	ADV
+sagt	VERB	VERB
+,	PUNCT	PUNCT
+vi	PRON	PRON
+fik	VERB	VERB
+ikke	ADV	ADV
+noget	DET	DET
+valg	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Hvis	SCONJ	SCONJ
+vi	PRON	PRON
+ikke	ADV	ADV
+var	AUX	AUX
+gået	VERB	VERB
+i	ADP	ADP
+arbejde	NOUN	NOUN
+,	PUNCT	PUNCT
+var	AUX	AUX
+arbejdet	NOUN	NOUN
+blevet	AUX	AUX
+stillet	VERB	VERB
+frit	ADJ	ADV
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+så	ADV	ADV
+ville	AUX	AUX
+mindst	ADV	ADV
+150	NUM	NUM
+kritiske	ADJ	ADJ
+folk	NOUN	NOUN
+ikke	ADV	ADV
+være	AUX	AUX
+kommet	VERB	VERB
+ind	ADV	ADV
+igen	ADV	ADV
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+de	PRON	PRON
+42	NUM	NUM
+på	ADP	ADP
+fyringslisten	NOUN	NOUN
+ville	AUX	AUX
+have	AUX	AUX
+mistet	VERB	VERB
+deres	DET	DET
+opsigelsesfrist	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+sagde	VERB	VERB
+Bjarne	PROPN	PROPN
+og	CONJ	CONJ
+Max	PROPN	PROPN
+,	PUNCT	PUNCT
+umiddelbart	ADV	ADV
+efter	ADP	ADP
+morgenens	NOUN	NOUN
+fællesmøde	NOUN	NOUN
+.	PUNCT	PUNCT
+
+De	PRON	PRON
+to	NUM	NUM
+er	VERB	VERB
+på	ADP	ADP
+den	DET	DET
+oprindelige	ADJ	ADJ
+fyringsliste	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	ADP
+i	ADP	ADP
+øjeblikket	NOUN	NOUN
+er	AUX	AUX
+trukket	VERB	VERB
+tilbage	ADV	ADV
+,	PUNCT	PUNCT
+mens	SCONJ	SCONJ
+ledelsen	NOUN	NOUN
+og	CONJ	CONJ
+tillidsfolkene	NOUN	NOUN
+prøver	VERB	VERB
+at	PART	PART
+finde	VERB	VERB
+alternative	ADJ	ADJ
+løsninger	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Efterhånden	ADV	NOUN
+som	ADP	ADP
+navnene	NOUN	NOUN
+på	ADP	ADP
+de	PRON	DET
+42	NUM	NUM
+fyrede	VERB	VERB
+sivede	VERB	VERB
+ud	ADV	ADV
+til	ADP	ADP
+kollegerne	NOUN	NOUN
+,	PUNCT	PUNCT
+var	VERB	AUX
+ingen	PRON	PRON
+længere	ADV	ADV
+i	ADP	ADP
+tvivl	NOUN	NOUN
+om	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+her	ADV	ADV
+var	AUX	AUX
+slagteriets	NOUN	NOUN
+ledelse	NOUN	NOUN
+ude	ADV	ADV
+på	ADP	ADP
+en	DET	DET
+straffeekspedition	NOUN	NOUN
+over	ADV	ADV
+for	ADP	ADP
+nogle	DET	DET
+medarbejdere	NOUN	NOUN
+,	PUNCT	PUNCT
+som	ADP	PRON
+har	AUX	AUX
+været	AUX	AUX
+for	ADV	ADP
+besværlige	ADJ	ADJ
+i	ADP	ADP
+den	DET	DET
+forløbne	ADJ	ADJ
+tid	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Bjarne	PROPN	PROPN
+og	CONJ	CONJ
+Max	PROPN	PROPN
+er	AUX	AUX
+sikre	ADJ	ADJ
+på	ADP	ADP
+at	PART	PART
+ryge	VERB	VERB
+ud	ADV	ADV
+under	ADP	ADP
+alle	ADJ	ADJ
+omstændigheder	NOUN	NOUN
+,	PUNCT	PUNCT
+så	SCONJ	SCONJ
+de	PRON	PRON
+er	AUX	AUX
+ikke	ADV	ADV
+længere	ADV	ADV
+tilbageholdende	ADJ	ADJ
+med	ADP	ADP
+at	PART	PART
+udtale	VERB	VERB
+sig	PRON	PRON
+.	PUNCT	PUNCT
+
+men	CONJ	CONJ
+hos	ADP	ADP
+mange	ADJ	ADJ
+andre	PRON	PRON
+er	AUX	AUX
+holdningen	NOUN	NOUN
+en	PRON	DET
+anden	PRON	DET
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Vi	PRON	PRON
+vil	AUX	AUX
+ikke	ADV	ADV
+være	AUX	AUX
+de	DET	DET
+næste	ADJ	ADJ
+,	PUNCT	PUNCT
+der	PRON	PRON
+skal	AUX	AUX
+fyres	VERB	VERB
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+og	CONJ	CONJ
+synet	NOUN	NOUN
+af	ADP	ADP
+en	DET	DET
+journalistblok	NOUN	NOUN
+får	VERB	VERB
+flokken	NOUN	NOUN
+til	ADP	ADP
+at	PART	PART
+spredes	VERB	VERB
+på	ADP	ADP
+et	DET	DET
+øjeblik	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+vil	AUX	AUX
+næppe	ADV	ADV
+volde	VERB	VERB
+rivalerne	NOUN	NOUN
+i	ADP	ADP
+Dansk	ADJ	ADJ
+Supermarked	NOUN	NOUN
+og	CONJ	CONJ
+Aldi	PROPN	PROPN
+finansielle	ADJ	ADJ
+problemer	NOUN	NOUN
+at	PART	PART
+komme	VERB	VERB
+med	ADP	ADP
+et	DET	DET
+modspil	NOUN	NOUN
+i	ADP	ADP
+samme	ADJ	ADJ
+størrelsesorden	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+kan	AUX	AUX
+betyde	VERB	VERB
+priskrig	NOUN	NOUN
+,	PUNCT	PUNCT
+bekræfter	VERB	VERB
+P.	PROPN	PROPN
+E.	PROPN	PROPN
+Pedersen	PROPN	PROPN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Kunderne	NOUN	NOUN
+skal	AUX	AUX
+være	AUX	AUX
+sikre	ADJ	ADJ
+på	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+de	PRON	PRON
+ikke	ADV	ADV
+kan	AUX	AUX
+købe	VERB	VERB
+basis-varer	NOUN	NOUN
+billigere	ADV	ADJ
+andre	DET	DET
+steder	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Går	VERB	VERB
+konkurrenterne	NOUN	NOUN
+ned	ADV	ADV
+i	ADP	ADP
+pris	NOUN	NOUN
+,	PUNCT	PUNCT
+følger	VERB	VERB
+vi	PRON	PRON
+med	ADV	ADV
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+FDBchefen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+De	DET	DET
+nye	ADJ	ADJ
+super-butikker	NOUN	NOUN
+har	VERB	VERB
+også	ADV	ADV
+en	DET	DET
+anden	DET	DET
+kedelig	ADJ	ADJ
+følge	NOUN	NOUN
+,	PUNCT	PUNCT
+set	VERB	VERB
+med	ADP	ADP
+brancheøjne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+De	PRON	PRON
+øger	VERB	VERB
+butiksdøden	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Også	ADV	ADV
+i	ADP	ADP
+FDB's	PROPN	PROPN
+egne	ADJ	NOUN
+rækker	NOUN	VERB
+.	PUNCT	PUNCT
+
+600	NUM	NUM
+FÅR	VERB	NOUN
+IKKE	ADV	ADV
+LOV	NOUN	NOUN
+
+600	NUM	NUM
+Brugser	NOUN	NOUN
+har	AUX	AUX
+ikke	ADV	ADV
+fået	VERB	VERB
+lov	NOUN	NOUN
+at	PART	PART
+blive	AUX	AUX
+Super-Brugser	NOUN	NOUN
+.	PUNCT	PUNCT
+
+De	DET	DET
+fleste	ADJ	ADJ
+må	AUX	AUX
+lukke	VERB	VERB
+,	PUNCT	PUNCT
+mener	VERB	VERB
+eksperterne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Desuden	ADV	ADV
+forudser	VERB	VERB
+FDB	PROPN	PROPN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+200	NUM	NUM
+job	NOUN	NOUN
+af	ADP	ADP
+sparehensyn	NOUN	NOUN
+skæres	VERB	VERB
+bort	ADV	ADV
+i	ADP	ADP
+de	DET	DET
+nye	ADJ	ADJ
+Super-Brugser	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Tidligere	ADV	ADV
+havde	VERB	VERB
+de	DET	DET
+store	ADJ	ADJ
+Brugser	NOUN	PROPN
+20.000	NUM	NUM
+forskellige	ADJ	ADJ
+varer	NOUN	NOUN
+på	ADP	ADP
+hylderne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+For	ADP	ADP
+at	PART	PART
+spare	VERB	VERB
+skæres	VERB	VERB
+antallet	NOUN	NOUN
+ned	ADV	ADV
+til	ADP	ADP
+8.000	NUM	NUM
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+finansierer	VERB	VERB
+en	DET	DET
+del	NOUN	NOUN
+af	ADP	ADP
+prisnedsættelserne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Resten	NOUN	NOUN
+skal	AUX	AUX
+komme	VERB	VERB
+fra	ADP	ADP
+et	DET	DET
+forventet	VERB	VERB
+mersalg	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Hans	PROPN	PROPN
+Uffe	PROPN	PROPN
+Christensen	PROPN	PROPN
+
+En	DET	DET
+ny	ADJ	ADJ
+aggressiv	ADJ	ADJ
+linje	NOUN	NOUN
+præger	VERB	VERB
+Super-Brugsen	PROPN	NOUN
+.	PUNCT	PUNCT
+
+Her	ADV	ADV
+morer	VERB	VERB
+Super-Pedersen	PROPN	PROPN
+sig	PRON	PRON
+over	ADP	ADP
+Nettos	PROPN	PROPN
+priser	NOUN	NOUN
+
+Finansmininister	NOUN	NOUN
+Henning	PROPN	PROPN
+Dyremose	PROPN	PROPN
+gør	VERB	VERB
+nu	ADV	ADV
+en	DET	DET
+heldig	ADJ	ADJ
+gennemførelse	NOUN	NOUN
+af	ADP	ADP
+finansloven	NOUN	NOUN
+for	ADP	ADP
+1991	NUM	NUM
+til	ADP	ADP
+murbrækker	NOUN	NOUN
+for	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+der	ADV	ADV
+kan	AUX	AUX
+opnås	VERB	VERB
+resultater	NOUN	NOUN
+på	ADP	ADP
+de	DET	DET
+andre	DET	DET
+,	PUNCT	PUNCT
+sprængfarlige	ADJ	ADJ
+politiske	ADJ	ADJ
+områder	NOUN	NOUN
+-	PUNCT	PUNCT
+uddannelse	NOUN	NOUN
+,	PUNCT	PUNCT
+arbejdsmarked	NOUN	NOUN
+og	CONJ	CONJ
+skat	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+satser	VERB	VERB
+på	ADP	ADP
+at	PART	PART
+bruge	VERB	VERB
+forhandlingerne	NOUN	NOUN
+om	ADP	ADP
+finansloven	NOUN	NOUN
+som	ADP	ADP
+murbrækker	NOUN	NOUN
+for	ADP	ADP
+resultater	NOUN	NOUN
+på	ADP	ADP
+de	DET	DET
+andre	DET	DET
+områder	NOUN	NOUN
+.	PUNCT	PUNCT
+
+En	DET	DET
+fornuftig	ADJ	ADJ
+finanslov	NOUN	NOUN
+skal	AUX	AUX
+føre	VERB	VERB
+til	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+de	DET	DET
+øvrige	ADJ	ADJ
+initiativer	NOUN	NOUN
+gennemføres	VERB	VERB
+,	PUNCT	PUNCT
+så	SCONJ	SCONJ
+der	ADV	ADV
+sikres	VERB	VERB
+en	DET	DET
+lav	ADJ	NOUN
+løn-	NOUN	X
+og	CONJ	CONJ
+omkostningsudvikling	NOUN	NOUN
+ved	ADP	ADP
+overenskomsterne	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Henning	PROPN	PROPN
+Dyremose	PROPN	PROPN
+til	ADP	ADP
+B.T.	PROPN	PROPN
+.	PUNCT	PUNCT
+
+KV-regeringen	NOUN	NOUN
+har	AUX	VERB
+udover	ADP	ADP
+finansloven	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+kommer	VERB	VERB
+til	ADP	ADP
+førstebehandling	NOUN	NOUN
+på	ADP	ADP
+torsdag	NOUN	NOUN
+,	PUNCT	PUNCT
+fremlagt	VERB	ADV
+22	NUM	NUM
+lovforslag	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+dækker	VERB	VERB
+alt	ADJ	ADJ
+fra	ADP	ADP
+nedsættelse	NOUN	NOUN
+af	ADP	ADP
+akassekontingent	NOUN	NOUN
+til	ADP	ADP
+afskaffelse	NOUN	NOUN
+af	ADP	ADP
+6	NUM	NUM
+pct.-skatten	NOUN	NOUN
+for	ADP	ADP
+indtægter	NOUN	NOUN
+op	ADV	ADV
+til	ADP	ADP
+200.000	NUM	NUM
+kroner	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Henning	PROPN	PROPN
+Dyremose	PROPN	PROPN
+mener	VERB	VERB
+ikke	ADV	ADV
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+en	DET	DET
+nedsættelse	NOUN	NOUN
+af	ADP	ADP
+moms	NOUN	NOUN
+og	CONJ	CONJ
+afgifter	NOUN	NOUN
+kan	AUX	AUX
+være	AUX	AUX
+med	ADV	ADV
+til	ADP	ADP
+at	PART	PART
+sikre	VERB	VERB
+et	DET	DET
+mere	ADV	ADV
+afdæmpet	ADJ	ADJ
+overenskomstresultat	NOUN	NOUN
+.	PUNCT	PUNCT
+
+NEDSAT	VERB	ADJ
+MOMS	NOUN	NOUN
+
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+tvivler	VERB	VERB
+oprigtig	ADV	ADV
+talt	VERB	VERB
+på	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+virksomheder	NOUN	NOUN
+og	CONJ	CONJ
+forretningerne	NOUN	NOUN
+vil	AUX	AUX
+nedsætte	VERB	VERB
+priserne	NOUN	NOUN
+i	ADP	ADP
+samme	ADJ	ADJ
+omfang	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+vi	PRON	PRON
+ville	AUX	AUX
+nedsætte	VERB	VERB
+moms	NOUN	NOUN
+og	CONJ	CONJ
+afgifter	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Henning	PROPN	PROPN
+Dyremose	PROPN	PROPN
+.	PUNCT	PUNCT
+
+MØDES	VERB	NOUN
+TO	NUM	ADP
+GANGE	NOUN	NOUN
+
+Sæsonen	NOUN	NOUN
+indledes	VERB	VERB
+som	ADP	ADP
+nævnt	VERB	VERB
+16.	ADJ	ADJ
+marts	NOUN	NOUN
+med	ADP	ADP
+opgøret	NOUN	NOUN
+mellem	ADP	ADP
+AGF	PROPN	PROPN
+og	CONJ	CONJ
+Brøndby	PROPN	PROPN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+dagen	NOUN	NOUN
+efter	ADV	ADV
+følger	VERB	VERB
+kampene	NOUN	NOUN
+:	PUNCT	PUNCT
+Ikast-Lyngby	PROPN	NOUN
+,	PUNCT	PUNCT
+B-1903-Silkeborg	PROPN	NOUN
+,	PUNCT	PUNCT
+AaB-Vejle	PROPN	PROPN
+og	CONJ	CONJ
+FremOB	PROPN	PROPN
+.	PUNCT	PUNCT
+
+De	DET	DET
+10	NUM	NUM
+hold	NOUN	NOUN
+i	ADP	ADP
+Superligaen	NOUN	NOUN
+skal	AUX	AUX
+mødes	VERB	VERB
+to	NUM	NUM
+gange	NOUN	NOUN
+i	ADP	ADP
+løbet	NOUN	NOUN
+af	ADP	ADP
+foråret	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+det	PRON	PRON
+giver	VERB	VERB
+således	ADV	ADV
+18	NUM	NUM
+runder	NOUN	NOUN
+med	ADP	ADP
+afslutning	NOUN	NOUN
+den	DET	DET
+23.	ADJ	ADJ
+juni	NOUN	NOUN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+programmet	NOUN	NOUN
+ser	VERB	VERB
+således	ADV	ADV
+ud	ADV	ADV
+:	PUNCT	PUNCT
+Lyngby-Brøndby	PROPN	NOUN
+,	PUNCT	PUNCT
+Silkeborg-AGF	PROPN	PROPN
+,	PUNCT	PUNCT
+Vejle-Ikast	PROPN	NOUN
+,	PUNCT	PUNCT
+Frem-B	PROPN	PROPN
+1903	NUM	NUM
+og	CONJ	CONJ
+AaB-OB	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Hvad	PRON	PRON
+der	ADV	ADV
+skal	AUX	AUX
+ske	VERB	VERB
+efter	ADP	ADP
+sommerferien	NOUN	NOUN
+tager	VERB	VERB
+Divisionsforeningen	NOUN	NOUN
+først	ADV	ADV
+stilling	NOUN	NOUN
+til	ADP	ADP
+på	ADP	ADP
+generalforsamlingen	NOUN	NOUN
+den	DET	DET
+26.	ADJ	ADJ
+januar	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Her	ADV	ADV
+vil	AUX	AUX
+det	PRON	PRON
+ligeledes	ADV	ADV
+blive	AUX	AUX
+afgjort	VERB	ADV
+om	SCONJ	SCONJ
+turneringen	NOUN	NOUN
+skal	AUX	AUX
+vendes	VERB	VERB
+,	PUNCT	PUNCT
+så	SCONJ	SCONJ
+der	ADV	ADV
+i	ADP	ADP
+modsætning	NOUN	NOUN
+til	ADP	ADP
+hidtidig	ADJ	ADJ
+praksis	NOUN	NOUN
+spilles	VERB	VERB
+efterår/forår	X	NOUN
+.	PUNCT	PUNCT
+
+Bliver	AUX	AUX
+det	PRON	PRON
+tilfældet	NOUN	VERB
+kåres	VERB	VERB
+årets	NOUN	NOUN
+danmarksmester	NOUN	NOUN
+den	DET	DET
+23.	ADJ	ADJ
+juni	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Uden	ADP	ADP
+dog	ADV	ADV
+at	PART	PART
+opnå	VERB	VERB
+meget	ADV	ADV
+mere	ADJ	ADJ
+end	ADP	ADP
+æren	NOUN	NOUN
+,	PUNCT	PUNCT
+fordi	SCONJ	SCONJ
+DM-guldet	NOUN	NOUN
+mod	ADP	ADP
+sædvane	NOUN	NOUN
+ikke	ADV	ADV
+vil	AUX	AUX
+give	VERB	VERB
+adgang	NOUN	NOUN
+til	ADP	ADP
+Europa	PROPN	PROPN
+Cup	NOUN	NOUN
+turneringerne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Skulle	AUX	AUX
+et	DET	DET
+flertal	NOUN	NOUN
+i	ADP	ADP
+Divisionsforeningen	NOUN	NOUN
+mod	ADP	ADP
+forventning	NOUN	NOUN
+imidlertid	ADV	ADV
+ønske	VERB	VERB
+at	PART	PART
+bibeholde	VERB	VERB
+turneringen	NOUN	NOUN
+forår/efterår	X	NOUN
+rykker	VERB	VERB
+to	NUM	NUM
+hold	NOUN	NOUN
+ud	ADV	ADV
+af	ADP	ADP
+Superligaen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Hvorefter	ADV	ADV
+de	DET	DET
+otte	NUM	NUM
+bedst	ADV	ADV
+placerede	VERB	VERB
+hold	NOUN	NOUN
+fra	ADP	ADP
+efteråret	NOUN	NOUN
+spiller	VERB	VERB
+om	ADP	ADP
+mesterskabet	NOUN	NOUN
+i	ADP	ADP
+et	DET	DET
+alle-mod-alle	ADJ	ADJ
+slutspil	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Nedslagtningen	NOUN	NOUN
+fortsatte	VERB	VERB
+i	ADP	ADP
+næsten	ADV	ADV
+20	NUM	NUM
+minutter	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Kampvognene	NOUN	NOUN
+kørte	VERB	VERB
+ind	ADV	ADV
+og	CONJ	CONJ
+ud	ADV	ADV
+mellem	ADP	ADP
+skræmte	VERB	ADJ
+og	CONJ	CONJ
+paniske	ADJ	ADJ
+mennesker	NOUN	NOUN
+på	ADP	ADP
+flugt	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+forsøgte	VERB	VERB
+at	PART	PART
+tale	VERB	VERB
+til	ADP	ADP
+en	DET	DET
+soldat	NOUN	NOUN
+og	CONJ	CONJ
+sagde	VERB	VERB
+:	PUNCT	PUNCT
+Lad	VERB	VERB
+os	PRON	PRON
+afgøre	VERB	VERB
+dette	PRON	PRON
+på	ADP	ADP
+en	DET	DET
+fredelig	ADJ	ADJ
+måde	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+sagde	VERB	VERB
+en	DET	DET
+kvæstet	ADJ	ADJ
+litauer	NOUN	NOUN
+,	PUNCT	PUNCT
+Atansa	PROPN	PROPN
+Stokus	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Som	ADP	ADP
+svar	NOUN	NOUN
+blev	AUX	AUX
+hun	PRON	PRON
+overfaldet	VERB	VERB
+af	ADP	ADP
+soldaten	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+slog	VERB	VERB
+ham	PRON	PRON
+i	ADP	ADP
+ansigtet	NOUN	NOUN
+med	ADP	ADP
+en	DET	DET
+geværkolbe	NOUN	NOUN
+.	PUNCT	PUNCT
+
+En	DET	DET
+medarbejder	NOUN	NOUN
+på	ADP	ADP
+TV-	NOUN	X
+og	CONJ	CONJ
+radiostationen	NOUN	NOUN
+fulgte	VERB	VERB
+chokeret	VERB	VERB
+massakren	NOUN	NOUN
+fra	ADP	ADP
+et	DET	DET
+vindue	NOUN	NOUN
+i	ADP	ADP
+TV-byen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+De	PRON	PRON
+kører	VERB	VERB
+folk	NOUN	NOUN
+ned	ADV	ADV
+med	ADP	ADP
+deres	DET	DET
+tanks	NOUN	NOUN
+.	PUNCT	PUNCT
+
+De	PRON	PRON
+slår	VERB	VERB
+løs	ADV	ADV
+på	ADP	ADP
+kvinder	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+sagde	VERB	VERB
+Eduardas	PROPN	PROPN
+Potashinskas	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Et	DET	DET
+andet	DET	DET
+øjenvidne	NOUN	NOUN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+De	PRON	PRON
+begyndte	VERB	VERB
+at	PART	PART
+skyde	VERB	VERB
+mod	ADP	ADP
+alle	ADJ	ADJ
+...	PUNCT	PUNCT
+lige	ADV	ADV
+meget	ADJ	ADV
+om	SCONJ	SCONJ
+det	PRON	PRON
+var	AUX	AUX
+kvinder	NOUN	NOUN
+,	PUNCT	PUNCT
+børn	NOUN	NOUN
+eller	CONJ	CONJ
+mænd	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+To	NUM	NUM
+spanske	ADJ	ADJ
+TV-folk	NOUN	NOUN
+blev	AUX	AUX
+gennembanket	VERB	NOUN
+af	ADP	ADP
+Sovjet-soldater	NOUN	NOUN
+,	PUNCT	PUNCT
+fordi	SCONJ	SCONJ
+de	PRON	PRON
+havde	AUX	AUX
+filmet	VERB	VERB
+en	DET	DET
+såret	VERB	ADJ
+litauer	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+blev	AUX	AUX
+hjulpet	VERB	VERB
+væk	ADV	ADV
+fra	ADP	ADP
+slagmarken	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Bagefter	ADV	ADV
+blev	AUX	AUX
+deres	DET	DET
+kamera	NOUN	NOUN
+konfiskeret	VERB	VERB
+.	PUNCT	PUNCT
+
+En	DET	DET
+rystet	VERB	VERB
+journalist	NOUN	NOUN
+fra	ADP	ADP
+avisen	NOUN	NOUN
+Respublica	PROPN	PROPN
+i	ADP	ADP
+Litauen	PROPN	NOUN
+fortalte	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+sovjetiske	ADJ	ADJ
+soldater	NOUN	NOUN
+efter	ADP	ADP
+massakren	NOUN	NOUN
+havde	AUX	AUX
+forsøgt	VERB	VERB
+at	PART	PART
+klæde	VERB	VERB
+civile	ADJ	ADJ
+dødsofre	NOUN	NOUN
+i	ADP	ADP
+militært	ADJ	ADJ
+tøj	NOUN	NOUN
+for	ADP	ADP
+at	PART	PART
+få	VERB	VERB
+dem	PRON	PRON
+til	ADP	ADP
+at	PART	PART
+se	VERB	VERB
+ud	ADV	ADV
+som	ADP	ADP
+dræbte	VERB	VERB
+soldater	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Klokken	NOUN	NOUN
+00.32	NUM	NUM
+dansk	ADJ	ADJ
+tid	NOUN	NOUN
+faldt	VERB	VERB
+de	DET	DET
+første	ADJ	ADJ
+bomber	NOUN	NOUN
+over	ADP	ADP
+Bagdad	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Klokken	NOUN	NOUN
+01.35	NUM	NUM
+sendte	VERB	VERB
+den	DET	DET
+israelske	ADJ	ADJ
+radio	NOUN	NOUN
+advarsler	NOUN	NOUN
+til	ADP	ADP
+befolkningen	NOUN	NOUN
+om	ADP	ADP
+at	PART	PART
+søge	VERB	VERB
+beskyttelse	NOUN	NOUN
+og	CONJ	CONJ
+finde	VERB	VERB
+gasmaskerne	NOUN	NOUN
+frem	ADV	ADV
+.	PUNCT	PUNCT
+
+Klokken	NOUN	NOUN
+01.38	NUM	NUM
+var	AUX	AUX
+Bagdad	PROPN	PROPN
+en	DET	DET
+død	ADJ	ADJ
+by	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Byen	NOUN	NOUN
+er	AUX	AUX
+totalt	ADV	ADV
+mørk	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Stilheden	NOUN	NOUN
+er	VERB	AUX
+nærmest	ADV	ADV
+larmende	VERB	ADJ
+.	PUNCT	PUNCT
+
+En	DET	DET
+kølig	ADJ	ADJ
+brise	NOUN	NOUN
+blæser	VERB	VERB
+gennem	ADP	ADP
+byen	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+rapporterede	VERB	VERB
+CNN-journalisterne	NOUN	NOUN
+fra	ADP	ADP
+Bagdad	PROPN	PROPN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Dette	PRON	PRON
+har	AUX	AUX
+været	AUX	AUX
+et	DET	DET
+overraskelses-angreb	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	AUX	AUX
+utroligt	ADJ	ADJ
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+byen	NOUN	NOUN
+ikke	ADV	ADV
+var	AUX	AUX
+mørkelagt	VERB	ADJ
+,	PUNCT	PUNCT
+da	SCONJ	SCONJ
+angrebet	NOUN	NOUN
+kom	VERB	VERB
+.	PUNCT	PUNCT
+
+Så	ADV	ADV
+vidt	ADV	ADV
+vi	PRON	PRON
+kan	AUX	AUX
+se	VERB	VERB
+fra	ADP	ADP
+hotellet	NOUN	NOUN
+,	PUNCT	PUNCT
+har	AUX	AUX
+ødelæggelserne	NOUN	NOUN
+hidtil	ADV	ADV
+været	VERB	VERB
+begrænsede	VERB	VERB
+og	CONJ	CONJ
+meget	ADV	ADV
+målrettede	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+kunne	AUX	AUX
+tyde	VERB	VERB
+på	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+angrebet	NOUN	NOUN
+skal	AUX	AUX
+ses	VERB	VERB
+som	ADP	ADP
+en	DET	DET
+alvorlig	ADJ	ADJ
+forskrækkelse	NOUN	NOUN
+til	ADP	ADP
+Irak	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Hvis	SCONJ	SCONJ
+USA	PROPN	PROPN
+ville	VERB	VERB
+,	PUNCT	PUNCT
+kunne	AUX	AUX
+man	PRON	PRON
+sagtens	ADV	ADV
+have	AUX	AUX
+bombet	VERB	VERB
+det	DET	DET
+meste	ADJ	ADJ
+af	ADP	ADP
+byen	NOUN	NOUN
+i	ADP	ADP
+stykker	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+HELVEDE	NOUN	ADV
+ER	AUX	AUX
+LØS	ADJ	NOUN
+
+Kl.	NOUN	ADP
+01.44	NUM	NUM
+,	PUNCT	PUNCT
+dansk	ADJ	ADJ
+tid	NOUN	NOUN
+,	PUNCT	PUNCT
+brød	VERB	VERB
+helvede	NOUN	NOUN
+løs	ADV	ADV
+igen	ADV	ADV
+over	ADP	ADP
+Bagdad	PROPN	PROPN
+.	PUNCT	PUNCT
+
+En	DET	DET
+infernalsk	ADJ	ADJ
+larm	NOUN	NOUN
+af	ADP	ADP
+bomber	NOUN	NOUN
+,	PUNCT	PUNCT
+eksplosioner	NOUN	NOUN
+og	CONJ	CONJ
+antiluftskyts	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Raffinaderiet	NOUN	NOUN
+er	AUX	AUX
+ramt	VERB	VERB
+igen	ADV	ADV
+.	PUNCT	PUNCT
+
+Flammerne	NOUN	NOUN
+står	VERB	VERB
+op	ADV	ADV
+i	ADP	ADP
+horisonten	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Dette	PRON	PRON
+er	AUX	AUX
+det	DET	DET
+voldsomste	ADJ	ADJ
+angreb	NOUN	NOUN
+hidtil	ADV	ADV
+.	PUNCT	PUNCT
+
+Bomberne	NOUN	NOUN
+faldt	VERB	VERB
+en	DET	DET
+halv	ADJ	ADJ
+mil	NOUN	NOUN
+fra	ADP	ADP
+hotellet	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+rapporterede	VERB	VERB
+John	PROPN	PROPN
+Hollimann	PROPN	PROPN
+,	PUNCT	PUNCT
+Bernard	PROPN	PROPN
+Shaw	PROPN	PROPN
+og	CONJ	CONJ
+veteranen	NOUN	NOUN
+fra	ADP	ADP
+Vietnam	PROPN	PROPN
+,	PUNCT	PUNCT
+krigsreporter	NOUN	NOUN
+Peter	PROPN	PROPN
+Arnett	PROPN	PROPN
+.	PUNCT	PUNCT
+
+På	ADP	ADP
+det	DET	DET
+tidspunkt	NOUN	NOUN
+var	VERB	AUX
+det	DET	DET
+lille	ADJ	ADJ
+barns	NOUN	NOUN
+forældre	NOUN	NOUN
+for	ADP	ADP
+alvor	NOUN	NOUN
+ved	ADP	ADP
+at	PART	PART
+være	AUX	AUX
+bekymrede	ADJ	VERB
+.	PUNCT	PUNCT
+
+Den	DET	DET
+unge	ADJ	ADJ
+mor	NOUN	NOUN
+havde	AUX	AUX
+et	DET	DET
+par	NOUN	NOUN
+måneder	NOUN	NOUN
+forinden	ADV	NOUN
+konstateret	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+sønnen	NOUN	NOUN
+havde	AUX	AUX
+haft	VERB	VERB
+skorper	NOUN	NOUN
+af	ADP	ADP
+blod	NOUN	NOUN
+i	ADP	ADP
+næse	NOUN	NOUN
+og	CONJ	CONJ
+mund	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Hun	PRON	PRON
+bad	VERB	VERB
+sin	DET	DET
+mand	NOUN	NOUN
+kontakte	VERB	X
+Københavns	PROPN	PROPN
+Kommune	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+havde	AUX	AUX
+godkendt	VERB	VERB
+den	PRON	PRON
+nu	ADV	ADV
+tiltalte	VERB	VERB
+som	ADP	ADP
+dagplejefar	NOUN	NOUN
+,	PUNCT	PUNCT
+for	ADP	ADP
+at	PART	PART
+få	VERB	VERB
+sønnen	NOUN	NOUN
+anbragt	VERB	VERB
+under	ADP	ADP
+mere	ADV	ADV
+betryggende	ADJ	ADJ
+forhold	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+det	PRON	PRON
+var	AUX	AUX
+ikke	ADV	ADV
+muligt	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Den	DET	DET
+8.	ADJ	ADJ
+november	NOUN	NOUN
+gik	VERB	VERB
+plejefaderen	NOUN	NOUN
+-	PUNCT	PUNCT
+ifølge	ADP	ADP
+tiltalen	NOUN	NOUN
+-	PUNCT	PUNCT
+amok	ADV	ADV
+.	PUNCT	PUNCT
+
+H.'s	PROPN	DET
+forklaring	NOUN	NOUN
+i	ADP	ADP
+grundlovsforhøret	NOUN	NOUN
+:	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Anders	PROPN	PROPN
+var	AUX	AUX
+helt	ADV	ADV
+anderledes	ADJ	ADJ
+af	ADP	ADP
+sind	NOUN	NOUN
+end	ADP	ADP
+min	DET	DET
+egen	ADJ	ADJ
+søn	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+irriterede	VERB	VERB
+mig	PRON	PRON
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+drengen	NOUN	NOUN
+tudede	VERB	VERB
+så	ADV	ADV
+meget	ADV	ADJ
+,	PUNCT	PUNCT
+så	SCONJ	SCONJ
+jeg	PRON	PRON
+ville	AUX	AUX
+vippe	VERB	VERB
+ham	PRON	PRON
+én	PRON	PRON
+.	PUNCT	PUNCT
+
+Jeg	PRON	PRON
+må	AUX	AUX
+have	AUX	AUX
+slået	VERB	VERB
+hårdere	ADV	ADV
+,	PUNCT	PUNCT
+end	ADP	ADP
+jeg	PRON	PRON
+troede	VERB	VERB
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+været	AUX	AUX
+uheldig	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+begyndte	VERB	VERB
+at	PART	PART
+rulle	VERB	VERB
+med	ADP	ADP
+øjnene	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+hans	DET	DET
+nakke	NOUN	NOUN
+blev	AUX	AUX
+slap	ADJ	VERB
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Han	PRON	PRON
+blev	AUX	AUX
+nervøs	ADJ	ADJ
+,	PUNCT	PUNCT
+da	SCONJ	SCONJ
+barnet	NOUN	NOUN
+begyndte	VERB	VERB
+at	PART	PART
+trække	VERB	VERB
+vejret	NOUN	NOUN
+hæst	ADV	NOUN
+og	CONJ	CONJ
+ringede	VERB	VERB
+efter	ADP	ADP
+en	DET	DET
+ambulance	NOUN	NOUN
+:	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+ringede	VERB	VERB
+også	ADV	ADV
+til	ADP	ADP
+hans	DET	DET
+far	NOUN	NOUN
+og	CONJ	CONJ
+fortalte	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+den	PRON	PRON
+var	AUX	AUX
+gruelig	ADV	ADJ
+gal	ADJ	ADJ
+-	PUNCT	PUNCT
+drengen	NOUN	NOUN
+havde	AUX	AUX
+fået	VERB	VERB
+krampe	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Situationen	NOUN	NOUN
+er	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+min	DET	DET
+nuværende	ADJ	ADJ
+kontrakt	NOUN	NOUN
+udløber	VERB	VERB
+til	ADP	ADP
+nytår	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Hvis	SCONJ	SCONJ
+jeg	PRON	PRON
+siger	VERB	VERB
+ja	NOUN	NOUN
+til	ADP	ADP
+at	PART	PART
+forlænge	VERB	VERB
+,	PUNCT	PUNCT
+forventer	VERB	VERB
+jeg	PRON	PRON
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Brøndbys	PROPN	PROPN
+ledelse	NOUN	NOUN
+vil	AUX	AUX
+"	PUNCT	PUNCT
+forgylde	VERB	VERB
+"	PUNCT	PUNCT
+mig	PRON	PRON
+på	ADP	ADP
+en	DET	DET
+måde	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+i	ADP	ADP
+hvert	DET	DET
+fald	NOUN	NOUN
+delvis	ADV	ADV
+vil	AUX	AUX
+kunne	AUX	AUX
+konkurrere	VERB	VERB
+med	ADP	ADP
+de	DET	DET
+penge	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+jeg	PRON	PRON
+ellers	ADV	ADV
+skulle	AUX	AUX
+have	AUX	AUX
+skrabet	VERB	VERB
+sammen	ADV	ADV
+i	ADP	ADP
+udlandet	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+På	ADP	ADP
+linie	NOUN	NOUN
+med	ADP	ADP
+de	DET	DET
+fleste	ADJ	ADJ
+af	ADP	ADP
+omklædningsrummets	NOUN	NOUN
+øvrige	ADJ	ADJ
+festberuste	ADJ	NOUN
+Brøndby'ere	NOUN	PROPN
+var	AUX	AUX
+Bjarne	PROPN	PROPN
+Jensen	PROPN	PROPN
+villig	ADJ	ADJ
+til	ADP	ADP
+at	PART	PART
+indrømme	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Superliga-finalen	NOUN	NOUN
+aldrig	ADV	ADV
+rigtig	ADV	ADV
+formåede	VERB	VERB
+at	PART	PART
+fænge	VERB	VERB
+rent	ADV	ADV
+underholdningsmæssigt	ADV	ADV
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Vi	PRON	PRON
+skal	AUX	AUX
+slutte	VERB	VERB
+ballet	NOUN	NOUN
+for	ADP	ADP
+Lyngby	PROPN	PROPN
+allerede	ADV	ADV
+i	ADP	ADP
+første	ADJ	ADJ
+halvleg	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+selv	ADV	ADV
+om	ADP	ADP
+vi	PRON	PRON
+fra	ADP	ADP
+starten	NOUN	NOUN
+havde	VERB	VERB
+i	ADP	ADP
+baghovedet	NOUN	NOUN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+vi	PRON	PRON
+burde	AUX	AUX
+ku'	AUX	AUX
+trille	VERB	VERB
+den	DET	DET
+kamp	NOUN	NOUN
+hjem	ADV	ADV
+,	PUNCT	PUNCT
+fik	VERB	VERB
+vi	PRON	PRON
+aldrig	ADV	ADV
+nogen	DET	DET
+ordentlig	ADJ	ADJ
+styring	NOUN	NOUN
+på	ADP	ADP
+midtbanen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+At	SCONJ	SCONJ
+Emeka	PROPN	PROPN
+Ezeugo	PROPN	PROPN
+går	VERB	VERB
+hen	ADV	ADV
+og	CONJ	CONJ
+dummer	VERB	VERB
+sig	PRON	PRON
+både	ADV	ADV
+på	ADP	ADP
+egne	ADJ	ADJ
+og	CONJ	CONJ
+hans	PRON	DET
+kollegers	NOUN	NOUN
+vegne	NOUN	NOUN
+,	PUNCT	PUNCT
+er	AUX	AUX
+både	ADV	ADV
+uheldigt	ADJ	ADJ
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+også	ADV	ADV
+temmelig	ADV	ADV
+dumt	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Jeg	PRON	PRON
+er	AUX	AUX
+sikker	ADJ	ADJ
+på	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+samme	ADJ	ADJ
+dumhed	NOUN	NOUN
+hos	ADP	ADP
+os	PRON	PRON
+ville	AUX	AUX
+have	AUX	AUX
+kostet	VERB	VERB
+synderen	NOUN	NOUN
+en	DET	DET
+klækkelig	ADJ	ADJ
+bøde	NOUN	NOUN
+!	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Steen	PROPN	PROPN
+Uno	PROPN	PROPN
+
+Alle	ADJ	ADJ
+ville	AUX	AUX
+ha'	VERB	VERB
+fat	ADV	ADV
+i	ADP	ADP
+Brøndbys	PROPN	PROPN
+500-kampsjubilar	NOUN	NOUN
+Bjarne	PROPN	PROPN
+Jensen	PROPN	PROPN
+efter	ADP	ADP
+kampen	NOUN	NOUN
+i	ADP	ADP
+Lyngby	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Foto	NOUN	NOUN
+:	PUNCT	PUNCT
+Palle	PROPN	PROPN
+Hedemann	PROPN	PROPN
+
+På	ADP	ADP
+samme	ADJ	ADJ
+tidspunkt	NOUN	NOUN
+-	PUNCT	PUNCT
+i	ADP	ADP
+tidsrummet	NOUN	NOUN
+mellem	ADP	ADP
+klokken	NOUN	NOUN
+11.50	NUM	NUM
+og	CONJ	CONJ
+12.50	NUM	NUM
+den	DET	DET
+12.	ADJ	ADJ
+december	NOUN	NOUN
+81	NUM	NUM
+-	PUNCT	PUNCT
+skulle	AUX	AUX
+Ove	PROPN	PROPN
+Hansen	PROPN	PROPN
+nemlig	ADV	ADV
+ifølge	ADP	ADP
+politiet	NOUN	NOUN
+have	AUX	AUX
+dræbt	VERB	VERB
+sin	DET	DET
+kone	NOUN	NOUN
+og	CONJ	CONJ
+skaffet	VERB	VERB
+sig	PRON	PRON
+af	ADV	ADV
+med	ADP	ADP
+liget	NOUN	NOUN
+ved	ADP	ADP
+at	PART	PART
+kaste	VERB	VERB
+det	PRON	PRON
+i	ADP	ADP
+havnen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Alligevel	ADV	ADV
+blev	AUX	AUX
+oplysningen	NOUN	NOUN
+aldrig	ADV	ADV
+skrevet	VERB	VERB
+ned	ADV	ADV
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+fastslog	VERB	VERB
+DR-Dokumentar	PROPN	NOUN
+gruppen	NOUN	NOUN
+i	ADP	ADP
+sin	DET	DET
+sønderlemmende	VERB	ADJ
+kritik	NOUN	NOUN
+af	ADP	ADP
+Frederikshavns	PROPN	PROPN
+politis	NOUN	ADJ
+efterforskningsarbejde	NOUN	NOUN
+i	ADP	ADP
+Pedal-Ove-sagen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Rapporten	NOUN	NOUN
+med	ADP	ADP
+nummeret	NOUN	NOUN
+0-22	NUM	NUM
+fik	VERB	VERB
+Jane	PROPN	PROPN
+Nielsen	PROPN	PROPN
+aldrig	ADV	ADV
+forelagt	VERB	VERB
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+TVs	NOUN	PROPN
+Sten	PROPN	PROPN
+Baadsgaard	PROPN	PROPN
+viste	VERB	VERB
+hende	PRON	PRON
+den	PRON	PRON
+før	ADP	ADP
+interviewet	NOUN	NOUN
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+efter	ADP	ADP
+aftale	NOUN	NOUN
+skulle	AUX	AUX
+hun	PRON	PRON
+på	ADP	ADP
+skærmen	NOUN	NOUN
+lade	VERB	VERB
+som	ADV	ADP
+om	ADP	ADP
+,	PUNCT	PUNCT
+hun	PRON	PRON
+ikke	ADV	ADV
+havde	AUX	AUX
+set	VERB	VERB
+den	PRON	PRON
+før	ADV	ADV
+og	CONJ	CONJ
+spørge	VERB	VERB
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Hvor	ADV	ADV
+er	AUX	AUX
+anden	ADJ	ADJ
+del	NOUN	NOUN
+?	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Underforstået	ADV	NOUN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+der	ADV	ADV
+måtte	AUX	AUX
+mangle	VERB	VERB
+en	DET	DET
+side	NOUN	NOUN
+-	PUNCT	PUNCT
+den	PRON	PRON
+med	ADP	ADP
+hendes	DET	DET
+forklaring	NOUN	NOUN
+om	ADP	ADP
+Ove	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Afhørt	VERB	ADV
+under	ADP	ADP
+vidneansvar	NOUN	NOUN
+afviste	VERB	VERB
+kriminalassistent	NOUN	NOUN
+Villy	PROPN	PROPN
+Nielsen	PROPN	PROPN
+,	PUNCT	PUNCT
+Frederikshavn	PROPN	PROPN
+politi	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+sammen	ADV	ADV
+med	ADP	ADP
+kollegaen	NOUN	NOUN
+Frank	PROPN	PROPN
+B.	PROPN	PROPN
+Madsen	PROPN	PROPN
+foretog	VERB	VERB
+afhøringen	NOUN	NOUN
+den	DET	DET
+30.	ADJ	ADJ
+december	NOUN	NOUN
+1981	NUM	NUM
+af	ADP	ADP
+Jane	PROPN	PROPN
+Nielsen	PROPN	PROPN
+på	ADP	ADP
+hendes	DET	DET
+bopæl	NOUN	NOUN
+under	ADP	ADP
+overværelse	NOUN	NOUN
+af	ADP	ADP
+hendes	DET	DET
+mand	NOUN	NOUN
+,	PUNCT	PUNCT
+imidlertid	ADV	ADV
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+hun	PRON	PRON
+skulle	AUX	AUX
+have	AUX	AUX
+nævnt	VERB	VERB
+noget	PRON	PRON
+om	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+hun	PRON	PRON
+så	VERB	ADV
+Ove	PROPN	VERB
+på	ADP	ADP
+drabsdagen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Min	DET	DET
+far	NOUN	NOUN
+har	AUX	AUX
+stukket	VERB	VERB
+sin	DET	DET
+tissemand	NOUN	NOUN
+op	ADV	ADV
+i	ADP	ADP
+mig	PRON	PRON
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+meddelte	VERB	VERB
+en	DET	DET
+åndssvag	ADJ	NOUN
+pige	NOUN	NOUN
+via	ADP	ADP
+staveplade	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+det	PRON	PRON
+resulterede	VERB	VERB
+i	ADP	ADP
+en	DET	DET
+politianmeldelse	NOUN	NOUN
+mod	ADP	ADP
+de	DET	DET
+uskyldige	ADJ	ADJ
+forældre	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Forældrene	NOUN	NOUN
+blev	AUX	AUX
+heller	ADV	ADV
+ikke	ADV	ADV
+dømt	VERB	VERB
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+måtte	VERB	VERB
+igennem	ADP	ADP
+en	DET	DET
+opslidende	ADJ	ADJ
+sag	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Rapporten	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+har	AUX	AUX
+kostet	VERB	VERB
+800.000	NUM	NUM
+,	PUNCT	PUNCT
+er	AUX	AUX
+bestilt	VERB	VERB
+og	CONJ	CONJ
+betalt	VERB	VERB
+af	ADP	ADP
+Københavns	PROPN	PROPN
+Amtsråd	NOUN	NOUN
+efter	ADP	ADP
+en	DET	DET
+voldsom	ADJ	ADJ
+debat	NOUN	NOUN
+om	ADP	ADP
+,	PUNCT	PUNCT
+hvorvidt	SCONJ	SCONJ
+stavepladen	NOUN	NOUN
+var	AUX	AUX
+fup	NOUN	ADJ
+eller	CONJ	CONJ
+et	DET	DET
+værdifuldt	ADJ	ADJ
+middel	NOUN	NOUN
+til	ADP	ADP
+at	PART	PART
+kommunikere	VERB	VERB
+med	ADP	ADP
+de	DET	DET
+såkaldt	ADV	ADV
+"	PUNCT	PUNCT
+vidtgående	ADV	ADV
+fysisk	ADV	ADJ
+og	CONJ	CONJ
+psykisk	ADV	ADV
+handicappede	ADJ	ADJ
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+MED	ADP	ADP
+FØRT	VERB	ADJ
+HÅND	NOUN	NOUN
+
+Brugen	NOUN	NOUN
+af	ADP	ADP
+staveplader	NOUN	NOUN
+begyndte	VERB	VERB
+i	ADP	ADP
+M-huset	NOUN	NOUN
+i	ADP	ADP
+Københavns	PROPN	PROPN
+Amts	NOUN	NOUN
+sygehusafdeling	NOUN	NOUN
+for	ADP	ADP
+multihandicappede	ADJ	NOUN
+,	PUNCT	PUNCT
+Vangedehuse	PROPN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+bredte	VERB	VERB
+sig	PRON	PRON
+efterhånden	ADV	ADV
+til	ADP	ADP
+andre	DET	DET
+institutioner	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Amtet	NOUN	NOUN
+skønner	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+op	ADV	ADV
+mod	ADP	ADP
+100	NUM	NUM
+handicappede	ADJ	ADJ
+har	AUX	AUX
+brugt	VERB	VERB
+eller	CONJ	CONJ
+bruger	VERB	VERB
+staveplader	NOUN	NOUN
+.	PUNCT	PUNCT
+
+De	DET	DET
+handicappede	ADJ	ADJ
+,	PUNCT	PUNCT
+der	PRON	PRON
+ikke	ADV	ADV
+har	AUX	VERB
+noget	DET	DET
+sprog	NOUN	NOUN
+,	PUNCT	PUNCT
+sidder	VERB	VERB
+sammen	ADV	ADV
+med	ADP	ADP
+to	NUM	NUM
+eller	CONJ	CONJ
+flere	ADJ	ADJ
+pædagoger	NOUN	NOUN
+over	ADV	ADV
+for	ADP	ADP
+stavepladen	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+består	VERB	VERB
+af	ADP	ADP
+alfabetet	NOUN	NOUN
+og	CONJ	CONJ
+nogle	DET	PRON
+få	ADJ	VERB
+andre	DET	DET
+symboler	NOUN	NOUN
+.	PUNCT	PUNCT
+
+For	ADP	ADP
+at	PART	PART
+give	VERB	VERB
+støtte	NOUN	NOUN
+fører	VERB	VERB
+en	DET	DET
+pædagog	NOUN	NOUN
+den	DET	DET
+handicappedes	ADJ	ADJ
+hånd	NOUN	NOUN
+over	ADP	ADP
+stavepladen	NOUN	NOUN
+,	PUNCT	PUNCT
+indtil	SCONJ	SCONJ
+klienten	NOUN	NOUN
+peger	VERB	VERB
+på	ADP	ADP
+et	DET	DET
+tegn	NOUN	NOUN
+på	ADP	ADP
+pladen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Jeg	PRON	PRON
+har	AUX	AUX
+ikke	ADV	ADV
+set	VERB	VERB
+større	ADJ	ADJ
+udvalg	NOUN	NOUN
+af	ADP	ADP
+sko	NOUN	NOUN
+i	ADP	ADP
+denne	DET	DET
+specielle	ADJ	ADJ
+stil	NOUN	NOUN
+uden	ADV	ADV
+for	ADP	ADP
+Paris	PROPN	PROPN
+og	CONJ	CONJ
+London	PROPN	PROPN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+dejlige	ADJ	ADJ
+damer	NOUN	NOUN
+allerede	ADV	ADV
+kravlede	VERB	VERB
+op	ADV	ADV
+på	ADP	ADP
+plateau'erne	NOUN	NOUN
+i	ADP	ADP
+vinterkulden	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Sarah-langben-Koch	PROPN	NOUN
+viser	VERB	VERB
+60'ere	NOUN	NOUN
+for	ADP	ADP
+B.T.	PROPN	PROPN
+i	ADP	ADP
+dag	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+jeg	PRON	PRON
+garanterer	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+sko	NOUN	NOUN
+stilen	NOUN	NOUN
+så	ADV	ADV
+længe	ADV	ADV
+det	DET	DET
+unikke	ADJ	ADJ
+varelager	NOUN	NOUN
+haves	VERB	NOUN
+fås	VERB	VERB
+fra	ADP	ADP
+str.	NOUN	NOUN
+36	NUM	NUM
+til	ADP	ADP
+41	NUM	NUM
+-	PUNCT	PUNCT
+eller	CONJ	CONJ
+i	ADP	ADP
+hvert	DET	DET
+fald	NOUN	NOUN
+til	ADP	ADP
+str.	NOUN	NOUN
+40	NUM	NUM
+.	PUNCT	PUNCT
+
+Flot	ADJ	ADV
+
+Tøjet	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+også	ADV	ADV
+nok	ADV	ADV
+skal	AUX	AUX
+kunne	AUX	AUX
+gøre	VERB	VERB
+en	PRON	DET
+og	CONJ	CONJ
+anden	PRON	DET
+vild	ADJ	ADJ
+i	ADP	ADP
+varmen	NOUN	NOUN
+,	PUNCT	PUNCT
+hvis	SCONJ	SCONJ
+den	PRON	PRON
+kommer	VERB	VERB
+,	PUNCT	PUNCT
+er	VERB	VERB
+fra	ADP	ADP
+samme	ADJ	ADJ
+butik	NOUN	NOUN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+lak	NOUN	ADJ
+pandebånd	NOUN	NOUN
+i	ADP	ADP
+mange	ADJ	ADJ
+farver	NOUN	NOUN
+koster	VERB	VERB
+49	NUM	NUM
+kr.	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Psykedelisk-mønstret	ADJ	NOUN
+klokkehat	NOUN	NOUN
+149	NUM	NUM
+kr.	NOUN	NOUN
+og	CONJ	CONJ
+Marilyn	PROPN	PROPN
+Monroe	PROPN	PROPN
+badedragt	NOUN	VERB
+i	ADP	ADP
+kulørt	ADJ	NOUN
+Lycra	NOUN	PROPN
+med	ADP	ADP
+Marilyn	PROPN	PROPN
+fotografier	NOUN	NOUN
+på	ADP	ADP
+numsen	NOUN	NOUN
+299	NUM	NUM
+kr.	NOUN	NOUN
+-	PUNCT	PUNCT
+som	ADP	ADP
+også	ADV	ADV
+er	AUX	AUX
+prisen	NOUN	NOUN
+for	ADP	ADP
+mange	ADJ	ADJ
+af	ADP	ADP
+husets	NOUN	NOUN
+andre	DET	DET
+badedragter	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Sællerter	NOUN	NOUN
+
+Nedslidte	ADJ	PROPN
+Levi's	PROPN	PROPN
+jeans	NOUN	NOUN
+til	ADP	ADP
+snøre-støvletter	NOUN	NOUN
+fra	ADP	ADP
+dengang	SCONJ	ADV
+mor	NOUN	NOUN
+var	AUX	AUX
+ung	ADJ	ADJ
+koster	VERB	NOUN
+399	NUM	NUM
+kr.	NOUN	NOUN
+-	PUNCT	PUNCT
+støvletterne	NOUN	NOUN
+499	NUM	NUM
+kr.	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Ruskindssko	NOUN	NOUN
+med	ADP	ADP
+smalle	ADJ	ADJ
+remme	NOUN	NOUN
+koster	VERB	VERB
+499	NUM	NUM
+kr.	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+gør	VERB	VERB
+røde	ADJ	ADJ
+ruskindssko	NOUN	NOUN
+med	ADP	ADP
+ankelremme	NOUN	NOUN
+også	ADV	ADV
+,	PUNCT	PUNCT
+li'som	ADV	ADV
+op-art	X	ADJ
+lak	NOUN	NOUN
+i	ADP	ADP
+sort	ADJ	ADJ
+med	ADP	ADP
+hvid	ADJ	ADJ
+hæl	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+der	ADV	ADV
+er	VERB	VERB
+et	DET	DET
+par	NOUN	NOUN
+hundrede	NOUN	NOUN
+at	PART	PART
+spare	VERB	VERB
+på	ADP	ADP
+andre	PRON	PRON
+af	ADP	ADP
+sko-modens	NOUN	NOUN
+sællerter	NOUN	NOUN
+hos	ADP	ADP
+Eddie	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Flere	ADJ	ADJ
+gange	NOUN	NOUN
+har	AUX	AUX
+Brian	PROPN	PROPN
+Sand	PROPN	PROPN
+været	AUX	AUX
+ledsaget	VERB	VERB
+af	ADP	ADP
+sin	DET	DET
+hund	NOUN	NOUN
+,	PUNCT	PUNCT
+når	SCONJ	SCONJ
+turen	NOUN	NOUN
+gik	VERB	VERB
+til	ADP	ADP
+Polen	PROPN	PROPN
+for	ADP	ADP
+at	PART	PART
+stå	VERB	VERB
+på	ADP	ADP
+ski	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+der	ADV	ADV
+vakte	VERB	VERB
+hunden	NOUN	NOUN
+også	ADV	ADV
+opsigt	NOUN	NOUN
+,	PUNCT	PUNCT
+blandt	ADP	ADP
+andet	PRON	PRON
+fordi	SCONJ	SCONJ
+Brian	PROPN	PROPN
+iklædte	VERB	VERB
+den	PRON	DET
+halstørklæde	NOUN	NOUN
+og	CONJ	CONJ
+en	DET	DET
+gammel	ADJ	ADJ
+vindjakke	NOUN	NOUN
+med	ADP	ADP
+opsmøgede	ADJ	VERB
+ærmer	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Dels	ADV	ADV
+for	ADP	ADP
+at	SCONJ	SCONJ
+den	PRON	PRON
+ikke	ADV	ADV
+skulle	AUX	AUX
+fryse	VERB	VERB
+,	PUNCT	PUNCT
+dels	ADV	ADV
+for	ADP	ADP
+at	PART	PART
+mildne	VERB	VERB
+det	DET	DET
+lidt	ADV	ADV
+voldsomme	ADJ	ADJ
+udseende	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+hunden	NOUN	NOUN
+elskede	VERB	VERB
+at	PART	PART
+fare	VERB	VERB
+efter	ADP	ADP
+familien	NOUN	NOUN
+på	ADP	ADP
+ski	NOUN	NOUN
+ned	ADV	ADV
+ad	ADP	ADP
+bakkerne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+LIGNER	VERB	VERB
+EN	DET	DET
+GRIS	NOUN	NOUN
+
+"	PUNCT	PUNCT
+Der	PRON	PRON
+er	VERB	VERB
+tit	ADV	ADV
+nogle	PRON	PRON
+,	PUNCT	PUNCT
+der	PRON	PRON
+siger	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+hunden	NOUN	NOUN
+ligner	VERB	VERB
+en	DET	DET
+gris	NOUN	NOUN
+,	PUNCT	PUNCT
+tapir	NOUN	NOUN
+eller	CONJ	CONJ
+har	VERB	VERB
+mund	NOUN	NOUN
+som	ADP	ADP
+en	DET	DET
+haj	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Så	ADV	ADV
+for	ADP	ADP
+at	PART	PART
+mildne	VERB	VERB
+det	DET	DET
+bastante	ADJ	ADJ
+udseende	NOUN	NOUN
+og	CONJ	CONJ
+tage	VERB	VERB
+brodden	NOUN	NOUN
+af	ADP	ADP
+eventuelle	ADJ	ADJ
+aggressioner	NOUN	NOUN
+,	PUNCT	PUNCT
+kalder	VERB	VERB
+jeg	PRON	PRON
+altid	ADV	ADV
+den	DET	DET
+forhåndenværende	ADJ	ADJ
+hund	NOUN	NOUN
+Pølse	NOUN	PROPN
+,	PUNCT	PUNCT
+når	SCONJ	SCONJ
+vi	PRON	PRON
+møder	VERB	VERB
+fremmede	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+fremkalder	VERB	VERB
+smil	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+de	PRON	PRON
+er	AUX	AUX
+jo	ADV	ADV
+smukke	ADJ	ADJ
+-	PUNCT	PUNCT
+ikke	ADV	ADV
+grimme	ADJ	ADJ
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Brian	PROPN	PROPN
+Sand	PROPN	PROPN
+mindes	VERB	VERB
+en	DET	DET
+anden	DET	DET
+pudsig	ADJ	ADJ
+episode	NOUN	NOUN
+angående	ADP	VERB
+bull	X	NOUN
+terrierens	NOUN	NOUN
+udseende	NOUN	NOUN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+I	ADP	ADP
+en	DET	DET
+strøgbutik	NOUN	NOUN
+mødte	VERB	VERB
+jeg	PRON	PRON
+en	DET	DET
+lille	ADJ	ADJ
+dreng	NOUN	NOUN
+,	PUNCT	PUNCT
+der	ADV	ADV
+næppe	ADV	ADV
+var	AUX	AUX
+højere	ADJ	ADJ
+end	ADP	ADP
+hunden	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Se	VERB	VERB
+mor	NOUN	NOUN
+,	PUNCT	PUNCT
+er	AUX	AUX
+den	PRON	PRON
+ikke	ADV	ADV
+sød	ADJ	ADJ
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+læspede	VERB	VERB
+han	PRON	PRON
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+syntes	VERB	VERB
+mor	NOUN	NOUN
+ikke	ADV	ADV
+,	PUNCT	PUNCT
+hun	PRON	PRON
+så	VERB	VERB
+den	DET	DET
+anden	DET	DET
+vej	NOUN	NOUN
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+han	PRON	PRON
+trak	VERB	VERB
+hende	PRON	PRON
+i	ADP	ADP
+frakken	NOUN	NOUN
+og	CONJ	CONJ
+fortsatte	VERB	VERB
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Se	VERB	DET
+mor	NOUN	NOUN
+,	PUNCT	PUNCT
+den	PRON	PRON
+ligner	VERB	VERB
+en	DET	DET
+hund	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Han	PRON	PRON
+skulle	AUX	AUX
+blive	AUX	AUX
+72	NUM	NUM
+år	NOUN	NOUN
+,	PUNCT	PUNCT
+inden	SCONJ	SCONJ
+han	PRON	PRON
+fik	VERB	VERB
+sit	DET	DET
+gennembrud	NOUN	NOUN
+hos	ADP	ADP
+det	DET	DET
+brede	ADJ	ADJ
+publikum	NOUN	NOUN
+med	ADP	ADP
+albummet	NOUN	NOUN
+"	PUNCT	PUNCT
+The	PROPN	PROPN
+Healer	PROPN	PROPN
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+Hans	DET	DET
+navn	NOUN	NOUN
+er	AUX	AUX
+John	PROPN	PROPN
+Lee	PROPN	PROPN
+Hooker	PROPN	PROPN
+,	PUNCT	PUNCT
+født	VERB	VERB
+22.	ADJ	ADJ
+august	NOUN	NOUN
+1917	NUM	NUM
+i	ADP	ADP
+bluesmusikkens	NOUN	NOUN
+hjemstat	NOUN	ADJ
+Mississippi	PROPN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+nok	ADV	ADV
+fik	VERB	VERB
+han	PRON	PRON
+først	ADV	ADV
+det	DET	DET
+afgørende	ADJ	ADJ
+gennembrud	NOUN	NOUN
+i	ADP	ADP
+1989	NUM	NUM
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+han	PRON	PRON
+fik	VERB	VERB
+en	DET	DET
+Grammy	PROPN	PROPN
+for	ADP	ADP
+"	PUNCT	PUNCT
+The	PROPN	PROPN
+Healer	PROPN	PROPN
+"	PUNCT	PUNCT
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+elskere	NOUN	NOUN
+af	ADP	ADP
+eksempelvis	ADV	NOUN
+Johnny	PROPN	PROPN
+Winter	PROPN	PROPN
+,	PUNCT	PUNCT
+Status	PROPN	PROPN
+Quo	PROPN	NOUN
+,	PUNCT	PUNCT
+Animals	PROPN	PROPN
+,	PUNCT	PUNCT
+Georgia	PROPN	PROPN
+Satellites	PROPN	PROPN
+,	PUNCT	PUNCT
+ZZ	PROPN	PROPN
+Top	PROPN	PROPN
+,	PUNCT	PUNCT
+The	PROPN	PROPN
+Black	PROPN	PROPN
+Crowes	PROPN	PROPN
+og	CONJ	CONJ
+Rolling	PROPN	PROPN
+Stones'	PROPN	PROPN
+guitarist	NOUN	NOUN
+Keith	PROPN	PROPN
+Richards	PROPN	PROPN
+kan	AUX	AUX
+roligt	ADV	ADV
+lige	ADV	ADV
+nu	ADV	ADV
+kaste	VERB	VERB
+sig	PRON	PRON
+i	ADP	ADP
+støvet	NOUN	NOUN
+og	CONJ	CONJ
+takke	VERB	VERB
+inderligt	ADV	ADV
+og	CONJ	CONJ
+intenst	ADV	ADV
+for	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+John	PROPN	PROPN
+Lee	PROPN	PROPN
+Hooker	PROPN	PROPN
+kom	VERB	VERB
+til	ADP	ADP
+verden	NOUN	NOUN
+dengang	ADV	ADV
+i	ADP	ADP
+1917	NUM	NUM
+.	PUNCT	PUNCT
+
+John	PROPN	PROPN
+Lee	PROPN	PROPN
+Hookers	PROPN	PROPN
+indflydelse	NOUN	NOUN
+på	ADP	ADP
+andre	DET	DET
+musikere	NOUN	NOUN
+som	ADP	ADP
+sanger	NOUN	NOUN
+og	CONJ	CONJ
+især	ADV	ADV
+som	ADP	ADP
+guitarist	NOUN	NOUN
+har	AUX	AUX
+været	AUX	AUX
+intet	DET	DET
+mindre	ADJ	ADJ
+end	ADP	ADP
+monumental	ADJ	NOUN
+.	PUNCT	PUNCT
+
+Lee	PROPN	PROPN
+Hooker	PROPN	PROPN
+opfandt	VERB	VERB
+den	DET	DET
+sejt	ADV	ADJ
+,	PUNCT	PUNCT
+swingende	ADJ	ADJ
+boogie-guitarstil	NOUN	NOUN
+,	PUNCT	PUNCT
+som	ADP	ADP
+Keith	PROPN	PROPN
+Richards	PROPN	PROPN
+og	CONJ	CONJ
+guitaristerne	NOUN	NOUN
+Francis	PROPN	PROPN
+Rossi	PROPN	PROPN
+og	CONJ	CONJ
+Rick	PROPN	PROPN
+Parfitt	PROPN	PROPN
+i	ADP	ADP
+Status	PROPN	PROPN
+Quo	PROPN	NOUN
+har	AUX	AUX
+levet	VERB	VERB
+fedt	ADV	VERB
+og	CONJ	CONJ
+fremragende	ADV	ADJ
+af	ADP	ADP
+gennem	ADP	ADP
+fire	NUM	NUM
+årtier	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+hvad	PRON	PRON
+mere	ADJ	ADV
+er	VERB	AUX
+:	PUNCT	PUNCT
+han	PRON	PRON
+opfandt	VERB	VERB
+stilen	NOUN	NOUN
+allerede	ADV	ADV
+først	ADV	ADV
+i	ADP	ADP
+40'erne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Dansk	ADJ	ADJ
+kultur	NOUN	NOUN
+skal	AUX	AUX
+skabes	VERB	VERB
+,	PUNCT	PUNCT
+forvaltes	VERB	VERB
+,	PUNCT	PUNCT
+plejes	VERB	NOUN
+og	CONJ	CONJ
+forkæles	VERB	NOUN
+af	ADP	ADP
+os	PRON	PRON
+danskere	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Den	PRON	PRON
+er	AUX	AUX
+vores	DET	DET
+egenart	NOUN	NOUN
+og	CONJ	CONJ
+livsstil	NOUN	ADJ
+.	PUNCT	PUNCT
+
+Det	DET	DET
+bedste	ADJ	ADJ
+vi	PRON	PRON
+har	AUX	AUX
+.	PUNCT	PUNCT
+
+I	ADP	ADP
+debatten	NOUN	NOUN
+tordnes	VERB	VERB
+der	ADV	ADV
+løs	ADV	ADV
+mod	ADP	ADP
+Det	DET	DET
+kgl.	ADJ	ADJ
+Teaters	NOUN	PROPN
+repertoire	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Filmfolket	NOUN	NOUN
+jamrer	VERB	VERB
+sig	PRON	PRON
+over	ADP	ADP
+manglende	VERB	VERB
+bevillinger	NOUN	NOUN
+,	PUNCT	PUNCT
+mens	SCONJ	SCONJ
+forfatterne	NOUN	NOUN
+flår	VERB	VERB
+hovedet	NOUN	NOUN
+af	ADP	ADP
+hinanden	PRON	PRON
+.	PUNCT	PUNCT
+
+Samtidig	ADV	ADV
+kvier	VERB	VERB
+vi	PRON	PRON
+os	PRON	PRON
+ved	ADP	ADP
+at	PART	PART
+købe	VERB	VERB
+for	ADV	ADP
+dyre	ADJ	ADJ
+bøger	NOUN	NOUN
+,	PUNCT	PUNCT
+svigter	VERB	VERB
+biograferne	NOUN	NOUN
+og	CONJ	CONJ
+ser	VERB	VERB
+TV	NOUN	NOUN
+i	ADP	ADP
+stedet	NOUN	NOUN
+for	ADP	ADP
+at	PART	PART
+gå	VERB	VERB
+i	ADP	ADP
+teatret	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	VERB	VERB
+der	ADV	ADV
+for	ADP	ADP
+så	ADV	ADV
+vidt	ADV	ADV
+ikke	ADV	ADV
+noget	DET	DET
+nyt	ADJ	ADJ
+i	ADP	ADP
+,	PUNCT	PUNCT
+bortset	VERB	VERB
+fra	ADP	ADP
+at	SCONJ	SCONJ
+kulturkrigen	NOUN	NOUN
+efterhånden	ADV	ADV
+har	AUX	AUX
+fået	VERB	VERB
+mere	ADJ	ADJ
+karakter	NOUN	NOUN
+af	ADP	ADP
+Røde-Kro-løjer	NOUN	NOUN
+end	ADP	ADP
+af	ADP	ADP
+seriøs	ADJ	ADJ
+debat	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Selvfølgelig	ADV	ADV
+har	VERB	VERB
+den	DET	DET
+barokke	ADJ	ADJ
+udnævnelse	NOUN	NOUN
+af	ADP	ADP
+en	DET	DET
+ny	ADJ	ADJ
+skuespilchef	NOUN	NOUN
+på	ADP	ADP
+Det	DET	DET
+Kgl.	ADJ	ADJ
+en	DET	DET
+vis	ADJ	ADJ
+underholdningsværdi	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+sladder	NOUN	NOUN
+er	VERB	AUX
+jo	ADV	ADV
+heller	ADV	ADV
+ikke	ADV	ADV
+at	PART	PART
+foragte	VERB	VERB
+i	ADP	ADP
+et	DET	DET
+provinsielt	ADJ	ADJ
+samfund	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	AUX	AUX
+den	DET	DET
+ene	ADJ	ADJ
+side	NOUN	NOUN
+af	ADP	ADP
+sagen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Den	PRON	PRON
+anden	PRON	PRON
+er	AUX	AUX
+så	ADV	VERB
+den	PRON	PRON
+,	PUNCT	PUNCT
+man	PRON	PRON
+aldrig	ADV	ADV
+taler	VERB	VERB
+om	ADP	ADP
+,	PUNCT	PUNCT
+nemlig	ADV	ADV
+dit	DET	DET
+og	CONJ	CONJ
+mit	DET	DET
+ansvar	NOUN	NOUN
+som	ADP	ADP
+almindelige	ADJ	ADJ
+kulturbrugere	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	AUX	AUX
+ikke	ADV	ADV
+god	ADJ	ADJ
+tone	NOUN	NOUN
+blandt	ADP	ADP
+os	PRON	PRON
+kulturformidlere	NOUN	ADJ
+at	PART	PART
+sige	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+publikum	NOUN	NOUN
+også	ADV	ADV
+har	VERB	VERB
+et	DET	DET
+ansvar	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+lad	VERB	VERB
+os	PRON	PRON
+slagte	VERB	VERB
+den	DET	DET
+hellige	ADJ	ADJ
+ko	NOUN	NOUN
+.	PUNCT	PUNCT
+
+DANSKE	ADJ	ADJ
+rockmusikere	NOUN	NOUN
+duer	VERB	VERB
+ikke	ADV	ADV
+til	ADP	ADP
+at	PART	PART
+sige	VERB	VERB
+fra	ADV	ADV
+,	PUNCT	PUNCT
+mener	VERB	VERB
+forfatteren	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+HVERKEN	ADV	NOUN
+digtende	VERB	ADV
+eller	CONJ	CONJ
+malende	VERB	VERB
+kunstnere	NOUN	NOUN
+ville	AUX	AUX
+stå	VERB	VERB
+model	NOUN	NOUN
+til	ADP	ADP
+en	DET	DET
+tilsvarende	ADJ	ADJ
+udgave	NOUN	NOUN
+af	ADP	ADP
+selvros	NOUN	NOUN
+og	CONJ	CONJ
+rygklapperi	NOUN	NOUN
+i	ADP	ADP
+medierne	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+skriver	VERB	VERB
+Anders	PROPN	PROPN
+Rou	PROPN	PROPN
+Jensen	PROPN	PROPN
+.	PUNCT	PUNCT
+
+MED	ADP	ADP
+adresse	NOUN	NOUN
+og	CONJ	CONJ
+postnummer	NOUN	NOUN
+til	ADP	ADP
+rockmusikerne	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+stiller	VERB	VERB
+op	ADV	ADV
+til	ADP	ADP
+interviews	NOUN	NOUN
+i	ADP	ADP
+TV	NOUN	NOUN
+og	CONJ	CONJ
+aviser	NOUN	NOUN
+med	ADP	ADP
+"	PUNCT	PUNCT
+den	DET	DET
+specielle	ADJ	ADJ
+form	NOUN	NOUN
+for	ADP	ADP
+hukommelsestab	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+går	VERB	VERB
+ud	ADV	ADV
+på	ADP	ADP
+at	PART	PART
+fremhæve	VERB	VERB
+netop	ADV	ADV
+den	DET	DET
+nyeste	ADJ	ADJ
+plade	NOUN	NOUN
+som	ADP	ADP
+den	DET	DET
+hidtil	ADV	ADV
+bedste	ADJ	ADJ
+,	PUNCT	PUNCT
+mest	ADV	ADV
+ærlige	ADJ	ADJ
+og	CONJ	CONJ
+oprigtige	ADJ	ADJ
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+MAN	PRON	PRON
+må	AUX	AUX
+kritisere	VERB	VERB
+det	DET	DET
+kuldslåede	ADJ	ADJ
+fornuftsægteskab	NOUN	NOUN
+med	ADP	ADP
+medierne	NOUN	NOUN
+og	CONJ	CONJ
+branchen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Den	DET	DET
+måde	NOUN	NOUN
+,	PUNCT	PUNCT
+hvorpå	ADV	ADV
+rocken	NOUN	NOUN
+sejrer	VERB	VERB
+sig	PRON	PRON
+til	ADP	ADP
+døde	NOUN	ADJ
+ved	ADP	ADP
+at	PART	PART
+vinde	VERB	VERB
+så	ADV	ADV
+megen	ADJ	ADJ
+overfladeopmærksomhed	NOUN	NOUN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+ingen	PRON	DET
+længere	ADV	ADV
+er	VERB	VERB
+i	ADP	ADP
+stand	NOUN	NOUN
+til	ADP	ADP
+overhovedet	ADV	ADV
+at	PART	PART
+huske	VERB	VERB
+,	PUNCT	PUNCT
+hvad	PRON	PRON
+der	ADV	ADV
+fra	ADP	ADP
+begyndelsen	NOUN	NOUN
+var	AUX	AUX
+målet	NOUN	VERB
+og	CONJ	CONJ
+meningen	NOUN	NOUN
+med	ADP	ADP
+musikken	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+skriver	VERB	VERB
+Jensen	PROPN	PROPN
+.	PUNCT	PUNCT
+
+DER	ADV	PRON
+er	VERB	AUX
+meget	ADV	ADV
+mere	ADJ	ADJ
+af	ADP	ADP
+samme	ADJ	ADJ
+skuffe	NOUN	NOUN
+i	ADP	ADP
+bogen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+VI	PRON	PRON
+citerer	VERB	VERB
+en	DET	DET
+sidste	ADJ	ADJ
+opsang	NOUN	NOUN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+ROCKMUSIK	NOUN	NOUN
+i	ADP	ADP
+Danmark	PROPN	PROPN
+defineres	VERB	VERB
+ved	ADP	ADP
+det	DET	DET
+navn	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	ADP
+på	ADP	ADP
+et	DET	DET
+givet	VERB	VERB
+tidspunkt	NOUN	NOUN
+via	ADP	ADP
+sit	DET	DET
+blikfang	NOUN	NOUN
+,	PUNCT	PUNCT
+sit	DET	DET
+privatliv	NOUN	NOUN
+og	CONJ	CONJ
+sin	DET	DET
+popularitet	NOUN	NOUN
+kan	AUX	AUX
+sælge	VERB	VERB
+flest	ADJ	ADJ
+aviser	NOUN	NOUN
+og	CONJ	CONJ
+trække	VERB	VERB
+flest	ADJ	ADJ
+seere	NOUN	NOUN
+til	ADP	ADP
+skærmen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+C.	PROPN	PROPN
+V.	PROPN	PROPN
+Jørgensen	PROPN	PROPN
+er	AUX	AUX
+altså	ADV	ADV
+en	DET	DET
+lousy	ADJ	ADJ
+rockmusiker	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+Anne	PROPN	PROPN
+Linnet	PROPN	PROPN
+-	PUNCT	PUNCT
+oh	INTJ	X
+la	INTJ	X
+la	INTJ	X
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Efter	ADP	ADV
+over	ADP	ADP
+en	DET	DET
+uges	NOUN	NOUN
+flugt	NOUN	NOUN
+fra	ADP	ADP
+politi	NOUN	NOUN
+og	CONJ	CONJ
+sociale	ADJ	ADJ
+myndigheder	NOUN	NOUN
+er	AUX	AUX
+den	DET	DET
+lille	ADJ	ADJ
+tre-årige	ADJ	ADJ
+Pernille	PROPN	NOUN
+atter	ADV	VERB
+helt	ADV	ADV
+legalt	ADV	ADV
+sammen	ADV	ADV
+med	ADP	ADP
+sin	DET	DET
+mor	NOUN	NOUN
+,	PUNCT	PUNCT
+Yvonne	PROPN	PROPN
+Sølyst	PROPN	PROPN
+,	PUNCT	PUNCT
+22	NUM	NUM
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+bedsteforældre	NOUN	NOUN
+,	PUNCT	PUNCT
+Ulla	PROPN	PROPN
+og	CONJ	CONJ
+Leif	PROPN	PROPN
+Nielsen	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Pernille	PROPN	NOUN
+får	VERB	VERB
+nemlig	ADV	ADV
+alligevel	ADV	ADV
+lov	NOUN	NOUN
+at	PART	PART
+bo	VERB	VERB
+hjemme	ADV	ADV
+hos	ADP	ADP
+sin	DET	DET
+mor	NOUN	NOUN
+,	PUNCT	PUNCT
+selvom	SCONJ	SCONJ
+Ejby	PROPN	PROPN
+kommune	NOUN	NOUN
+for	ADP	ADP
+en	DET	DET
+måned	NOUN	NOUN
+siden	ADV	ADV
+besluttede	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+hun	PRON	PRON
+skulle	AUX	AUX
+fjernes	VERB	VERB
+med	ADP	ADP
+tvang	NOUN	NOUN
+.	PUNCT	PUNCT
+
+I	ADP	ADP
+går	NOUN	NOUN
+omstødte	VERB	VERB
+Odense	PROPN	PROPN
+kommune	NOUN	NOUN
+kort	ADV	ADV
+og	CONJ	CONJ
+godt	ADV	ADV
+beslutningen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Vi	PRON	PRON
+vandt	VERB	VERB
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+Ejby	PROPN	PROPN
+kommune	NOUN	NOUN
+tabte	VERB	VERB
+kampen	NOUN	NOUN
+om	ADP	ADP
+Pernille	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+var	AUX	AUX
+sandelig	ADV	ADJ
+godt	ADJ	ADJ
+,	PUNCT	PUNCT
+vi	PRON	PRON
+ikke	ADV	ADV
+bare	ADV	ADV
+afleverede	VERB	VERB
+Pernille	PROPN	NOUN
+og	CONJ	CONJ
+opførte	VERB	VERB
+os	PRON	PRON
+som	ADP	ADP
+lovlydige	ADJ	ADJ
+borgere	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Leif	PROPN	PROPN
+Nielsen	PROPN	PROPN
+,	PUNCT	PUNCT
+43	NUM	NUM
+.	PUNCT	PUNCT
+
+I	ADP	ADP
+sidste	ADJ	ADJ
+uge	NOUN	NOUN
+sad	VERB	VERB
+bedstefaderen	NOUN	NOUN
+ellers	ADV	ADV
+to	NUM	NUM
+dage	NOUN	NOUN
+i	ADP	ADP
+Kolding	PROPN	PROPN
+arrest	NOUN	NOUN
+,	PUNCT	PUNCT
+efter	ADP	ADP
+at	PART	PART
+være	AUX	AUX
+blevet	AUX	AUX
+anholdt	VERB	VERB
+under	ADP	ADP
+mistanke	NOUN	NOUN
+for	ADP	ADP
+at	PART	PART
+vide	VERB	VERB
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+barnebarnet	NOUN	NOUN
+var	AUX	AUX
+skjult	VERB	ADJ
+for	ADP	ADP
+myndighederne	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+tre	NUM	NUM
+enige	ADJ	ADJ
+dommere	NOUN	NOUN
+i	ADP	ADP
+Østre	ADJ	ADJ
+Landsret	NOUN	NOUN
+underkendte	VERB	VERB
+hurtigt	ADV	ADV
+varetægtsfængslingen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+onsdag	NOUN	NOUN
+led	VERB	VERB
+det	DET	DET
+offentlige	ADJ	ADJ
+i	ADP	ADP
+Ejby	PROPN	PROPN
+altså	ADV	ADV
+endnu	ADV	ADV
+et	DET	DET
+nederlag	NOUN	NOUN
+i	ADP	ADP
+den	DET	DET
+meget	ADV	ADV
+debatterede	VERB	ADJ
+sag	NOUN	NOUN
+fra	ADP	ADP
+Fyn	PROPN	PROPN
+.	PUNCT	PUNCT
+
+På	ADP	ADP
+grund	NOUN	NOUN
+af	ADP	ADP
+Yvonne	PROPN	PROPN
+Sølysts	PROPN	PROPN
+nye	ADJ	ADJ
+adresse	NOUN	NOUN
+i	ADP	ADP
+Odense	PROPN	PROPN
+skulle	AUX	AUX
+børneværnet	NOUN	NOUN
+i	ADP	ADP
+byen	NOUN	NOUN
+afprøve	VERB	VERB
+tvangsfjernelsen	NOUN	NOUN
+ud	ADV	ADV
+fra	ADP	ADP
+det	DET	DET
+samme	ADJ	ADJ
+materiale	NOUN	NOUN
+,	PUNCT	PUNCT
+som	ADP	PRON
+socialudvalget	NOUN	NOUN
+i	ADP	ADP
+Ejby	PROPN	PROPN
+havde	AUX	AUX
+vurderet	VERB	VERB
+ud	ADV	ADV
+fra	ADP	ADP
+.	PUNCT	PUNCT
+
+Hun	PRON	PRON
+skal	AUX	AUX
+nu	ADV	ADV
+leve	VERB	VERB
+i	ADP	ADP
+adskillige	ADJ	ADJ
+måneder	NOUN	NOUN
+med	ADP	ADP
+frygten	NOUN	NOUN
+for	ADP	ADP
+at	PART	PART
+være	AUX	AUX
+blevet	AUX	AUX
+smittet	VERB	VERB
+med	ADP	ADP
+AIDS	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Hvad	PRON	PRON
+tror	VERB	VERB
+du	PRON	PRON
+,	PUNCT	PUNCT
+det	PRON	PRON
+betyder	VERB	VERB
+for	ADP	ADP
+en	DET	DET
+ung	ADJ	ADJ
+pige	NOUN	NOUN
+?	PUNCT	PUNCT
+
+Jeg	PRON	PRON
+håber	VERB	VERB
+,	PUNCT	PUNCT
+politiet	NOUN	NOUN
+fanger	VERB	VERB
+dig	PRON	PRON
+hurtigt	ADV	ADV
+,	PUNCT	PUNCT
+så	SCONJ	SCONJ
+du	PRON	PRON
+ikke	ADV	ADV
+når	VERB	VERB
+at	PART	PART
+krænke	VERB	VERB
+andre	DET	DET
+piger	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+måske	ADV	ADV
+ikke	ADV	ADV
+får	VERB	VERB
+samme	ADJ	ADJ
+familiemæssige	ADJ	ADJ
+støtte	NOUN	NOUN
+som	ADP	ADP
+min	DET	DET
+pige	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+derfor	ADV	ADV
+risikerer	VERB	VERB
+at	PART	PART
+knække	VERB	VERB
+helt	ADV	ADV
+sammen	ADV	ADV
+psykisk	ADV	ADV
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+har	AUX	AUX
+fået	VERB	VERB
+en	DET	DET
+utrolig	ADJ	ADJ
+opbakning	NOUN	NOUN
+fra	ADP	ADP
+både	ADV	ADV
+læger	NOUN	NOUN
+,	PUNCT	PUNCT
+politi	NOUN	NOUN
+,	PUNCT	PUNCT
+kommunalfolk	NOUN	NOUN
+,	PUNCT	PUNCT
+familie	NOUN	NOUN
+og	CONJ	CONJ
+bekendte	NOUN	VERB
+,	PUNCT	PUNCT
+så	SCONJ	SCONJ
+vi	PRON	PRON
+skal	AUX	AUX
+nok	ADV	ADV
+komme	VERB	VERB
+igennem	ADP	ADP
+denne	DET	DET
+forfærdelige	ADJ	ADJ
+oplevelse	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Er	AUX	AUX
+du	PRON	PRON
+klar	ADJ	ADJ
+over	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+det	PRON	PRON
+ikke	ADV	ADV
+kun	ADV	ADV
+er	AUX	AUX
+den	DET	DET
+unge	ADJ	ADJ
+pige	NOUN	NOUN
+du	PRON	PRON
+rammer	VERB	NOUN
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+i	ADP	ADP
+næsten	ADV	ADV
+lige	ADV	ADV
+så	ADV	ADV
+høj	ADJ	ADJ
+grad	NOUN	NOUN
+forældre	NOUN	NOUN
+og	CONJ	CONJ
+søskende	NOUN	VERB
+,	PUNCT	PUNCT
+bedsteforældre	NOUN	NOUN
+og	CONJ	CONJ
+skoleveninder	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+REJS	VERB	PROPN
+HJEM	ADV	PROPN
+IGEN	ADV	PROPN
+
+"	PUNCT	PUNCT
+Vort	DET	DET
+samfund	NOUN	NOUN
+er	AUX	AUX
+for	ADV	ADV
+godt	ADJ	ADJ
+til	ADP	ADP
+folk	NOUN	NOUN
+som	ADP	ADP
+dig	PRON	PRON
+.	PUNCT	PUNCT
+
+Rejs	VERB	PROPN
+tilbage	ADV	ADV
+hvor	ADV	ADV
+du	PRON	PRON
+kom	VERB	VERB
+fra	ADP	ADP
+,	PUNCT	PUNCT
+vi	PRON	PRON
+er	AUX	VERB
+nemlig	ADV	ADV
+ikke	ADV	ADV
+interesserede	VERB	VERB
+i	ADP	ADP
+at	PART	PART
+give	VERB	VERB
+ophold	NOUN	NOUN
+til	ADP	ADP
+personer	NOUN	NOUN
+som	ADP	ADP
+dig	PRON	PRON
+,	PUNCT	PUNCT
+der	PRON	PRON
+ikke	ADV	ADV
+kan	AUX	AUX
+indordne	VERB	VERB
+sig	PRON	PRON
+de	DET	DET
+aller	X	NOUN
+simpleste	ADJ	ADJ
+adfærdsnormer	NOUN	NOUN
+,	PUNCT	PUNCT
+nemlig	ADV	ADV
+respekten	NOUN	NOUN
+for	ADP	ADP
+hinanden	PRON	PRON
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+skriver	VERB	VERB
+faderen	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+slutter	VERB	VERB
+brevet	NOUN	NOUN
+sådan	ADV	ADV
+:	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Henning	PROPN	PROPN
+Dyremose	PROPN	PROPN
+er	AUX	AUX
+vores	DET	DET
+mand	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+er	AUX	AUX
+dygtig	ADJ	ADJ
+og	CONJ	CONJ
+sympatisk	ADJ	ADJ
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+om	SCONJ	SCONJ
+han	PRON	PRON
+er	AUX	AUX
+finansminister	NOUN	NOUN
+,	PUNCT	PUNCT
+eller	CONJ	CONJ
+det	PRON	PRON
+er	AUX	AUX
+Mogens	PROPN	PROPN
+Lykketoft	PROPN	PROPN
+fra	ADP	ADP
+Socialdemokratiet	NOUN	NOUN
+,	PUNCT	PUNCT
+svarer	VERB	VERB
+til	ADP	ADP
+forskellen	NOUN	NOUN
+mellem	ADP	ADP
+en	DET	DET
+Hof	PROPN	PROPN
+og	CONJ	CONJ
+en	DET	DET
+Tuborg	PROPN	PROPN
+.	PUNCT	PUNCT
+
+De	PRON	PRON
+har	VERB	VERB
+forskellig	ADJ	ADJ
+etikette	NOUN	NOUN
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+indholdet	NOUN	NOUN
+kommer	VERB	VERB
+fra	ADP	ADP
+samme	ADJ	ADJ
+kedel	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+har	AUX	AUX
+hidtil	ADV	ADV
+støttet	VERB	VERB
+Schlüter	PROPN	PROPN
+og	CONJ	CONJ
+vil	AUX	AUX
+fortsat	ADV	ADV
+gøre	VERB	VERB
+det	PRON	PRON
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+vil	AUX	AUX
+hellere	ADV	ADV
+have	VERB	VERB
+borgerlige	ADJ	ADJ
+regeringer	NOUN	NOUN
+end	ADP	ADP
+socialdemokratiske	ADJ	ADJ
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+KV-regeringen	NOUN	NOUN
+regerer	VERB	VERB
+helt	ADV	ADV
+på	ADP	ADP
+Socialdemokratiets	NOUN	NOUN
+nåde	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+har	VERB	AUX
+derfor	ADV	ADV
+få	ADJ	VERB
+stærke	ADJ	ADJ
+følelser	NOUN	NOUN
+specielt	ADV	ADV
+forbundet	VERB	VERB
+med	ADP	ADP
+at	PART	PART
+holde	VERB	VERB
+liv	NOUN	NOUN
+i	ADP	ADP
+den	DET	DET
+nuværende	ADJ	ADJ
+regering	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Fremskridtspartiets	NOUN	NOUN
+gruppeformand	NOUN	NOUN
+,	PUNCT	PUNCT
+Aage	PROPN	PROPN
+Brusgaard	PROPN	PROPN
+.	PUNCT	PUNCT
+
+I	ADP	ADP
+den	DET	DET
+situation	NOUN	NOUN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+Schlüter	PROPN	PROPN
+vælger	VERB	VERB
+at	PART	PART
+gå	VERB	VERB
+,	PUNCT	PUNCT
+vil	AUX	AUX
+Aage	PROPN	PROPN
+Brusgaard	PROPN	PROPN
+ikke	ADV	ADV
+pege	VERB	VERB
+på	ADP	ADP
+Dyremose	PROPN	PROPN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Sandsynligvis	ADV	ADV
+vil	AUX	AUX
+vi	PRON	PRON
+henholde	VERB	VERB
+os	PRON	PRON
+til	ADP	ADP
+en	DET	DET
+tidligere	ADJ	ADJ
+beslutning	NOUN	NOUN
+om	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+vi	PRON	PRON
+altid	ADV	ADV
+peger	VERB	VERB
+på	ADP	ADP
+lederen	NOUN	NOUN
+af	ADP	ADP
+det	DET	DET
+største	ADJ	ADJ
+borgerlige	ADJ	ADJ
+parti	NOUN	NOUN
+.	PUNCT	PUNCT
+
+SKARPERE	ADJ	ADJ
+PROFIL	NOUN	NOUN
+
+Men	CONJ	CONJ
+industriminister	NOUN	NOUN
+Anne	PROPN	PROPN
+Birgitte	PROPN	PROPN
+Lundholt	PROPN	PROPN
+kunne	AUX	AUX
+da	ADV	ADV
+være	AUX	AUX
+en	DET	DET
+mulighed	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Hun	PRON	PRON
+har	VERB	VERB
+gode	ADJ	ADJ
+holdninger	NOUN	NOUN
+,	PUNCT	PUNCT
+er	AUX	AUX
+flittig	ADJ	ADJ
+og	CONJ	CONJ
+ordholdende	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Hun	PRON	PRON
+kunne	AUX	AUX
+være	AUX	AUX
+en	DET	DET
+fin	ADJ	ADJ
+chef	NOUN	NOUN
+for	ADP	ADP
+en	DET	DET
+kommende	VERB	VERB
+borgerlig	ADJ	ADJ
+regering	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+dermed	ADV	ADV
+ville	AUX	AUX
+få	VERB	VERB
+en	DET	DET
+langt	ADV	ADV
+skarpere	ADJ	ADJ
+profil	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Aage	PROPN	PROPN
+Brusgaard	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Senere	ADV	ADV
+på	ADP	ADP
+dagen	NOUN	NOUN
+var	VERB	VERB
+der	ADV	ADV
+hold-tidskørsel	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+her	ADV	ADV
+triumferede	VERB	VERB
+Ariostea	PROPN	PROPN
+med	ADP	ADP
+sejr	NOUN	NOUN
+i	ADP	ADP
+41,23	NUM	NUM
+minut	NOUN	NOUN
+for	ADP	ADP
+36,5	NUM	NUM
+km.	NOUN	NOUN
+.	PUNCT	PUNCT
+
+På	ADP	ADP
+andenpladsen	NOUN	NOUN
+kom	VERB	VERB
+Castorama	PROPN	PROPN
+med	ADP	ADP
+Laurent	PROPN	PROPN
+Fignon	PROPN	PROPN
+og	CONJ	CONJ
+Bjarne	PROPN	PROPN
+Riis	PROPN	PROPN
+på	ADP	ADP
+41,31	NUM	NUM
+.	PUNCT	PUNCT
+
+Så	ADV	ADV
+fulgte	VERB	VERB
+Panasonic	PROPN	PROPN
+,	PUNCT	PUNCT
+PDM	PROPN	PROPN
+,	PUNCT	PUNCT
+Clas	PROPN	PROPN
+,	PUNCT	PUNCT
+Buckler	PROPN	PROPN
+og	CONJ	CONJ
+overraskende	VERB	VERB
+kun	ADV	ADV
+som	ADP	ADP
+nr.	NOUN	NOUN
+syv	NUM	NUM
+"	PUNCT	PUNCT
+Z	PROPN	PUNCT
+"	PUNCT	PUNCT
+med	ADP	ADP
+Lemond	PROPN	PROPN
+.	PUNCT	PUNCT
+
+De	DET	DET
+næste	ADJ	ADJ
+var	AUX	AUX
+Motorola	PROPN	PROPN
+,	PUNCT	PUNCT
+Gatorade-Chateau-d'Ax	PROPN	PROPN
+,	PUNCT	PUNCT
+Banesto	PROPN	PROPN
+og	CONJ	CONJ
+Amaya	PROPN	PROPN
+med	ADP	ADP
+Per	PROPN	PROPN
+Pedersen	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Man	PRON	PRON
+havde	AUX	AUX
+endda	ADV	ADV
+troet	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+TVM	PROPN	PROPN
+med	ADP	ADP
+Jesper	PROPN	PROPN
+Skibby	PROPN	PROPN
+kunne	AUX	AUX
+klare	VERB	VERB
+en	DET	DET
+topplacering	NOUN	NOUN
+,	PUNCT	PUNCT
+hvorved	ADV	ADV
+Skibby	PROPN	PROPN
+var	AUX	AUX
+kommet	VERB	VERB
+langt	ADV	ADV
+op	ADV	ADV
+i	ADP	ADP
+den	DET	DET
+samlede	VERB	VERB
+stilling	NOUN	NOUN
+,	PUNCT	PUNCT
+men	CONJ	CONJ
+holdet	NOUN	NOUN
+havde	VERB	VERB
+uheld	NOUN	NOUN
+og	CONJ	CONJ
+fandt	VERB	VERB
+aldrig	ADV	ADV
+rytmen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Mange	ADJ	ADJ
+havde	VERB	VERB
+uheld	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Alcala	PROPN	PROPN
+havde	VERB	VERB
+punktering	NOUN	NOUN
+efter	ADP	ADP
+fem	NUM	NUM
+kilometer	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+Greg	PROPN	PROPN
+Lemond	PROPN	PROPN
+punkterede	VERB	ADV
+efter	ADP	ADP
+kun	ADV	ADV
+10	NUM	NUM
+meters	NOUN	NOUN
+kørsel	NOUN	NOUN
+.	PUNCT	PUNCT
+
+DET	DET	PRON
+BITRE	ADJ	VERB
+STYRT	NOUN	ADV
+
+Ariostea-mandskabet	NOUN	NOUN
+fik	VERB	VERB
+melding	NOUN	NOUN
+om	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+de	PRON	PRON
+førte	VERB	VERB
+holdløbet	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+fik	VERB	VERB
+rytterne	NOUN	NOUN
+til	ADP	ADP
+at	PART	PART
+stramme	VERB	VERB
+den	PRON	PRON
+over	ADP	ADP
+evne	NOUN	NOUN
+i	ADP	ADP
+det	DET	DET
+sidste	ADJ	ADJ
+sving	NOUN	NOUN
+ca.	ADV	ADV
+700	NUM	NUM
+meter	NOUN	NOUN
+fra	ADP	ADP
+mål	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Her	ADV	ADV
+gled	VERB	VERB
+Rolf	PROPN	PROPN
+Sørensens	PROPN	PROPN
+baghjul	NOUN	NOUN
+,	PUNCT	PUNCT
+så	SCONJ	SCONJ
+han	PRON	PRON
+styrtede	VERB	VERB
+og	CONJ	CONJ
+rev	VERB	VERB
+både	ADV	ADV
+Moreno	PROPN	PROPN
+Argentin	PROPN	PROPN
+og	CONJ	CONJ
+Cassani	PROPN	PROPN
+med	ADV	ADV
+.	PUNCT	PUNCT
+
+Gennem	ADP	PROPN
+generationer	NOUN	NOUN
+er	AUX	AUX
+det	PRON	PRON
+blevet	AUX	AUX
+banket	VERB	VERB
+ind	ADV	ADV
+i	ADP	ADP
+hovederne	NOUN	NOUN
+på	ADP	ADP
+os	PRON	PRON
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+noget	PRON	PRON
+er	AUX	AUX
+kunst	NOUN	ADJ
+,	PUNCT	PUNCT
+seriøs	ADJ	ADJ
+musik	NOUN	NOUN
+og	CONJ	CONJ
+kultur	NOUN	NOUN
+-	PUNCT	PUNCT
+noget	PRON	PRON
+andet	PRON	PRON
+ikke	ADV	ADV
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+havde	AUX	AUX
+unægtelig	ADV	ADV
+været	AUX	AUX
+mere	ADV	ADV
+hensigtsmæssigt	ADJ	ADJ
+,	PUNCT	PUNCT
+om	SCONJ	SCONJ
+vi	PRON	PRON
+havde	AUX	AUX
+lært	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+kulturen	NOUN	NOUN
+har	VERB	VERB
+mange	ADJ	ADJ
+facetter	NOUN	NOUN
+,	PUNCT	PUNCT
+strækkende	VERB	VERB
+sig	PRON	PRON
+fra	ADP	ADP
+forsamlingshusene	NOUN	NOUN
+til	ADP	ADP
+de	DET	DET
+store	ADJ	ADJ
+scener	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Om	SCONJ	SCONJ
+vi	PRON	PRON
+havde	AUX	AUX
+lært	VERB	VERB
+at	PART	PART
+værdsætte	VERB	VERB
+os	PRON	PRON
+selv	PRON	PRON
+og	CONJ	CONJ
+hinanden	PRON	PRON
+,	PUNCT	PUNCT
+som	ADP	ADP
+mennesker	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+både	ADV	ADV
+har	VERB	VERB
+brug	NOUN	NOUN
+for	ADP	ADP
+bøger	NOUN	NOUN
+,	PUNCT	PUNCT
+blade	NOUN	NOUN
+,	PUNCT	PUNCT
+klassisk	ADJ	ADJ
+musik	NOUN	NOUN
+,	PUNCT	PUNCT
+pop	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Orientering	NOUN	NOUN
+"	PUNCT	PUNCT
+og	CONJ	CONJ
+"	PUNCT	PUNCT
+De	PRON	DET
+ringer	VERB	NOUN
+,	PUNCT	PUNCT
+vi	PRON	PRON
+spiller	VERB	VERB
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+For	CONJ	CONJ
+ingen	PRON	PRON
+af	ADP	ADP
+os	PRON	PRON
+er	AUX	AUX
+intellektuelle	ADJ	ADJ
+dyr	NOUN	NOUN
+hele	ADJ	ADJ
+døgnet	NOUN	NOUN
+rundt	ADV	ADV
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+har	VERB	VERB
+alle	ADJ	ADJ
+sammen	ADV	ADV
+brug	NOUN	NOUN
+for	ADP	ADP
+også	ADV	ADV
+at	PART	PART
+slappe	VERB	VERB
+af	ADV	ADV
+og	CONJ	CONJ
+lege	VERB	VERB
+,	PUNCT	PUNCT
+hvis	SCONJ	SCONJ
+vi	PRON	PRON
+skal	AUX	AUX
+vedblive	VERB	VERB
+at	PART	PART
+være	AUX	AUX
+hele	ADJ	ADJ
+mennesker	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Alligevel	ADV	ADV
+skal	AUX	AUX
+der	ADV	ADV
+kæmpes	VERB	VERB
+med	ADP	ADP
+næb	NOUN	NOUN
+og	CONJ	CONJ
+kløer	NOUN	NOUN
+,	PUNCT	PUNCT
+for	ADP	ADP
+at	PART	PART
+få	VERB	VERB
+meningsdannerne	NOUN	NOUN
+til	ADP	ADP
+at	PART	PART
+tage	VERB	VERB
+"	PUNCT	PUNCT
+det	DET	DET
+lette	ADJ	ADJ
+"	PUNCT	PUNCT
+alvorligt	ADV	ADV
+og	CONJ	CONJ
+behandle	VERB	VERB
+det	PRON	PRON
+som	ADP	ADP
+en	DET	DET
+fuldgyldig	ADJ	ADJ
+del	NOUN	NOUN
+af	ADP	ADP
+vort	DET	DET
+programudbud	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	AUX	AUX
+for	ADV	ADV
+dårligt	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Tiden	NOUN	NOUN
+har	AUX	AUX
+for	ADP	ADP
+længst	ADV	ADV
+været	AUX	AUX
+inde	ADV	ADV
+til	ADP	ADP
+at	PART	PART
+tale	VERB	VERB
+og	CONJ	CONJ
+skrive	VERB	VERB
+om	ADP	ADP
+underholdning	NOUN	NOUN
+som	ADP	ADP
+en	DET	DET
+vigtig	ADJ	ADJ
+del	NOUN	NOUN
+af	ADP	ADP
+vor	DET	DET
+fælles	ADJ	ADJ
+nutidskultur	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+fordomsfri	ADJ	NOUN
+bedømmelse	NOUN	NOUN
+af	ADP	ADV
+om	SCONJ	ADP
+den	PRON	PRON
+er	VERB	AUX
+professionelt	ADV	ADJ
+og	CONJ	CONJ
+ærligt	ADV	ADV
+udført	VERB	ADJ
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Det	PRON	PRON
+er	AUX	AUX
+et	DET	DET
+rent	ADJ	ADJ
+uheld	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+jeg	PRON	PRON
+ved	VERB	VERB
+ikke	ADV	ADV
+hvorfor	ADV	ADV
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Maskinchef	NOUN	NOUN
+på	ADP	ADP
+Ask	PROPN	PROPN
+var	AUX	AUX
+Ole	PROPN	PROPN
+Rønnow	PROPN	PROPN
+,	PUNCT	PUNCT
+som	ADP	ADP
+også	ADV	ADV
+var	AUX	AUX
+maskinchef	NOUN	NOUN
+på	ADP	ADP
+Peder	PROPN	PROPN
+Paars	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+har	AUX	AUX
+været	AUX	AUX
+med	ADV	ADV
+til	ADP	ADP
+over	ADV	ADV
+for	ADP	ADP
+DSB	PROPN	PROPN
+at	PART	PART
+fastslå	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+både	ADV	ADV
+Ask	PROPN	PROPN
+og	CONJ	CONJ
+Urd	PROPN	PROPN
+var	AUX	AUX
+gode	ADJ	ADJ
+skibe	NOUN	NOUN
+.	PUNCT	PUNCT
+
+DSBs	PROPN	PROPN
+omstridte	ADJ	VERB
+Kalundborg-Århus-rute	NOUN	NOUN
+forfølges	VERB	VERB
+af	ADP	ADP
+problemer	NOUN	NOUN
+:	PUNCT	PUNCT
+Urd	PROPN	NOUN
+måtte	AUX	AUX
+i	ADP	ADP
+går	NOUN	NOUN
+eftermiddags	NOUN	NOUN
+have	VERB	VERB
+Århus	PROPN	PROPN
+Havns	NOUN	PROPN
+bugserbåd	NOUN	NOUN
+,	PUNCT	PUNCT
+Hermes	PROPN	PROPN
+,	PUNCT	PUNCT
+til	ADP	ADP
+at	PART	PART
+skubbe	VERB	VERB
+sig	PRON	PRON
+fra	ADP	ADP
+reparationskaj	NOUN	NOUN
+til	ADP	ADP
+lastekaj	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Rutechef	NOUN	PROPN
+Ivan	PROPN	PROPN
+Madsen	PROPN	PROPN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+ved	VERB	VERB
+ikke	ADV	ADV
+hvorfor	ADV	ADV
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+det	PRON	PRON
+er	VERB	AUX
+nok	ADV	ADV
+,	PUNCT	PUNCT
+fordi	SCONJ	SCONJ
+det	PRON	PRON
+er	AUX	AUX
+den	DET	DET
+nemmeste	ADJ	ADJ
+måde	NOUN	NOUN
+at	PART	PART
+komme	VERB	VERB
+rundt	ADV	ADV
+om	ADP	ADP
+hjørnet	NOUN	NOUN
+på	ADP	ADP
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+vi	PRON	PRON
+har	VERB	VERB
+jo	ADV	ADV
+alligevel	ADV	ADV
+bugserbådene	NOUN	NOUN
+lige	ADV	ADV
+i	ADP	ADP
+nærheden	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Det	PRON	PRON
+koster	VERB	VERB
+15.000	NUM	NUM
+kr.	NOUN	NOUN
+at	PART	PART
+tilkalde	VERB	VERB
+en	DET	DET
+bugserbåd	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Forklaringen	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	ADP
+rutechefen	NOUN	NOUN
+ikke	ADV	ADV
+kendte	VERB	VERB
+,	PUNCT	PUNCT
+er	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+Urd	PROPN	PROPN
+i	ADP	ADP
+går	NOUN	NOUN
+havde	AUX	AUX
+vovet	VERB	VERB
+sig	PRON	PRON
+mod	ADP	ADP
+Kalundborg	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Den	DET	DET
+ene	ADJ	ADJ
+maskine	NOUN	NOUN
+brød	VERB	VERB
+sammen	ADV	ADV
+,	PUNCT	PUNCT
+hvorefter	ADV	ADV
+Urd	PROPN	PROPN
+vendte	VERB	VERB
+om	ADV	ADP
+og	CONJ	CONJ
+humpede	VERB	VERB
+til	ADP	ADP
+Århus	PROPN	PROPN
+,	PUNCT	PUNCT
+fordi	SCONJ	SCONJ
+DSB	PROPN	PROPN
+her	ADV	ADV
+har	VERB	VERB
+reservedele	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Imens	ADV	ADV
+bankede	VERB	VERB
+Ask	PROPN	NOUN
+i	ADP	ADP
+kajen	NOUN	NOUN
+i	ADP	ADP
+Kalundborg	PROPN	PROPN
+,	PUNCT	PUNCT
+hvorefter	ADV	ADV
+enhver	PRON	PRON
+kunne	AUX	AUX
+se	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+nu	ADV	ADV
+skulle	VERB	AUX
+Urd	PROPN	PROPN
+i	ADP	ADP
+rute	NOUN	NOUN
+som	ADP	ADP
+Ask	PROPN	NOUN
+.	PUNCT	PUNCT
+
+Derfor	ADV	ADV
+blev	AUX	AUX
+den	PRON	PRON
+bugseret	VERB	VERB
+til	ADP	ADP
+lastekaj	NOUN	NOUN
+,	PUNCT	PUNCT
+mens	SCONJ	SCONJ
+den	PRON	PRON
+stadig	ADV	ADV
+var	VERB	VERB
+under	ADP	ADP
+reparation	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+da	SCONJ	SCONJ
+alt	ADJ	ADJ
+var	AUX	AUX
+klar	ADJ	ADJ
+,	PUNCT	PUNCT
+gik	VERB	VERB
+maskinchefen	NOUN	NOUN
+hjem	ADV	ADV
+.	PUNCT	PUNCT
+
+Forslaget	NOUN	NOUN
+om	ADP	ADP
+fælles	ADJ	ADJ
+gruppemøder	NOUN	NOUN
+mellem	ADP	ADP
+V	PROPN	PROPN
+og	CONJ	CONJ
+K	PROPN	PROPN
+er	AUX	AUX
+ikke	ADV	ADV
+helt	ADV	ADV
+nyt	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Faktisk	ADV	ADV
+blev	AUX	AUX
+der	ADV	ADV
+holdt	VERB	VERB
+et	DET	DET
+historisk	ADJ	ADJ
+fælles	ADJ	ADJ
+gruppemøde	NOUN	NOUN
+forud	ADV	ADV
+for	ADP	ADP
+lanceringen	NOUN	NOUN
+af	ADP	ADP
+KV-planen	NOUN	NOUN
+i	ADP	ADP
+1964	NUM	NUM
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+i	ADP	ADP
+1965	NUM	NUM
+kostede	VERB	VERB
+det	PRON	DET
+Venstres	NOUN	NOUN
+daværende	ADJ	ADJ
+leder	NOUN	NOUN
+,	PUNCT	PUNCT
+tidl.	ADJ	NOUN
+statsminister	NOUN	NOUN
+Erik	PROPN	PROPN
+Eriksen	PROPN	PROPN
+,	PUNCT	PUNCT
+rollen	NOUN	NOUN
+som	ADP	ADP
+sit	DET	DET
+partis	NOUN	ADJ
+frontfigur	NOUN	NOUN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+han	PRON	PRON
+direkte	ADV	ADV
+gik	VERB	VERB
+ind	ADV	ADV
+for	ADP	ADP
+en	DET	DET
+sammenslutning	NOUN	NOUN
+af	ADP	ADP
+de	DET	DET
+to	NUM	NUM
+partier	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Dengang	ADV	ADV
+var	AUX	AUX
+tiden	NOUN	NOUN
+ikke	ADV	ADV
+moden	ADJ	NOUN
+til	ADP	ADP
+et	DET	DET
+så	ADV	ADV
+afgørende	ADJ	ADJ
+skridt	NOUN	NOUN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Det	PRON	PRON
+er	AUX	AUX
+den	PRON	PRON
+for	ADP	ADP
+så	ADV	ADV
+vidt	ADV	ADV
+heller	ADV	ADV
+ikke	ADV	ADV
+nu	ADV	ADV
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+skal	VERB	AUX
+i	ADP	ADP
+hvert	DET	DET
+fald	NOUN	NOUN
+først	ADV	ADV
+igennem	ADP	ADP
+en	DET	DET
+lang	ADJ	ADJ
+,	PUNCT	PUNCT
+lang	ADJ	ADJ
+periode	NOUN	NOUN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+de	DET	DET
+to	NUM	NUM
+partiers	NOUN	NOUN
+folk	NOUN	NOUN
+kan	AUX	AUX
+lære	VERB	VERB
+hinandens	PRON	PRON
+kemi	NOUN	NOUN
+at	PART	PART
+kende	VERB	VERB
+.	PUNCT	PUNCT
+
+Her	ADV	ADV
+kunne	AUX	AUX
+jævnlige	ADJ	VERB
+fælles	ADJ	ADJ
+gruppe-	NOUN	X
+og	CONJ	CONJ
+hovedbestyrelsesmøder	NOUN	NOUN
+være	AUX	AUX
+et	DET	DET
+skridt	NOUN	NOUN
+på	ADP	ADP
+vejen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+vil	AUX	AUX
+hindre	VERB	VERB
+mange	ADJ	ADJ
+misforståelser	NOUN	NOUN
+mellem	ADP	ADP
+vore	DET	DET
+to	NUM	NUM
+partier	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+skal	AUX	AUX
+tænke	VERB	VERB
+på	ADP	ADP
+samarbejdet	NOUN	NOUN
+blandt	ADP	ADP
+den	DET	DET
+kommende	VERB	VERB
+generation	NOUN	NOUN
+af	ADP	ADP
+borgerlige	ADJ	ADJ
+politikere	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	DET	DET
+hele	ADJ	ADJ
+skulle	AUX	AUX
+nødigt	ADV	ADV
+gå	VERB	VERB
+på	ADP	ADP
+gulvet	NOUN	NOUN
+,	PUNCT	PUNCT
+fordi	SCONJ	SCONJ
+nogle	DET	DET
+enkeltpersoner	NOUN	NOUN
+har	AUX	AUX
+holdt	VERB	VERB
+samarbejdet	NOUN	NOUN
+i	ADP	ADP
+gang	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+fiskeriministeren	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Efter	ADP	ADP
+en	DET	DET
+weekend	NOUN	NOUN
+hos	ADP	ADP
+familien	NOUN	NOUN
+på	ADP	ADP
+Fanø	PROPN	PROPN
+har	AUX	AUX
+han	PRON	PRON
+mandag	NOUN	NOUN
+været	VERB	VERB
+i	ADP	ADP
+Bruxelles	PROPN	PROPN
+til	ADP	ADP
+EF-fiskeriministermøde	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+tror	VERB	VERB
+ikke	ADV	ADV
+længere	ADV	ADV
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+der	ADV	ADV
+er	VERB	VERB
+nogen	DET	DET
+markedsudvalgs-medlemmer	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+kan	AUX	AUX
+overskue	VERB	VERB
+sammenhængen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Alligevel	ADV	ADV
+sidder	VERB	VERB
+vi	PRON	PRON
+møde	NOUN	NOUN
+efter	ADP	ADP
+møde	NOUN	NOUN
+og	CONJ	CONJ
+giver	VERB	VERB
+bindende	VERB	VERB
+mandat	NOUN	NOUN
+til	ADP	ADP
+ministre	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+skal	AUX	AUX
+forhandle	VERB	VERB
+Danmarks	PROPN	PROPN
+synspunkt	NOUN	NOUN
+i	ADP	ADP
+EFs	PROPN	PROPN
+ministerråd	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Peter	PROPN	PROPN
+Duetoft	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+henviser	VERB	VERB
+bl.a.	ADV	ADV
+til	ADP	ADP
+B.T.s	PROPN	PROPN
+afsløring	NOUN	NOUN
+af	ADP	ADP
+et	DET	DET
+EF-direktiv	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+af	ADP	ADP
+hensyn	NOUN	NOUN
+til	ADP	ADP
+folkesundheden	NOUN	NOUN
+forbyder	VERB	VERB
+private	ADJ	ADJ
+slagtehuse	NOUN	NOUN
+at	PART	PART
+slagte	VERB	VERB
+mere	ADJ	ADJ
+end	ADP	ADP
+12	NUM	NUM
+kreaturer	NOUN	NOUN
+om	ADP	ADP
+ugen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Folkesundheden	NOUN	NOUN
+lider	VERB	VERB
+ingen	DET	DET
+skade	NOUN	NOUN
+så	ADV	ADV
+længe	ADV	ADV
+,	PUNCT	PUNCT
+der	PRON	PRON
+slagtes	VERB	VERB
+under	ADP	ADP
+12	NUM	NUM
+kreaturer	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Slagtes	VERB	VERB
+der	ADV	ADV
+13	NUM	NUM
+kreaturer	NOUN	NOUN
+,	PUNCT	PUNCT
+skal	AUX	AUX
+slagterierne	NOUN	NOUN
+indrettes	VERB	VERB
+med	ADP	ADP
+avanceret	ADJ	ADJ
+udstyr	NOUN	NOUN
+som	ADP	ADP
+var	AUX	AUX
+de	PRON	DET
+store	ADJ	ADJ
+eksportslagterier	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+dermed	ADV	ADV
+lukkes	VERB	VERB
+halvdelen	NOUN	NOUN
+af	ADP	ADP
+danske	ADJ	ADJ
+slagtehuse	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Direktivet	NOUN	NOUN
+blev	AUX	AUX
+vedtaget	VERB	VERB
+i	ADP	ADP
+juli	NOUN	NOUN
+i	ADP	ADP
+år	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+Markedsudvalget	NOUN	NOUN
+opdagede	VERB	VERB
+ikke	ADV	ADV
+konsekvensen	NOUN	NOUN
+af	ADP	ADP
+det	PRON	PRON
+før	ADP	ADV
+i	ADP	ADP
+sidste	ADJ	ADJ
+uge	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Duetoft	PROPN	NOUN
+redegør	VERB	NOUN
+for	ADP	ADP
+sit	DET	DET
+kontroversielle	ADJ	ADJ
+synspunkt	NOUN	NOUN
+i	ADP	ADP
+en	DET	DET
+ny	ADJ	ADJ
+bog	NOUN	NOUN
+om	ADP	ADP
+EFunionerne	NOUN	NOUN
+,	PUNCT	PUNCT
+som	PRON	PRON
+udkommer	VERB	VERB
+på	ADP	ADP
+mandag	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Peter	PROPN	PROPN
+Duetoft	PROPN	PROPN
+,	PUNCT	PUNCT
+der	ADV	PRON
+er	AUX	AUX
+erklæret	VERB	VERB
+supereuropæer	NOUN	NOUN
+og	CONJ	CONJ
+har	VERB	VERB
+en	DET	DET
+fortid	NOUN	NOUN
+i	ADP	ADP
+EF-parlamentet	NOUN	NOUN
+,	PUNCT	PUNCT
+har	AUX	AUX
+skrevet	VERB	VERB
+bogen	NOUN	NOUN
+sammen	ADV	ADV
+med	ADP	ADP
+Jens	PROPN	PROPN
+Peter	PROPN	PROPN
+Bonde	PROPN	PROPN
+fra	ADP	ADP
+Folkebevægelsen	NOUN	NOUN
+mod	ADP	ADP
+EF	PROPN	PROPN
+.	PUNCT	PUNCT
+
+ODENSE	PROPN	PROPN
+:	PUNCT	PUNCT
+De	PRON	PRON
+er	AUX	AUX
+begge	PRON	DET
+fædre	NOUN	NOUN
+,	PUNCT	PUNCT
+31	NUM	NUM
+år	NOUN	NOUN
+gamle	ADJ	ADJ
+og	CONJ	CONJ
+med	ADP	ADP
+begyndende	VERB	ADJ
+tendens	NOUN	NOUN
+til	ADP	ADP
+"	PUNCT	PUNCT
+høj	ADJ	ADJ
+pande	NOUN	NOUN
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+Men	CONJ	CONJ
+de	PRON	PRON
+er	AUX	AUX
+også	ADV	ADV
+et	DET	DET
+par	NOUN	NOUN
+rigtige	ADJ	ADJ
+legebørn	NOUN	NOUN
+,	PUNCT	PUNCT
+fodbold-fans	NOUN	NOUN
+og	CONJ	CONJ
+grinebidere	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+så	ADV	ADV
+er	AUX	AUX
+de	PRON	PRON
+i	ADP	ADP
+øvrigt	ADV	ADV
+to	NUM	NUM
+af	ADP	ADP
+Odense	PROPN	PROPN
+Teaters	NOUN	NOUN
+mest	ADV	ADV
+talentfulde	ADJ	ADJ
+skuespillere	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Nu	ADV	ADV
+skal	AUX	AUX
+de	PRON	PRON
+spille	VERB	VERB
+Tvebak	NOUN	PROPN
+og	CONJ	CONJ
+Jonathan	PROPN	PROPN
+i	ADP	ADP
+dramatiseringen	NOUN	NOUN
+af	ADP	ADP
+Astrid	PROPN	PROPN
+Lindgrens	PROPN	PROPN
+eventyr	NOUN	NOUN
+"	PUNCT	PUNCT
+Brødrene	NOUN	NOUN
+Løvehjerte	NOUN	PROPN
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+Kim	PROPN	PROPN
+Harris	PROPN	PROPN
+og	CONJ	CONJ
+Henrik	PROPN	PROPN
+Prip	PROPN	PROPN
+knokler	VERB	VERB
+i	ADP	ADP
+disse	DET	DET
+dage	NOUN	NOUN
+med	ADP	ADP
+at	PART	PART
+genfinde	VERB	VERB
+deres	DET	DET
+barndommelige	ADJ	ADJ
+sindelag	NOUN	NOUN
+.	PUNCT	PUNCT
+
+De	PRON	PRON
+er	AUX	AUX
+blevet	AUX	AUX
+beordret	VERB	VERB
+til	ADP	ADP
+at	PART	PART
+granske	VERB	VERB
+i	ADP	ADP
+hukommelsen	NOUN	NOUN
+og	CONJ	CONJ
+prøve	VERB	VERB
+at	PART	PART
+huske	VERB	VERB
+,	PUNCT	PUNCT
+hvordan	ADV	ADV
+de	PRON	PRON
+var	VERB	AUX
+da	SCONJ	ADV
+de	PRON	PRON
+var	AUX	AUX
+børn	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+hvis	SCONJ	SCONJ
+det	PRON	PRON
+kniber	VERB	VERB
+med	ADP	ADP
+hukommelsen	NOUN	NOUN
+,	PUNCT	PUNCT
+så	ADV	ADV
+kan	AUX	AUX
+de	PRON	PRON
+hjælpe	VERB	VERB
+hinanden	PRON	PRON
+lidt	ADV	ADV
+på	ADP	ADP
+gled	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Ja	INTJ	INTJ
+,	PUNCT	PUNCT
+for	CONJ	CONJ
+vi	PRON	PRON
+har	AUX	AUX
+nemlig	ADV	ADV
+kendt	VERB	ADJ
+hinanden	PRON	PRON
+siden	SCONJ	ADP
+vi	PRON	PRON
+var	AUX	AUX
+otte-ti	NUM	NUM
+år	NOUN	NOUN
+gamle	ADJ	ADJ
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Kim	PROPN	PROPN
+Harris	PROPN	PROPN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Dengang	ADV	ADV
+kom	VERB	VERB
+vi	PRON	PRON
+på	ADP	ADP
+samme	ADJ	ADJ
+fodbold-hold	NOUN	NOUN
+i	ADP	ADP
+Vedbæk	PROPN	PROPN
+Boldklub	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Vi	PRON	PRON
+tilbragte	VERB	VERB
+mange	ADJ	ADJ
+år	NOUN	NOUN
+sammen	ADV	ADV
+på	ADP	ADP
+det	DET	DET
+hold	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Henrik	PROPN	PROPN
+Prip	PROPN	PROPN
+.	PUNCT	PUNCT
+
+FØRSTE	ADJ	ADJ
+SMØGER	NOUN	NOUN
+
+"	PUNCT	PUNCT
+Det	PRON	PRON
+var	VERB	AUX
+dengang	SCONJ	ADV
+,	PUNCT	PUNCT
+vi	PRON	PRON
+røg	VERB	VERB
+vores	DET	DET
+første	ADJ	ADJ
+smøger	NOUN	NOUN
+sammen	ADV	ADV
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+husker	VERB	VERB
+Kim	PROPN	PROPN
+og	CONJ	CONJ
+bakker	VERB	NOUN
+på	ADP	ADP
+piben	NOUN	NOUN
+-	PUNCT	PUNCT
+man	PRON	PRON
+er	AUX	AUX
+vel	ADV	ADV
+blevet	AUX	AUX
+voksen	ADJ	ADJ
+.	PUNCT	PUNCT
+
+Simon	PROPN	PROPN
+Wiesenthal	PROPN	PROPN
+er	AUX	AUX
+83	NUM	NUM
+og	CONJ	CONJ
+minsandten	ADV	NOUN
+i	ADP	ADP
+sin	DET	DET
+høje	ADJ	ADJ
+alder	NOUN	NOUN
+stadig	ADV	ADV
+aktiv	ADJ	NOUN
+i	ADP	ADP
+sin	DET	DET
+jagt	NOUN	NOUN
+på	ADP	ADP
+tidligere	ADJ	ADJ
+nazister	NOUN	NOUN
+,	PUNCT	PUNCT
+der	PRON	PRON
+gemmer	VERB	VERB
+sig	PRON	PRON
+verden	NOUN	NOUN
+over	ADP	ADP
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+er	AUX	AUX
+også	ADV	ADV
+stadig	ADV	ADV
+aktiv	ADJ	ADJ
+som	ADP	ADP
+forfatter	NOUN	NOUN
+:	PUNCT	PUNCT
+Munksgaards	PROPN	NOUN
+forlag	NOUN	NOUN
+har	AUX	AUX
+netop	ADV	ADV
+udsendt	VERB	VERB
+andet	ADJ	DET
+oplag	NOUN	NOUN
+af	ADP	ADP
+bogen	NOUN	NOUN
+"	PUNCT	PUNCT
+Retfærdighed	NOUN	NOUN
+-	PUNCT	PUNCT
+ikke	ADV	ADV
+hævn	NOUN	ADV
+"	PUNCT	PUNCT
+,	PUNCT	PUNCT
+der	PRON	PRON
+af	ADP	ADP
+forfatteren	NOUN	NOUN
+regnes	VERB	VERB
+som	ADP	ADP
+hans	DET	DET
+sidste	ADJ	ADJ
+bog	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Her	ADV	ADV
+beskriver	VERB	VERB
+han	PRON	PRON
+sit	DET	DET
+arbejde	NOUN	NOUN
+helt	ADV	ADV
+op	ADV	ADV
+til	ADP	ADP
+1989	NUM	NUM
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+bogen	NOUN	NOUN
+er	AUX	AUX
+ikke	ADV	ADV
+,	PUNCT	PUNCT
+som	PRON	PRON
+man	PRON	PRON
+kunne	AUX	AUX
+tro	VERB	VERB
+,	PUNCT	PUNCT
+negativ	ADJ	ADV
+og	CONJ	CONJ
+hadefuld	ADJ	NOUN
+.	PUNCT	PUNCT
+
+Som	ADP	ADP
+forfatteren	NOUN	NOUN
+blandt	ADP	ADP
+andet	PRON	PRON
+skriver	VERB	VERB
+i	ADP	ADP
+sit	DET	DET
+forord	NOUN	NOUN
+:	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+er	AUX	AUX
+nu	ADV	ADV
+engang	ADV	ADV
+optimist	NOUN	ADJ
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+jeg	PRON	PRON
+tror	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+intolerancen	NOUN	NOUN
+kun	ADV	ADV
+i	ADP	ADP
+perioder	NOUN	NOUN
+er	VERB	VERB
+i	ADP	ADP
+stand	NOUN	NOUN
+til	ADP	ADP
+at	PART	PART
+dominere	VERB	VERB
+vores	DET	DET
+liv	NOUN	NOUN
+-	PUNCT	PUNCT
+i	ADP	ADP
+sidste	ADJ	ADJ
+ende	NOUN	NOUN
+vil	AUX	VERB
+tolerancen	NOUN	NOUN
+sejre	VERB	VERB
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+At	SCONJ	SCONJ
+Wiesenthal	PROPN	PROPN
+overlevede	VERB	VERB
+krigen	NOUN	NOUN
+,	PUNCT	PUNCT
+er	AUX	AUX
+et	DET	PRON
+under	NOUN	ADV
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+var	AUX	AUX
+anbragt	VERB	VERB
+i	ADP	ADP
+12	NUM	NUM
+forskellige	ADJ	ADJ
+koncentrationslejre	NOUN	NOUN
+i	ADP	ADP
+alt	NOUN	ADJ
+,	PUNCT	PUNCT
+heriblandt	ADV	ADV
+Lvov	PROPN	PROPN
+,	PUNCT	PUNCT
+hvor	ADV	ADV
+kun	ADV	ADV
+34	NUM	NUM
+af	ADP	ADP
+149.000	NUM	NUM
+jøder	NOUN	NOUN
+var	VERB	VERB
+i	ADP	ADP
+live	ADJ	NOUN
+efter	ADP	ADP
+krigen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+når	SCONJ	SCONJ
+de	PRON	PRON
+var	AUX	AUX
+det	PRON	PRON
+,	PUNCT	PUNCT
+skyldtes	VERB	VERB
+det	PRON	PRON
+ganske	ADV	ADV
+enkelt	ADV	ADJ
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+fangevogterne	NOUN	NOUN
+brugte	VERB	VERB
+dem	PRON	PRON
+som	ADP	ADP
+undskyldning	NOUN	NOUN
+for	ADP	ADP
+ikke	ADV	ADV
+at	PART	PART
+blive	AUX	AUX
+sendt	VERB	VERB
+til	ADP	ADP
+fronten	NOUN	NOUN
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Når	SCONJ	SCONJ
+boligministeren	NOUN	NOUN
+ikke	ADV	ADV
+vil	VERB	VERB
+,	PUNCT	PUNCT
+så	ADV	ADV
+må	AUX	AUX
+jeg	PRON	PRON
+gøre	VERB	VERB
+det	PRON	PRON
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+siger	VERB	VERB
+Kirsten	PROPN	PROPN
+Jacobsen	PROPN	PROPN
+med	ADP	ADP
+henvisning	NOUN	NOUN
+til	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+boligminister	NOUN	NOUN
+Svend	PROPN	PROPN
+Erik	PROPN	PROPN
+Hovmand	PROPN	PROPN
+(	PUNCT	PUNCT
+V	PROPN	PROPN
+)	PUNCT	PUNCT
+har	AUX	AUX
+afvist	VERB	VERB
+at	PART	PART
+foretage	VERB	VERB
+sig	PRON	PRON
+noget	PRON	PRON
+,	PUNCT	PUNCT
+før	SCONJ	SCONJ
+kammeradvokaten	NOUN	NOUN
+har	AUX	AUX
+vurderet	VERB	VERB
+sagen	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Dermed	ADV	ADV
+tager	VERB	VERB
+hun	PRON	PRON
+bogstavelig	ADV	ADV
+talt	VERB	VERB
+Ungbos	PROPN	PROPN
+tidligere	ADJ	ADJ
+formand	NOUN	NOUN
+,	PUNCT	PUNCT
+Torben	PROPN	PROPN
+Lund	PROPN	PROPN
+på	ADP	ADP
+ordet	NOUN	NOUN
+,	PUNCT	PUNCT
+idet	SCONJ	SCONJ
+næstformanden	NOUN	NOUN
+i	ADP	ADP
+den	DET	DET
+socialdemokratiske	ADJ	ADJ
+gruppe	NOUN	NOUN
+i	ADP	ADP
+aftes	NOUN	NOUN
+udtalte	VERB	VERB
+til	ADP	ADP
+TV-2-Nyhederne	NOUN	NOUN
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+"	PUNCT	PUNCT
+det	PRON	PRON
+er	AUX	AUX
+op	ADV	ADV
+til	ADP	ADP
+en	DET	DET
+dommer	NOUN	NOUN
+at	PART	PART
+afgøre	VERB	VERB
+,	PUNCT	PUNCT
+om	SCONJ	SCONJ
+der	ADV	ADV
+er	AUX	VERB
+foregået	VERB	ADJ
+ulovligheder	NOUN	NOUN
+i	ADP	ADP
+Ungbos	PROPN	PROPN
+administration	NOUN	NOUN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Kirsten	PROPN	PROPN
+Jacobsen	PROPN	PROPN
+vil	AUX	AUX
+i	ADP	ADP
+anmeldelsen	NOUN	NOUN
+bede	VERB	VERB
+politidirektøren	NOUN	NOUN
+undersøge	VERB	VERB
+,	PUNCT	PUNCT
+om	SCONJ	SCONJ
+Landsforeningen	NOUN	NOUN
+Ungbo	PROPN	PROPN
+har	AUX	AUX
+begået	VERB	VERB
+mandatsvig	NOUN	ADV
+,	PUNCT	PUNCT
+underslæb	NOUN	NOUN
+og	CONJ	CONJ
+bedrageri	NOUN	NOUN
+i	ADP	ADP
+forbindelse	NOUN	NOUN
+med	ADP	ADP
+statens	NOUN	NOUN
+milliontilskud	NOUN	NOUN
+til	ADP	ADP
+Ungbos	PROPN	PROPN
+virksomhed	NOUN	NOUN
+.	PUNCT	PUNCT
+
+NYE	ADJ	ADJ
+AFSLØRINGER	NOUN	NOUN
+
+Siden	SCONJ	ADP
+Ungbo	PROPN	PROPN
+for	ADP	ADP
+tre	NUM	NUM
+uger	NOUN	NOUN
+siden	ADV	ADV
+gik	VERB	VERB
+konkurs	ADJ	NOUN
+med	ADP	ADP
+et	DET	DET
+underskud	NOUN	NOUN
+på	ADP	ADP
+44,1	NUM	NUM
+mill.	NOUN	NOUN
+kroner	NOUN	NOUN
+,	PUNCT	PUNCT
+er	AUX	AUX
+der	ADV	ADV
+næppe	ADV	ADV
+gået	VERB	VERB
+en	DET	DET
+dag	NOUN	NOUN
+uden	ADP	ADP
+nye	ADJ	ADJ
+belastende	VERB	ADJ
+afsløringer	NOUN	NOUN
+af	ADP	ADP
+Ungbos	PROPN	PROPN
+måde	NOUN	NOUN
+at	PART	PART
+drive	VERB	VERB
+almennyttig	ADJ	ADJ
+udlejningsvirksomhed	NOUN	NOUN
+på	ADP	ADP
+er	AUX	AUX
+dukket	VERB	VERB
+op	ADV	ADV
+.	PUNCT	PUNCT
+
+En	DET	DET
+stor	ADJ	ADJ
+del	NOUN	NOUN
+af	ADP	ADP
+Ungbos	PROPN	PROPN
+1.600	NUM	NUM
+ungdomsboliger	NOUN	NOUN
+og	CONJ	CONJ
+2.200	NUM	NUM
+hybler	NOUN	NOUN
+er	AUX	AUX
+truet	VERB	VERB
+af	ADP	ADP
+tvangsauktion	NOUN	NOUN
+.	PUNCT	PUNCT
+
+150	NUM	NUM
+ansatte	VERB	VERB
+på	ADP	ADP
+hovedkontoret	NOUN	NOUN
+risikerer	VERB	VERB
+en	DET	DET
+fyreseddel	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+mange	ADJ	ADJ
+lejere	NOUN	NOUN
+,	PUNCT	PUNCT
+flere	ADJ	ADJ
+kommuner	NOUN	NOUN
+,	PUNCT	PUNCT
+fagbevægelsen	NOUN	NOUN
+,	PUNCT	PUNCT
+en	DET	DET
+bank	NOUN	NOUN
+og	CONJ	CONJ
+staten	NOUN	NOUN
+har	VERB	VERB
+alle	ADJ	ADJ
+penge	NOUN	NOUN
+til	ADP	ADP
+gode	NOUN	NOUN
+.	PUNCT	PUNCT
+
+I	ADP	ADP
+går	NOUN	NOUN
+hævdede	VERB	VERB
+de	PRON	PRON
+to	NUM	NUM
+tiltalte	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+computermanden	NOUN	NOUN
+blot	ADV	ADV
+ringede	VERB	VERB
+for	ADP	ADP
+at	PART	PART
+fortælle	VERB	VERB
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+han	PRON	PRON
+skulle	VERB	VERB
+i	ADP	ADP
+lag	NOUN	NOUN
+med	ADP	ADP
+nogle	DET	DET
+damer	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+var	VERB	AUX
+hvad	PRON	PRON
+,	PUNCT	PUNCT
+der	PRON	PRON
+mentes	VERB	VERB
+med	ADP	ADP
+"	PUNCT	PUNCT
+kunder	NOUN	NOUN
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+Klokken	NOUN	NOUN
+17.05	NUM	NUM
+samme	ADJ	ADJ
+dag	NOUN	NOUN
+ringede	VERB	VERB
+han	PRON	PRON
+igen	ADV	ADV
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+regnede	VERB	VERB
+med	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+du	PRON	PRON
+tog	VERB	VERB
+en	DET	DET
+telefonboks	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Det	PRON	PRON
+er	AUX	AUX
+en	DET	DET
+dum	ADJ	ADJ
+telefon	NOUN	NOUN
+,	PUNCT	PUNCT
+"	PUNCT	PUNCT
+sagde	VERB	VERB
+"	PUNCT	PUNCT
+Mercedesmanden	NOUN	NOUN
+"	PUNCT	PUNCT
+.	PUNCT	PUNCT
+
+Og	CONJ	CONJ
+efter	ADP	ADP
+en	DET	DET
+hurtig	ADJ	ADJ
+opringning	NOUN	NOUN
+til	ADP	ADP
+vennens	NOUN	NOUN
+hotel	NOUN	NOUN
+blev	AUX	AUX
+de	PRON	DET
+enige	ADJ	ADJ
+om	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+den	DET	DET
+24-årige	ADJ	ADJ
+skulle	AUX	AUX
+finde	VERB	VERB
+en	DET	DET
+telefonboks	NOUN	NOUN
+og	CONJ	CONJ
+ringe	VERB	VERB
+en	DET	DET
+halv	ADJ	ADJ
+time	NOUN	NOUN
+senere	ADV	ADV
+.	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Havde	VERB	NOUN
+I	PRON	ADP
+mistanke	NOUN	NOUN
+om	ADP	ADP
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+telefonen	NOUN	NOUN
+blev	VERB	AUX
+aflyttet	VERB	VERB
+?	PUNCT	PUNCT
+"	PUNCT	PUNCT
+spurgte	VERB	VERB
+anklager	NOUN	NOUN
+Annette	PROPN	PROPN
+Vester	PROPN	PROPN
+.	PUNCT	PUNCT
+
+Computermanden	NOUN	NOUN
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Hvorfor	ADV	ADV
+skulle	VERB	VERB
+den	PRON	PRON
+det	PRON	PRON
+?	PUNCT	PUNCT
+
+Jeg	PRON	PRON
+ville	AUX	AUX
+bare	ADV	ADV
+ikke	ADV	ADV
+snakke	VERB	VERB
+med	ADP	ADP
+ham	PRON	PRON
+,	PUNCT	PUNCT
+hvis	SCONJ	SCONJ
+der	ADV	ADV
+var	VERB	VERB
+andre	PRON	PRON
+i	ADP	ADP
+nærheden	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Så	ADV	ADV
+kunne	AUX	AUX
+min	DET	DET
+kone	NOUN	NOUN
+måske	ADV	ADV
+få	VERB	VERB
+mistanke	NOUN	NOUN
+,	PUNCT	PUNCT
+og	CONJ	CONJ
+det	PRON	PRON
+ragede	VERB	VERB
+ikke	ADV	ADV
+andre	PRON	PRON
+,	PUNCT	PUNCT
+at	SCONJ	SCONJ
+jeg	PRON	PRON
+var	VERB	VERB
+på	ADP	ADP
+bordel	NOUN	NOUN
+i	ADP	ADP
+Holland	PROPN	PROPN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+"	PUNCT	PUNCT
+Mercedes-manden	NOUN	NOUN
+"	PUNCT	PUNCT
+:	PUNCT	PUNCT
+"	PUNCT	PUNCT
+Jeg	PRON	PRON
+skulle	AUX	AUX
+gå	VERB	VERB
+til	ADP	ADP
+en	DET	DET
+anden	DET	DET
+telefon	NOUN	NOUN
+,	PUNCT	PUNCT
+fordi	SCONJ	SCONJ
+han	PRON	PRON
+skulle	AUX	AUX
+fortælle	VERB	VERB
+om	ADP	ADP
+sine	DET	DET
+udskejelser	NOUN	NOUN
+i	ADP	ADP
+Holland	PROPN	PROPN
+.	PUNCT	PUNCT
+"	PUNCT	PUNCT
+
+Inden	SCONJ	SCONJ
+computermanden	NOUN	NOUN
+kørte	VERB	VERB
+mod	ADP	ADP
+Holland	PROPN	PROPN
+,	PUNCT	PUNCT
+lyttede	VERB	VERB
+politiet	NOUN	NOUN
+også	ADV	ADV
+på	ADP	ADP
+en	DET	DET
+samtale	NOUN	NOUN
+fra	ADP	ADP
+"	PUNCT	PUNCT
+Mercedes-manden	NOUN	NOUN
+"	PUNCT	PUNCT
+til	ADP	ADP
+én	PRON	PRON
+af	ADP	ADP
+hans	DET	DET
+venner	NOUN	NOUN
+.	PUNCT	PUNCT
+
+Han	PRON	PRON
+skulle	AUX	AUX
+komme	VERB	VERB
+ud	ADV	ADV
+til	ADP	ADP
+en	DET	DET
+adresse	NOUN	NOUN
+for	ADP	ADP
+at	PART	PART
+hente	VERB	VERB
+noget	PRON	PRON
+,	PUNCT	PUNCT
+inden	SCONJ	SCONJ
+det	PRON	PRON
+blev	AUX	AUX
+mørkt	ADJ	ADJ
+.	PUNCT	PUNCT
+
