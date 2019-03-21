@@ -1,3 +1,6 @@
+# Ignore cached compiles
+__pycache__/
+
 # Ignore latex build files
 /report/.minted-main
 /report/_minted-main
