@@ -1,3 +1,5 @@
+from timeit import time
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -7,6 +9,99 @@ import models
 import reader
 
 torch.manual_seed(1)
+
+
+def to_ixs(seq, ixs):
+    """
+    Convert words or tags (or any items in seq) to integers
+
+    :param seq: list of words or tags
+    :param ixs: dict mapping strings to integers
+    :return:    tensor of dtype torch.long
+    """
+    wixs = [ixs.get(w, 0) for w in seq]
+    return torch.tensor(wixs, dtype=torch.long)
+
+
+def train(model, training_data, loss_func, optimizer, epochs=5):
+    """
+    Trains a model on given data set using the provided loss function and
+    optimizer and prints progress and total loss after each epoch.
+
+    :param model:           instance of nn.Module
+    :param training_data:   list of tuples, where the first entry is a sequence
+                            of words and the second entry is a sequence of tags
+    :param loss_func:       loss function to use, ie. nn.NLLLoss
+    :param optimizer:       optimizer to use, ie. optim.SGD
+    :param epochs:          number of epochs to train (defaults to 5)
+
+    :return:                the model after training
+    """
+    remaining = len(training_data)
+    for epoch in range(epochs):
+
+        print(f"Training: Epoch {epoch}")
+        print("Working... ", end="", flush=True)
+
+        total_loss = 0
+        for sent, tags in training_data:
+
+            # Print progress, because be nice
+            remaining -= 1
+            if remaining % 100 == 0:
+                print("-", end="", flush=True)
+
+            # Reset model
+            model.zero_grad()
+            model.hidden = model.init_hidden()
+
+            # Make predictions and calculate loss
+            logprobs = model(to_ixs(sent, word2ix))
+            loss = loss_func(logprobs, to_ixs(tags, tag2ix))
+
+            # Backpropagate and train
+            loss.backward()
+            optimizer.step()
+
+            # Accumulate total loss
+            total_loss += loss.item()
+
+        print(f"Epoch loss: {total_loss}")
+
+    return model
+
+def evaluate(model, data):
+    """
+    Calculate, print and return the accuracy of the model in making predictions
+    for the sentences in data.
+
+    :param model:   instance of nn.Module
+    :param data:    list of tuples, where the first entry is a sequence
+                    of words and the second entry is a sequence of tags
+
+    :return:        accuracy of the model
+    """
+    total, correct = 0, 0
+
+    for sent, tags in data:
+        sentence = to_ixs(sent, word2ix)
+        tag_ixs  = to_ixs(tags, tag2ix)
+
+        model.hidden = model.init_hidden()
+        out = model(sentence)
+
+        for scores, tag_ix in zip(out, tag_ixs):
+            exp_tag  = ix2tag[tag_ix.item()]
+            pred_tag = ix2tag[torch.argmax(scores).item()]
+
+            total += 1
+            if exp_tag == pred_tag:
+                correct += 1
+
+    acc = (correct / total * 100)
+    print(f"{correct} correct of {total} total. Accuracy: {acc}%")
+    print()
+    return acc
 
 
 ##### Import data
@@ -45,101 +140,11 @@ try:
 except FileNotFoundError:
     optimizer = optim.SGD(model.parameters(), lr=0.1)
     loss_func = nn.NLLLoss()
-    train(model, train_data, loss_func, optimizer)
+    start_time = time.clock()
+    train(model, train_data, loss_func, optimizer, epochs=1)
+    print(f"Time: {time.clock() - start_time}")
     torch.save(model.state_dict(), "./saved_models/biLSTM.pt")
 
 ##### Evaluate the model
 print("Bidirectional PosTagger")
 evaluate(model, test_data)
-
-
-def to_ixs(seq, ixs):
-    """
-    Convert words or tags (or any items in seq) to integers
-
-    :param seq: list of words or tags
-    :param ixs: dict mapping strings to integers
-    :return:    tensor of dtype torch.long
-    """
-    wixs = [ixs.get(w, 0) for w in seq]
-    return torch.tensor(wixs, dtype=torch.long)
-
-
-def train(model, training_data, loss_func, optimizer, epochs=5):
-    """
-    Trains a model on given data set using the provided loss function and
-    optimizer and prints progress and total loss after each epoch.
-
-    :param model:           instance of nn.Module
-    :param training_data:   list of tuples, where the first entry is a sequence
-                            of words and the second entry is a sequence of tags
-    :param loss_func:       loss function to use, ie. nn.NLLLoss
-    :param optimizer:       optimizer to use, ie. optim.SGD
-    :param epochs:          number of epochs to train (defaults to 5)
-
-    :return:                the model after training
-    """
-    remaining = len(training_data)
-    for epoch in range(epochs):
-
-        print("Training: Epoch {}".format(epoch))
-        print("Working... ", end="", flush=True)
-
-        total_loss = 0
-        for sent, tags in training_data:
-
-            # Print progress, because be nice
-            remaining -= 1
-            if remaining % 100 == 0:
-                print("-", end="", flush=True)
-
-            # Reset model
-            model.zero_grad()
-            model.hidden = model.init_hidden()
-
-            # Make predictions and calculate loss
-            logprobs = model(to_ixs(sent, word2ix))
-            loss = loss_func(logprobs, to_ixs(tags, tag2ix))
-
-            # Backpropagate and train
-            loss.backward()
-            optimizer.step()
-
-            # Accumulate total loss
-            total_loss += loss.item()
-
-        print("Epoch loss: {}".format(total_loss))
-
-    return model
-
-def evaluate(model, data):
-    """
-    Calculate, print and return the accuracy of the model in making predictions
-    for the sentences in data.
-
-    :param model:   instance of nn.Module
-    :param data:    list of tuples, where the first entry is a sequence
-                    of words and the second entry is a sequence of tags
-
-    :return:        accuracy of the model
-    """
-    total, correct = 0, 0
-
-    for sent, tags in data:
-        sentence = to_ixs(sent, word2ix)
-        tag_ixs = to_ixs(tags, tag2ix)
-        model.hidden = model.init_hidden()
-        out = model(sentence)
-
-        for scores, word, tag_ix in zip(out, sent, tag_ixs):
-            exp_tag = ix2tag[tag_ix.item()]
-            pred_tag = ix2tag[torch.argmax(scores).item()]
-
-            total += 1
-            if exp_tag == pred_tag:
-                correct += 1
-
-    acc = (correct / total * 100)
-    print("{} correct of {} total. Accuracy: {}%".format(correct, total, acc))
-    print()
-    return acc

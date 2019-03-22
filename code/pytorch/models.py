@@ -19,8 +19,8 @@ class BiPosTagger(nn.Module):
         self.hidden2tag = nn.Linear(hdim * 2, tag_size)
 
     def init_hidden(self):
-        return (torch.zeros(2, 1, self.hdim),
-                torch.zeros(2, 1, self.hdim))
+        return (torch.randn(2, 1, self.hdim),
+                torch.randn(2, 1, self.hdim))
 
     def forward(self, sentence):
         embeds = self.embedding(sentence).view(len(sentence), 1, -1)
