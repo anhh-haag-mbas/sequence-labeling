@@ -2,30 +2,32 @@ import dynet as dy
 import numpy as np
 import ipdb
 import array
+import random
 
 START_TAG = 0
 END_TAG = 1
 
-class CrfBiPosTaggerDouble:
-    def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8):
+class BiLstmCrfModel:
+    def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8, embeddings = None):
+        self.name = self.__class__.__name__
         self.model = dy.ParameterCollection()
         self.trainer = dy.SimpleSGDTrainer(self.model)
 
         # Embedding
-        self.lookup = self.model.add_lookup_parameters((vocab_size, embed_size))
+
+        if embeddings is None:
+            self.lookup = self.model.add_lookup_parameters((vocab_size, embed_size))
+        else:
+            self.lookup = self.model.lookup_parameters_from_numpy(embeddings)
+            (embed_size, vocab_size), _ = self.lookup.dim()
 
         # Bi-LSTM
-        self.lstmf = dy.LSTMBuilder(
-                        layers = 1,
-                        input_dim = embed_size,
-                        hidden_dim = hidden_size,
-                        model = self.model)
-        
-        self.lstmb = dy.LSTMBuilder(
-                        layers = 1,
-                        input_dim = embed_size,
-                        hidden_dim = hidden_size,
-                        model = self.model)
+        self.bilstm = dy.BiRNNBuilder(
+                            num_layers = 1, 
+                            input_dim = embed_size,
+                            hidden_dim = hidden_size * 2,
+                            model = self.model,
+                            rnn_builder_factory = dy.LSTMBuilder)
 
         self.num_tags = output_size
         # Dense layer
@@ -38,40 +40,43 @@ class CrfBiPosTaggerDouble:
         """
         Expects the inputs and labels to be transformed to integers beforehand
         """
-        for sentence, sentence_labels in list(zip(inputs, labels)):
+        for sentence, sentence_labels in zip(inputs, labels):
             dy.renew_cg()
-            sentence_labels = [l for l in sentence_labels] # Transform(+2) to account for start and end tag
-            inps = [self.lookup[i] for i in sentence]
-           
-            # LSTM
-            f_init = self.lstmf.initial_state()
-            b_init = self.lstmb.initial_state()
-            
-            forward = f_init.transduce(inps)
-            backward = b_init.transduce(reversed(inps))
-
-            concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, reversed(backward))]
-
-            # Linear layer
-            score_vecs = [(self.w * layer + self.b) for layer in concat_layer]
-
-            # CRF
-            #_, instance_score  = self.viterbi(score_vecs)
-            instance_score = self.forward(score_vecs)
-
-            gold_tag_indices = array.array('I', sentence_labels)
-
-            gold_score = self.score_sentence(score_vecs, gold_tag_indices)
-
-            loss = instance_score - gold_score
+            loss = self._calculate_loss(sentence, sentence_labels)
 
             loss.value()
             loss.backward()
             self.trainer.update()
 
+    def _calculate_loss(self, sentence, labels):
+        # Embedding + Bi-LSTM + Linear layer
+        embeddings = [self.lookup[w] for w in sentence]
+        bi_lstm_output = self.bilstm.transduce(embeddings)
+        score_vecs = [self.w * o + self.b for o in bi_lstm_output]
 
-    def fit_batch(self, inputs, labels, mini_batch_size = 1, epochs = 1):
-        pass
+        # CRF
+        instance_score = self.forward(score_vecs)
+        gold_tag_indices = array.array('I', labels)
+        gold_score = self.score_sentence(score_vecs, gold_tag_indices)
+        return instance_score - gold_score
+
+    def fit_batch(self, data, labels, mini_batch_size = 1, epochs = 1):
+        train_pairs = list(zip(data, labels))
+
+        for epoch in range(epochs):
+            random.shuffle(train_pairs)
+            mini_batches = [train_pairs[x:x+mini_batch_size] for x in range(0, len(train_pairs), mini_batch_size)]
+
+            for batch in mini_batches:
+                dy.renew_cg()
+                losses = []
+                for x, y in batch:
+                    loss = self._calculate_loss(x,y)
+                    losses.append(loss)
+                loss = dy.esum(losses)
+                loss.forward()
+                loss.backward()
+                self.trainer.update()
 
     def fit_auto_batch(self, inputs, labels, mini_batch_size = 1, epochs = 1):
         pass
@@ -81,16 +86,10 @@ class CrfBiPosTaggerDouble:
         inps = [self.lookup[i] for i in sentence]
        
         # LSTM
-        f_init = self.lstmf.initial_state()
-        b_init = self.lstmb.initial_state()
-        
-        forward = f_init.transduce(inps)
-        backward = b_init.transduce(reversed(inps))
-
-        concat_layer = [dy.concatenate([f,b]) for f, b in zip(forward, reversed(backward))]
+        bi_lstm_output = self.bilstm.transduce(inps)
 
         # Linear layer
-        score_vecs = [dy.rectify(self.w * layer + self.b) for layer in concat_layer]
+        score_vecs = [dy.rectify(self.w * o + self.b) for o in bi_lstm_output]
 
         # CRF
         pred_tag_indices, _  = self.viterbi(score_vecs)
