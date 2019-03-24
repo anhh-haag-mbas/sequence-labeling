@@ -29,10 +29,10 @@ Should we use fixed seeds?
 Speed 
     Training + running
 Accuracy
-    Total + OOV accuracy 
+    Total + OOV accuracy + additional (see http://aclweb.org/anthology/C18-1327 OOV analysis)
 Standard deviation (Calculated after)
 Convergence time (number of training sets before overfitting)
-
+Pairs of wrong guesses (expected vs actual values, is there a systematic error in our model where ADJ is prefered over NOUN or something weird)
 
 
 ## What range of tests do we work with? Which parameters do we limit ourselves on
