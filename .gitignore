@@ -1,3 +1,6 @@
+# Ignore virtual environments
+.venv
+
 # Ignore cached compiles
 __pycache__/
 
