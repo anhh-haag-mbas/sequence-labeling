@@ -1,0 +1,4 @@
+tensorflow
+polyglot
+keras
+numpy
