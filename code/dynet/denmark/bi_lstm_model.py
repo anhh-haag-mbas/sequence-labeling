@@ -1,13 +1,11 @@
 import numpy as np
 import array
-#import random
 
 import dynet_config
 # Set some parameters manualy
 dynet_config.set(mem=500,random_seed=1)
 # Initialize dynet import using above configuration in the current scope
 import dynet as dy
-
 
 class BiLstmModel:
 
@@ -60,7 +58,7 @@ class BiLstmModel:
         loss_progression = []
 
         for epoch in range(epochs):
-            random.shuffle(train_pairs)
+            np.random.shuffle(train_pairs)
             mini_batches = [train_pairs[x:x+mini_batch_size] for x in range(0, len(train_pairs), mini_batch_size)]
 
             for batch in mini_batches:

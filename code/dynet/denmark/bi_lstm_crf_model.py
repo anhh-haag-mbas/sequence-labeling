@@ -1,7 +1,6 @@
 import dynet as dy
 import numpy as np
 import array
-import random
 
 START_TAG = 0
 END_TAG = 1
@@ -63,7 +62,7 @@ class BiLstmCrfModel:
         train_pairs = list(zip(data, labels))
 
         for epoch in range(epochs):
-            random.shuffle(train_pairs)
+            np.random.shuffle(train_pairs)
             mini_batches = [train_pairs[x:x+mini_batch_size] for x in range(0, len(train_pairs), mini_batch_size)]
 
             for batch in mini_batches:
