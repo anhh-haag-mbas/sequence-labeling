@@ -1,4 +1,6 @@
 cython
 dynet
+ipython
+ipdb
 gensim
 polyglot
