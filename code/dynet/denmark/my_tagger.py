@@ -1,21 +1,22 @@
 import sys
-#import dynet as dy
-import ipdb 
 from collections import defaultdict
 from extractor import read_conllu, read_fasttext
 from bi_lstm_model import BiLstmModel
 from bi_lstm_crf_model import BiLstmCrfModel
 from helper import time
 #from gensim.models import FastText
-from polyglot.mapping import Embedding
+#from polyglot.mapping import Embedding
 
-train_inputs, train_labels, tags, vocab = read_conllu("data/da-ud-train.conllu")
-val_inputs, val_labels, _, _ = read_conllu("data/da-ud-dev.conllu")
+train_inputs, train_labels = read_conllu("data/da_ddt-ud-train.conllu")
+val_inputs, val_labels, = read_conllu("data/da_ddt-ud-dev.conllu")
 #(embedding, word_count), elapsed = time(read_fasttext, "embeddings/cc.da.300.vec")
 #model = FastText.load_fasttext_format('embeddings/cc.da.300.bin')
 
-embeddings = None
+train_word_mapper = Mapper(train_inputs)
+val_word_mapper = Mapper(val_inputs + ["<UNK>"])
+tag_mapper = Mapper(train_labels)
 
+embeddings = None
 if embeddings:
     print("Training with embeddings")
     embeddings, elapsed = time(Embedding.load, "embeddings/embeddings_pkl.tar.bz2")
@@ -28,14 +29,13 @@ else:
     word2int = {w:i for i, w in enumerate(int2word)}
     EMBED_SIZE = 64
 
-
 int2tag  = ["<START>", "<END>"] + tags
 tag2int  = {w:i for i, w in enumerate(int2tag)}
 UNK = word2int["<UNK>"]
 
-VOCAB_SIZE = len(int2word)
+VOCAB_SIZE = len(train_word_mapper)
 HIDDEN_DIM = 100
-OUTPUT_DIM = len(int2tag)
+OUTPUT_DIM = len(tag_mapper)
 
 train_inputs = [[word2int.get(w, UNK) for w in ws] for ws in train_inputs] 
 train_labels = [[tag2int[t] for t in ts] for ts in train_labels]

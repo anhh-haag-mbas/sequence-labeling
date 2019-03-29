@@ -5,3 +5,7 @@ def time(func, *args):
     result = func(*args)
     elapsed = timeit.default_timer() - start_time
     return (result, elapsed)
+
+def flatten(xss):
+    return [x for xs in xss for x in xs]
+

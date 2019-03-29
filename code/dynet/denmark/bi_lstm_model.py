@@ -1,8 +1,13 @@
-import dynet as dy
 import numpy as np
-import ipdb
 import array
-import random
+#import random
+
+import dynet_config
+# Set some parameters manualy
+dynet_config.set(mem=500,random_seed=1)
+# Initialize dynet import using above configuration in the current scope
+import dynet as dy
+
 
 class BiLstmModel:
 

@@ -1,6 +1,5 @@
 import dynet as dy
 import numpy as np
-import ipdb
 import array
 import random
 
