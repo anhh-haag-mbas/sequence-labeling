@@ -14,10 +14,16 @@ class Mapper:
             return self.i2x[0]
         return self.i2x[index]
 
+    def element_list(self, indexes):
+        return [self.element(i) for i in indexes]
+
     def index(self, element):
         if self.default:
             return self.x2i.get(element, 0)
         return self.x2i[element]
+
+    def index_list(self, elements):
+        return [self.index(e) for e in elements]
 
     def __len__(self):
         return len(self.i2x)
