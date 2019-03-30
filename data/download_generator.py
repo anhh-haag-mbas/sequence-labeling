@@ -18,8 +18,8 @@ with open("languages.txt", "r") as f, \
     for line in f:
         code = line.strip()
         lang = code2lang[code]
-        nerf.write(f"wget -O ./{lang}.tar.gz https://blender04.cs.rpi.edu/~panx2/wikiann/data/{code}.tar.gz\n")
-        fembf.write(f"wget -O ./{lang}.bin.gz https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.{code}.300.bin.gz")
+        nerf.write(f"wget -nc -O ./{lang}.tar.gz https://blender04.cs.rpi.edu/~panx2/wikiann/data/{code}.tar.gz\n")
+        fembf.write(f"wget -nc -O ./{lang}.bin.gz https://dl.fbaipublicfiles.com/fasttext/vectors-crawl/cc.{code}.300.bin.gz")
 
-with open("download_all_files.sh", "w") as posf:
-    posf.write('wget -O ud-treebanks-v2.3.tgz "https://lindat.mff.cuni.cz/repository/xmlui/bitstream/handle/11234/1-2895/ud-treebanks-v2.3.tgz?sequence=1&isAllowed=y"')
+with open("pos/download_all_files.sh", "w") as posf:
+    posf.write('wget -nc -O ud-treebanks-v2.3.tgz "https://lindat.mff.cuni.cz/repository/xmlui/bitstream/handle/11234/1-2895/ud-treebanks-v2.3.tgz?sequence=1&isAllowed=y"')

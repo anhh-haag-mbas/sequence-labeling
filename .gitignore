@@ -22,6 +22,8 @@ __pycache__/
 /code/dynet/denmark/embeddings/*
 /code/bilstm-aux/**/__pycache__/*
 **/download_files.sh
+**/download_all_files.sh
+data/pos/ud-treebanks-v2.3.tgz
 
 # IDE files
 .idea
