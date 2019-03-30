@@ -19,7 +19,6 @@ def read_input_label_file(filepath, input_idx, label_idx):
             current_label.append(split[label_idx])
 
         if len(current_input) > 0:
-            print("I fucked up")
             inputs.append(current_input)
             labels.append(current_label)
     
