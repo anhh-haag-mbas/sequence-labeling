@@ -2,9 +2,9 @@ import sys
 
 ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 #FORM, UPOS = 0, 1
-def read_conllu(filepath):
+def read_input_label_file(filepath, input_idx, label_idx):
     inputs, labels = [], []
-    with open(filepath, 'r') as training_file:
+    with open(filepath, 'r', encoding = 'utf-8') as training_file:
         current_input, current_label = [], []
         for line in training_file:
             if line.startswith("#"): continue
@@ -15,13 +15,21 @@ def read_conllu(filepath):
                 continue
 
             split = line.split()
-            word, tag = split[FORM], split[UPOS]
-            
-            current_input.append(word)
-            current_label.append(tag)
+            current_input.append(split[input_idx])
+            current_label.append(split[label_idx])
+
+        if len(current_input) > 0:
+            print("I fucked up")
+            inputs.append(current_input)
+            labels.append(current_label)
     
     return (inputs, labels)
 
+def read_conllu(filepath):
+    return read_input_label_file(filepath, FORM, UPOS)
+
+def read_bio(filepath):
+    return read_input_label_file(filepath, 0, 1)
 
 def read_fasttext(filepath):
     word2embedding = {}
