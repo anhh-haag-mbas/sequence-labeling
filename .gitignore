@@ -24,6 +24,7 @@ __pycache__/
 **/download_files.sh
 **/download_all_files.sh
 data/pos/ud-treebanks-v2.3.tgz
+data/ner
 
 # IDE files
 .idea
