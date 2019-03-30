@@ -21,6 +21,7 @@ __pycache__/
 /code/dynet/denmark/__pycache__/*
 /code/dynet/denmark/embeddings/*
 /code/bilstm-aux/**/__pycache__/*
+**/download_files.sh
 
 # IDE files
 .idea
