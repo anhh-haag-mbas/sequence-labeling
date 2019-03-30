@@ -1,20 +1,22 @@
 import sys
 import ipdb 
 from collections import defaultdict
-from extractor import read_conllu
+from extractor import read_conllu, read_bio
 from bi_lstm_model import BiLstmModel
 from bi_lstm_crf_model import BiLstmCrfModel
 from helper import time, flatten
 
-path_root = "../../../data/pos/"
-train_inputs, train_labels = read_conllu(path_root + "da/training.conllu")
-val_inputs, val_labels = read_conllu(path_root + "da/validation.conllu")
+path_root = "../../../data/ner/"
+train_inputs, train_labels = read_bio(path_root + "/wikiann-sk_training.bio")
+val_inputs, val_labels = read_bio(path_root + "/wikiann-sk_validation.bio")
 #embedding, word_count = read_fasttext("embeddings/cc.da.300.vec")
 
 tags = list(set(flatten(train_labels)))
 tags.sort()
 vocab = list(set(flatten(train_inputs)))
 vocab.sort()
+
+print(tags, len(vocab))
 
 int2word = ["<UNK>"] + vocab
 word2int = {w:i for i, w in enumerate(int2word)}
@@ -31,7 +33,7 @@ def to_input(word, unknown = 0):
 
 VOCAB_SIZE = len(int2word)
 EMBED_SIZE = 86
-HIDDEN_DIM = 16
+HIDDEN_DIM = 100
 OUTPUT_DIM = len(tags)
 
 train_inputs = [[word2int[w] for w in ws] for ws in train_inputs] 
@@ -53,6 +55,8 @@ def evaluate(tagger, inputs, labels):
         for pred, label in zip(s_preds, s_labs):
             if pred != label: evaluation[pred] += 1
     return evaluation
+
+
 
 for testnum in range(test_iterations):
     taggers = []
@@ -86,6 +90,8 @@ total_miss_predictions = {tagger.name: 0 for tagger in taggers}
 total_training_time = {tagger.name: 0 for tagger in taggers}
 total_labels = sum([len(ts) for ts in val_labels])
 
+print(f"Total labels {total_labels}")
+
 for testnum in range(len(data)):
     print(f"Test {testnum}")
     for tagger in data[testnum]:
@@ -103,7 +109,9 @@ for testnum in range(len(data)):
 for tagger in total_training_time:
     print(f"{tagger} tagger:")
     print(f"average_training_time: {total_training_time[tagger]/test_iterations}")
-    print(f"average_miss_predictions: {total_miss_predictions[tagger]/test_iterations} ~ {1 - (total_miss_predictions[tagger]/total_labels)}")
+    average_miss_predictions = total_miss_predictions[tagger]/test_iterations
+    print(f"average_miss_predictions: {average_miss_predictions} ~ {average_miss_predictions / total_labels}")
+    print(f"accuracy: {1 - (average_miss_predictions/total_labels)}")
 
     
 
