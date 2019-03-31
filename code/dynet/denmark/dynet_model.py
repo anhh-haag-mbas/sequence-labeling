@@ -39,7 +39,7 @@ class DynetModel:
         self.w = self.model.add_parameters((self.num_tags, hidden_size * 2))
         self.b = self.model.add_parameters(self.num_tags)
 
-    def set_seed(seed):
+    def set_seed(self, seed):
         dy.reset_random_seed(seed)
         np.random.seed(seed)
        
