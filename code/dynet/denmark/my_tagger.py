@@ -2,13 +2,17 @@ import sys
 import ipdb 
 from collections import defaultdict
 from extractor import read_conllu, read_bio
-from bi_lstm_model import BiLstmModel
-from bi_lstm_crf_model import BiLstmCrfModel
+from dynet_model import DynetModel
 from helper import time, flatten
 
-path_root = "../../../data/ner/"
-train_inputs, train_labels = read_bio(path_root + "/wikiann-sk_training.bio")
-val_inputs, val_labels = read_bio(path_root + "/wikiann-sk_validation.bio")
+#path_root = "../../../data/ner/"
+#train_inputs, train_labels = read_bio(path_root + "/wikiann-sk_training.bio")
+#val_inputs, val_labels = read_bio(path_root + "/wikiann-sk_validation.bio")
+
+path_root = "../../../data/pos/"
+train_inputs, train_labels = read_conllu(path_root + "da/training.conllu")
+val_inputs, val_labels = read_conllu(path_root + "da/validation.conllu")
+
 #embedding, word_count = read_fasttext("embeddings/cc.da.300.vec")
 
 tags = list(set(flatten(train_labels)))
@@ -17,6 +21,7 @@ vocab = list(set(flatten(train_inputs)))
 vocab.sort()
 
 print(tags, len(vocab))
+print(len(flatten(train_labels)))
 
 int2word = ["<UNK>"] + vocab
 word2int = {w:i for i, w in enumerate(int2word)}
@@ -36,6 +41,20 @@ EMBED_SIZE = 86
 HIDDEN_DIM = 100
 OUTPUT_DIM = len(tags)
 
+config = {
+        "vocab_size": len(int2word),
+        "crf": False,
+        "data": {
+            "training": path_root + "da/training.conllu",
+            "validation": path_root + "da/validation.conllu"},
+        "embedding": None,
+        "dropout": 0.1,
+        "batch_size": 1,
+        "epochs": 1, 
+        "lstm_layers": 1,
+        "lstm_dim": 100
+        }
+
 train_inputs = [[word2int[w] for w in ws] for ws in train_inputs] 
 train_labels = [[tag2int[t] for t in ts] for ts in train_labels]
 
@@ -49,29 +68,30 @@ train_time  = "train_time"
 evaluation = "eval"
 
 def evaluate(tagger, inputs, labels):
-    evaluation = {t:0 for t in range(len(tags))}
+    evaluation = {(t1, t2):0 for t1 in range(len(tags)) for t2 in range(len(tags))}
     predictions = [tagger.predict(i) for i in inputs]
     for s_preds, s_labs in zip(predictions, labels):
         for pred, label in zip(s_preds, s_labs):
-            if pred != label: evaluation[pred] += 1
+            if pred != label: evaluation[(label, pred)] += 1
     return evaluation
 
 
 
 for testnum in range(test_iterations):
     taggers = []
-    taggers.append(BiLstmModel(
+    taggers.append(DynetModel(
                         vocab_size = VOCAB_SIZE, 
                         output_size = OUTPUT_DIM, 
                         embed_size = EMBED_SIZE, 
-                        hidden_size = HIDDEN_DIM))
+                        hidden_size = HIDDEN_DIM,
+                        crf = False))
 
-#    taggers.append(BiLstmCrfModel(
-#                        vocab_size = VOCAB_SIZE, 
-#                        output_size = OUTPUT_DIM, 
-#                        embed_size = EMBED_SIZE, 
-#                        hidden_size = HIDDEN_DIM))
-#
+    taggers.append(DynetModel(
+                        vocab_size = VOCAB_SIZE, 
+                        output_size = OUTPUT_DIM, 
+                        embed_size = EMBED_SIZE, 
+                        hidden_size = HIDDEN_DIM,
+                        crf = True))
 
     testdata = data[testnum]
 
@@ -83,7 +103,7 @@ for testnum in range(test_iterations):
 
     for tagger in taggers: 
         evals = evaluate(tagger, val_inputs, val_labels)
-        evals = {int2tag[i]:evals[i] for i in evals.keys()}
+        evals = {(int2tag[l], int2tag[p]):evals[(l,p)] for l, p in evals.keys()}
         testdata[tagger.name][evaluation] = evals
 
 total_miss_predictions = {tagger.name: 0 for tagger in taggers}
@@ -97,7 +117,14 @@ for testnum in range(len(data)):
     for tagger in data[testnum]:
         print(f"{tagger} tagger:")
         for key in data[testnum][tagger]:
-            print(f"{key} = {data[testnum][tagger][key]}")
+            if key == 'eval':
+                ev = data[testnum][tagger]['eval']
+                for expected, actual in ev.keys():
+                    k = (expected, actual)
+                    if ev[k] != 0:
+                        print(f"expected {expected} - actual {actual} = {ev[k]}")
+            else:
+                print(f"{key} = {data[testnum][tagger][key]}")
         miss_predictions = sum(data[testnum][tagger][evaluation].values())
         print(f"Total miss predictions: {miss_predictions} ~ {miss_predictions/total_labels}")
 
