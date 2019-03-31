@@ -1,6 +1,10 @@
+numpy
 cython
 dynet
 ipython
 ipdb
 gensim
+pycld2
+python3-icu
+pyicu
 polyglot
