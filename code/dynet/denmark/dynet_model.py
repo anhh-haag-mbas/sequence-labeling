@@ -3,7 +3,7 @@ import numpy as np
 import array
 
 class DynetModel:
-    def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8, embeddings = None, crf = False, seed = 1):
+    def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8, embedding = None, crf = False, seed = 1):
         self.set_seed(seed)
         self.name = "bi-lstm-crf" if crf else "bi-lstm"
 
@@ -21,10 +21,10 @@ class DynetModel:
             self.predict = self._predict
 
         # Embedding
-        if embeddings is None:
+        if embedding is None:
             self.lookup = self.model.add_lookup_parameters((vocab_size, embed_size))
         else:
-            self.lookup = self.model.lookup_parameters_from_numpy(embeddings)
+            self.lookup = self.model.lookup_parameters_from_numpy(embedding.vectors)
             (embed_size, vocab_size), _ = self.lookup.dim()
 
         # Bi-LSTM
