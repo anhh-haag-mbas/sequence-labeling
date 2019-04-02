@@ -1,0 +1,1 @@
+During refactoring I made an error in my CRF model where some tags were overlapping with the start and end tag, this didn't seem to have any meaningful effect on the model for some reason. Are the start and end of the crf even important?

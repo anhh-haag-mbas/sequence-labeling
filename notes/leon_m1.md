@@ -15,3 +15,15 @@ Current status
         Zeljko mentioned to limit the parameters as much as possible
         Still looking for argument for which languages to choose
             Some representative which we have data for in each task, embeddings, etc.
+
+
+Papers on typologi
+
+Pytorch comparisons
+
+12 languages 2 from each family
+
+Might want to sketch out tables to see what we expect
+    To see progerss
+
+End of week 16 stop doing experiments
