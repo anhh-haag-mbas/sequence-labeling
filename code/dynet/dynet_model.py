@@ -1,11 +1,14 @@
+import dynet_config
+#dynet_config.set_gpu()
 import dynet as dy
 import numpy as np
 import array
 
 class DynetModel:
-    def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8, embedding = None, crf = False, seed = 1):
+    def __init__(self, vocab_size, output_size, embed_size = 86, hidden_size = 8, embedding = None, crf = False, seed = 1, dropout = None):
         self.set_seed(seed)
         self.name = "bi-lstm-crf" if crf else "bi-lstm"
+        self.dropout = dropout if dropout is not None else lambda x, _: x
 
         self.model = dy.ParameterCollection()
         self.trainer = dy.SimpleSGDTrainer(self.model)
@@ -57,8 +60,11 @@ class DynetModel:
 
     def _calculate_score(self, sentence):
         # Embedding + Bi-LSTM + Linear layer
+        #sentence = [self.dropout(w, np.random.uniform()) for w in sentence]
         embeddings = [self.lookup[w] for w in sentence]
+        embeddings = [dy.dropout(e, 0.5) for e in embeddings]
         bi_lstm_output = self.bilstm.transduce(embeddings)
+        bi_lstm_output = [dy.dropout(o, 0.5) for o in bi_lstm_output]
         return [self.w * o + self.b for o in bi_lstm_output]
 
     def _calculate_crf_loss(self, sentence, labels):
