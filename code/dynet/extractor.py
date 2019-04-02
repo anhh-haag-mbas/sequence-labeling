@@ -1,4 +1,5 @@
 import sys
+from collections import defaultdict
 
 ID, FORM, LEMMA, UPOS, XPOS, FEATS, HEAD, DEPREL, DEPS, MISC = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
 #FORM, UPOS = 0, 1
@@ -42,3 +43,29 @@ def read_fasttext(filepath):
 
 def read_polyglot(filepath):
     pass
+
+def read_conllu_metadata(filepath):
+    _, labels = read_input_label_file(filepath, FORM, UPOS)
+    sentences = len(labels)
+    tags = defaultdict(int)
+    for sentence in labels:
+        for label in sentence:
+            tags[label] += 1
+
+    tokens = sum(tags.values())
+    keys = list(tags.keys())
+    keys.sort()
+    label_num = len(keys)
+
+    values = []
+    for key in keys:
+        values.append(str(tags[key]))
+
+    values_string = '\t'.join(values)
+    return f"{sentences}\t{tokens}\t{label_num}\t{values_string}"
+            
+
+
+
+    
+
