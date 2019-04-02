@@ -146,19 +146,27 @@ def run_experiment(config):
 #    print(f"Training time {elapsed}")
 #    print(f"Training output {results}")
 
-config = {
-        "crf": False,
-        "embedding_size": 86,
-        "hidden_size": 100,
-        "seed": 1, 
-        "dropout": 0.0,
-        "task": "pos",
-        "language": "sk",
-#        "embedding_type": "polyglot",
-        "embedding_type": "self_trained",
-        "framework": "dynet",
-        "mini_batches": 1,
-        "epochs": 1 
-        }
+languages = ["sk"]#["ar", "de", "el", "en", "fr", "hu", "ja", "ko", "ru", "sk", "tr", "zh"]
+files = ["training", "testing", "validation"]
+tasks = ["ner"]
+seeds = [659054003] #, 319650727, 614680916, 686244532, 3846303]
 
-print(run_experiment(config))
+for lang in languages:
+    for seed in seeds:
+        for task in tasks:
+            config = {
+                    "crf": False,
+                    "embedding_size": 86,
+                    "hidden_size": 100,
+                    "seed": seed, 
+                    "dropout": 0.0,
+                    "task": task, 
+                    "language": lang, 
+            #        "embedding_type": "polyglot",
+                    "embedding_type": "self_trained",
+                    "framework": "dynet",
+                    "mini_batches": 1,
+                    "epochs": 1 
+                    }
+
+            print(run_experiment(config))
