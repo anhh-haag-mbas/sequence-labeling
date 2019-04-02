@@ -134,7 +134,7 @@ model = models.BiPosTagger(EMBEDDING_DIM, HIDDEN_DIM, VOCAB_SIZE, LABEL_SIZE)
 
 ##### Either load the model state (if it exists) or train from scratch
 try:
-    model.load_state_dict(torch.load("./saved_models/biLSTM.pt"))
+    model.load_state_dict(torch.load("./saved_models/copyBiLSTM.pt"))
     model.eval()
     print("Model loaded")
 except FileNotFoundError:
