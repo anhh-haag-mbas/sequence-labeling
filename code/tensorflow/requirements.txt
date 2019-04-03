@@ -1,4 +1,11 @@
-tensorflow
-polyglot
 keras
+tensorflow
+
+polyglot
+pycld2
+pyicu
 numpy
+
+cython
+fasttext
+requests

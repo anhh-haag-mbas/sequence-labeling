@@ -4,8 +4,8 @@ import keras
 from keras.layers import Dense, LSTM, Activation, Embedding, Bidirectional
 from keras.models import Sequential
 from keras.optimizers import SGD
-from polyglot.downloader import downloader
 
+from embedding import load_polyglot_embedding, load_fasttext_embedding
 from sentences import Sentences
 
 # Configuration dict
@@ -51,19 +51,24 @@ class TensorFlowSequenceLabelling:
         self.configuration = configuration
 
     def load_sentences(self):
-        self.sentences = Sentences(task=self.configuration["task"], language_code=self.configuration["language"])
+        if self.configuration["embedding type"] == "task specific":
+            self.sentences = Sentences(task=self.configuration["task"], language_code=self.configuration["language"])
 
-    def load_embeddings(self):
         if self.configuration["embedding type"] == "polyglot":
-            downloader.download(f"embeddings2.{self.configuration['language']}")
+            embedding = load_polyglot_embedding(self.configuration["language"])
+            self.sentences = Sentences(task=self.configuration["task"], language_code=self.configuration["language"],
+                                       id_by_word=embedding.vocabulary.word_id)
+
+        if self.configuration["embedding type"] == "fasttext":
+            embedding = load_fasttext_embedding(self.configuration["language"])
+            embedding.words??
+            self.sentences = Sentences(task=self.configuration["task"], language_code=self.configuration["language"],
+                                       id_by_word=??)
 
     def create_model(self):
         self.model = Sequential()
 
-        sentence_length = self.sentences.sentence_length
-        embedding_dimensions = self.configuration["embedding dimensions"]
-        self.model.add(Embedding(self.sentences.word_count, embedding_dimensions, input_length=sentence_length,
-                                 mask_zero=True))
+        self.model.add(self.embedding())
 
         # Bidirectional returns the hidden size*2 as there are two layers now (one in each direction)
         self.model.add(Bidirectional(LSTM(units=100, return_sequences=True)))
@@ -75,9 +80,25 @@ class TensorFlowSequenceLabelling:
                            optimizer=self.optimizer(),
                            metrics=['accuracy'])
 
-        self.model.summary()
+        # self.model.summary()
         print("words", self.sentences.training_word_ids.shape)
         print("tags", self.sentences.training_tag_ids.shape)
+
+    def embedding(self):
+        sentence_length = self.sentences.sentence_length
+
+        if self.configuration["embedding type"] == "task specific":
+            dimensions = self.configuration["embedding dimensions"]
+
+            return Embedding(self.sentences.word_count, dimensions, input_length=sentence_length, mask_zero=True)
+
+        if self.configuration["embedding type"] == "polyglot":
+            embedding = load_polyglot_embedding(self.configuration["language"])
+            dimensions = len(embedding.zero_vector())
+            embeddings_initializer = keras.initializers.constant(embedding.vectors)
+
+            return Embedding(len(embedding.words), dimensions, input_length=sentence_length, mask_zero=True,
+                             embeddings_initializer=embeddings_initializer, trainable=False)
 
     def optimizer(self):
         if self.configuration["optimizer"] == "sgd":
@@ -111,7 +132,6 @@ class TensorFlowSequenceLabelling:
 
     def run(self):
         self.load_sentences()
-        self.load_embeddings()
         self.create_model()
         self.train_model()
         self.evaluate_model()
