@@ -2,16 +2,20 @@ import numpy as np
 
 
 class Sentences:
-    def __init__(self, task, language_code):
+    def __init__(self, task, language_code, id_by_word=None):
         """
         :param task: "pos", "ner"
         :param language_code: e.g. "da", "en", "ch", etc.
         """
         self.task = task
         self.language_code = language_code
+        # TODO: Padding/unknown words are different in polyglot/fasttext
         self.padding_id = 0
         self.unknown_id = 1
-        self.sentence_length = self.calculate_sentence_length(self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, "training")))))
+        self.sentence_length = self.calculate_sentence_length(
+            self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, "training")))))
+
+        self.id_by_word = id_by_word
         self.training_word_ids, self.id_by_word = self.construct_training_word_ids()
         self.word_by_id = {v: k for k, v in self.id_by_word.items()}
         self.training_tag_ids, self.id_by_tag = self.construct_training_tag_ids()
@@ -34,7 +38,10 @@ class Sentences:
         self.testing_tag_ids = np.asarray(self.testing_tag_ids)
 
     def construct_training_word_ids(self):
-        return self.training_groups_to_ids(self.training_words())
+        if self.id_by_word is None:
+            return self.training_groups_to_ids(self.training_words())
+        else:
+            return self.groups_to_ids(self.training_words(), self.id_by_word), self.id_by_word
 
     def construct_training_tag_ids(self):
         return self.training_groups_to_ids(self.training_tags())
@@ -52,7 +59,7 @@ class Sentences:
         return self.groups_to_ids(self.testing_tags(), self.id_by_tag)
 
     def training_groups_to_ids(self, groups):
-        id_by_item = {"__unk__": self.unknown_id, "__pad__": self.padding_id}
+        id_by_item = {"<UNK>": self.unknown_id, "<PAD>": self.padding_id}
         id_groups = []
         id_group = []
         for group in groups:
@@ -116,10 +123,10 @@ class Sentences:
         return len(longest_sentence)
 
     def padded_words(self, words):
-        return [self.pad(group, "__pad__", self.sentence_length) for group in words]
+        return [self.pad(group, "<PAD>", self.sentence_length) for group in words]
 
     def padded_tags(self, tags):
-        return [self.pad(group, "__pad__", self.sentence_length) for group in tags]
+        return [self.pad(group, "<PAD>", self.sentence_length) for group in tags]
 
     def pad(self, items, padding, size):
         while len(items) < size:
