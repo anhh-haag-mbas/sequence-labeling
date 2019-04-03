@@ -4,7 +4,9 @@ import keras
 from keras.layers import Dense, LSTM, Activation, Embedding, Bidirectional
 from keras.models import Sequential
 from keras.optimizers import SGD
-from polyglot.downloader import downloader
+from polyglot.downloader import downloader as polyglot_downloader
+from polyglot.mapping import Embedding as PolyglotEmbedding
+import os
 
 from sentences import Sentences
 
@@ -55,7 +57,13 @@ class TensorFlowSequenceLabelling:
 
     def load_embeddings(self):
         if self.configuration["embedding type"] == "polyglot":
-            downloader.download(f"embeddings2.{self.configuration['language']}")
+            polyglot_downloader.download(f"embeddings2.{self.configuration['language']}")
+            folder = polyglot_downloader.download_dir
+            filename = polyglot_downloader.info(f"embeddings2.{self.configuration['language']}").filename
+            path = os.path.join(folder, filename)
+            embedding = PolyglotEmbedding.load(path)
+            # Usage:
+            # embedding.get(word, default) -> numpy vector
 
     def create_model(self):
         self.model = Sequential()
