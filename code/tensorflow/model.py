@@ -5,7 +5,7 @@ from keras.layers import Dense, LSTM, Activation, Embedding, Bidirectional
 from keras.models import Sequential
 from keras.optimizers import SGD
 
-from embedding import load_polyglot_embedding
+from embedding import load_polyglot_embedding, load_fasttext_embedding
 from sentences import Sentences
 
 # Configuration dict
@@ -53,10 +53,17 @@ class TensorFlowSequenceLabelling:
     def load_sentences(self):
         if self.configuration["embedding type"] == "task specific":
             self.sentences = Sentences(task=self.configuration["task"], language_code=self.configuration["language"])
+
         if self.configuration["embedding type"] == "polyglot":
             embedding = load_polyglot_embedding(self.configuration["language"])
             self.sentences = Sentences(task=self.configuration["task"], language_code=self.configuration["language"],
                                        id_by_word=embedding.vocabulary.word_id)
+
+        if self.configuration["embedding type"] == "fasttext":
+            embedding = load_fasttext_embedding(self.configuration["language"])
+            embedding.words??
+            self.sentences = Sentences(task=self.configuration["task"], language_code=self.configuration["language"],
+                                       id_by_word=??)
 
     def create_model(self):
         self.model = Sequential()

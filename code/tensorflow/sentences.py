@@ -10,8 +10,6 @@ class Sentences:
         self.task = task
         self.language_code = language_code
         # TODO: Padding/unknown words are different in polyglot/fasttext
-        self.padding_id = 0
-        self.unknown_id = 1
         self.sentence_length = self.calculate_sentence_length(
             self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, "training")))))
 
@@ -26,6 +24,12 @@ class Sentences:
         self.testing_tag_ids = self.construct_testing_tag_ids()
         self.word_count = len(self.id_by_word)
         self.tag_count = len(self.id_by_tag)
+
+        self.word_padding_id = self.id_by_word["<PAD>"]
+        self.word_unknown_id = self.id_by_word["<UNK>"]
+
+        self.tag_padding_id = self.id_by_tag["<PAD>"]
+        self.tag_unknown_id = self.id_by_tag["<UNK>"]
 
         self.convert_to_numpy_arrays()
 
@@ -59,7 +63,7 @@ class Sentences:
         return self.groups_to_ids(self.testing_tags(), self.id_by_tag)
 
     def training_groups_to_ids(self, groups):
-        id_by_item = {"<UNK>": self.unknown_id, "<PAD>": self.padding_id}
+        id_by_item = {"<UNK>": 0, "<PAD>": 1}
         id_groups = []
         id_group = []
         for group in groups:
@@ -79,7 +83,7 @@ class Sentences:
                 if item in id_by_item:
                     id_group += [id_by_item[item]]
                 else:
-                    id_group += [self.unknown_id]
+                    id_group += [id_by_item["<UNK>"]]
             id_groups += [id_group]
             id_group = []
         return id_groups
