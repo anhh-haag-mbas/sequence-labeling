@@ -1,5 +1,5 @@
 import dynet_config
-dynet_config.set_gpu(False)
+#dynet_config.set_gpu(False)
 import dynet as dy
 import numpy as np
 import array
@@ -82,13 +82,13 @@ class DynetModel:
         return dy.esum(losses)
 
     def fit_auto_batch(self, sentences, labels, mini_batch_size = 1, epochs = 1, 
-                       patience = None, validation_sentences = None, validation_lables = None):
+                       patience = None, validation_sentences = None, validation_labels = None):
         """
         Train the model using dynet' auto-batching (requires --dynet-autobatch 1). 
         The model expects the sentence and labels transformed into integer representations.
         """
         if patience is not None:
-            if validation_sentences is None or validation_lables is None:
+            if validation_sentences is None or validation_labels is None:
                 raise ValueError("Patience is set but no validation sentences or labels")
             best_correct = 0
 
@@ -110,7 +110,7 @@ class DynetModel:
                 self.trainer.update()
 
             if patience is not None:
-                correct = self.evaluate(validation_sentences, validation_lables)
+                correct = self.evaluate(validation_sentences, validation_labels)
                 if correct > best_correct:
                     best_correct = correct
                     epochs_no_improvement = 0

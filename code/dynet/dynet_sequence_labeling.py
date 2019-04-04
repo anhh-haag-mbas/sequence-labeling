@@ -125,8 +125,16 @@ def run_experiment(config):
                 seed = config["seed"],
                 dropout_rate = config["dropout"])
 
-    results, elapsed = time(tagger.fit_auto_batch, train_inputs, train_labels, config['mini_batches'], config['epochs'], config["patience"], val_inputs, val_labels) 
-
+    results, elapsed = time(
+                        lambda: tagger.fit_auto_batch(
+                                    sentences = train_inputs, 
+                                    labels = train_labels, 
+                                    mini_batch_size = config['mini_batches'],
+                                    epochs = config['epochs'], 
+                                    patience = config["patience"], 
+                                    validation_sentences = val_inputs, 
+                                    validation_labels = val_labels) 
+                        )
     print(results)
 
     evaluation, eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, tags)
