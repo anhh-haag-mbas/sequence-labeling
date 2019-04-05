@@ -1,0 +1,21 @@
+The models consists of a Polyglot (\ref) embedding layer, a 2 layered bi-lstm, and a linear transformation layer. 
+After the linear transformation layer, one of the models uses a softmax activation function to return the probability distribution for the output values.
+The other model uses a linear-chain CRF to calculate the best sequence scores and uses this to output best values.
+
+The expectation for these models is that the CRF model performs better on the Named Entity Recognition (NER) tasks, 
+and has no significant influence on the scores in the Part of Speech (POS) tasks.
+Although we do not expect the CRF layer to negatively affect the score on POS tasks, 
+CRF's are known to be slower to train, so we expect the training time to increase significantly(\ref).
+
+We use a pretrained embedding since they have been shown to provide a significant increase in accuracy for sequence labeling tasks (\ref).
+We picked pretrained Polyglot embeddings since there exists models in a lot of different languages, 
+and Polyglot seems to outperform its competitors like FastText (\ref to FastText + comparison), 
+even though FastText's embeddings are significantly larget than Polyglot's.
+
+We use a bi-lstm to encode the relationships between all the words in sentences,
+bi-lstm have been shown to perform better than other Reccurent Neural Networks (RNN) (eg. GRU) or convolutional neural networks on sequence labeling tasks (\ref).
+We choose a 2 layered bi-lstm since sources show (\ref) that this often times perform better than a single layer,
+while 3 layers doesn't necessarily provide any benefits.
+
+The linear transformation layer is simply used to transform the output of the bi-lstm to a kind of score for each of the possible output values.
+The scores are used by softmax and the CRF layer to provide the final output.
