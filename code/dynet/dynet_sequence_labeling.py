@@ -6,7 +6,6 @@ import sys
 import numpy as np
 
 unknown = "<UNK>"
-separator = "\t"
 
 def validate_config(config):
     config_values = []
@@ -65,21 +64,20 @@ def evaluate(tagger, inputs, labels, tags):
     predictions = [tagger.predict(i) for i in inputs]
     for s_preds, s_labs in zip(predictions, labels):
         for pred, label in zip(s_preds, s_labs):
-            if pred != label: evaluation[(label, pred)] += 1
+            evaluation[(label, pred)] += 1
     return evaluation
 
-def to_input(word, word2int, default):
-    """
-    Transforms words to their respective integer representation or unknown if not in dict
-    """
-    if word in word2int.keys():
-        return word2int[word]
-    return default 
+def count_errors(evaluation):
+    errors = 0
+    for expected, actual in evaluation:
+        if expected != actual:
+            errors += evaluation[(expected, actual)]
+    return errors
 
-def config_to_csv(config):
+def config_to_csv(config, separator = ","):
     return f'{config["framework"]}{separator}{config["language"]}{separator}{config["crf"]}{separator}{config["task"]}{separator}{config["embedding_type"]}{separator}{config["seed"]}{separator}{config["mini_batches"]}{separator}{config["epochs"]}{separator}'
 
-def evaluation_to_csv(evaluation):
+def evaluation_to_csv(evaluation, separator = ","):
     keys = list(evaluation.keys())
     keys.sort()
     values = []
@@ -95,8 +93,8 @@ def print_evaluation(evaluation, int2tag):
 
 
 def run_experiment(config):
-    # Setup 
     validate_config(config)
+    # Setup 
     train_inputs, train_labels = read_data(config, "training")
     val_inputs, val_labels     = read_data(config, "validation")
     embedding                  = configure_embedding(config)
@@ -114,29 +112,36 @@ def run_experiment(config):
     val_inputs = [[word2int(w) for w in ws] for ws in val_inputs]
     val_labels = [[tag2int(t) for t in ts] for ts in val_labels]
 
-    def apply_dropout(word, p):
-        #print(p, p < config['dropout'], word, word2int("<UNK>"))
-        return word2int("<UNK>") if p < config["dropout"] else word
+    separator = ","
 
     # Testing
     tagger = DynetModel(
-                vocab_size = len(words) + 1,
+                input_size = len(words) + 1,
                 output_size = len(tags),
                 embed_size = config["embedding_size"],
                 hidden_size = config["hidden_size"],
                 crf = config["crf"],
                 embedding = embedding,
                 seed = config["seed"],
-                dropout = apply_dropout)
+                dropout_rate = config["dropout"])
 
-    if config['mini_batches'] == 1 and config['epochs'] == 1:
-        results, elapsed = time(tagger.fit, train_inputs, train_labels) 
-    else:
-        results, elapsed = time(tagger.fit_auto_batch, train_inputs, train_labels, config['mini_batches'], config['epochs']) 
+    results, elapsed = time(
+                        lambda: tagger.fit_auto_batch(
+                                    sentences = train_inputs, 
+                                    labels = train_labels, 
+                                    mini_batch_size = config['mini_batches'],
+                                    epochs = config['epochs'], 
+                                    patience = config["patience"], 
+                                    validation_sentences = val_inputs, 
+                                    validation_labels = val_labels) 
+                        )
+    print(results)
 
-    evaluation = evaluate(tagger, val_inputs, val_labels, tags)
-    total_errors = sum(evaluation.values())
-    accuracy = 1 - (total_errors / (sum([len(i) for i in val_inputs])))
+    evaluation, eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, tags)
+    total_values = sum([len(i) for i in val_inputs])
+    total_errors = count_errors(evaluation)
+    accuracy = 1 - (total_errors / total_values)
+    print(f"training {elapsed} - test {eva_elapsed}, tokens {total_values} - errors {total_errors}")
     return config_to_csv(config) + f"{elapsed}{separator}{total_errors}{separator}{accuracy}{separator}" + evaluation_to_csv(evaluation)
 
 #    for expected, actual in evaluation.keys():
@@ -146,9 +151,8 @@ def run_experiment(config):
 #    print(f"Training time {elapsed}")
 #    print(f"Training output {results}")
 
-languages = ["sk"]#["ar", "de", "el", "en", "fr", "hu", "ja", "ko", "ru", "sk", "tr", "zh"]
-files = ["training", "testing", "validation"]
-tasks = ["ner"]
+languages = ["da"]#["ar", "de", "el", "en", "fr", "hu", "ja", "ko", "ru", "sk", "tr", "zh"]
+tasks = ["pos"]
 seeds = [659054003] #, 319650727, 614680916, 686244532, 3846303]
 
 for lang in languages:
@@ -159,14 +163,15 @@ for lang in languages:
                     "embedding_size": 86,
                     "hidden_size": 100,
                     "seed": seed, 
-                    "dropout": 0.0,
+                    "dropout": 0.50,
                     "task": task, 
                     "language": lang, 
-            #        "embedding_type": "polyglot",
-                    "embedding_type": "self_trained",
+                    "embedding_type": "polyglot",
+                    #"embedding_type": "self_trained",
                     "framework": "dynet",
-                    "mini_batches": 1,
-                    "epochs": 1 
+                    "mini_batches": 16,
+                    "epochs": 20,
+                    "patience": 3
                     }
 
             print(run_experiment(config))
