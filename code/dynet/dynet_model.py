@@ -1,4 +1,5 @@
 import dynet_config
+dynet_config.set(autobatch=1, profiling=0)
 #dynet_config.set_gpu(False)
 import dynet as dy
 import numpy as np
@@ -8,8 +9,7 @@ class DynetModel:
     """
     The sequence tagger model, dynet implementation.
     """
-    def __init__(self, input_size, output_size, embed_size, hidden_size,
-                 seed=1, embedding=None, crf=False, dropout_rate=0.5):
+    def __init__(self, embedding, output_size, hidden_size, seed=1, crf=False, dropout_rate=0.5):
         self.set_seed(seed)
         self.model = dy.ParameterCollection()
         self.trainer = dy.SimpleSGDTrainer(self.model)
@@ -26,11 +26,8 @@ class DynetModel:
             self._predict = self._predict_sentence
 
         # Embedding
-        if embedding is None:
-            self.lookup = self.model.add_lookup_parameters((input_size, embed_size))
-        else:
-            self.lookup = self.model.lookup_parameters_from_numpy(embedding.vectors)
-            (embed_size, _), _ = self.lookup.dim()
+        self.lookup = self.model.lookup_parameters_from_numpy(embedding.vectors)
+        (embed_size, _), _ = self.lookup.dim()
 
         # Bi-LSTM
         self.bilstm = dy.BiRNNBuilder(
