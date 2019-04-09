@@ -2,17 +2,17 @@ from model import TensorFlowSequenceLabelling
 
 conf = {
     "framework": "tensorflow",
-    "model": "bi-lstm",
+    "crf": "bi-lstm",
     "language": "da",
     "optimizer": "sgd",
-    "learning rate": 0.1,
-    # "embedding type": "task specific",
-    "embedding type": "polyglot",
-    "embedding dimensions": 64,
-    "dropout": 0,
+    "learning_rate": 0.1,
+    "dropout": 0.5,
     "task": "pos",
-    "batch_size": 40,
-    "repeat": 2
+    "batch_size": 100,
+    "data_dir": "../../data/",
+    "seed": 5123,
+    "epochs": 1,
+    "patience": None
 }
 
 labelling = TensorFlowSequenceLabelling(conf)

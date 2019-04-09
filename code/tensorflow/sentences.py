@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Sentences:
-    def __init__(self, task, language_code, id_by_word=None):
+    def __init__(self, task, language_code, id_by_word):
         """
         :param task: "pos", "ner"
         :param language_code: e.g. "da", "en", "ch", etc.
@@ -25,11 +25,11 @@ class Sentences:
         self.word_count = len(self.id_by_word)
         self.tag_count = len(self.id_by_tag)
 
-        self.word_padding_id = self.id_by_word["<PAD>"]
         self.word_unknown_id = self.id_by_word["<UNK>"]
+        self.word_padding_id = self.id_by_word["<PAD>"]
 
-        self.tag_padding_id = self.id_by_tag["<PAD>"]
         self.tag_unknown_id = self.id_by_tag["<UNK>"]
+        self.tag_padding_id = self.id_by_tag["<PAD>"]
 
         self.convert_to_numpy_arrays()
 
@@ -42,10 +42,7 @@ class Sentences:
         self.testing_tag_ids = np.asarray(self.testing_tag_ids)
 
     def construct_training_word_ids(self):
-        if self.id_by_word is None:
-            return self.training_groups_to_ids(self.training_words())
-        else:
-            return self.groups_to_ids(self.training_words(), self.id_by_word), self.id_by_word
+        return self.groups_to_ids(self.training_words(), self.id_by_word), self.id_by_word
 
     def construct_training_tag_ids(self):
         return self.training_groups_to_ids(self.training_tags())
@@ -63,7 +60,7 @@ class Sentences:
         return self.groups_to_ids(self.testing_tags(), self.id_by_tag)
 
     def training_groups_to_ids(self, groups):
-        id_by_item = {"<UNK>": 0, "<PAD>": 1}
+        id_by_item = {"<PAD>": 0, "<UNK>": 1}
         id_groups = []
         id_group = []
         for group in groups:
