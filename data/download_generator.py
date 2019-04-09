@@ -1,6 +1,7 @@
 """
 Reads the language codes in languages.txt to generate bash scripts for downloading all the appropriate NER and fasttext files
 TODO: Somehow extend with polyglot file downloads
+      http://polyglot.cs.stonybrook.edu/~polyglot/embeddings2/ja/embeddings_pkl.tar.bz2
 """
 import sys
 
