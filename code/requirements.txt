@@ -1,0 +1,13 @@
+numpy
+cython
+dynet
+ipython
+ipdb
+gensim
+python3-icu
+pyicu
+polyglot
+tensorflow
+keras
+torch
+torch-vision
