@@ -8,7 +8,7 @@ def config_to_str(config, separator):
     values = []
     keys = ["framework", "language", "task", "crf", "seed", "batch_size", "epochs", "patience"]
     values = map(lambda k: str(config[k]), keys)
-    return separator.join(values) 
+    return separator.join(values)
 
 def evaluation_to_str(evaluation, separator):
     return ""
@@ -17,7 +17,7 @@ def results_to_str(results, separator):
     values = []
     keys = ["total_values", "total_errors", "total_oov", "total_oov_errors", "training_time", "evaluation_time", "epochs_run"]
     values = map(lambda k: str(config[k]), keys)
-    return separator.join(values) + evaluation_to_str(results["evaluation_matrix", separator]
+    return separator.join(values) + evaluation_to_str(results["evaluation_matrix"], separator)
 
 def run_experiment(config):
     framework = config["framework"]
@@ -39,7 +39,7 @@ def experiment_to_str(config, results):
     return config_to_str(config,separator)+separator+results_to_str(results, separator)
 
 frameworks = ["dynet", "pytorch", "tensorflow"]
-languages = ["de", "nl", "ja", "en", "sv", "zh", "sk", "ar", "el"] 
+languages = ["de", "nl", "ja", "en", "sv", "zh", "sk", "ar", "el"]
 tasks = ["pos", "ner"]
 models = [True, False]
 seeds = [613321, 5123, 421213, 521403, 322233]
@@ -48,7 +48,7 @@ epochs = [1, 5, {"max": 50, "patience": 3}]
 
 count = 0
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
-config_count = len(frameworks) * len(seeds) * len(batch_sizes) * len(epochs) * len(tasks) * len(models) * len(languages) 
+config_count = len(frameworks) * len(seeds) * len(batch_sizes) * len(epochs) * len(tasks) * len(models) * len(languages)
 
 for framework, seed, batch_size, epoch, task, model, language in configurations:
     config = {
@@ -61,7 +61,9 @@ for framework, seed, batch_size, epoch, task, model, language in configurations:
             "epochs": epoch if not isinstance(epoch, dict) else epoch["max"],
             "patience": None if not isinstance(epoch, dict) else epoch["patience"],
             "hidden_size": 100,
-            "dropout": 0.5, 
+            "dropout": 0.5,
+            "optimizer": "sgd",
+            "learning_rate": 0.1,
             "data_root": "../data/"
             }
     count += 1
