@@ -2,9 +2,7 @@ from dynet_model import DynetModel
 from helper import flatten, time
 from extractor import read_conllu, read_bio
 from polyglot.mapping import Embedding
-from collections import defaultdict
 import sys
-import numpy as np
 
 def validate_config(config):
     config_values = []
@@ -29,7 +27,7 @@ def validate_config(config):
         raise ValueError(f"No value for {config_values} in config")
 
 def read_data(config, data_type):
-    root_path = "../../data/"
+    root_path = config["data_root"]
     lang = config["language"]
     if config["task"] == "ner":
         return read_bio(root_path + f"ner/{lang}/{data_type}.bio")
@@ -37,7 +35,7 @@ def read_data(config, data_type):
         return read_conllu(root_path + f"pos/{lang}/{data_type}.conllu")
 
 def configure_embedding(config):
-    root_path = "../../data/embeddings/"
+    root_path = config["data_root"] + "embeddings/"
     lang = config["language"]
     return Embedding.load(root_path + f"polyglot/{lang}.tar.bz2")
 
@@ -46,7 +44,7 @@ def create_embedding_mapping(embedding):
     unknown_id = vocabulary.get("<UNK>")
     return lambda i: vocabulary.words[i], lambda e: vocabulary.get(e, unknown_id)
 
-def create_mapping(elements, default = None, embedding = None):
+def create_mapping(elements, default = None):
     elements = list(set(elements))
     elements.sort()
     if default: elements.insert(0, default)
@@ -55,38 +53,31 @@ def create_mapping(elements, default = None, embedding = None):
 
     return lambda i: elements[i], lambda e: ele2int.get(e, 0)
 
-def evaluate(tagger, inputs, labels, tags):
+# TODO: make cleaner
+def evaluate(tagger, inputs, labels, tags, unknown):
     evaluation = {t2:{t1:0 for t1 in tags} for t2 in tags}
+   
+    total_words = 0
+    total_oov = 0
+    for s in inputs:
+        for w in s:
+            total_words += 1
+            if w == unknown:
+                total_oov += 1
+
+    total_errors = 0
+    total_oov_errors = 0
+
     predictions = [tagger.predict(i) for i in inputs]
-    for s_preds, s_labs in zip(predictions, labels):
-        for pred, label in zip(s_preds, s_labs):
+    for s_preds, s_labs, s in zip(predictions, labels, inputs):
+        for pred, label, word in zip(s_preds, s_labs, s):
             evaluation[label][pred] += 1
-    return evaluation
+            if label != pred:
+                total_errors += 1
+                if word == unknown:
+                    total_oov_errors += 1
 
-def count_errors(evaluation):
-    errors = 0
-    for expected, actual in evaluation:
-        if expected != actual:
-            errors += evaluation[(expected, actual)]
-    return errors
-
-#def config_to_csv(config, separator = ","):
-#    return f'{config["framework"]}{separator}{config["language"]}{separator}{config["crf"]}{separator}{config["task"]}{separator}{config["embedding_type"]}{separator}{config["seed"]}{separator}{config["mini_batches"]}{separator}{config["epochs"]}{separator}'
-#
-#def evaluation_to_csv(evaluation, separator = ","):
-#    keys = list(evaluation.keys())
-#    keys.sort()
-#    values = []
-#    for key in keys:
-#        values.append(evaluation[key])
-#    return f"{separator}".join(map(str, values))
-#
-#def print_evaluation(evaluation, int2tag):
-#    keys = list(evaluation.keys())
-#    keys.sort()
-#    for t1, t2 in keys:
-#        print(f"Expected {int2tag(t1)} - Actual {int2tag(t2)} = {evaluation[(t1,t2)]} times", file=sys.stderr)
-#
+    return evaluation, total_words, total_oov, total_errors, total_oov_errors
 
 def run_experiment(config):
     validate_config(config)
@@ -95,9 +86,7 @@ def run_experiment(config):
     val_inputs, val_labels     = read_data(config, "validation")
     test_inputs, test_labels   = read_data(config, "testing")
     embedding                  = configure_embedding(config)
-
-    words = set(flatten(train_inputs))
-    tags = set(flatten(train_labels))
+    tags                       = set(flatten(train_labels))
 
     int2tag, tag2int           = create_mapping(tags)
     int2word, word2int         = create_embedding_mapping(embedding)
@@ -107,8 +96,6 @@ def run_experiment(config):
 
     val_inputs = [[word2int(w) for w in ws] for ws in val_inputs]
     val_labels = [[tag2int(t) for t in ts] for ts in val_labels]
-
-    separator = ","
 
     # Testing
     tagger = DynetModel(
@@ -129,31 +116,33 @@ def run_experiment(config):
                                     validation_sentences = val_inputs, 
                                     validation_labels = val_labels) 
                         )
-    print(results)
 
-    evaluation, eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, [tag2int(t) for t in tags])
-    total_values = sum([len(i) for i in val_inputs])
-    total_errors = count_errors(evaluation)
+    (evaluation, total_words, total_oov, total_errors, total_oov_errors), eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, [tag2int(t) for t in tags], word2int("<UNK>"))
+
+
+    evaluation = {int2tag(exp): {int2tag(act):evaluation[exp][act] for act in evaluation[exp]} for exp in evaluation}
+
     return {
-            "total_values": total_values,
+            "total_values": total_words,
             "total_errors": total_errors,
             "total_oov": total_oov,
             "total_oov_errors": total_oov_errors,
             "training_time": elapsed,
             "evaluation_time": eva_elapsed,
-            "evaluation_matrix": evaluation
+            "evaluation_matrix": evaluation,
+            "epochs_run": results
             }
 
-config = {
-        "language": "da",
-        "task": "pos",
-        "crf": False,
-        "seed": 613321,
-        "batch_size": 1,
-        "epochs": 1,
-        "patience": None,
-        "hidden_size": 100,
-        "dropout": 0.5
-        }
-
-print(run_experiment(config))
+#config = {
+#        "language": "da",
+#        "task": "pos",
+#        "crf": False,
+#        "seed": 613321,
+#        "batch_size": 1,
+#        "epochs": 1,
+#        "patience": None,
+#        "hidden_size": 100,
+#        "dropout": 0.0
+#        }
+#
+#print(run_experiment(config))
