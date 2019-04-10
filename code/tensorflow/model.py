@@ -2,12 +2,13 @@ import time
 
 import keras
 import os
+from keras import Model, Input
 from keras.callbacks import EarlyStopping
 from keras.layers import Dense, LSTM, Activation, Embedding, Bidirectional, Dropout
-from keras.models import Sequential
 from keras.optimizers import SGD
 from polyglot.mapping import Embedding as PolyglotEmbedding
 
+from crf import CRF
 from sentences import Sentences
 
 
@@ -30,31 +31,32 @@ class TensorFlowSequenceLabelling:
                          id_by_word=self.embedding.vocabulary.word_id)
 
     def create_model(self):
-        model = Sequential()
-
         sentence_length = self.sentences.sentence_length
         dimensions = len(self.embedding.zero_vector())
         embeddings_initializer = keras.initializers.constant(self.embedding.vectors)
 
-        model.add(Embedding(len(self.embedding.words), dimensions, input_length=sentence_length, mask_zero=True,
-                            embeddings_initializer=embeddings_initializer))
+        inputs = Input(shape=(sentence_length, ))
+
+        layer = Embedding(len(self.embedding.words), dimensions, input_length=sentence_length, mask_zero=True,
+                          embeddings_initializer=embeddings_initializer)(inputs)
 
         if self.c["dropout"] and self.c["dropout"] > 0:
-            model.add(Dropout(self.c["dropout"]))
+            layer = Dropout(self.c["dropout"])(layer)
 
         # TODO: NER task
 
         # Bidirectional returns the hidden size*2 as there are two layers now (one in each direction)
-        model.add(Bidirectional(LSTM(units=100, return_sequences=True)))
+        layer = Bidirectional(LSTM(units=100, return_sequences=True))(layer)
 
         if self.c["dropout"] and self.c["dropout"] > 0:
-            model.add(Dropout(self.c["dropout"]))
+            layer = Dropout(self.c["dropout"])(layer)
 
-        model.add(Dense(self.sentences.tag_count))
-        model.add(Activation('softmax'))
+        layer = Dense(self.sentences.tag_count)(layer)
+        layer = Activation('softmax')(layer)
 
         if self.c["crf"]:
-            pass  # TODO: CRF
+            # TODO: CRF
+            pass #layer = CRF()(layer, sequence_lenghts)
 
         optimizer = None
         if self.c["optimizer"] == "sgd":
@@ -62,9 +64,11 @@ class TensorFlowSequenceLabelling:
         if self.c["optimizer"] == "adam":
             optimizer = "adam"
 
+        model = Model(inputs=inputs, outputs=layer)
         model.compile(loss='categorical_crossentropy',
                       optimizer=optimizer,
                       metrics=['accuracy'])
+
         return model
 
     def run(self):
@@ -84,7 +88,7 @@ class TensorFlowSequenceLabelling:
             "total_acc": self.total_acc,
             "oov_acc": self.oov_acc,
             "epochs_run": None,  # TODO: epochs ran
-            "evalutation_matrix": self.evalutation_matrix # TODO: Use tags instead of ids
+            "evalutation_matrix": self.evalutation_matrix  # TODO: Use tags instead of ids
         }
 
     def train_model(self):
