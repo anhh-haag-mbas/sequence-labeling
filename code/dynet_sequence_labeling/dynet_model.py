@@ -31,7 +31,7 @@ class DynetModel:
 
         # Bi-LSTM
         self.bilstm = dy.BiRNNBuilder(
-                            num_layers = 2,
+                            num_layers = 1,
                             input_dim = embed_size,
                             hidden_dim = hidden_size * 2,
                             model = self.model,

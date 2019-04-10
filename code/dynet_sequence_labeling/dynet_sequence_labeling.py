@@ -1,6 +1,6 @@
-from dynet_model import DynetModel
-from helper import flatten, time
-from extractor import read_conllu, read_bio
+from dynet_sequence_labeling.dynet_model import DynetModel
+from dynet_sequence_labeling.helper import flatten, time
+from dynet_sequence_labeling.extractor import read_conllu, read_bio
 from polyglot.mapping import Embedding
 import sys
 
@@ -142,7 +142,8 @@ def run_experiment(config):
 #        "epochs": 1,
 #        "patience": None,
 #        "hidden_size": 100,
-#        "dropout": 0.0
+#        "dropout": 0.0,
+#        "data_root": "../../data/"
 #        }
 #
 #print(run_experiment(config))
