@@ -1,11 +1,10 @@
 import sys
-sys.path.insert(0, "./dynet")
 import os
 from itertools import product
-import dynet_sequence_labeling
+import dynet_sequence_labeling.dynet_sequence_labeling
+from polyglot.mapping import Embedding
 
 def config_to_str(config, separator):
-    values = []
     keys = ["framework", "language", "task", "crf", "seed", "batch_size", "epochs", "patience"]
     values = map(lambda k: str(config[k]), keys)
     return separator.join(values)
@@ -14,10 +13,12 @@ def evaluation_to_str(evaluation, separator):
     return ""
 
 def results_to_str(results, separator):
-    values = []
     keys = ["total_values", "total_errors", "total_oov", "total_oov_errors", "training_time", "evaluation_time", "epochs_run"]
     values = map(lambda k: str(config[k]), keys)
     return separator.join(values) + evaluation_to_str(results["evaluation_matrix"], separator)
+
+def load_embeddings(data_root, languages):
+    return [Embedding.load(data_root + f"embeddings/{l}.tar.bz2") for l in languages]
 
 def run_experiment(config):
     framework = config["framework"]
@@ -45,12 +46,17 @@ models = [True, False]
 seeds = [613321, 5123, 421213, 521403, 322233]
 batch_sizes = [1, 8, 32]
 epochs = [1, 5, {"max": 50, "patience": 3}]
+data_root = "../data/"
 
 count = 0
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
 config_count = len(frameworks) * len(seeds) * len(batch_sizes) * len(epochs) * len(tasks) * len(models) * len(languages)
 
+
+embeddings = load_embeddings(data_root, languages)
+
 for framework, seed, batch_size, epoch, task, model, language in configurations:
+
     config = {
             "framework": framework,
             "language": language,
@@ -64,7 +70,8 @@ for framework, seed, batch_size, epoch, task, model, language in configurations:
             "dropout": 0.5,
             "optimizer": "sgd",
             "learning_rate": 0.1,
-            "data_root": "../data/"
+            "data_root": data_root,
+            "embedding": polyglot_embedding
             }
     count += 1
     print(f"{count} / {config_count} - {config_to_str(config, ' ')}")
