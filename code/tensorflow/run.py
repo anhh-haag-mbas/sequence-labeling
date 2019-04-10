@@ -2,7 +2,7 @@ from model import TensorFlowSequenceLabelling
 
 conf = {
     "framework": "tensorflow",
-    "crf": "bi-lstm",
+    "crf": True,
     "language": "da",
     "optimizer": "sgd",
     "learning_rate": 0.1,
