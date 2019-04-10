@@ -81,8 +81,10 @@ class TensorFlowSequenceLabelling:
             "total_errors": self.total_errors,
             "total_oov": self.total_oov,
             "total_oov_errors": self.total_oov_errors,
+            "total_acc": self.total_acc,
+            "oov_acc": self.oov_acc,
             "epochs_run": None,  # TODO: epochs ran
-            "evalutation_matrix": self.evalutation_matrix
+            "evalutation_matrix": self.evalutation_matrix # TODO: Use tags instead of ids
         }
 
     def train_model(self):
@@ -128,6 +130,9 @@ class TensorFlowSequenceLabelling:
                 if oov and error:
                     self.total_oov_errors += 1
                 self.evalutation_matrix[(predicted_tag, actual_tag)] += 1
+
+        self.total_acc = 1 - (self.total_errors / self.total_values)
+        self.oov_acc = 1 - (self.total_oov_errors / self.total_oov)
 
     def measure(self, function):
         begin_timestamp = time.time()
