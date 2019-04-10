@@ -35,7 +35,7 @@ class TensorFlowSequenceLabelling:
         dimensions = len(self.embedding.zero_vector())
         embeddings_initializer = keras.initializers.constant(self.embedding.vectors)
 
-        inputs = Input(shape=(sentence_length, ))
+        inputs = Input(shape=(sentence_length,))
 
         layer = Embedding(len(self.embedding.words), dimensions, input_length=sentence_length, mask_zero=True,
                           embeddings_initializer=embeddings_initializer)(inputs)
@@ -54,9 +54,13 @@ class TensorFlowSequenceLabelling:
         layer = Dense(self.sentences.tag_count)(layer)
         layer = Activation('softmax')(layer)
 
+        unpadded_sentence_lengths = Input(shape=[1], dtype='int32')
         if self.c["crf"]:
             # TODO: CRF
-            pass #layer = CRF()(layer, sequence_lenghts)
+            crf = CRF()
+            layer = crf([layer, unpadded_sentence_lengths])
+        else:
+            crf = None
 
         optimizer = None
         if self.c["optimizer"] == "sgd":
@@ -64,10 +68,16 @@ class TensorFlowSequenceLabelling:
         if self.c["optimizer"] == "adam":
             optimizer = "adam"
 
-        model = Model(inputs=inputs, outputs=layer)
-        model.compile(loss='categorical_crossentropy',
-                      optimizer=optimizer,
-                      metrics=['accuracy'])
+        model = Model(inputs=[inputs, unpadded_sentence_lengths], outputs=layer)
+
+        if crf is not None:
+            model.compile(loss=crf.loss,
+                          optimizer=optimizer,
+                          metrics=['accuracy'])
+        else:
+            model.compile(loss='categorical_crossentropy',
+                          optimizer=optimizer,
+                          metrics=['accuracy'])
 
         return model
 
@@ -88,7 +98,8 @@ class TensorFlowSequenceLabelling:
             "total_acc": self.total_acc,
             "oov_acc": self.oov_acc,
             "epochs_run": None,  # TODO: epochs ran
-            "evalutation_matrix": self.evalutation_matrix  # TODO: Use tags instead of ids
+            "sentence_errors": self.sentence_errors,
+            "evalutation_matrix": self.evalutation_matrix
         }
 
     def train_model(self):
@@ -97,11 +108,14 @@ class TensorFlowSequenceLabelling:
         else:
             callbacks = None
 
-        self.model.fit(self.sentences.training_word_ids, keras.utils.to_categorical(self.sentences.training_tag_ids),
+        self.model.fit([self.sentences.training_word_ids, self.sentences.training_lengths],
+                       keras.utils.to_categorical(self.sentences.training_tag_ids),
+                       validation_data=[[self.sentences.validation_word_ids, self.sentences.validation_lengths],
+                                        keras.utils.to_categorical(self.sentences.validation_tag_ids)],
                        batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
 
     def predict(self):
-        self.predictions = self.model.predict(self.sentences.testing_word_ids).argmax(2)
+        self.predictions = self.model.predict([self.sentences.testing_word_ids, self.sentences.testing_lengths]).argmax(2)
 
     def evaluate(self):
         actual_tags = self.sentences.testing_tag_ids
@@ -116,9 +130,13 @@ class TensorFlowSequenceLabelling:
             for actual_tag in self.sentences.tag_by_id.keys():
                 if actual_tag == self.sentences.tag_padding_id:
                     continue
-                self.evalutation_matrix[(predicted_tag, actual_tag)] = 0
+                predicted_tag_name = self.sentences.tag_by_id[predicted_tag]
+                actual_tag_name = self.sentences.tag_by_id[actual_tag]
+                self.evalutation_matrix[(predicted_tag_name, actual_tag_name)] = 0
 
+        self.sentence_errors = []
         for predicted_sentences, actual_sentences, sentences in zip(self.predictions, actual_tags, words):
+            errors_in_sentence = 0
             for predicted_tag, actual_tag, word in zip(predicted_sentences, actual_sentences, sentences):
                 error = predicted_tag != actual_tag
                 oov = self.embedding.get(word) is None
@@ -129,12 +147,19 @@ class TensorFlowSequenceLabelling:
                 self.total_values += 1
                 if error:
                     self.total_errors += 1
+                    errors_in_sentence += 1
                 if oov:
                     self.total_oov += 1
                 if oov and error:
                     self.total_oov_errors += 1
-                self.evalutation_matrix[(predicted_tag, actual_tag)] += 1
+                predicted_tag_name = self.sentences.tag_by_id[predicted_tag]
+                actual_tag_name = self.sentences.tag_by_id[actual_tag]
+                self.evalutation_matrix[(predicted_tag_name, actual_tag_name)] += 1
+            self.sentence_errors += [{"errors": errors_in_sentence,
+                                      "predicted_sentence": predicted_sentences,
+                                      "actual_sentence": actual_sentences}]
 
+        self.sentence_errors.sort(key=lambda x: x["errors"], reverse=True)
         self.total_acc = 1 - (self.total_errors / self.total_values)
         self.oov_acc = 1 - (self.total_oov_errors / self.total_oov)
 

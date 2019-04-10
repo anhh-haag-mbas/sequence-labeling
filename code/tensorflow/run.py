@@ -2,13 +2,13 @@ from model import TensorFlowSequenceLabelling
 
 conf = {
     "framework": "tensorflow",
-    "crf": True,
+    "crf": False,
     "language": "da",
-    "optimizer": "sgd",
+    "optimizer": "adam",
     "learning_rate": 0.1,
-    "dropout": 0.5,
+    "dropout": 0,
     "task": "pos",
-    "batch_size": 100,
+    "batch_size": 8,
     "data_dir": "../../data/",
     "seed": 5123,
     "epochs": 1,
@@ -16,5 +16,5 @@ conf = {
 }
 
 labelling = TensorFlowSequenceLabelling(conf)
-labelling.quick = True
-print(labelling.run())
+res = labelling.run()
+print(res)
