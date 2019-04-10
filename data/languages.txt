@@ -1,9 +1,9 @@
-de
-nl
-ja
-en
-sv
-zh
-sk
-ar
-el
+de - German - GSD
+nl - Dutch - Alpino
+ja - Japanese - GSD
+en - English - ParTUT
+sv - Swedish - Talbanken
+zh - Chinese - GSD
+sk - Slovak - SNK
+ar - Arabic - PADT
+el - Greek - GDT
