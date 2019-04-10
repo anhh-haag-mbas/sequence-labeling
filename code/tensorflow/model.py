@@ -13,6 +13,7 @@ from sentences import Sentences
 
 
 # TODO: Seed
+# TODO: Shamelessly copy from https://github.com/guillaumegenthial/tf_ner/blob/master/models/lstm_crf/main.py
 
 class TensorFlowSequenceLabelling:
     def __init__(self, configuration):
