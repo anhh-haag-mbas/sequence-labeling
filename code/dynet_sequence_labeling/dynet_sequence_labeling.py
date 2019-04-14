@@ -1,6 +1,6 @@
-from dynet_model import DynetModel
-from helper import flatten, time
-from extractor import read_conllu, read_bio
+from dynet_sequence_labeling.dynet_model import DynetModel
+from dynet_sequence_labeling.helper import flatten, time
+from dynet_sequence_labeling.extractor import read_conllu, read_bio
 from polyglot.mapping import Embedding
 import sys
 
@@ -33,11 +33,6 @@ def read_data(config, data_type):
         return read_bio(root_path + f"ner/{lang}/{data_type}.bio")
     elif config["task"] == "pos":
         return read_conllu(root_path + f"pos/{lang}/{data_type}.conllu")
-
-def configure_embedding(config):
-    root_path = config["data_root"] + "embeddings/"
-    lang = config["language"]
-    return Embedding.load(root_path + f"polyglot/{lang}.tar.bz2")
 
 def create_embedding_mapping(embedding):
     vocabulary = embedding.vocabulary
@@ -85,7 +80,7 @@ def run_experiment(config):
     train_inputs, train_labels = read_data(config, "training")
     val_inputs, val_labels     = read_data(config, "validation")
     test_inputs, test_labels   = read_data(config, "testing")
-    embedding                  = configure_embedding(config)
+    embedding                  = config["embedding"]
     tags                       = set(flatten(train_labels))
 
     int2tag, tag2int           = create_mapping(tags)
@@ -142,7 +137,8 @@ def run_experiment(config):
 #        "epochs": 1,
 #        "patience": None,
 #        "hidden_size": 100,
-#        "dropout": 0.0
+#        "dropout": 0.0,
+#        "data_root": "../../data/"
 #        }
-#
+
 #print(run_experiment(config))
