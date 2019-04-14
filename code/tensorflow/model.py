@@ -98,9 +98,9 @@ class TensorFlowSequenceLabelling:
             "total_oov_errors": self.total_oov_errors,
             "total_acc": self.total_acc,
             "oov_acc": self.oov_acc,
-            "epochs_run": None,  # TODO: epochs ran
-            "sentence_errors": self.sentence_errors,
-            "evalutation_matrix": self.evalutation_matrix
+            "epochs_run": self.epochs_run,
+            # "sentence_errors": self.sentence_errors,
+            # "evalutation_matrix": self.evalutation_matrix
         }
 
     def train_model(self):
@@ -109,11 +109,13 @@ class TensorFlowSequenceLabelling:
         else:
             callbacks = None
 
-        self.model.fit([self.sentences.training_word_ids, self.sentences.training_lengths],
-                       keras.utils.to_categorical(self.sentences.training_tag_ids),
-                       validation_data=[[self.sentences.validation_word_ids, self.sentences.validation_lengths],
-                                        keras.utils.to_categorical(self.sentences.validation_tag_ids)],
-                       batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
+        history = self.model.fit([self.sentences.training_word_ids, self.sentences.training_lengths],
+                                 keras.utils.to_categorical(self.sentences.training_tag_ids),
+                                 validation_data=[
+                                     [self.sentences.validation_word_ids, self.sentences.validation_lengths],
+                                     keras.utils.to_categorical(self.sentences.validation_tag_ids)],
+                                 batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
+        self.epochs_run = len(history.epoch)
 
     def predict(self):
         self.predictions = self.model.predict([self.sentences.testing_word_ids, self.sentences.testing_lengths]).argmax(2)
