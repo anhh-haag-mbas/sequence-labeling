@@ -12,7 +12,7 @@ from crf import CRF
 from sentences import Sentences
 
 
-# TODO: Seed
+# TODO: Seed, see https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development
 # TODO: Shamelessly copy from https://github.com/guillaumegenthial/tf_ner/blob/master/models/lstm_crf/main.py
 
 class TensorFlowSequenceLabelling:
@@ -21,7 +21,6 @@ class TensorFlowSequenceLabelling:
         self.embedding = self.load_embedding()
         self.sentences = self.load_sentences()
         self.model = self.create_model()
-        print(self.sentences.tag_padding_id)
 
     def load_embedding(self):
         path = os.path.join(self.c["data_dir"], "embeddings", self.c["language"] + ".tar.bz2")
@@ -57,7 +56,6 @@ class TensorFlowSequenceLabelling:
 
         unpadded_sentence_lengths = Input(shape=[1], dtype='int32')
         if self.c["crf"]:
-            # TODO: CRF
             crf = CRF()
             layer = crf([layer, unpadded_sentence_lengths])
         else:
@@ -118,7 +116,8 @@ class TensorFlowSequenceLabelling:
         self.epochs_run = len(history.epoch)
 
     def predict(self):
-        self.predictions = self.model.predict([self.sentences.testing_word_ids, self.sentences.testing_lengths]).argmax(2)
+        self.predictions = self.model.predict([self.sentences.testing_word_ids, self.sentences.testing_lengths]) \
+            .argmax(2)
 
     def evaluate(self):
         actual_tags = self.sentences.testing_tag_ids
