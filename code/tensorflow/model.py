@@ -12,7 +12,9 @@ from crf import CRF
 from sentences import Sentences
 
 
-# TODO: Seed, see https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development
+# TODO: Seed
+#  see https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development
+#  and https://stackoverflow.com/a/38423188
 # TODO: Shamelessly copy from https://github.com/guillaumegenthial/tf_ner/blob/master/models/lstm_crf/main.py
 
 class TensorFlowSequenceLabelling:
