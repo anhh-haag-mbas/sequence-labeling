@@ -1,6 +1,6 @@
-from dynet_sequence_labeling.dynet_model import DynetModel
-from dynet_sequence_labeling.helper import flatten, time
-from dynet_sequence_labeling.extractor import read_conllu, read_bio
+from dynet_model import DynetModel
+from helper import flatten, time
+from extractor import read_conllu, read_bio
 from polyglot.mapping import Embedding
 import sys
 
@@ -76,7 +76,7 @@ def evaluate(tagger, inputs, labels, tags, unknown):
 
 def run_experiment(config):
     validate_config(config)
-    # Setup 
+    # Setup
     train_inputs, train_labels = read_data(config, "training")
     val_inputs, val_labels     = read_data(config, "validation")
     test_inputs, test_labels   = read_data(config, "testing")
@@ -99,7 +99,9 @@ def run_experiment(config):
                 crf = config["crf"],
                 embedding = embedding,
                 seed = config["seed"],
-                dropout_rate = config["dropout"])
+                dropout_rate = config["dropout"],
+                learning_rate = config["learning_rate"],
+                optimizer = config["optimizer"])
 
     results, elapsed = time(
                         lambda: tagger.fit_auto_batch(
@@ -114,7 +116,7 @@ def run_experiment(config):
 
     (evaluation, total_words, total_oov, total_errors, total_oov_errors), eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, [tag2int(t) for t in tags], word2int("<UNK>"))
 
-
+    # Transform the evaluation matrix from using tag ids, to tag names
     evaluation = {int2tag(exp): {int2tag(act):evaluation[exp][act] for act in evaluation[exp]} for exp in evaluation}
 
     return {
@@ -127,18 +129,3 @@ def run_experiment(config):
             "evaluation_matrix": evaluation,
             "epochs_run": results
             }
-
-#config = {
-#        "language": "da",
-#        "task": "pos",
-#        "crf": False,
-#        "seed": 613321,
-#        "batch_size": 1,
-#        "epochs": 1,
-#        "patience": None,
-#        "hidden_size": 100,
-#        "dropout": 0.0,
-#        "data_root": "../../data/"
-#        }
-
-#print(run_experiment(config))

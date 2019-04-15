@@ -52,26 +52,22 @@ def experiment_to_str(config, results):
     return config_to_str(config,separator)+separator+results_to_str(results, separator)+"\n"
 
 frameworks = ["dynet", "pytorch", "tensorflow"]
-#languages = ["de", "nl", "ja", "en", "sv", "zh", "sk", "ar", "el"]
-#tasks = ["pos", "ner"]
-
-languages = ["nl"]
-tasks = ["pos"]
-
+languages = ["de", "nl", "ja", "en", "sv", "zh", "sk", "ar", "el"]
+tasks = ["pos", "ner"]
 models = [False, True]
 seeds = [613321, 5123, 421213, 521403, 322233]
 batch_sizes = [1, 8, 32]
 epochs = [1, 5, {"max": 50, "patience": 3}]
 data_root = "../data/"
 
-count = 0
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
 config_count = len(frameworks) * len(seeds) * len(batch_sizes) * len(epochs) * len(tasks) * len(models) * len(languages)
-
 embeddings = load_embeddings(data_root, languages)
 
-for framework, seed, batch_size, epoch, task, model, language in configurations:
+print(f"Progress - framework language task crf seed batchsize epochs patience")
 
+count = 0
+for framework, seed, batch_size, epoch, task, model, language in configurations:
     config = {
             "framework": framework,
             "language": language,
@@ -92,6 +88,5 @@ for framework, seed, batch_size, epoch, task, model, language in configurations:
     print(f"{count} / {config_count} - {config_to_str(config, ' ')}")
     results = run_experiment(config)
     validate_results(results)
-    print(results)
     with open("out.csv", "a", encoding = "utf-8") as of:
         of.write(experiment_to_str(config, results))
