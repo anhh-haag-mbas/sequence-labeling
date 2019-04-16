@@ -1,6 +1,8 @@
 """
 Script for creating training, validation, and test file from unsplit bio file. 
 Arguments are language codes
+Split data as 60% is used for training, 40% for Testing.
+Out of the 60% used for training, 10% is validation
 """
 import sys
 import os
@@ -10,7 +12,7 @@ if len(sys.argv) < 2:
     exit(0)
 
 training = 0.5
-validation = 0.2
+validation = 0.1
 test = 1 - training - validation
 
 languages = sys.argv[1:]
@@ -41,10 +43,13 @@ for lang in languages:
     test_end = sentence_count
 
     with open(outfile_train, "w") as fo:
-        fo.write("\n\n".join(sentences[0:training_end]))
+        for sentence in sentences[0:training_end]:
+            fo.write(sentence + "\n\n")
 
     with open(outfile_val, "w") as fo:
-        fo.write("\n\n".join(sentences[training_end:validation_end]))
+        for sentence in sentences[training_end:validation_end]:
+            fo.write(sentence + "\n\n")
 
     with open(outfile_test, "w") as fo:
-        fo.write("\n\n".join(sentences[validation_end:test_end]))
+        for sentence in sentences[validation_end:test_end]:
+            fo.write(sentence + "\n\n")

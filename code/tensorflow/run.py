@@ -2,19 +2,19 @@ from model import TensorFlowSequenceLabelling
 
 conf = {
     "framework": "tensorflow",
-    "model": "bi-lstm",
+    "crf": False,
     "language": "da",
-    "optimizer": "sgd",
-    "learning rate": 0.1,
-    # "embedding type": "task specific",
-    "embedding type": "polyglot",
-    "embedding dimensions": 64,
+    "optimizer": "adam",
+    "learning_rate": 0.1,
     "dropout": 0,
     "task": "pos",
-    "batch_size": 40,
-    "repeat": 2
+    "batch_size": 8,
+    "data_dir": "../../data/",
+    "seed": 5123,
+    "epochs": 1,
+    "patience": None
 }
 
 labelling = TensorFlowSequenceLabelling(conf)
-labelling.quick = True
-print(labelling.run())
+res = labelling.run()
+print(res)

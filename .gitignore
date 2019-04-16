@@ -27,6 +27,7 @@ data/pos/ud-treebanks-v2.3.tgz
 data/ner
 data/pos
 data/embeddings
+code/out.csv
 
 # IDE files
 .idea

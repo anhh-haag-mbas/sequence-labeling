@@ -2,7 +2,7 @@ import numpy as np
 
 
 class Sentences:
-    def __init__(self, task, language_code, id_by_word=None):
+    def __init__(self, task, language_code, id_by_word):
         """
         :param task: "pos", "ner"
         :param language_code: e.g. "da", "en", "ch", etc.
@@ -18,34 +18,40 @@ class Sentences:
         self.word_by_id = {v: k for k, v in self.id_by_word.items()}
         self.training_tag_ids, self.id_by_tag = self.construct_training_tag_ids()
         self.tag_by_id = {v: k for k, v in self.id_by_tag.items()}
+        self.training_lengths = self.lengths(self.unpadded_tags_for("training"))
         self.validation_word_ids = self.construct_validation_word_ids()
         self.validation_tag_ids = self.construct_validation_tag_ids()
+        self.validation_lengths = self.lengths(self.unpadded_tags_for("validation"))
         self.testing_word_ids = self.construct_testing_word_ids()
         self.testing_tag_ids = self.construct_testing_tag_ids()
+        self.testing_lengths = self.lengths(self.unpadded_tags_for("testing"))
         self.word_count = len(self.id_by_word)
         self.tag_count = len(self.id_by_tag)
 
-        self.word_padding_id = self.id_by_word["<PAD>"]
         self.word_unknown_id = self.id_by_word["<UNK>"]
+        self.word_padding_id = self.id_by_word["<PAD>"]
 
-        self.tag_padding_id = self.id_by_tag["<PAD>"]
         self.tag_unknown_id = self.id_by_tag["<UNK>"]
+        self.tag_padding_id = self.id_by_tag["<PAD>"]
 
         self.convert_to_numpy_arrays()
 
     def convert_to_numpy_arrays(self):
         self.training_word_ids = np.asarray(self.training_word_ids)
         self.training_tag_ids = np.asarray(self.training_tag_ids)
+        self.training_lengths = np.asarray(self.training_lengths)
         self.validation_word_ids = np.asarray(self.validation_word_ids)
         self.validation_tag_ids = np.asarray(self.validation_tag_ids)
+        self.validation_lengths = np.asarray(self.validation_lengths)
         self.testing_word_ids = np.asarray(self.testing_word_ids)
         self.testing_tag_ids = np.asarray(self.testing_tag_ids)
+        self.testing_lengths = np.asarray(self.testing_lengths)
+
+    def lengths(self, sentences):
+        return [len(sentence) for sentence in sentences]
 
     def construct_training_word_ids(self):
-        if self.id_by_word is None:
-            return self.training_groups_to_ids(self.training_words())
-        else:
-            return self.groups_to_ids(self.training_words(), self.id_by_word), self.id_by_word
+        return self.groups_to_ids(self.training_words(), self.id_by_word), self.id_by_word
 
     def construct_training_tag_ids(self):
         return self.training_groups_to_ids(self.training_tags())
@@ -63,7 +69,7 @@ class Sentences:
         return self.groups_to_ids(self.testing_tags(), self.id_by_tag)
 
     def training_groups_to_ids(self, groups):
-        id_by_item = {"<UNK>": 0, "<PAD>": 1}
+        id_by_item = {"<PAD>": 0, "<UNK>": 1}
         id_groups = []
         id_group = []
         for group in groups:
@@ -110,9 +116,15 @@ class Sentences:
         return self.padded_words(self.words(
             self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type))))))
 
+    def unpadded_words_for(self, data_type):
+        return self.words(self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type)))))
+
     def tags_for(self, data_type):
         return self.padded_tags(self.tags(
             self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type))))))
+
+    def unpadded_tags_for(self, data_type):
+        return self.tags(self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type)))))
 
     def conllu_file_path(self, task, language_code, data_type):
         """
