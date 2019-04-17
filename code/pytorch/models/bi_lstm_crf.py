@@ -3,17 +3,15 @@ import torch
 import torch.autograd as autograd
 import torch.nn as nn
 import torch.nn.functional as F
+
 from torchcrf import CRF
 
-torch.manual_seed(1)
-
-# START_TAG, STOP_TAG = 0, 1
 START_TAG = "<START>"
 STOP_TAG = "<STOP>"
 
 class PosTagger(nn.Module):
 
-    def __init__(self, edim, hdim, vocab_size, tag2ix, padix=0, batch_sz=1):
+    def __init__(self, edim, hdim, voc_size, tag_size, embedding=None, pad_ix=0, batch_sz=1):
         super(PosTagger, self).__init__()
 
         self.gpu = False
@@ -21,16 +19,19 @@ class PosTagger(nn.Module):
         # Dimensions and model variables
         self.edim       = edim
         self.hdim       = hdim
-        self.tag2ix     = tag2ix
-        self.tag_size   = vocab_size
-        self.tag_size   = len(tag2ix)
+        self.voc_size   = voc_size
+        self.tag_size   = tag_size
         self.batch_sz   = batch_sz
 
         # Layers
-        self.embedding  = nn.Embedding(vocab_size, edim, padding_idx=padix)
+        self.embedding  = nn.Embedding(voc_size, edim, padding_idx=pad_ix)
+        if embedding:
+            self.embedding.load_state_dict({'weight': torch.tensor(embedding.vectors)})
+
+        self.dropout    = nn.Dropout()
         self.lstm       = nn.LSTM(edim, hdim // 2, bidirectional=True, batch_first=True)
-        self.hid2tag    = nn.Linear(hdim, self.tag_size)
-        self.crf        = CRF(self.tag_size, batch_first=True)
+        self.hid2tag    = nn.Linear(hdim, tag_size)
+        self.crf        = CRF(tag_size, batch_first=True)
 
         # Hidden dimension
         self.hid  = self.init_hidden()
@@ -38,6 +39,14 @@ class PosTagger(nn.Module):
     def init_hidden(self):
         return (torch.randn(2, self.batch_sz, self.hdim // 2),
                 torch.randn(2, self.batch_sz, self.hdim // 2))
+
+    def forward(self, X, X_lens, mask):
+
+        # Get the emission scores from the BiLSTM
+        emissions = self._get_emission_scores(X, X_lens)
+
+        # Return best sequence
+        return self.crf.decode(emissions, mask=mask)
 
     def nll(self, X, X_lens, Y, mask=None):
         """
@@ -52,14 +61,6 @@ class PosTagger(nn.Module):
 
         # Return negative log likelihood
         return -log_likelihood
-
-    def forward(self, X, X_lens, mask):
-
-        # Get the emission scores from the BiLSTM
-        emissions = self._get_emission_scores(X, X_lens)
-
-        # Return best sequence
-        return self.crf.decode(emissions, mask=mask)
 
     def _get_emission_scores(self, X, X_lens):
         """
@@ -77,10 +78,13 @@ class PosTagger(nn.Module):
 
         batch_sz, seq_len = X.size()
         X = self.embedding(X)
+        X = self.dropout(X)
 
         X = torch.nn.utils.rnn.pack_padded_sequence(X, X_lens, batch_first=True)
         X, self.hid = self.lstm(X, self.hid)
         X, _ = torch.nn.utils.rnn.pad_packed_sequence(X, batch_first=True)
+
+        X = self.dropout(X)
 
         X = self.hid2tag(X.contiguous().view(-1, X.size(2)))
 

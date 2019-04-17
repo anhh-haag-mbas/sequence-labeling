@@ -1,6 +1,6 @@
-from dynet_model import DynetModel
-from helper import flatten, time
-from extractor import read_conllu, read_bio
+from dynet_sequence_labeling.dynet_model import DynetModel
+from dynet_sequence_labeling.helper import flatten, time
+from dynet_sequence_labeling.extractor import read_conllu, read_bio
 from polyglot.mapping import Embedding
 import sys
 
@@ -51,7 +51,7 @@ def create_mapping(elements, default = None):
 # TODO: make cleaner
 def evaluate(tagger, inputs, labels, tags, unknown):
     evaluation = {t2:{t1:0 for t1 in tags} for t2 in tags}
-   
+
     total_words = 0
     total_oov = 0
     for s in inputs:
@@ -86,7 +86,7 @@ def run_experiment(config):
     int2tag, tag2int           = create_mapping(tags)
     int2word, word2int         = create_embedding_mapping(embedding)
 
-    train_inputs = [[word2int(w) for w in ws] for ws in train_inputs] 
+    train_inputs = [[word2int(w) for w in ws] for ws in train_inputs]
     train_labels = [[tag2int(t) for t in ts] for ts in train_labels]
 
     val_inputs = [[word2int(w) for w in ws] for ws in val_inputs]
@@ -105,13 +105,13 @@ def run_experiment(config):
 
     results, elapsed = time(
                         lambda: tagger.fit_auto_batch(
-                                    sentences = train_inputs, 
-                                    labels = train_labels, 
+                                    sentences = train_inputs,
+                                    labels = train_labels,
                                     mini_batch_size = config['batch_size'],
-                                    epochs = config['epochs'], 
-                                    patience = config["patience"], 
-                                    validation_sentences = val_inputs, 
-                                    validation_labels = val_labels) 
+                                    epochs = config['epochs'],
+                                    patience = config["patience"],
+                                    validation_sentences = val_inputs,
+                                    validation_labels = val_labels)
                         )
 
     (evaluation, total_words, total_oov, total_errors, total_oov_errors), eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, [tag2int(t) for t in tags], word2int("<UNK>"))
