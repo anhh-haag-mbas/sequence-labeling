@@ -51,7 +51,7 @@ def create_mapping(elements, default = None):
 # TODO: make cleaner
 def evaluate(tagger, inputs, labels, tags, unknown):
     evaluation = {t2:{t1:0 for t1 in tags} for t2 in tags}
-   
+
     total_words = 0
     total_oov = 0
     for s in inputs:
@@ -76,7 +76,7 @@ def evaluate(tagger, inputs, labels, tags, unknown):
 
 def run_experiment(config):
     validate_config(config)
-    # Setup 
+    # Setup
     train_inputs, train_labels = read_data(config, "training")
     val_inputs, val_labels     = read_data(config, "validation")
     test_inputs, test_labels   = read_data(config, "testing")
@@ -86,7 +86,7 @@ def run_experiment(config):
     int2tag, tag2int           = create_mapping(tags)
     int2word, word2int         = create_embedding_mapping(embedding)
 
-    train_inputs = [[word2int(w) for w in ws] for ws in train_inputs] 
+    train_inputs = [[word2int(w) for w in ws] for ws in train_inputs]
     train_labels = [[tag2int(t) for t in ts] for ts in train_labels]
 
     val_inputs = [[word2int(w) for w in ws] for ws in val_inputs]
@@ -99,22 +99,24 @@ def run_experiment(config):
                 crf = config["crf"],
                 embedding = embedding,
                 seed = config["seed"],
-                dropout_rate = config["dropout"])
+                dropout_rate = config["dropout"],
+                learning_rate = config["learning_rate"],
+                optimizer = config["optimizer"])
 
     results, elapsed = time(
                         lambda: tagger.fit_auto_batch(
-                                    sentences = train_inputs, 
-                                    labels = train_labels, 
+                                    sentences = train_inputs,
+                                    labels = train_labels,
                                     mini_batch_size = config['batch_size'],
-                                    epochs = config['epochs'], 
-                                    patience = config["patience"], 
-                                    validation_sentences = val_inputs, 
-                                    validation_labels = val_labels) 
+                                    epochs = config['epochs'],
+                                    patience = config["patience"],
+                                    validation_sentences = val_inputs,
+                                    validation_labels = val_labels)
                         )
 
     (evaluation, total_words, total_oov, total_errors, total_oov_errors), eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, [tag2int(t) for t in tags], word2int("<UNK>"))
 
-
+    # Transform the evaluation matrix from using tag ids, to tag names
     evaluation = {int2tag(exp): {int2tag(act):evaluation[exp][act] for act in evaluation[exp]} for exp in evaluation}
 
     return {
@@ -127,18 +129,3 @@ def run_experiment(config):
             "evaluation_matrix": evaluation,
             "epochs_run": results
             }
-
-#config = {
-#        "language": "da",
-#        "task": "pos",
-#        "crf": False,
-#        "seed": 613321,
-#        "batch_size": 1,
-#        "epochs": 1,
-#        "patience": None,
-#        "hidden_size": 100,
-#        "dropout": 0.0,
-#        "data_root": "../../data/"
-#        }
-
-#print(run_experiment(config))

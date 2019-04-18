@@ -4,7 +4,6 @@ dynet
 ipython
 ipdb
 gensim
-python3-icu
 pyicu
 polyglot
 tensorflow

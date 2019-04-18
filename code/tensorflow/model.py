@@ -13,6 +13,8 @@ from sentences import Sentences
 
 
 # TODO: Seed
+#  see https://keras.io/getting-started/faq/#how-can-i-obtain-reproducible-results-using-keras-during-development
+#  and https://stackoverflow.com/a/38423188
 # TODO: Shamelessly copy from https://github.com/guillaumegenthial/tf_ner/blob/master/models/lstm_crf/main.py
 
 class TensorFlowSequenceLabelling:
@@ -21,7 +23,6 @@ class TensorFlowSequenceLabelling:
         self.embedding = self.load_embedding()
         self.sentences = self.load_sentences()
         self.model = self.create_model()
-        print(self.sentences.tag_padding_id)
 
     def load_embedding(self):
         path = os.path.join(self.c["data_dir"], "embeddings", self.c["language"] + ".tar.bz2")
@@ -57,7 +58,6 @@ class TensorFlowSequenceLabelling:
 
         unpadded_sentence_lengths = Input(shape=[1], dtype='int32')
         if self.c["crf"]:
-            # TODO: CRF
             crf = CRF()
             layer = crf([layer, unpadded_sentence_lengths])
         else:
@@ -98,9 +98,9 @@ class TensorFlowSequenceLabelling:
             "total_oov_errors": self.total_oov_errors,
             "total_acc": self.total_acc,
             "oov_acc": self.oov_acc,
-            "epochs_run": None,  # TODO: epochs ran
-            "sentence_errors": self.sentence_errors,
-            "evalutation_matrix": self.evalutation_matrix
+            "epochs_run": self.epochs_run,
+            # "sentence_errors": self.sentence_errors,
+            # "evalutation_matrix": self.evalutation_matrix
         }
 
     def train_model(self):
@@ -109,14 +109,17 @@ class TensorFlowSequenceLabelling:
         else:
             callbacks = None
 
-        self.model.fit([self.sentences.training_word_ids, self.sentences.training_lengths],
-                       keras.utils.to_categorical(self.sentences.training_tag_ids),
-                       validation_data=[[self.sentences.validation_word_ids, self.sentences.validation_lengths],
-                                        keras.utils.to_categorical(self.sentences.validation_tag_ids)],
-                       batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
+        history = self.model.fit([self.sentences.training_word_ids, self.sentences.training_lengths],
+                                 keras.utils.to_categorical(self.sentences.training_tag_ids),
+                                 validation_data=[
+                                     [self.sentences.validation_word_ids, self.sentences.validation_lengths],
+                                     keras.utils.to_categorical(self.sentences.validation_tag_ids)],
+                                 batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
+        self.epochs_run = len(history.epoch)
 
     def predict(self):
-        self.predictions = self.model.predict([self.sentences.testing_word_ids, self.sentences.testing_lengths]).argmax(2)
+        self.predictions = self.model.predict([self.sentences.testing_word_ids, self.sentences.testing_lengths]) \
+            .argmax(2)
 
     def evaluate(self):
         actual_tags = self.sentences.testing_tag_ids

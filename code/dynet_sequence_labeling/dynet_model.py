@@ -1,6 +1,5 @@
 import dynet_config
 dynet_config.set(autobatch=1, profiling=0)
-#dynet_config.set_gpu(False)
 import dynet as dy
 import numpy as np
 import array
@@ -9,10 +8,17 @@ class DynetModel:
     """
     The sequence tagger model, dynet implementation.
     """
-    def __init__(self, embedding, output_size, hidden_size, seed=1, crf=False, dropout_rate=0.5):
+    def __init__(self, embedding, output_size, hidden_size, seed=1, crf=False, dropout_rate=0.5, optimizer = "sgd", learning_rate = 0.1):
         self.set_seed(seed)
+
         self.model = dy.ParameterCollection()
-        self.trainer = dy.SimpleSGDTrainer(self.model)
+
+        if optimizer == "sgd":
+            self.trainer = dy.SimpleSGDTrainer(self.model, learning_rate = learning_rate)
+        elif optimizer == "adam":
+            self.trainer = dy.AdamTrainer(self.model, alpha = learning_rate)
+        else:
+            raise ValueError("Unknown optimizer")
 
         # CRF
         if crf:
@@ -31,7 +37,7 @@ class DynetModel:
 
         # Bi-LSTM
         self.bilstm = dy.BiRNNBuilder(
-                            num_layers = 1,
+                            num_layers = 2,
                             input_dim = embed_size,
                             hidden_dim = hidden_size * 2,
                             model = self.model,
@@ -81,7 +87,7 @@ class DynetModel:
     def fit_auto_batch(self, sentences, labels, mini_batch_size = 1, epochs = 1, 
                        patience = None, validation_sentences = None, validation_labels = None):
         """
-        Train the model using dynet' auto-batching (requires --dynet-autobatch 1). 
+        Train the model using dynets auto-batching (requires --dynet-autobatch 1). 
         The model expects the sentence and labels transformed into integer representations.
         """
         if patience is not None:
@@ -127,9 +133,6 @@ class DynetModel:
             for prediction, label in zip(predictions, sentence_labels):
                 if prediction == label: correct += 1
         return correct
-
-    def predict_batch(self, sentences):
-        raise NotImplemented("TODO")
 
     def predict(self, sentence):
         """
