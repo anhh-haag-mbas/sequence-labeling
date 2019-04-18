@@ -1,0 +1,136 @@
+---
+title: "Metadata"
+author: "haag"
+date: "April 17, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+data <- read.csv("ner-metadata-new.csv", header = T)
+data
+legend_names <- lapply(training_data$file, function(x) {
+  substring(x, 5, 6)  
+})
+
+testing_data <- subset(data, subset = substring(file, 8, 11) == "test") 
+training_data <- subset(data, subset = substring(file, 8, 12) == "train")
+validation_data <- subset(data, subset = substring(file, 8, 10) == "val")
+
+
+
+par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
+barplot(training_data$sentences, col = rainbow(10), main = "Training data")
+legend("topright", inset=c(-0.06,0), legend=legend_names, pch = 20, col = rainbow(10), title="Group")
+
+par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
+barplot(training_data$tokens, col = rainbow(10), main = "Training data")
+legend("topright", inset=c(-0.06,0), legend=legend_names, pch = 20, col = rainbow(10), title="Group")
+
+save_image <- function(data, legend, main = NULL, filepath = "~/Desktop/tmp.png"){
+  png(filename=filepath)
+  par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
+  barplot(data, col = rainbow(length(data)), main = main)
+  legend("topright", inset=c(-0.06,0), legend=legend_names, pch = 20, col = rainbow(length(data)))
+  dev.off()  
+}
+
+save_image(training_data$tokens, legend_names, "Training tokens", "~/Desktop/ner_training_tokens.png")
+
+
+
+?subset(data, subset(substring(file, 16, )))
+
+barplot(data$sentences, col = rainbow(9), legend.text = legend_names)
+barplot(data$sentences / sum(data$sentences), col = rainbow(9), legend.text = legend_names)
+
+summary(data$sentences)
+```
+
+```{r}
+data <- read.csv("pos-metadata.csv", header = T)
+data
+
+testing_data <- subset(data, subset = substring(file, 8, 11) == "test") 
+training_data <- subset(data, subset = substring(file, 8, 12) == "train")
+validation_data <- subset(data, subset = substring(file, 8, 10) == "val")
+
+testing_data
+
+testing_data$sentences[4] + training_data$sentences[4] + validation_data$sentences[4]
+
+
+barplot(testing_data$sentences, col = rainbow(10), legend.text = testing_data$file)
+
+
+training_legend <- substring(training_data$file, 5, 6)
+
+par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
+barplot(training_data$sentences, col = rainbow(10), main = "Training data")
+legend("topright", inset=c(-0.06,0), legend=training_legend, pch = 20, col = rainbow(10), title="Group")
+
+validation_legend <- substring(validation_data$file, 5, 6)
+par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
+barplot(validation_data$sentences, col = rainbow(10), main = "Validation data")
+legend("topright", inset=c(-0.06,0), legend=training_legend, pch = 20, col = rainbow(10), title="Group")
+
+barplot(validation_data$sentences, col = rainbow(10), legend.text = validation_data$file)
+
+
+
+
+barplot(testing_data$sentences / sum(testing_data$sentences), col = rainbow(10), legend.text = testing_data$file)
+barplot(training_data$sentences / sum(training_data$sentences), col = rainbow(10), legend.text = training_data$file)
+barplot(validation_data$sentences / sum(validation_data$sentences), col = rainbow(10), legend.text = validation_data$file)
+```
+
+
+```{r}
+# Random data to plot:
+A <- data.frame(x=rnorm(100, 20, 2), y=rnorm(100, 20, 2))
+B <- data.frame(x=rnorm(100, 21, 1), y=rnorm(100, 21, 1))
+
+# Add extra space to right of plot area; change clipping to figure
+par(mar=c(5.1, 4.1, 4.1, 5.0), xpd=TRUE)
+
+# Plot both groups
+plot(y ~ x, A, ylim=range(c(A$y, B$y)), xlim=range(c(A$x, B$x)), pch=1,
+               main="Scatter plot of two groups")
+points(y ~ x, B, pch=3)
+
+# Add legend to top right, outside plot region
+legend("topright", inset=c(-0.2,0), legend=c("A","B"), pch=c(1,3), title="Group")
+
+#fit <- training_data
+#png(filename="~/Desktop/pos-training.png")
+#barplot(fit$sentences, col = rainbow(10), legend.text = fit$file)
+#dev.off()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

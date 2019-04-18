@@ -24,7 +24,7 @@ with open("languages.txt", "r") as f, \
         posf.write(f"mv {code}/*-train.conllu {code}/training.conllu\n")
         posf.write(f"mv {code}/*-dev.conllu {code}/validation.conllu\n")
         posf.write(f"mv {code}/*-test.conllu {code}/testing.conllu\n")
-
+        posf.write(f"cat {code}/*.conllu > {code}/combined.conllu\n")
     
     for code in language_codes:
         nerf.write(f"tar -xzf {code}.tar.gz\n")
