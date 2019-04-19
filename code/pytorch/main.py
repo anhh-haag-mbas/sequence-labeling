@@ -87,8 +87,10 @@ def run_experiment(config):
         dropout     = dropout,
     )
 
+    print(f"Before batch: {len(X_train)}")
     X_train, X_test, X_val = batchify(X_train, X_test, X_val, batch_sz=batch_sz, ixs=word2ix)
     y_train, y_test, y_val = batchify(y_train, y_test, y_val, batch_sz=batch_sz, ixs=tag2ix)
+    print(f"After batch: {len(X_train)}")
 
     if optimizer == "sgd":
         optimizer = optim.SGD(model.parameters(), lr=lr)

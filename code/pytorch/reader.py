@@ -16,12 +16,14 @@ def read_conllu(path):
     with open(path, "r", encoding="utf-8") as f:
         for line in f.readlines():
             line.strip()
+
             if line.startswith("#"):
-                words, tags = [], []
                 continue
+
             if line.isspace():
                 X.append(words)
                 y.append(tags)
+                words, tags = [], []
                 continue
 
             line = line.split("\t")
@@ -40,12 +42,18 @@ def read_bio(path):
     words, tags = [], []
     with open(path, "r", encoding="utf-8") as f:
         for line in f.readlines():
+            line.strip()
+
+            if line.startswith("#"):
+                continue
+
             if line.isspace():
                 X.append(words)
                 y.append(tags)
                 words, tags = [], []
+
             else:
-                w, t = line.split(" ")
+                w, t = line.split("\t")
                 words.append(w)
                 tags.append(t)
 

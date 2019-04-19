@@ -41,7 +41,7 @@ def train_patience(model, X, Y, optimizer, patience, X_val, Y_val, max_epochs):
     epochs, counter = 0, 0
 
     while counter < patience and epochs < max_epochs:
-        epoch += 1
+        epochs += 1
 
         print(f"Counter is {counter}")
 
