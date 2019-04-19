@@ -6,8 +6,6 @@ import torch.nn.functional as F
 
 from torchcrf import CRF
 
-START_TAG = "<START>"
-STOP_TAG = "<STOP>"
 
 class PosTagger(nn.Module):
 
@@ -56,10 +54,8 @@ class PosTagger(nn.Module):
         emissions = self._get_emission_scores(X, X_lens)
 
         if hasattr(self, "crf"):
-
             # Return best sequence
             return self.crf.decode(emissions, mask=mask)
-
         else:
             log_probs = F.log_softmax(emissions, dim=2)
             Y_hat = torch.argmax(log_probs, dim=2)
@@ -72,16 +68,17 @@ class PosTagger(nn.Module):
         """
 
         # Get the emission scores of X
-        X_emit = self._get_emission_scores(X, X_lens)
+        emit_scores = self._get_emission_scores(X, X_lens)
 
         if hasattr(self, "crf"):
             # Get log likelihood from CRF
-            log_likelihood = self.crf(X_emit, Y, mask=mask)
+            log_likelihood = self.crf(emit_scores, Y, mask=mask)
             loss = -log_likelihood
 
         else:
+            # Run CrossEntropyLoss
             Y = Y.view(-1)
-            Y_hat = X_emit.view(-1, self.tag_sz)
+            Y_hat = emit_scores.view(-1, self.tag_sz)
             loss = nn.CrossEntropyLoss(ignore_index=self.padix)
             loss = loss(Y_hat, Y)
 

@@ -148,7 +148,7 @@ def generate_results(model, X, Y, tag_sz, unkix):
 
                 evaluation[pred][act] += 1
 
-    total   = torch.sum(evaluation).item()
+    total   = int(torch.sum(evaluation).item())
     correct = int(sum([evaluation[i][i] for i in range(tag_sz)]))
     errors  = total - correct
     acc = correct / total * 100

@@ -11,7 +11,7 @@ STOP_TAG = "<STOP>"
 
 class PosTagger(nn.Module):
 
-    def __init__(self, edim, hdim, voc_sz, tag_sz, emb, padix, batch_sz, dr, lstm_layers):
+    def __init__(self, edim, hdim, voc_sz, tag_sz, emb, padix, batch_sz, dr, lstm_layers, crf):
         super(PosTagger, self).__init__()
 
         self.gpu = False
@@ -39,7 +39,9 @@ class PosTagger(nn.Module):
             batch_first=True
         )
         self.hid2tag    = nn.Linear(hdim * 2, tag_sz)
-        self.crf        = CRF(tag_sz, batch_first=True)
+
+        if crf:
+            self.crf        = CRF(tag_sz, batch_first=True)
 
         # Hidden dimension
         self.hid  = self.init_hidden()
@@ -53,8 +55,16 @@ class PosTagger(nn.Module):
         # Get the emission scores from the BiLSTM
         emissions = self._get_emission_scores(X, X_lens)
 
-        # Return best sequence
-        return self.crf.decode(emissions, mask=mask)
+        if hasattr(self, "crf"):
+
+            # Return best sequence
+            return self.crf.decode(emissions, mask=mask)
+
+        else:
+            log_probs = F.log_softmax(emissions, dim=2)
+            Y_hat = torch.argmax(log_probs, dim=2)
+            return [Y_hat[i][:X_lens[i]] for i in range(X_lens)]
+
 
     def loss(self, X, X_lens, Y, mask=None):
         """
@@ -64,11 +74,19 @@ class PosTagger(nn.Module):
         # Get the emission scores of X
         X_emit = self._get_emission_scores(X, X_lens)
 
-        # Get log likelihood from CRF
-        log_likelihood = self.crf(X_emit, Y, mask=mask)
+        if hasattr(self, "crf"):
+            # Get log likelihood from CRF
+            log_likelihood = self.crf(X_emit, Y, mask=mask)
+            loss = -log_likelihood
+
+        else:
+            Y = Y.view(-1)
+            Y_hat = X_emit.view(-1, self.tag_sz)
+            loss = nn.CrossEntropyLoss(ignore_index=self.padix)
+            loss = loss(Y_hat, Y)
 
         # Return negative log likelihood
-        return -log_likelihood
+        return loss
 
     def _get_emission_scores(self, X, X_lens):
         """
