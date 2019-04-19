@@ -51,13 +51,17 @@ def experiment_to_str(config, results):
     separator = ","
     return config_to_str(config,separator)+separator+results_to_str(results, separator)+"\n"
 
-frameworks = ["dynet", "pytorch", "tensorflow"]
-languages = ["de", "nl", "ja", "en", "sv", "zh", "sk", "ar", "el"]
+#frameworks = ["dynet", "pytorch", "tensorflow"]
+frameworks = ["dynet",] 
+
+languages = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 tasks = ["pos", "ner"]
 models = [False, True]
 seeds = [613321, 5123, 421213, 521403, 322233]
-batch_sizes = [1, 8, 32]
-epochs = [1, 5, {"max": 50, "patience": 3}]
+#batch_sizes = [1, 8, 32]
+batch_sizes = [8]
+#epochs = [1, 5, {"max": 50, "patience": 3}]
+epochs = [{"max": 50, "patience": 3}]
 data_root = "../data/"
 
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
