@@ -82,17 +82,21 @@ def experiment_to_str(config, results):
     separator = ","
     return config_to_str(config,separator)+separator+results_to_str(results, separator)+"\n"
 
-languages = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
-frameworks = ["dynet", "pytorch", "tensorflow"]
-tasks = ["pos", "ner"]
-models = [False, True]
-seeds = [613321, 5123, 421213, 521403, 322233]
+tasks       = ["pos", "ner"]
+seeds       = [613321, 5123, 421213, 521403, 322233]
+models      = [False, True]
+epochs      = [1, 5, {"max": 50, "patience": 3}]
+languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
+data_root   = "../data/"
+frameworks  = ["dynet", "pytorch", "tensorflow"]
 batch_sizes = [1, 8, 32]
-epochs = [1, 5, {"max": 50, "patience": 3}]
-data_root = "../data/"
 
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
-config_count = len(frameworks) * len(seeds) * len(batch_sizes) * len(epochs) * len(tasks) * len(models) * len(languages)
+
+f, s, b        = len(frameworks), len(seeds), len(batch_sizes)
+e, t, m, l     = len(epochs), len(tasks), len(models), len(languages)
+config_count   = f * s * b * e * t * m * l
+
 embeddings = load_embeddings(data_root, languages)
 
 print(f"Progress - framework language task crf seed batchsize epochs patience")
@@ -100,20 +104,20 @@ print(f"Progress - framework language task crf seed batchsize epochs patience")
 count = 0
 for framework, seed, batch_size, epoch, task, model, language in configurations:
     config = {
-            "framework": framework,
-            "language": language,
-            "task": task,
-            "crf": model,
-            "seed": seed,
-            "batch_size": batch_size,
-            "epochs": epoch if not isinstance(epoch, dict) else epoch["max"],
-            "patience": None if not isinstance(epoch, dict) else epoch["patience"],
-            "hidden_size": 100,
-            "dropout": 0.5,
-            "data_root": data_root,
-            "embedding": embeddings[language],
-            "optimizer": "sgd",
-            "learning_rate": 0.1,
+            "framework"     : framework,
+            "language"      : language,
+            "task"          : task,
+            "crf"           : model,
+            "seed"          : seed,
+            "batch_size"    : batch_size,
+            "epochs"        : epoch if not isinstance(epoch, dict) else epoch["max"],
+            "patience"      : None if not isinstance(epoch, dict) else epoch["patience"],
+            "hidden_size"   : 100,
+            "dropout"       : 0.5,
+            "data_root"     : data_root,
+            "embedding"     : embeddings[language],
+            "optimizer"     : "sgd",
+            "learning_rate" : 0.1,
             }
     count += 1
     print(f"{count} / {config_count} - {config_to_str(config, ' ')}")

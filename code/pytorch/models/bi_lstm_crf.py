@@ -80,7 +80,10 @@ class PosTagger(nn.Module):
         X = self.embedding(X)
         X = self.dropout(X)
 
-        X = torch.nn.utils.rnn.pack_padded_sequence(X, X_lens, batch_first=True)
+        try:
+            X = torch.nn.utils.rnn.pack_padded_sequence(X, X_lens, batch_first=True)
+        except RuntimeError:
+            import ipdb; ipdb.set_trace()
         X, self.hid = self.lstm(X, self.hid)
         X, _ = torch.nn.utils.rnn.pad_packed_sequence(X, batch_first=True)
 

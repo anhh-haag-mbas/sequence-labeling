@@ -12,19 +12,27 @@ START_TAG, STOP_TAG   = "<START>", "<STOP>"
 FORM, UPOS = 1, 3
 def read_conllu(path):
     X, y = [], []
-    with open(path, "r") as f:
+    words, tags = [], []
+    with open(path, "r", encoding="utf-8") as f:
         for line in f.readlines():
+            line.strip()
+
             if line.startswith("#"):
-                words, tags = [], []
                 continue
+
             if line.isspace():
                 X.append(words)
                 y.append(tags)
+                words, tags = [], []
                 continue
 
             line = line.split("\t")
-            words.append(line[FORM])
-            tags.append(line[UPOS])
+            if len(line) == 2:
+                words.append(line[0])
+                tags.append(line[1])
+            else:
+                words.append(line[FORM])
+                tags.append(line[UPOS])
 
     return X, y
 
@@ -32,14 +40,20 @@ def read_conllu(path):
 def read_bio(path):
     X, y = [], []
     words, tags = [], []
-    with open(path, "r") as f:
+    with open(path, "r", encoding="utf-8") as f:
         for line in f.readlines():
+            line.strip()
+
+            if line.startswith("#"):
+                continue
+
             if line.isspace():
                 X.append(words)
                 y.append(tags)
                 words, tags = [], []
+
             else:
-                w, t = line.split(" ")
+                w, t = line.split("\t")
                 words.append(w)
                 tags.append(t)
 
@@ -88,8 +102,8 @@ def _batchify(data, batch_sz, ixs):
     Batch a dataset in batches of size `batch_sz` and convert to integer
     representation according to `ixs`
     """
-    rem = (len(data) % batch_sz)
-    data = data if rem == 0 else data[:-rem]
+    # rem = (len(data) % batch_sz)
+    # data = data if rem == 0 else data[:-rem]
 
     out = []
     i = 0

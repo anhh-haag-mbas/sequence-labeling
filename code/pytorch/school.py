@@ -6,13 +6,17 @@ import torch.optim as optim
 def _train(model, X, Y, optimizer):
     model.train()
 
+    print("Working... ", end="", flush=True)
+    print(f"Number of batches: {len(X)}")
+    k = len(X) // 100
+
     total_loss = 0
     for batch in range(len(X)):
         batch_x, x_lens, mask = X[batch]
         batch_y, _, _         = Y[batch]
 
         # Print progress, because be nice
-        if batch % 10 == 0:
+        if batch % k == 0:
             print("-", end="", flush=True)
 
         # Reset model
@@ -33,25 +37,26 @@ def _train(model, X, Y, optimizer):
 
 def train_patience(model, X, Y, optimizer, patience, X_val, Y_val, max_epochs):
     batch_sz = X[0][0].size(0)
-    acc = evaluate(model, X_val, Y_val)
-    epoch, counter = 0, 0
+    best_acc = evaluate(model, X_val, Y_val)
+    epochs, counter = 0, 0
 
-    while counter < patience and epoch < max_epochs:
-        epoch += 1
+    while counter < patience and epochs < max_epochs:
+        epochs += 1
 
         print(f"Counter is {counter}")
 
-        print(f"Training: Epoch {epoch}")
-        print("Working... ", end="", flush=True)
+        print(f"Training: Epoch {epochs}")
         total_loss = _train(model, X, Y, optimizer)
         print(f"Epoch loss: {total_loss}")
 
         curr_acc = evaluate(model, X_val, Y_val)
-        if curr_acc > acc:
-            acc = curr_acc
+        if curr_acc > best_acc:
+            best_acc = curr_acc
             counter = 0
         else:
             counter += 1
+
+    return epochs
 
 
 def train_epochs(model, X, Y, optimizer, epochs):
@@ -72,7 +77,6 @@ def train_epochs(model, X, Y, optimizer, epochs):
     for epoch in range(epochs):
 
         print(f"Training: Epoch {epoch+1}")
-        print("Working... ", end="", flush=True)
         total_loss = _train(model, X, Y, optimizer)
         print(f"Epoch loss: {total_loss}")
 
@@ -117,27 +121,38 @@ def evaluate(model, X, Y):
     return acc
 
 
-def generate_results(model, X, Y, batch_sz, tag_sz):
+def generate_results(model, X, Y, tag_sz, unkix):
     model.eval()
     evaluation = torch.zeros(tag_sz, tag_sz)
+
+    nb_oov        = 0
+    nb_oov_errors = 0
 
     for batch in range(len(X)):
         batch_x, x_lens, mask = X[batch]
         batch_y, _, _         = Y[batch]
+        batch_sz = batch_x.shape[0]
 
-        pred_tags = model(batch_x, x_lens, mask)
+        Y_hat = model(batch_x, x_lens, mask)
 
         for i in range(batch_sz):
-            pred_tag_seq = pred_tags[i]
+            Yi     = batch_y[i][:x_lens[i]]
+            Xi     = batch_x[i][:x_lens[i]]
+            Yi_hat = Y_hat[i]
 
-            for pred, act in zip(pred_tag_seq, batch_y[i][:x_lens[i]]):
+            for word, pred, act in zip(Xi, Yi_hat, Yi):
+                if word == unkix:
+                    nb_oov        += 1
+                    nb_oov_errors += 1 if not pred == act else 0
+
                 evaluation[pred][act] += 1
 
     total   = torch.sum(evaluation).item()
     correct = int(sum([evaluation[i][i] for i in range(tag_sz)]))
+    errors  = total - correct
     acc = correct / total * 100
 
     print(f"{correct} correct of {total} total. Accuracy: {acc}%")
     print()
 
-    return total, (total - correct), evaluation.int()
+    return total, errors, nb_oov, nb_oov_errors, evaluation.int()
