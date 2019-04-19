@@ -99,12 +99,11 @@ def run_experiment(config):
         epochs, train_time = time(
             train_patience, model, X_train, y_train, optimizer, patience, X_val, y_val, epochs)
     else:
-        epochs, train_time = time(
+        train_time = time(
             train_epochs, model, X_train, y_train, optimizer, epochs)
 
-    evaluate(model, X_test, y_test)
-    (total, errors, eva), eva_time = time(
-        generate_results, model, X_test, y_test, batch_sz, tag_sz)
+    (total, errors, nb_oov, nb_oov_errors, eva), eva_time = time(
+        generate_results, model, X_test, y_test, tag_sz, word2ix['<UNK>'])
 
     eva = {
         ix2tag[i]: {
@@ -115,8 +114,8 @@ def run_experiment(config):
     return {
         "total_values"      : total,
         "total_errors"      : errors,
-        "total_oov"         : 0,
-        "total_oov_errors"  : 0,
+        "total_oov"         : nb_oov,
+        "total_oov_errors"  : nb_oov_errors,
         "training_time"     : train_time,
         "evaluation_time"   : eva_time,
         "epochs_run"        : epochs,
