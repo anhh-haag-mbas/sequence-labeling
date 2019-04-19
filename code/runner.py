@@ -85,11 +85,11 @@ def experiment_to_str(config, results):
 tasks       = ["pos", "ner"]
 seeds       = [613321, 5123, 421213, 521403, 322233]
 models      = [False, True]
-epochs      = [1, 5, {"max": 50, "patience": 3}]
+epochs      = [{"max": 50, "patience": 3}, 5, 1]
 languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 data_root   = "../data/"
 frameworks  = ["dynet", "pytorch", "tensorflow"]
-batch_sizes = [1, 8, 32]
+batch_sizes = [32, 8, 1]
 
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
 
