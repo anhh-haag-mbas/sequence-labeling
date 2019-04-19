@@ -1,17 +1,16 @@
 """
 Script for creating training, validation, and test file from unsplit bio file. 
 Arguments are language codes
-Split data as 60% is used for training, 40% for Testing.
-Out of the 60% used for training, 10% is validation
+Ideal split is 5000, 1000, 1000 if imposible tries to split 80%, 10%, 10% with a warning
 """
 import sys
 import os
 
 if len(sys.argv) < 2:
-    print ("Run with language code")
+    print ("Needs a language codes as argument")
     exit(0)
 
-training = 0.5
+training = 0.8
 validation = 0.1
 test = 1 - training - validation
 
@@ -29,8 +28,12 @@ for lang in languages:
                 sentence = []
             else:
                 split = line.split()
-                sentence.append(split[0] + " " + split[-1])
-        if len(sentence) != 0: 
+                sentence.append(split[0] + "\t" + split[-1])
+
+            if len(sentences) > 7000:
+                break
+
+        if len(sentence) != 0: # Add last sentence if any
             sentences.append(sentence)
 
     sentence_count = len(sentences)
@@ -38,10 +41,16 @@ for lang in languages:
     outfile_val = f"{lang}/validation.bio"
     outfile_test = f"{lang}/testing.bio"
 
-    training_end = int(sentence_count * training)
-    validation_end = training_end + int(sentence_count * validation)
-    test_end = sentence_count
-
+    if sentence_count >= 7000:
+        training_end = 5000
+        validation_end = 6000
+        test_end = 7000
+    else:
+        training_end = int(sentence_count * training)
+        validation_end = training_end + int(sentence_count * validation)
+        test_end = sentence_count
+        print(f"Only {sentence_count} < 7000 sentences, splitting {training_end}, {validation_end}, {test_end}")
+ 
     with open(outfile_train, "w") as fo:
         for sentence in sentences[0:training_end]:
             fo.write(sentence + "\n\n")

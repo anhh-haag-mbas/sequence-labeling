@@ -44,31 +44,3 @@ def read_fasttext(filepath):
 def read_polyglot(filepath):
     pass
 
-def read_metadata(filepath, word_idx, label_idx):
-    _, labels = read_input_label_file(filepath, word_idx, label_idx)
-    sentences = len(labels)
-    tags = defaultdict(int)
-    for sentence in labels:
-        for label in sentence:
-            tags[label] += 1
-
-    tokens = sum(tags.values())
-    keys = list(tags.keys())
-    keys.sort()
-    label_num = len(keys)
-
-    values = []
-    for key in keys:
-        values.append(str(tags[key]))
-
-    keys_string = '\t'.join(keys)
-    #print(keys_string, file=sys.stderr)
-
-    values_string = '\t'.join(values)
-    return f"{sentences}\t{tokens}\t{label_num}\t{values_string}"
- 
-def read_conllu_metadata(filepath):
-    return read_metadata(filepath, FORM, UPOS) 
-
-def read_bio_metadata(filepath):
-    return read_metadata(filepath, 0, 1) 
