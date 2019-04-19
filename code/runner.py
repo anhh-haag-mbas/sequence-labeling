@@ -1,17 +1,39 @@
 import sys
 import os
-from itertools import product
+
+import pytorch.main as pyt
 import dynet_sequence_labeling.dynet_sequence_labeling as dysl
+
+from itertools import product
 from polyglot.mapping import Embedding
 
 def validate_results(results):
-    keys = ["total_values", "total_errors", "total_oov", "total_oov_errors", "training_time", "evaluation_time", "epochs_run"]
+    keys = [
+        "total_values",
+        "total_errors",
+        "total_oov",
+        "total_oov_errors",
+        "training_time",
+        "evaluation_time",
+        "epochs_run"
+    ]
+
     for key in keys:
         if key not in results.keys():
             raise ValueError(f"Missing value {key} from experiment results")
 
 def config_to_str(config, separator):
-    keys = ["framework", "language", "task", "crf", "seed", "batch_size", "epochs", "patience"]
+    keys = [
+        "framework",
+        "language",
+        "task",
+        "crf",
+        "seed",
+        "batch_size",
+        "epochs",
+        "patience"
+    ]
+
     values = map(lambda k: str(config[k]), keys)
     return separator.join(values)
 
@@ -25,7 +47,16 @@ def evaluation_to_str(evaluation, separator):
     return separator.join(values)
 
 def results_to_str(results, separator):
-    keys = ["total_values", "total_errors", "total_oov", "total_oov_errors", "training_time", "evaluation_time", "epochs_run"]
+    keys = [
+        "total_values",
+        "total_errors",
+        "total_oov",
+        "total_oov_errors",
+        "training_time",
+        "evaluation_time",
+        "epochs_run"
+    ]
+
     values = map(lambda k: str(results[k]), keys)
     return separator.join(values) + separator + evaluation_to_str(results["evaluation_matrix"], separator)
 
@@ -42,7 +73,7 @@ def run_experiment(config):
         return run_experiment_tensorflow(config)
 
 def run_experiment_pytorch(config):
-    pass
+    return pyt.run_experiment(config)
 
 def run_experiment_tensorflow(config):
     pass
@@ -51,17 +82,13 @@ def experiment_to_str(config, results):
     separator = ","
     return config_to_str(config,separator)+separator+results_to_str(results, separator)+"\n"
 
-#frameworks = ["dynet", "pytorch", "tensorflow"]
-frameworks = ["dynet",] 
-
 languages = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
+frameworks = ["dynet", "pytorch", "tensorflow"]
 tasks = ["pos", "ner"]
 models = [False, True]
 seeds = [613321, 5123, 421213, 521403, 322233]
-#batch_sizes = [1, 8, 32]
-batch_sizes = [8]
-#epochs = [1, 5, {"max": 50, "patience": 3}]
-epochs = [{"max": 50, "patience": 3}]
+batch_sizes = [1, 8, 32]
+epochs = [1, 5, {"max": 50, "patience": 3}]
 data_root = "../data/"
 
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
