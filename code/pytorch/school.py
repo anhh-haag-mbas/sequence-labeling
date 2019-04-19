@@ -32,6 +32,7 @@ def _train(model, X, Y, optimizer):
         # Accumulate total loss
         total_loss += loss.item()
 
+    print()
     return total_loss
 
 
@@ -43,7 +44,7 @@ def train_patience(model, X, Y, optimizer, patience, X_val, Y_val, max_epochs):
     while counter < patience and epochs < max_epochs:
         epochs += 1
 
-        print(f"Counter is {counter}")
+        print(f"Patience left {patience - counter}")
 
         print(f"Training: Epoch {epochs}")
         total_loss = _train(model, X, Y, optimizer)

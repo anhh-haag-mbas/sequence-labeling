@@ -6,39 +6,44 @@ import torch.nn.functional as F
 
 from torchcrf import CRF
 
-START_TAG = "<START>"
-STOP_TAG = "<STOP>"
 
 class PosTagger(nn.Module):
 
-    def __init__(self, edim, hdim, voc_size, tag_size, embedding, padix, batch_sz, dropout):
+    def __init__(self, edim, hdim, voc_sz, tag_sz, emb, padix, batch_sz, dr, lstm_layers):
         super(PosTagger, self).__init__()
 
         self.gpu = False
 
         # Dimensions and model variables
-        self.edim       = edim
-        self.hdim       = hdim
-        self.padix      = padix
-        self.voc_size   = voc_size
-        self.tag_size   = tag_size
-        self.batch_sz   = batch_sz
+        self.edim        = edim
+        self.hdim        = hdim
+        self.padix       = padix
+        self.voc_sz      = voc_sz
+        self.tag_sz      = tag_sz
+        self.batch_sz    = batch_sz
+        self.lstm_layers = lstm_layers
 
         # Layers
-        self.embedding  = nn.Embedding(voc_size, edim, padding_idx=padix)
-        if embedding:
-            self.embedding.load_state_dict({'weight': torch.tensor(embedding.vectors)})
+        self.embedding  = nn.Embedding(voc_sz, edim, padding_idx=padix)
+        if emb:
+            self.embedding.load_state_dict({'weight': torch.tensor(emb.vectors)})
 
-        self.dropout    = nn.Dropout(dropout)
-        self.lstm       = nn.LSTM(edim, hdim // 2, bidirectional=True, batch_first=True)
-        self.hid2tag    = nn.Linear(hdim, tag_size)
+        self.dropout    = nn.Dropout(p=dr)
+        self.lstm       = nn.LSTM(
+            edim,
+            hdim,
+            num_layers=lstm_layers,
+            bidirectional=True,
+            batch_first=True
+        )
+        self.hid2tag    = nn.Linear(hdim * 2, tag_sz)
 
         # Hidden dimension
         self.hid  = self.init_hidden()
 
     def init_hidden(self):
-        return (torch.randn(2, self.batch_sz, self.hdim // 2),
-                torch.randn(2, self.batch_sz, self.hdim // 2))
+        return (torch.randn(2 * self.lstm_layers, self.batch_sz, self.hdim),
+                torch.randn(2 * self.lstm_layers, self.batch_sz, self.hdim))
 
     def forward(self, X, X_lens, mask):
         out = self._forward(X, X_lens)
@@ -51,7 +56,7 @@ class PosTagger(nn.Module):
         log_probs = self._forward(X, X_lens)
 
         Y = Y.view(-1)
-        Y_hat = log_probs.view(-1, self.tag_size)
+        Y_hat = log_probs.view(-1, self.tag_sz)
         loss = nn.NLLLoss(ignore_index=self.padix)
 
         return loss(Y_hat, Y)
@@ -67,7 +72,7 @@ class PosTagger(nn.Module):
             X_lens: int list with actual lenghts of X
 
         Outputs: log probabilities
-            log probs of shape `(batch_sz, seq_len, tag_size)`: log probs of X
+            log probs of shape `(batch_sz, seq_len, tag_sz)`: log probs of X
         """
         self.hid = self.init_hidden()
 
@@ -85,4 +90,4 @@ class PosTagger(nn.Module):
 
         X = F.log_softmax(X, dim=1)
 
-        return X.view(batch_sz, seq_len, self.tag_size)
+        return X.view(batch_sz, seq_len, self.tag_sz)
