@@ -1,9 +1,7 @@
-de - German - GSD
-nl - Dutch - Alpino
+da - Danish - DDT
+no - Norwegian - Bokmaal
+ru - Russian - SynTagRus
+hi - Hindi - HDTB
+ur - Urdu - UDTB
 ja - Japanese - GSD
-en - English - ParTUT
-sv - Swedish - Talbanken
-zh - Chinese - GSD
-sk - Slovak - SNK
 ar - Arabic - PADT
-el - Greek - GDT
