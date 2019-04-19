@@ -117,14 +117,16 @@ class Sentences:
             self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type))))))
 
     def unpadded_words_for(self, data_type):
-        return self.words(self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type)))))
+        return self.words(
+            self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type)))))
 
     def tags_for(self, data_type):
         return self.padded_tags(self.tags(
             self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type))))))
 
     def unpadded_tags_for(self, data_type):
-        return self.tags(self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type)))))
+        return self.tags(
+            self.items(self.groups(self.lines(self.conllu_file_path(self.task, self.language_code, data_type)))))
 
     def conllu_file_path(self, task, language_code, data_type):
         """
