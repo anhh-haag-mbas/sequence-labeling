@@ -45,8 +45,6 @@ class TensorFlowSequenceLabelling:
         if self.c["dropout"] and self.c["dropout"] > 0:
             layer = Dropout(self.c["dropout"])(layer)
 
-        # TODO: NER task
-
         # Bidirectional returns the hidden size*2 as there are two layers now (one in each direction)
         layer = Bidirectional(LSTM(units=100, return_sequences=True))(layer)
 
