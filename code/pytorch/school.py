@@ -19,7 +19,7 @@ def _train(model, X, Y, optimizer):
         model.zero_grad()
 
         # Make predictions and calculate loss
-        loss = model.nll(batch_x, x_lens, batch_y, mask)
+        loss = model.loss(batch_x, x_lens, batch_y, mask)
 
         # Backpropagate and train
         loss.backward()
@@ -54,7 +54,7 @@ def train_patience(model, X, Y, optimizer, patience, X_val, Y_val, max_epochs):
             counter += 1
 
 
-def train_epochs(model, X, Y, optimizer, epochs=5):
+def train_epochs(model, X, Y, optimizer, epochs):
     """
     Trains a model on given data set using the provided loss function and
     optimizer and prints progress and total loss after each epoch.
@@ -73,7 +73,7 @@ def train_epochs(model, X, Y, optimizer, epochs=5):
 
         print(f"Training: Epoch {epoch+1}")
         print("Working... ", end="", flush=True)
-        total_loss = train(model, X, Y, optimizer)
+        total_loss = _train(model, X, Y, optimizer)
         print(f"Epoch loss: {total_loss}")
 
 def evaluate(model, X, Y, batch_sz=1):
@@ -101,10 +101,10 @@ def evaluate(model, X, Y, batch_sz=1):
 
             total += len(pred_tag_seq)
 
-            tens = torch.ones(x_lens[0])
-            tens[:len(pred_tag_seq)] = torch.tensor(pred_tag_seq)
+            ones = torch.ones(x_lens[0])
+            ones[:len(pred_tag_seq)] = pred_tag_seq
 
-            mask_cor = ((batch_y[i] - tens.long()) == 0).byte()
+            mask_cor = ((batch_y[i] - ones.long()) == 0).byte()
             correct += mask_cor.sum().item()
 
         last_batch = batch

@@ -11,7 +11,7 @@ STOP_TAG = "<STOP>"
 
 class PosTagger(nn.Module):
 
-    def __init__(self, edim, hdim, voc_size, tag_size, embedding=None, pad_ix=0, batch_sz=1):
+    def __init__(self, edim, hdim, voc_size, tag_size, embedding, padix, batch_sz, dropout):
         super(PosTagger, self).__init__()
 
         self.gpu = False
@@ -24,7 +24,7 @@ class PosTagger(nn.Module):
         self.batch_sz   = batch_sz
 
         # Layers
-        self.embedding  = nn.Embedding(voc_size, edim, padding_idx=pad_ix)
+        self.embedding  = nn.Embedding(voc_size, edim, padding_idx=padix)
         if embedding:
             self.embedding.load_state_dict({'weight': torch.tensor(embedding.vectors)})
 
@@ -48,7 +48,7 @@ class PosTagger(nn.Module):
         # Return best sequence
         return self.crf.decode(emissions, mask=mask)
 
-    def nll(self, X, X_lens, Y, mask=None):
+    def loss(self, X, X_lens, Y, mask=None):
         """
         Compute and return the negative log likelihood for y given X
         """

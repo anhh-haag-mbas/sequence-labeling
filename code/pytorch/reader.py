@@ -89,19 +89,18 @@ def _batchify(data, batch_sz, ixs):
     representation according to `ixs`
     """
     rem = (len(data) % batch_sz)
-    if rem > 0:
-        data = data[:-rem]
+    data = data if rem == 0 else data[:-rem]
 
     out = []
     i = 0
-    for j in range(batch_sz, len(data), batch_sz):
+    for j in range(batch_sz, len(data) + 1, batch_sz):
         out.append(prep_batch(data[i:j], ixs))
         i = j
 
     return out
 
 
-def prep_batch(X, ixs=None):
+def prep_batch(X, ixs):
     """
     Take a batch of data X and returns same sized padded sequences of integer
     representation of the X. If ixs is not provided, X is assumed to already
@@ -113,7 +112,7 @@ def prep_batch(X, ixs=None):
         mask:       (batch_sz, seq_len)
     """
     X_lens = [len(x) for x in X]
-    pad_token = -1 if not ixs else ixs.get('<PAD>', -1)
+    pad_token = ixs["<PAD>"]
 
     max_xlen = max(X_lens)
     batch_sz = len(X)
