@@ -4,7 +4,7 @@ import keras
 import os
 from keras import Model, Input
 from keras.callbacks import EarlyStopping
-from keras.layers import Dense, LSTM, Activation, Embedding, Bidirectional, Dropout
+from keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout
 from keras.optimizers import SGD
 from polyglot.mapping import Embedding as PolyglotEmbedding
 
@@ -45,16 +45,13 @@ class TensorFlowSequenceLabelling:
         if self.c["dropout"] and self.c["dropout"] > 0:
             layer = Dropout(self.c["dropout"])(layer)
 
-        # TODO: NER task
-
         # Bidirectional returns the hidden size*2 as there are two layers now (one in each direction)
         layer = Bidirectional(LSTM(units=100, return_sequences=True))(layer)
 
         if self.c["dropout"] and self.c["dropout"] > 0:
             layer = Dropout(self.c["dropout"])(layer)
 
-        layer = Dense(self.sentences.tag_count)(layer)
-        layer = Activation('softmax')(layer)
+        layer = Dense(self.sentences.tag_count, activation='softmax')(layer)
 
         unpadded_sentence_lengths = Input(shape=[1], dtype='int32')
         if self.c["crf"]:
@@ -110,10 +107,12 @@ class TensorFlowSequenceLabelling:
             callbacks = None
 
         history = self.model.fit([self.sentences.training_word_ids, self.sentences.training_lengths],
-                                 keras.utils.to_categorical(self.sentences.training_tag_ids),
+                                 keras.utils.to_categorical(self.sentences.training_tag_ids,
+                                                            num_classes=self.sentences.tag_count),
                                  validation_data=[
                                      [self.sentences.validation_word_ids, self.sentences.validation_lengths],
-                                     keras.utils.to_categorical(self.sentences.validation_tag_ids)],
+                                     keras.utils.to_categorical(self.sentences.validation_tag_ids,
+                                                                num_classes=self.sentences.tag_count)],
                                  batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
         self.epochs_run = len(history.epoch)
 
