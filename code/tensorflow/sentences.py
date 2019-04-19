@@ -160,16 +160,10 @@ class Sentences:
         return items
 
     def words(self, items):
-        if self.task == "pos":
-            return [[items[1] for items in group] for group in items]
-        if self.task == "ner":
-            return [[items[0] for items in group] for group in items]
+        return [[items[0] for items in group] for group in items]
 
     def tags(self, items):
-        if self.task == "pos":
-            return [[items[3] for items in group] for group in items]
-        if self.task == "ner":
-            return [[items[1] for items in group] for group in items]
+        return [[items[1] for items in group] for group in items]
 
     def items(self, groups):
         return [self.items_from_lines(group) for group in groups]

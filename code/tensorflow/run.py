@@ -34,14 +34,14 @@ def ner(c):
     return c
 
 
-# langs = ["de", "nl", "ja", "en", "sv", "zh", "sk", "ar", "el"]
+# langs = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 # confs = [lang(l) for l in langs]
 # confs_crf = [crf(lang(l)) for l in langs]
 
-de = [lang("de"), crf(lang("de")), crf(ner(lang("de")))]
+de = [lang("da"), crf(lang("da")), crf(ner(lang("da")))]
 ja = [lang("ja"), crf(lang("ja")), crf(ner(lang("ja")))]
 
-for conf in [ner(lang("de"))]:
+for conf in [ner(lang("da")), lang("da")]:
     labelling = TensorFlowSequenceLabelling(conf)
     res = labelling.run()
     print(res)
