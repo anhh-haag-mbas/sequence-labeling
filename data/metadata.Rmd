@@ -51,6 +51,15 @@ barplot(data$sentences / sum(data$sentences), col = rainbow(9), legend.text = le
 
 summary(data$sentences)
 ```
+```{r}
+data <- read.csv("conllu-metadata.csv", header = T)
+data
+
+subset(data, subset = sentences > 4000 & sentences < 5000)
+
+```
+
+
 
 ```{r}
 data <- read.csv("pos-metadata.csv", header = T)
