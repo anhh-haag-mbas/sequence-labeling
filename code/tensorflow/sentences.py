@@ -1,56 +1,8 @@
 import numpy as np
 
-def reverse_dict(dict):
-    return {v: k for k, v in dict.items()}
 
-class Sentences:
-    def __init__(self, task, language_code, id_by_word, id_by_tag):
-        self.task = task
-        self.language_code = language_code
-
-        self.id_by_word = id_by_word
-        self.word_by_id = reverse_dict(self.id_by_word.items())
-        self.word_count = len(self.id_by_tag)
-
-        self.id_by_tag = id_by_tag
-        self.tag_by_id = reverse_dict(self.id_by_tag.items())
-        self.tag_count = len(self.id_by_tag)
-
-        self.word_unknown_id = self.id_by_word["<UNK>"]
-        self.word_padding_id = self.id_by_word["<PAD>"]
-
-        self.tag_unknown_id = self.id_by_tag["<UNK>"]
-        self.tag_padding_id = self.id_by_tag["<PAD>"]
-
-
-class Sentence:
-    def __init__(self, words, tags):
-        assert len(words) == len(tags)
-        self.words = words
-        self.tags = tags
-        self.length = len(self.words)
-
-    def pad(self, minimum_length, pad_word, pad_tag):
-        s = self.copy()
-        missing_items = minimum_length - s.length
-        words = s.words + [pad_word] * missing_items
-        tags = s.tags = [pad_tag] * missing_items
-        return Sentence(words, tags)
-
-    def copy(self):
-        return Sentence(self.words, self.tags)
-
-    @staticmethod
-    def from_ner_lines(lines):
-        words = [line.split("\t")[0].strip() for line in lines]
-        tags = [line.split("\t")[1].strip() for line in lines]
-        return Sentence(words, tags)
-
-    @staticmethod
-    def from_pos_lines(lines):
-        words = [line.split("\t")[1].strip() for line in lines]
-        tags = [line.split("\t")[3].strip() for line in lines]
-        return Sentence(words, tags)
+def reverse_dict(d):
+    return {v: k for k, v in d.items()}
 
 
 class Sentences:
@@ -61,15 +13,14 @@ class Sentences:
         """
         self.task = task
         self.language_code = language_code
-        # TODO: Padding/unknown words are different in polyglot/fasttext
         self.sentence_length = self.calculate_sentence_length(
-            self.items(self.groups(self.lines(self.pos_file_path(self.task, self.language_code, "training")))))
+            self.items(self.groups(self.lines(self.file_path(self.task, self.language_code, "training")))))
 
         self.id_by_word = id_by_word
         self.training_word_ids, self.id_by_word = self.construct_training_word_ids()
-        self.word_by_id = {v: k for k, v in self.id_by_word.items()}
+        self.word_by_id = reverse_dict(self.id_by_word)
         self.training_tag_ids, self.id_by_tag = self.construct_training_tag_ids()
-        self.tag_by_id = {v: k for k, v in self.id_by_tag.items()}
+        self.tag_by_id = reverse_dict(self.id_by_tag)
 
         self.training_lengths = self.lengths(self.unpadded_tags_for("training"))
         self.validation_word_ids = self.construct_validation_word_ids()
@@ -167,19 +118,25 @@ class Sentences:
 
     def words_for(self, data_type):
         return self.padded_words(self.words(
-            self.items(self.groups(self.lines(self.pos_file_path(self.task, self.language_code, data_type))))))
+            self.items(self.groups(self.lines(self.file_path(self.task, self.language_code, data_type))))))
 
     def unpadded_words_for(self, data_type):
         return self.words(
-            self.items(self.groups(self.lines(self.pos_file_path(self.task, self.language_code, data_type)))))
+            self.items(self.groups(self.lines(self.file_path(self.task, self.language_code, data_type)))))
 
     def tags_for(self, data_type):
         return self.padded_tags(self.tags(
-            self.items(self.groups(self.lines(self.pos_file_path(self.task, self.language_code, data_type))))))
+            self.items(self.groups(self.lines(self.file_path(self.task, self.language_code, data_type))))))
 
     def unpadded_tags_for(self, data_type):
         return self.tags(
-            self.items(self.groups(self.lines(self.pos_file_path(self.task, self.language_code, data_type)))))
+            self.items(self.groups(self.lines(self.file_path(self.task, self.language_code, data_type)))))
+
+    def file_path(self, task, language_code, data_type):
+        if task == "pos":
+            return self.pos_file_path(language_code, data_type)
+        if task == "ner":
+            return self.ner_file_path(language_code, data_type)
 
     def pos_file_path(self, language_code, data_type):
         return f"../../data/pos/{language_code}/{data_type}.conllu"
@@ -203,10 +160,16 @@ class Sentences:
         return items
 
     def words(self, items):
-        return [[items[1] for items in group] for group in items]
+        if self.task == "pos":
+            return [[items[1] for items in group] for group in items]
+        if self.task == "ner":
+            return [[items[0] for items in group] for group in items]
 
     def tags(self, items):
-        return [[items[3] for items in group] for group in items]
+        if self.task == "pos":
+            return [[items[3] for items in group] for group in items]
+        if self.task == "ner":
+            return [[items[1] for items in group] for group in items]
 
     def items(self, groups):
         return [self.items_from_lines(group) for group in groups]
