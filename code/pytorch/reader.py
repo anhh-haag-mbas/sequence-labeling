@@ -10,7 +10,7 @@ START_TAG, STOP_TAG   = "<START>", "<STOP>"
 
 
 FORM, UPOS = 1, 3
-def import_conllu(path):
+def read_conllu(path):
     X, y = [], []
     with open(path, "r") as f:
         for line in f.readlines():
@@ -29,7 +29,7 @@ def import_conllu(path):
     return X, y
 
 
-def import_bio(path):
+def read_bio(path):
     X, y = [], []
     words, tags = [], []
     with open(path, "r") as f:

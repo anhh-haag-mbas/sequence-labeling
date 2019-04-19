@@ -41,7 +41,8 @@ class PosTagger(nn.Module):
                 torch.randn(2, self.batch_sz, self.hdim // 2))
 
     def forward(self, X, X_lens, mask):
-        return torch.argmax(self._forward(X, X_lens), dim=2)
+        out = self._forward(X, X_lens)
+        return torch.argmax(out, dim=2)
 
     def loss(self, X, X_lens, Y, mask=None):
         """
@@ -65,8 +66,8 @@ class PosTagger(nn.Module):
             X of shape `(batch_sz, seq_len)`: input tensor
             X_lens: int list with actual lenghts of X
 
-        Outputs: emissions
-            emissions of shape `(batch_sz, seq_len, tag_size)`: emission scores of X
+        Outputs: log probabilities
+            log probs of shape `(batch_sz, seq_len, tag_size)`: log probs of X
         """
         self.hid = self.init_hidden()
 

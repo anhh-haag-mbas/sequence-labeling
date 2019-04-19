@@ -82,7 +82,8 @@ def experiment_to_str(config, results):
     separator = ","
     return config_to_str(config,separator)+separator+results_to_str(results, separator)+"\n"
 
-frameworks = ["dynet", "pytorch", "tensorflow"]
+# frameworks = ["dynet", "pytorch", "tensorflow"]
+frameworks = ["pytorch"]
 languages = ["de", "nl", "ja", "en", "sv", "zh", "sk", "ar", "el"]
 tasks = ["pos", "ner"]
 models = [False, True]
