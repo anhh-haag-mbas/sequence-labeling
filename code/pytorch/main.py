@@ -1,150 +1,139 @@
-from timeit import time
+import sys
+import timeit
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-import models
-import reader
+from pytorch.bi_lstm_crf import PosTagger
+from pytorch.reader import read_bio, read_conllu, batchify
+from pytorch.school import train_epochs, train_patience, evaluate, generate_results
 
-torch.manual_seed(1)
 
+DEFAULT_LSTM_LAYERS = 1
 
-def to_ixs(seq, ixs):
+def time(func, *args):
     """
-    Convert words or tags (or any items in seq) to integers
-
-    :param seq: list of words or tags
-    :param ixs: dict mapping strings to integers
-    :return:    tensor of dtype torch.long
+    I totally stole this
     """
-    wixs = [ixs.get(w, 0) for w in seq]
-    return torch.tensor(wixs, dtype=torch.long)
+    start_time = timeit.default_timer()
+    result = func(*args)
+    elapsed = timeit.default_timer() - start_time
+    return (result, elapsed)
 
 
-def train(model, training_data, loss_func, optimizer, epochs=5):
-    """
-    Trains a model on given data set using the provided loss function and
-    optimizer and prints progress and total loss after each epoch.
+def create_emb_mapping(embedding):
+    vocabulary = embedding.vocabulary
+    return vocabulary.id_word, vocabulary.word_id
 
-    :param model:           instance of nn.Module
-    :param training_data:   list of tuples, where the first entry is a sequence
-                            of words and the second entry is a sequence of tags
-    :param loss_func:       loss function to use, ie. nn.NLLLoss
-    :param optimizer:       optimizer to use, ie. optim.SGD
-    :param epochs:          number of epochs to train (defaults to 5)
+def create_tag_mapping(tags_list, padix):
+    tag2ix, ix2tag = {}, {}
+    for tags in tags_list:
+        for tag in tags:
+            ix = tag2ix.get(tag, len(tag2ix))
+            tag2ix[tag] = ix
+            ix2tag[ix] = tag
 
-    :return:                the model after training
-    """
-    remaining = len(training_data)
-    for epoch in range(epochs):
+    newix = len(tag2ix)
+    tag2ix['<PAD>'] = padix
+    tag = ix2tag[padix]
 
-        print(f"Training: Epoch {epoch}")
-        print("Working... ", end="", flush=True)
+    tag2ix[tag] = newix
+    ix2tag[padix] = '<PAD>'
+    ix2tag[newix] = tag
 
-        total_loss = 0
-        for sent, tags in training_data:
-
-            # Print progress, because be nice
-            remaining -= 1
-            if remaining % 100 == 0:
-                print("-", end="", flush=True)
-
-            # Reset model
-            model.zero_grad()
-            model.hidden = model.init_hidden()
-
-            # Make predictions and calculate loss
-            logprobs = model(to_ixs(sent, word2ix))
-            loss = loss_func(logprobs, to_ixs(tags, tag2ix))
-
-            # Backpropagate and train
-            loss.backward()
-            optimizer.step()
-
-            # Accumulate total loss
-            total_loss += loss.item()
-
-        print(f"Epoch loss: {total_loss}")
-
-    return model
-
-def evaluate(model, data):
-    """
-    Calculate, print and return the accuracy of the model in making predictions
-    for the sentences in data.
-
-    :param model:   instance of nn.Module
-    :param data:    list of tuples, where the first entry is a sequence
-                    of words and the second entry is a sequence of tags
-
-    :return:        accuracy of the model
-    """
-    total, correct = 0, 0
-
-    for sent, tags in data:
-        sentence = to_ixs(sent, word2ix)
-        tag_ixs  = to_ixs(tags, tag2ix)
-
-        model.hidden = model.init_hidden()
-        out = model(sentence)
-
-        for scores, tag_ix in zip(out, tag_ixs):
-            exp_tag  = ix2tag[tag_ix.item()]
-            pred_tag = ix2tag[torch.argmax(scores).item()]
-
-            total += 1
-            if exp_tag == pred_tag:
-                correct += 1
-
-    acc = (correct / total * 100)
-    print(f"{correct} correct of {total} total. Accuracy: {acc}%")
-    print()
-    return acc
+    return ix2tag, tag2ix
 
 
-##### Import data
-DATA_ROOT = "../../data/"
-train_filepath = DATA_ROOT + "UD_Danish-DDT/da_ddt-ud-train.conllu"
-test_filepath  = DATA_ROOT + "UD_Danish-DDT/da_ddt-ud-dev.conllu"
+def run_experiment(config):
+    # Seed shit
+    torch.manual_seed(config["seed"])
 
-train_data = reader.import_data(train_filepath)
-test_data  = reader.import_data(test_filepath)
+    # Define path, task and lang
+    root, task, lang = config["data_root"], config["task"], config["language"]
+    path = f"{root}{task}/{lang}"
 
-##### Define word2ix, tag2ix and ix2tag
-word2ix, tag2ix = { '<UNK>': 0 }, { '<START>': 0, '<END>': 1 }
-for sent, tags in train_data:
-    for word in sent:
-        word2ix[word] = word2ix.get(word, len(word2ix))
+    # Get an ending and a read function dependent on the task
+    read, end = (read_conllu, ".conllu") if task == "pos" else (read_bio, ".bio")
 
-    for tag in tags:
-        tag2ix[tag] = tag2ix.get(tag, len(tag2ix))
+    # Fetch raw data
+    X_train, y_train = read(path + "/training"   + end)
+    X_test,  y_test  = read(path + "/testing"    + end)
+    X_val,   y_val   = read(path + "/validation" + end)
 
-ix2tag = { ix: tag for tag, ix in tag2ix.items() }
+    # Load polyglot embedding
+    embedding        = config["embedding"]
 
-##### Set configuration
-EMBEDDING_DIM = 64
-HIDDEN_DIM    = 100
-VOCAB_SIZE    = len(word2ix)
-LABEL_SIZE    = len(tag2ix)
+    # Define dictionaries and find the padding index and the tag size
+    ix2word, word2ix = create_emb_mapping(embedding)
+    padix            = word2ix["<PAD>"]
 
-##### Create the model
-model = models.BiPosTagger(EMBEDDING_DIM, HIDDEN_DIM, VOCAB_SIZE, LABEL_SIZE)
+    ix2tag,  tag2ix  = create_tag_mapping(y_train, padix)
+    tag_sz           = len(ix2tag)
 
-##### Either load the model state (if it exists) or train from scratch
-try:
-    model.load_state_dict(torch.load("./saved_models/copyBiLSTM.pt"))
-    model.eval()
-    print("Model loaded")
-except FileNotFoundError:
-    optimizer = optim.SGD(model.parameters(), lr=0.1)
-    loss_func = nn.NLLLoss()
-    start_time = time.clock()
-    train(model, train_data, loss_func, optimizer, epochs=1)
-    print(f"Time: {time.clock() - start_time}")
-    torch.save(model.state_dict(), "./saved_models/biLSTM.pt")
+    # Set configurations
+    lr              = config["learning_rate"]
+    crf             = config["crf"]
+    epochs          = config["epochs"]
+    dropout         = config["dropout"]
+    batch_sz        = config["batch_size"]
+    patience        = config["patience"]
+    optimizer       = config["optimizer"]
+    hidden_dim      = config["hidden_size"]
+    lstm_layers     = config.get("lstm_layers", DEFAULT_LSTM_LAYERS)
 
-##### Evaluate the model
-print("Bidirectional PosTagger")
-evaluate(model, test_data)
+    # Define and instantiate the POS Tagger
+    model = PosTagger(
+        hdim        = hidden_dim,
+        voc_sz      = embedding.shape[0],
+        edim        = embedding.shape[1],
+        tag_sz      = tag_sz,
+        emb         = embedding,
+        padix       = padix,
+        batch_sz    = batch_sz,
+        dr          = dropout,
+        lstm_layers = lstm_layers,
+        crf         = crf,
+    )
+
+    # Create the opimizer
+    if optimizer == "sgd":
+        optimizer = optim.SGD(model.parameters(), lr=lr)
+    elif optimizer == "adam":
+        optimizer = optim.Adam(model.parameters(), lr=lr)
+
+    # Batchify data (list of (tensor: batch, list: lengths, tensor: mask) )
+    X_train, X_test, X_val = batchify(X_train, X_test, X_val, batch_sz=batch_sz, ixs=word2ix)
+    y_train, y_test, y_val = batchify(y_train, y_test, y_val, batch_sz=batch_sz, ixs=tag2ix)
+
+    # Either train with patience or fixed amount of epochs (and time it)
+    if patience:
+        epochs, train_time = time(
+            train_patience, model, X_train, y_train, optimizer, patience, X_val, y_val, epochs)
+    else:
+        _, train_time = time(
+            train_epochs, model, X_train, y_train, optimizer, epochs)
+
+    # Generate evaluation results and time how long it took
+    (total, errors, nb_oov, nb_oov_errors, eva), eva_time = time(
+        generate_results, model, X_test, y_test, tag_sz, word2ix['<UNK>'])
+
+    # Convert evaluation matrix to map from tag names instead of tag ids
+    eva = {
+        ix2tag[i]: {
+            ix2tag[j]: eva[i][j].item() for j in range(tag_sz) if not j == padix
+        } for i in range(tag_sz) if not i == padix
+    }
+
+    # Return dict of results
+    return {
+        "total_values"      : total,
+        "total_errors"      : errors,
+        "total_oov"         : nb_oov,
+        "total_oov_errors"  : nb_oov_errors,
+        "training_time"     : train_time,
+        "evaluation_time"   : eva_time,
+        "epochs_run"        : epochs,
+        "evaluation_matrix" : eva
+    }

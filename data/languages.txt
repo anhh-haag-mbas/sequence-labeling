@@ -1,12 +1,7 @@
-el
-sk 
-ar 
-tr 
-ko 
-hu 
-zh
-fr
-ru
-de
-ja
-en
+da - Danish - DDT
+no - Norwegian - Bokmaal
+ru - Russian - SynTagRus
+hi - Hindi - HDTB
+ur - Urdu - UDTB
+ja - Japanese - GSD
+ar - Arabic - PADT
