@@ -6,14 +6,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-# from pytorch.models.old_bilstm import PosTagger as BiLstm
-from pytorch.models.bi_lstm import PosTagger as BiLstm
-from pytorch.models.bi_lstm_crf import PosTagger as CrfBiLstm
+from pytorch.bi_lstm_crf import PosTagger
 from pytorch.reader import read_bio, read_conllu, batchify
 from pytorch.school import train_epochs, train_patience, evaluate, generate_results
 
 
-DEFAULT_LSTM_LAYERS = 2
+DEFAULT_LSTM_LAYERS = 1
 
 def time(func, *args):
     """
@@ -86,7 +84,6 @@ def run_experiment(config):
     lstm_layers     = config.get("lstm_layers", DEFAULT_LSTM_LAYERS)
 
     # Define and instantiate the POS Tagger
-    PosTagger = CrfBiLstm if crf else BiLstm
     model = PosTagger(
         hdim        = hidden_dim,
         voc_sz      = embedding.shape[0],
@@ -97,6 +94,7 @@ def run_experiment(config):
         batch_sz    = batch_sz,
         dr          = dropout,
         lstm_layers = lstm_layers,
+        crf         = crf,
     )
 
     # Create the opimizer

@@ -9,7 +9,7 @@ from torchcrf import CRF
 
 class PosTagger(nn.Module):
 
-    def __init__(self, edim, hdim, voc_sz, tag_sz, emb, padix, batch_sz, dr, lstm_layers):
+    def __init__(self, edim, hdim, voc_sz, tag_sz, emb, padix, batch_sz, dr, lstm_layers, crf):
         super(PosTagger, self).__init__()
 
         self.gpu = False
@@ -38,6 +38,9 @@ class PosTagger(nn.Module):
         )
         self.hid2tag    = nn.Linear(hdim * 2, tag_sz)
 
+        if crf:
+            self.crf        = CRF(tag_sz, batch_first=True)
+
         # Hidden dimension
         self.hid  = self.init_hidden()
 
@@ -46,23 +49,43 @@ class PosTagger(nn.Module):
                 torch.randn(2 * self.lstm_layers, self.batch_sz, self.hdim))
 
     def forward(self, X, X_lens, mask):
-        out = self._forward(X, X_lens)
-        return torch.argmax(out, dim=2)
+
+        # Get the emission scores from the BiLSTM
+        emissions = self._get_emission_scores(X, X_lens)
+
+        if hasattr(self, "crf"):
+            # Return best sequence
+            return self.crf.decode(emissions, mask=mask)
+        else:
+            log_probs = F.log_softmax(emissions, dim=2)
+            Y_hat = torch.argmax(log_probs, dim=2)
+            return [Y_hat[i][:X_lens[i]] for i in range(len(X_lens))]
+
 
     def loss(self, X, X_lens, Y, mask=None):
         """
         Compute and return the negative log likelihood for y given X
         """
-        log_probs = self._forward(X, X_lens)
 
-        Y = Y.view(-1)
-        Y_hat = log_probs.view(-1, self.tag_sz)
-        loss = nn.NLLLoss(ignore_index=self.padix)
+        # Get the emission scores of X
+        emit_scores = self._get_emission_scores(X, X_lens)
 
-        return loss(Y_hat, Y)
+        if hasattr(self, "crf"):
+            # Get log likelihood from CRF
+            log_likelihood = self.crf(emit_scores, Y, mask=mask)
+            loss = -log_likelihood
 
+        else:
+            # Run CrossEntropyLoss
+            Y = Y.view(-1)
+            Y_hat = emit_scores.view(-1, self.tag_sz)
+            loss = nn.CrossEntropyLoss(ignore_index=self.padix)
+            loss = loss(Y_hat, Y)
 
-    def _forward(self, X, X_lens):
+        # Return negative log likelihood
+        return loss
+
+    def _get_emission_scores(self, X, X_lens):
         """
         Runs unembedded sequences through the embedding, lstm and linear layer
         of the model and returns the emission scores of X
@@ -71,8 +94,8 @@ class PosTagger(nn.Module):
             X of shape `(batch_sz, seq_len)`: input tensor
             X_lens: int list with actual lenghts of X
 
-        Outputs: log probabilities
-            log probs of shape `(batch_sz, seq_len, tag_sz)`: log probs of X
+        Outputs: emissions
+            emissions of shape `(batch_sz, seq_len, tag_sz)`: emission scores of X
         """
         self.hid = self.init_hidden()
 
@@ -87,7 +110,5 @@ class PosTagger(nn.Module):
         X = self.dropout(X)
 
         X = self.hid2tag(X.contiguous().view(-1, X.size(2)))
-
-        X = F.log_softmax(X, dim=1)
 
         return X.view(batch_sz, seq_len, self.tag_sz)
