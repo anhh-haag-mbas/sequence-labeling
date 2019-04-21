@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 
 ```{r}
-data <- read.csv("ner-metadata-new.csv", header = T)
+data <- read.csv("ner-metadata.csv", header = T)
 data
 legend_names <- lapply(training_data$file, function(x) {
   substring(x, 5, 6)  
@@ -26,11 +26,27 @@ validation_data <- subset(data, subset = substring(file, 8, 10) == "val")
 
 par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
 barplot(training_data$sentences, col = rainbow(10), main = "Training data")
-legend("topright", inset=c(-0.06,0), legend=legend_names, pch = 20, col = rainbow(10), title="Group")
+legend("topright", inset=c(-0.06,0), legend=training_data$file, pch = 20, col = rainbow(10), title="Group")
 
 par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
-barplot(training_data$tokens, col = rainbow(10), main = "Training data")
+barplot(training_data$tokens, col = rainbow(10), main = "Training tokens")
 legend("topright", inset=c(-0.06,0), legend=legend_names, pch = 20, col = rainbow(10), title="Group")
+
+
+make_plot <- function(data, legend, main = NULL){
+  par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)
+  barplot(data, col = rainbow(length(data)), main = main)
+  legend("topright", inset=c(-0.06,0), legend=legend_names, pch = 20, col = rainbow(length(data)))
+}
+
+make_plot(training_data$sentences, legend = legend_names, "Training sentences")
+make_plot(training_data$tokens, legend = legend_names, "Training Tokens")
+make_plot(testing_data$sentences, legend = legend_names, "Testing sentences")
+make_plot(testing_data$tokens, legend = legend_names, "Testing tokens")
+make_plot(validation_data$sentences, legend = legend_names, "Validation sentences")
+make_plot(validation_data$tokens, legend = legend_names, "Validation tokens")
+
+
 
 save_image <- function(data, legend, main = NULL, filepath = "~/Desktop/tmp.png"){
   png(filename=filepath)
@@ -55,7 +71,7 @@ summary(data$sentences)
 data <- read.csv("conllu-metadata.csv", header = T)
 data
 
-subset(data, subset = sentences > 4000 & sentences < 5000)
+subset(data, subset = grepl("Chi", file))
 
 ```
 

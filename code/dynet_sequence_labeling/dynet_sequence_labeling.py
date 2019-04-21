@@ -51,15 +51,6 @@ def create_mapping(elements, default = None):
 # TODO: make cleaner
 def evaluate(tagger, inputs, labels, tags, unknown):
     evaluation = {t2:{t1:0 for t1 in tags} for t2 in tags}
-
-    total_words = 0
-    total_oov = 0
-    for s in inputs:
-        for w in s:
-            total_words += 1
-            if w == unknown:
-                total_oov += 1
-
     total_errors = 0
     total_oov_errors = 0
 
@@ -72,7 +63,17 @@ def evaluate(tagger, inputs, labels, tags, unknown):
                 if word == unknown:
                     total_oov_errors += 1
 
-    return evaluation, total_words, total_oov, total_errors, total_oov_errors
+    return evaluation, total_errors, total_oov_errors
+
+def word_count(inputs, unknown):
+    total_words = 0
+    total_oov = 0
+    for s in inputs:
+        for w in s:
+            total_words += 1
+            if w == unknown:
+                total_oov += 1
+    return total_words, total_oov
 
 def run_experiment(config):
     validate_config(config)
@@ -91,6 +92,9 @@ def run_experiment(config):
 
     val_inputs = [[word2int(w) for w in ws] for ws in val_inputs]
     val_labels = [[tag2int(t) for t in ts] for ts in val_labels]
+
+    test_inputs = [[word2int(w) for w in ws] for ws in test_inputs]
+    test_labels = [[tag2int(t) for t in ts] for ts in test_labels]
 
     # Testing
     tagger = DynetModel(
@@ -113,8 +117,11 @@ def run_experiment(config):
                                     validation_sentences = val_inputs,
                                     validation_labels = val_labels)
                         )
+    
+    unknown = word2int("<UNK>")
 
-    (evaluation, total_words, total_oov, total_errors, total_oov_errors), eva_elapsed = time(evaluate, tagger, val_inputs, val_labels, [tag2int(t) for t in tags], word2int("<UNK>"))
+    total_words, total_oov = word_count(test_inputs, unknown)
+    (evaluation, total_errors, total_oov_errors), eva_elapsed = time(evaluate, tagger, test_inputs, test_labels, [tag2int(t) for t in tags], unknown)
 
     # Transform the evaluation matrix from using tag ids, to tag names
     evaluation = {int2tag(exp): {int2tag(act):evaluation[exp][act] for act in evaluation[exp]} for exp in evaluation}
