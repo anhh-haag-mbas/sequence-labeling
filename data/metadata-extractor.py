@@ -25,7 +25,7 @@ for i, filepath in enumerate(filepaths):
                 word = split[0].strip()
                 label = split[1].strip()
                 if label == "_": 
-                    continue # Ignore cases where the token is unlabelled, as would happen for english words like cannot
+                    continue # Ignore cases where the token is unlabelled, as happens for contractions
                 tokens[current] += 1
                 labels[label] += 1
                 distinct.add(word)
