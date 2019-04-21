@@ -72,7 +72,7 @@ class PosTagger(nn.Module):
 
         if hasattr(self, "crf"):
             # Get log likelihood from CRF
-            log_likelihood = self.crf(emit_scores, Y, mask=mask)
+            log_likelihood = self.crf(emit_scores, Y, mask=mask, reduction="mean")
             loss = -log_likelihood
 
         else:
