@@ -113,7 +113,7 @@ class TensorFlowSequenceLabelling:
                                      [self.sentences.validation_word_ids, self.sentences.validation_lengths],
                                      keras.utils.to_categorical(self.sentences.validation_tag_ids,
                                                                 num_classes=self.sentences.tag_count)],
-                                 batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
+                                 batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks, verbose=2)
         self.epochs_run = len(history.epoch)
 
     def predict(self):
