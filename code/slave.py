@@ -62,9 +62,6 @@ def results_to_str(results, separator):
     values = map(lambda k: str(results[k]), keys)
     return separator.join(values) + separator + evaluation_to_str(results["evaluation_matrix"], separator)
 
-def load_embeddings(data_root, languages):
-    return {l:Embedding.load(data_root + (f"embeddings/{l}.tar.bz2")) for l in languages}
-
 def run_experiment(config):
     framework = config["framework"]
     if framework == "dynet":
@@ -84,13 +81,12 @@ def experiment_to_str(config, results):
     separator = ","
     return config_to_str(config,separator)+separator+results_to_str(results, separator)+"\n"
 
-configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
+def load_embeddings(data_root, languages):
+    return {l:Embedding.load(data_root + (f"embeddings/{l}.tar.bz2")) for l in languages}
 
-languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 data_root   = "../data/"
+languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 embeddings = load_embeddings(data_root, languages)
-
-print(f"Progress - framework language task crf seed batchsize epochs patience")
 
 config = {
         "framework"     : sys.argv[1],
