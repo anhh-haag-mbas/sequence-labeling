@@ -98,7 +98,7 @@ class TensorFlowSequenceLabelling:
             "oov_acc": self.oov_acc,
             "epochs_run": self.epochs_run,
             # "sentence_errors": self.sentence_errors,
-            # "evalutation_matrix": self.evalutation_matrix
+            "evalutation_matrix": self.evalutation_matrix
         }
 
     def train_model(self):
