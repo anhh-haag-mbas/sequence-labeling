@@ -77,7 +77,7 @@ try:
                 process.poll()
                 if process.returncode is not None:
                     with open("log", "a", encoding = "utf-8") as of:
-                        of.write(config_to_string(config) + "\n" + str(process.returncode))
+                        of.write(config_to_str(config) + "\n" + str(process.returncode))
             processes = [p for p in processes if p.returncode is None]
         processes += [subprocess.Popen(config)]
         print(" ".join(config))
