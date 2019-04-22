@@ -11,19 +11,7 @@ def load_embeddings(data_root, languages):
     return {l:Embedding.load(data_root + (f"embeddings/{l}.tar.bz2")) for l in languages}
 
 def config_to_str(config, separator):
-    keys = [
-        "framework",
-        "language",
-        "task",
-        "crf",
-        "seed",
-        "batch_size",
-        "epochs",
-        "patience"
-    ]
-
-    values = map(lambda k: str(config[k]), keys)
-    return separator.join(values)
+    return separator.join(config)
 
 tasks       = ["pos", "ner"]
 seeds       = [613321, 5123, 421213, 521403, 322233]
