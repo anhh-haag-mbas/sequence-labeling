@@ -3,6 +3,7 @@ import os
 
 import pytorch.main as pyt
 import dynet_sequence_labeling.dynet_sequence_labeling as dysl
+from tensorflow_sequence_labelling.model import TensorFlowSequenceLabelling as tf
 
 from itertools import product
 from polyglot.mapping import Embedding
@@ -75,7 +76,7 @@ def run_experiment_pytorch(config):
     return pyt.run_experiment(config)
 
 def run_experiment_tensorflow(config):
-    pass
+    return tf(config).run()
 
 def experiment_to_str(config, results):
     separator = ","
