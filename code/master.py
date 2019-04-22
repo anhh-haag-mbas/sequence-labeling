@@ -69,8 +69,9 @@ try:
                     str(epoch if not isinstance(epoch, dict) else epoch["max"]),
                     str(None if not isinstance(epoch, dict) else epoch["patience"])
                  ]
-        while(len(processes) > max_process_count):
+        if len(processes) > max_process_count:
             print(f"Running the max {len(processes)} processes, now waiting...")
+        while(len(processes) > max_process_count):
             time.sleep(10)
             for process in processes:
                 process.poll()
