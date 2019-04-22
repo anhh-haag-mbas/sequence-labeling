@@ -1,9 +1,12 @@
 import sys
 import os
 
-import pytorch.main as pyt
-import dynet_sequence_labeling.dynet_sequence_labeling as dysl
-from tensorflow_sequence_labelling.model import TensorFlowSequenceLabelling as tf
+if sys.argv[1] == "pytorch":
+    import pytorch.main as pyt
+if sys.argv[1] == "dynet":
+    import dynet_sequence_labeling.dynet_sequence_labeling as dysl
+if sys.argv[1] == "tensorflow":
+    from tensorflow_sequence_labelling.model import TensorFlowSequenceLabelling as tf
 
 from itertools import product
 from polyglot.mapping import Embedding
