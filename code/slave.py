@@ -76,7 +76,6 @@ def run_experiment_pytorch(config):
     return pyt.run_experiment(config)
 
 def run_experiment_tensorflow(config):
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
     return tf(config).run()
 
 def experiment_to_str(config, results):
