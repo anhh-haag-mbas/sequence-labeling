@@ -158,7 +158,11 @@ class TensorFlowSequenceLabelling:
                     self.total_oov_errors += 1
                 predicted_tag_name = self.sentences.tag_by_id[predicted_tag]
                 actual_tag_name = self.sentences.tag_by_id[actual_tag]
-                self.evalutation_matrix[(predicted_tag_name, actual_tag_name)] += 1
+                if predicted_tag_name not in self.evalutation_matrix:
+                    self.evalutation_matrix[predicted_tag_name] = {}
+                if actual_tag_name not in self.evalutation_matrix[predicted_tag_name]
+                    self.evalutation_matrix[predicted_tag_name][actual_tag_name] = 0
+                self.evalutation_matrix[predicted_tag_name][actual_tag_name] += 1
             self.sentence_errors += [{"errors": errors_in_sentence,
                                       "predicted_sentence": predicted_sentences,
                                       "actual_sentence": actual_sentences}]
