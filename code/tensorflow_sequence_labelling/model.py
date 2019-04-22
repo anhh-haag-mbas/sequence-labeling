@@ -8,8 +8,8 @@ from keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout
 from keras.optimizers import SGD
 from polyglot.mapping import Embedding as PolyglotEmbedding
 
-from crf import CRF
-from sentences import Sentences
+from .crf import CRF
+from .sentences import Sentences
 
 
 # TODO: Seed
