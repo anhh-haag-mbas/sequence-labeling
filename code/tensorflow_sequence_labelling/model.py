@@ -1,9 +1,8 @@
+import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
 import time
 
 import keras
-import os
 from keras import Model, Input
 from keras.callbacks import EarlyStopping
 from keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout
