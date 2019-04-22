@@ -5,5 +5,5 @@ rm -rf _minted-out
 mkdir -p .minted-out
 
 mv .minted-out _minted-out
-latexmk -jobname=out/main
+latexmk -jobname=out/main src/main.tex
 mv _minted-out .minted-out
