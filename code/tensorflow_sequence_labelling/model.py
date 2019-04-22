@@ -25,7 +25,7 @@ class TensorFlowSequenceLabelling:
         self.model = self.create_model()
 
     def load_embedding(self):
-        path = os.path.join(self.c["data_dir"], "embeddings", self.c["language"] + ".tar.bz2")
+        path = os.path.join(self.c["data_root"], "embeddings", self.c["language"] + ".tar.bz2")
         return PolyglotEmbedding.load(path)
 
     def load_sentences(self):
