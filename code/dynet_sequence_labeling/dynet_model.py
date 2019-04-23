@@ -3,12 +3,15 @@ dynet_config.set(autobatch=1, profiling=0)
 import dynet as dy
 import numpy as np
 import array
+from uuid import uuid4
+import os
 
 class DynetModel:
     """
     The sequence tagger model, dynet implementation.
     """
     def __init__(self, embedding, output_size, hidden_size, seed=1, crf=False, dropout_rate=0.5, optimizer = "sgd", learning_rate = 0.1):
+        self.tmp_patience_filename = str(uuid4()) + ".model"
         self.set_seed(seed)
 
         self.model = dy.ParameterCollection()
@@ -117,11 +120,12 @@ class DynetModel:
                 if correct > best_correct:
                     best_correct = correct
                     epochs_no_improvement = 0
-                    self.save("tmp_patience_model.model")
+                    self.save(self.tmp_patience_filename)
                 else:
                     epochs_no_improvement += 1
                     if patience == epochs_no_improvement:
-                        self.load("tmp_patience_model.model")
+                        self.load(self.tmp_patience_filename)
+                        os.remove(self.tmp_patience_filename)
                         return epoch + 1
                 
         return epochs
