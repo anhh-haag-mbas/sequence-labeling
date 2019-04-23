@@ -98,7 +98,7 @@ class TensorFlowSequenceLabelling:
             "oov_acc": self.oov_acc,
             "epochs_run": self.epochs_run,
             # "sentence_errors": self.sentence_errors,
-            "evaluation_matrix": self.evalutation_matrix
+            "evaluation_matrix": self.evaluation_matrix
         }
 
     def train_model(self):
@@ -129,14 +129,13 @@ class TensorFlowSequenceLabelling:
         self.total_errors = 0
         self.total_oov = 0
         self.total_oov_errors = 0
-        self.evalutation_matrix = {}
+        self.evaluation_matrix = {}
         for predicted_tag in self.sentences.tag_by_id.keys():
+            predicted_tag_name = self.sentences.tag_by_id[predicted_tag]
+            self.evaluation_matrix[predicted_tag_name] = {}
             for actual_tag in self.sentences.tag_by_id.keys():
-                if actual_tag == self.sentences.tag_padding_id:
-                    continue
-                predicted_tag_name = self.sentences.tag_by_id[predicted_tag]
                 actual_tag_name = self.sentences.tag_by_id[actual_tag]
-                self.evalutation_matrix[(predicted_tag_name, actual_tag_name)] = 0
+                self.evaluation_matrix[predicted_tag_name][actual_tag_name] = 0
 
         self.sentence_errors = []
         for predicted_sentences, actual_sentences, sentences in zip(self.predictions, actual_tags, words):
@@ -144,9 +143,6 @@ class TensorFlowSequenceLabelling:
             for predicted_tag, actual_tag, word in zip(predicted_sentences, actual_sentences, sentences):
                 error = predicted_tag != actual_tag
                 oov = self.embedding.get(word) is None
-
-                if actual_tag == self.sentences.tag_padding_id:
-                    continue
 
                 self.total_values += 1
                 if error:
@@ -158,11 +154,7 @@ class TensorFlowSequenceLabelling:
                     self.total_oov_errors += 1
                 predicted_tag_name = self.sentences.tag_by_id[predicted_tag]
                 actual_tag_name = self.sentences.tag_by_id[actual_tag]
-                if predicted_tag_name not in self.evalutation_matrix:
-                    self.evalutation_matrix[predicted_tag_name] = {}
-                if actual_tag_name not in self.evalutation_matrix[predicted_tag_name]:
-                    self.evalutation_matrix[predicted_tag_name][actual_tag_name] = 0
-                self.evalutation_matrix[predicted_tag_name][actual_tag_name] += 1
+                self.evaluation_matrix[predicted_tag_name][actual_tag_name] += 1
             self.sentence_errors += [{"errors": errors_in_sentence,
                                       "predicted_sentence": predicted_sentences,
                                       "actual_sentence": actual_sentences}]
