@@ -20,7 +20,9 @@ epochs      = [{"max": 50, "patience": 3}, 5, 1]
 languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 data_root   = "../data/"
 # frameworks  = ["dynet", "pytorch", "tensorflow"]
-frameworks  = ["tensorflow", "pytorch", "dynet"]
+frameworks  = ["dynet"]
+# frameworks  = ["pytorch"]
+# frameworks  = ["tensorflow"]
 batch_sizes = [32, 8, 1]
 
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
@@ -60,7 +62,7 @@ try:
                  ]
         if len(processes) > max_process_count:
             print(f"Running the max {len(processes)} processes, now waiting...")
-        while (len(processes) > max_process_count) or (framework == "tensorflow" and len(processes) >= 5):
+        while (len(processes) > max_process_count) or (framework == "tensorflow" and len(processes) >= 5) or (framework == "pytorch" and len(processes) >= 2):
             time.sleep(10)
             for process in processes:
                 process.poll()
