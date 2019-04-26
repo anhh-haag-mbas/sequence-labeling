@@ -139,10 +139,10 @@ class Sentences:
             return self.ner_file_path(language_code, data_type)
 
     def pos_file_path(self, language_code, data_type):
-        return f"../../data/pos/{language_code}/{data_type}.conllu"
+        return f"../data/pos/{language_code}/{data_type}.conllu"
 
     def ner_file_path(self, language_code, data_type):
-        return f"../../data/ner/{language_code}/{data_type}.bio"
+        return f"../data/ner/{language_code}/{data_type}.bio"
 
     def calculate_sentence_length(self, items):
         longest_sentence = max(items, key=len)
