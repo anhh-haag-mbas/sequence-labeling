@@ -22,7 +22,7 @@ def load_configs(path):
     configs = []
     with open(path, "r") as f:
         for line in f:
-            configs += [line.split(", ")]
+            configs += [line.strip().split(", ")]
     return configs
 
 try:
