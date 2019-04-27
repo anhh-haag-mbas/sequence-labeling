@@ -8,19 +8,79 @@ for our experiments and models, aswell as it will motivate the use of Polyglot
 embeddings.
 
 
+\subsubsection{General structure of the models}
+
+We used two different models to run our experiments. The first one is a standard
+bidirectional LSTM network, \texttt{Bi-LSTM}, and the second one is a
+\texttt{Bi-LSTM} with an added CRF layer, \texttt{Bi-LSTM-CRF}. Both models has
+the same fundamental structure, which consist of:
+
+\begin{itemize}
+    \item An embedding layer with a fixed embedding dimension size
+    \item A dropout layer with a dropout rate of $0.5$
+    \item Two LSTM layers, one for the forward pass and one for the backward
+        pass
+    \item Another dropout layer with the same dropout rate
+    \item A simple linear layer mapping the LSTM output scores back into tag
+        space
+\end{itemize}
+
+In the \texttt{Bi-LSTM} model, the output of the final linear layer is run
+through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
+output is instead treated as emission scores that is passed as input to the CRF
+layer, which then compute the most likely sequence of tags.
+
+
+
 \subsubsection{Embeddings}
 
-Polyglot embeddings are easier than FastText, but self-trained embeddings could
-also have been fun!
+We use a pretrained embedding since they have been shown to provide a
+significant increase in accuracy for sequence labeling tasks (\ref{}).
+We picked pretrained Polyglot embeddings since there exists models in a lot of
+different languages, and Polyglot seems to outperform its competitors like
+FastText (\ref{} to FastText + comparison), even though FastText's embeddings are
+significantly larget than Polyglot's.
 
 
 \subsubsection{Bi-LSTM}
 
-This is the easy one!
+Long Short-Term Memory (LSTM) networks are a particular type of Recurrent Neural
+Networks (RNN), that was originally proposed by (\ref{} Hochreiter 199X) as a way of
+dealing with defiencies of normal RNNs. For machine learning tasks concerned
+with sequential data it is more often than not necessary to let information
+about an input at a timestep $t$ get carried over to the processing of an input
+at timestep $t+1$. This is the motivation of RNN (see Figure~\ref{}).
 
-\begin{equation}
-y = A * x + b
-\end{equation}
+However, the standard RNN suffers from the problems of exponential decay or blow
+up of error signals that are backpropagated through the network --- a situation
+that only gets worse as the time dependencies increase (\ref Hochreiter,
+Graves). To remedy this, LSTM networks are used instead.
+
+An LSTM network is compposed of carefully designed memory cells containing
+multiple gates, that determines what information to remember, what to forget,
+what to do with the input and the output of the network. In addition, a main
+state, $c$, of the network cell is maintained and used to compute a hidden
+state, $h$, which is passed on to be used at the next timestep.
+
+The gates and states are calculated in the following manner:\footnote{Note that
+    these calculations are done by the respective frameworks we have been
+working with and are not something, we have implemented ourselves}
+
+\begin{align*}
+    & i_{t} = \sigma(W_{xi}x_{t} + W_{hi}h_{t-1} + W_{ci}c_{t-1} + b_{i}) \\
+    & f_{t} = \sigma(W_{xf}x_{t} + W_{hf}h_{t-1} + W_{cf}c_{t-1} + b_{f}) \\
+    & o_{t} = \sigma(W_{xo}x_{t} + W_{ho}h_{t-1} + W_{co}c_{t-1} + b_{o}) \\ \\
+    & c_{t} = f_{t}c_{t-1} + i_{t}\tanh(W_{xc}x_{t} + W_{hc}h_{t-1} + b_{c}) \\
+    & h_{t} = o_{t}\tanh(c_{t})
+\end{align*}
+
+
+MORE WORK TO BE DONE
+
+\url{http://colah.github.io/posts/2015-08-Understanding-LSTMs/}
+
+\url{https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms}
+
 
 
 \subsubsection{CRF}
