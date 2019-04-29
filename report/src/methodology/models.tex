@@ -35,17 +35,17 @@ layer, which then compute the most likely sequence of tags.
 \subsubsection{Embeddings}
 
 We use a pretrained embedding since they have been shown to provide a
-significant increase in accuracy for sequence labeling tasks (\ref{}).
+significant increase in accuracy for sequence labeling tasks (~\ref{}).
 We picked pretrained Polyglot embeddings since there exists models in a lot of
 different languages, and Polyglot seems to outperform its competitors like
-FastText (\ref{} to FastText + comparison), even though FastText's embeddings are
+FastText (~\ref{} to FastText + comparison), even though FastText's embeddings are
 significantly larget than Polyglot's.
 
 
 \subsubsection{Bi-LSTM}
 
 Long Short-Term Memory (LSTM) networks are a particular type of Recurrent Neural
-Networks (RNN), that was originally proposed by (\ref{} Hochreiter 199X) as a way of
+Networks (RNN), that was originally proposed by (~\ref{} Hochreiter 199X) as a way of
 dealing with defiencies of normal RNNs. For machine learning tasks concerned
 with sequential data it is more often than not necessary to let information
 about an input at a timestep $t$ get carried over to the processing of an input
@@ -53,7 +53,7 @@ at timestep $t+1$. This is the motivation of RNN (see Figure~\ref{}).
 
 However, the standard RNN suffers from the problems of exponential decay or blow
 up of error signals that are backpropagated through the network --- a situation
-that only gets worse as the time dependencies increase (\ref Hochreiter,
+that only gets worse as the time dependencies increase (~\ref{} Hochreiter,
 Graves). To remedy this, LSTM networks are used instead.
 
 An LSTM network is compposed of carefully designed memory cells containing
@@ -74,12 +74,19 @@ working with and are not something, we have implemented ourselves}
     & h_{t} = o_{t}\tanh(c_{t})
 \end{align*}
 
+where $i_{t}$, $f_{t}$ and $o_{t}$ are the input gate, the forget gate and the
+output gate respectively at time $t$, $c$ is the cell state and $h$ is the
+hidden state. The weight matrices $W$ maps from either an input $x$ of size $m$
+to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m*n}$ is the
+input-forget gate matrix), or between to internal components (ie. $W_{hi} \in
+\mathbb{R}^{n*n}$ is the hidden-input gate matrix). (~\ref{} Huang et al. 2015)
+
 
 MORE WORK TO BE DONE
 
-\url{http://colah.github.io/posts/2015-08-Understanding-LSTMs/}
+% \url{http://colah.github.io/posts/2015-08-Understanding-LSTMs/}
 
-\url{https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms}
+% \url{https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html#written-memories-the-intuition-behind-lstms}
 
 
 
