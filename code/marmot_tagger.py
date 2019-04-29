@@ -40,8 +40,8 @@ def generate_run_strings(config):
 
     return run_string_trainer, run_string_tagger
 
-def compare(file_expected, file_actual, vocabulary):
-    evaluation = {} 
+def compare(file_expected, file_actual, vocabulary, tags):
+    evaluation = {t2:{t1:0 for t1 in tags} for t2 in tags}
     word_idx = 0
     tag_idx = 1
     tag_idx_conllu = 5
@@ -79,13 +79,18 @@ def compare(file_expected, file_actual, vocabulary):
               
     return evaluation, words, errors, oov_words, oov_errors
 
-def vocabulary(iterator, word_idx):
+def vocabulary(iterator, word_idx, tag_idx):
     vocab = set()
+    tags = set()
     for item in iterator:
         if item.isspace(): continue
-        word = item.split("\t")[word_idx].strip()
+        split = item.split("\t")
+        word = split[word_idx].strip()
+        tag = split[tag_idx].strip()
         vocab.add(word)
-    return vocab
+        tags.add(tag)
+
+    return vocab, tags
 
 def evaluate(config):
     task = config["task"]
@@ -99,9 +104,9 @@ def evaluate(config):
     file_expected = f"{data_root}/{task}/{language}/testing.{file_end}"
     file_training = f"{data_root}/{task}/{language}/training.{file_end}"
     with open(file_training) as train_file:
-        vocab = vocabulary(train_file, 0)
+        vocab, tags = vocabulary(train_file, 0, 1)
 
-    return compare(file_expected, file_actual, vocab)
+    return compare(file_expected, file_actual, vocab, tags)
 
 def cleanup(config):
     task = config["task"]
