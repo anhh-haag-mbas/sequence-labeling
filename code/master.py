@@ -30,7 +30,7 @@ try:
         framework = config[2]
         if len(processes) > max_process_count:
             print(f"Running the max {len(processes)} processes, now waiting...")
-        while (len(processes) > max_process_count) or (framework == "tensorflow" and len(processes) >= 5) or (framework == "pytorch" and len(processes) >= 2):
+        while (len(processes) > max_process_count) or (framework == "tensorflow" and len(processes) >= 5):
             time.sleep(10)
             for process in processes:
                 process.poll()
