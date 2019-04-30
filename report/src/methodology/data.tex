@@ -5,7 +5,7 @@
 This section will describe the process of finding and preparing the relevant
 language data for the project. This includes considerations about which
 languages to work with, what data sources was used, how the data was
-preprocessed, etc.
+preprocessed, etc.\
 
 
 \subsubsection{Choosing languages}
@@ -35,10 +35,10 @@ For the NER task we used auto-annotated wikipedia data from~\ref{}{http://nlp.cs
 As the title suggests, this dataset contains annotated data for 282 languages in varying sizes.
 
 The datasets from~\ref{}{UniversalDependencies.org} are all in the CoNNL-U format, but are created from different types of sources. 
-The source types are given as tags such as news, legal, blog, wiki, etc.
+The source types are given as tags such as news, legal, blog, wiki, etc.\
 The datasets from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} are all in BIO format, and since they were created based on wikipedia we didn't have to take varying sources into considerations.
 
-We are interested in whether word ordering has an impact on the accuracy of our models so our primary criteria for languages were their word ordering, ie. the relative ordering of verbs, subjects, and objects (eg. verb-object-subject).
+We are interested in whether word ordering has an impact on the accuracy of our models so our primary criteria for languages were their word ordering, ie.\ the relative ordering of verbs, subjects, and objects (eg.\ verb-object-subject).
 Word ordering were decided based on~\ref{}{https://wals.info/chapter/81}, we picked languages with one dominant word-ordering, ignoring languages such as german which has alternating word orderings. 
 
 For word orderings with enough languages to choose from we picked two languages from the same langauge family and one language from a different family.
@@ -65,7 +65,7 @@ A list of the languages as well as the word-ordering, language family, treebank,
 * Norwegian,SVO, IE, Germanic,          Bokmaal, blog, news, non-fiction
 * Russian,  SVO, IE, Slavic,            SynTagRus, fiction, news, non-fiction
 
-The distribution of tokens, labels, etc. is given in appendix.
+The distribution of tokens, labels, etc.\ is given in appendix.
 
 For the training, validation and test-sets the data was simply split, as following. 
 First 4000 sentences for training, next 500 for validation, and next 500 for testing.
