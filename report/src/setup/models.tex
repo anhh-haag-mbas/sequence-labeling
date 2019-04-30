@@ -81,8 +81,46 @@ to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m*n}$ is t
 input-forget gate matrix), or between to internal components (ie. $W_{hi} \in
 \mathbb{R}^{n*n}$ is the hidden-input gate matrix). (~\ref{} Huang et al. 2015)
 
+The activation function $\sigma$ is the sigmoid function, which squishes the
+values of the gate matrices into the interval $[0,1]$. This means, that the
+gates determine which and how much information is passed through and stored in
+the memory cell. For example, the forget gate $f_{t}$ at timestep $t$ is 
+multiplied with the previous cell state $c_{t-1}$ to determine what to remember
+and what to forget when $c_{t}$ is computed. A value of $1$ in the gate matrix
+means `keep all' where a $0$ means `forget all'.
+\footnote{This particular forget mechanism was not
+    introduced by Hochreiter in his original LSTM paper and according to
+    \url{https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html}
+    `led the original [\ldots] model to have trouble with simple tasks involving
+    long sequences'. This solution was introduced by (~\ref{} Gers et al. 2000)
+and is now standard in LSTM implementations.}
 
-MORE WORK TO BE DONE
+Updating the cell state also entails adding the element wise product of the
+input gate $i_{t}$ and \textit{the candidate write} given by $\tanh(W_{xc}x_{t}
++ W_{hc}h_{t-1} + b_{c})$. Since the hidden state $h_{t} = o_{t}\tanh(c_{t})$
+the candidate write at timestep $t$ consists of not only the weighted current
+input $W_{xc}x_{t}$ but also the weighted result of passing the previous cell
+state through the previous output gate $W_{hc}h_{t-1}$ where $h_{t-1} =
+o_{t-1}\tanh(c_{t-1})$.
+
+In other words, the memory cell at timestep $t-1$ produces a reading of its own
+cell state which it passes on as a hidden state to the memory cell at timestep
+$t$ to be used to compute the candidate write for $c_{t}$. For further
+discussion of this somewhat reversed read/write procedure, refer to (~\ref{}
+\url{https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html}).
+
+The intricate design of the LSTM memory cell allows for time dependencies
+spanning very long sequences through careful regulation of the cell state.
+Applying a separate LSTM network layer that processes the same sequence of data
+but in reversed order, the model becomes bidirectional (see Figure~\ref{}).
+However, at each timestep $t$ there will be two memory cells: one for the
+forward pass and one for the backward pass. The first will depend on all $x_{i}
+\in \{x_{0}, \ldots, x_{t-1}\}$ where the second will depend on all $x_{j} \in
+\{x_{t+1}, \ldots, x_{T}\}$. This requires that the entire sequence of data is
+provided before an output can be produced, but at the same time it enables the
+output to be computed taking both past and future dependencies into
+consideration.
+
 
 % \url{http://colah.github.io/posts/2015-08-Understanding-LSTMs/}
 
