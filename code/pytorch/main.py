@@ -10,6 +10,7 @@ from pytorch.bi_lstm_crf import PosTagger
 from pytorch.reader import read_bio, read_conllu, batchify
 from pytorch.school import train_epochs, train_patience, evaluate, generate_results
 
+torch.set_num_threads(1)
 
 DEFAULT_LSTM_LAYERS = 1
 
