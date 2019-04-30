@@ -67,9 +67,9 @@ The gates and states are calculated in the following manner:\footnote{Note that
 working with and are not something, we have implemented ourselves}
 
 \begin{align*}
-    & i_{t} = \sigma(W_{xi}x_{t} + W_{hi}h_{t-1} + W_{ci}c_{t-1} + b_{i}) \\
-    & f_{t} = \sigma(W_{xf}x_{t} + W_{hf}h_{t-1} + W_{cf}c_{t-1} + b_{f}) \\
-    & o_{t} = \sigma(W_{xo}x_{t} + W_{ho}h_{t-1} + W_{co}c_{t-1} + b_{o}) \\ \\
+    & i_{t} = \sigma(W_{xi}x_{t} + W_{hi}h_{t-1} + W_{ci}c_{t-1} + b_{i})    \\
+    & f_{t} = \sigma(W_{xf}x_{t} + W_{hf}h_{t-1} + W_{cf}c_{t-1} + b_{f})    \\
+    & o_{t} = \sigma(W_{xo}x_{t} + W_{ho}h_{t-1} + W_{co}c_{t-1} + b_{o})    \\ \\
     & c_{t} = f_{t}c_{t-1} + i_{t}\tanh(W_{xc}x_{t} + W_{hc}h_{t-1} + b_{c}) \\
     & h_{t} = o_{t}\tanh(c_{t})
 \end{align*}
