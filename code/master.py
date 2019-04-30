@@ -9,7 +9,7 @@ if len(sys.argv) not in [2]:
     exit(1)
 
 processes = []
-max_process_count = 33
+max_process_count = 60
 
 def signal_handler(sig, frame):
     print("Killing subprocesses")
