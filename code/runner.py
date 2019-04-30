@@ -1,8 +1,8 @@
 import sys
 import os
 
-import pytorch.main as pyt
 import dynet_sequence_labeling.dynet_sequence_labeling as dysl
+import marmot_tagger as marmot
 
 from itertools import product
 from polyglot.mapping import Embedding
@@ -71,9 +71,11 @@ def run_experiment(config):
         return run_experiment_pytorch(config)
     if framework == "tensorflow":
         return run_experiment_tensorflow(config)
+    if framework == "marmot":
+        return marmot.run_experiment(config)
 
 def run_experiment_pytorch(config):
-    return pyt.run_experiment(config)
+    pass
 
 def run_experiment_tensorflow(config):
     pass
@@ -84,12 +86,13 @@ def experiment_to_str(config, results):
 
 tasks       = ["pos", "ner"]
 seeds       = [613321, 5123, 421213, 521403, 322233]
-models      = [False, True]
+models      = [True]
 epochs      = [{"max": 50, "patience": 3}, 5, 1]
 languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 data_root   = "../data/"
-frameworks  = ["dynet", "pytorch", "tensorflow"]
-batch_sizes = [32, 8, 1]
+#frameworks  = ["dynet", "pytorch", "tensorflow"]
+frameworks  = ["marmot"]
+batch_sizes = [1]
 
 configurations = product(frameworks, seeds, batch_sizes, epochs, tasks, models, languages)
 
