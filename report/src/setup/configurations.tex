@@ -1,6 +1,81 @@
 
 \subsection{Configurations}
 
+The first part of the data gathering process was to find pre-existing annotated
+data for our two tasks, part-of-speech (POS), and named entitiy recognition
+(NER). We wanted pre-existing datasets since it would be {too complicated (Jeg
+ved der eksisterer et bedre ord her men jeg kan ikke huske hvad det er lige nu)}
+to annotated data for the languages ourselves. For the POS task we used datasets
+from~\ref{}{UniversalDependencies.org} which has a broad selection of languages
+with multiple datasets in each. For the NER task we used auto-annotated wik
+ipedia data fr om~\ref{}{http://nlp As the title suggests, this dataset contains
+annotat d data for 2 The datasets from~\ref{}{UniversalDependencies.org} are all
+in the CoNNL-Uformat, but are created from different types of sources. The
+source types are given as tags such as news, legal, blog, wiki, etc.\ The
+datasets from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} are all in BIO format, and
+since they were created based on wikipedia we didn't have to take varying
+sources into considerations.
+
+We are interested in whether word ordering has an impact on the accuracy of our
+models so our primary criteria for languages were their word ordering, ie.\ the
+relative ordering of verbs, subjects, and objects (eg.\ verb-object-subject).
+Word ordering were decided based on~\ref{}{https://wals.info/chapter/81}, we
+picked languages with one dominant word-ordering, ignoring languages such as
+german which has alternating word orderings. 
+
+For word orderings with enough languages to choose from we picked two languages
+from the same langauge family and one language from a different family. Language
+families were similarly based on~\ref{}{https://wals.info/languoid}, we split
+languages based on both their family and genus, meaning a language such as
+german (indo-european, germanic) is considered different from italian
+(indo-european, romance).
+
+We wanted the same languages for both tasks and also required that there was a
+pre-trained polyglot word embedding for the langauge. This left us with around
+60 languages to choose from. We also wanted to train or models on the same
+number of sentences in each language to avoid any language performing much
+better solely because of more training. Due to the nature of the languages each
+sentence might contain a greater or lesser amount of words in each sentence, we
+didn't do anything to equalize this, since the word count wouldn't affect the
+number of updates when training. There is an argument to be made that since the
+language would also be tested on longer sentences, and we might assume it is
+harder to correctly label longer sentences than shorter ones, the accuracy might
+be lower for these languages than others. 
+
+The cutoff we made on the number of sentences was 5000, where 4000 was used for
+training and the last 1000 was split evenly between validation and testing.
+Based on this we had data for three languages for the two most common word
+orderings subject-object-verb and subject-verb-object. For the less common
+verb-subject-object word ordering we didn't have sufficient data for more than a
+single language, and for even rarer word orderings we didn't have any data.
+
+The treebanks we selected from~\ref{}{UniversalDependencies.org} were all made
+from news, where some used additional sources such as non-fiction and spoken. A
+list of the languages as well as the word-ordering, language family, treebank,
+and tags is given below.
+
+* Arabic,   VSO, Afro-Asiatic, Semitic, PADT, news
+* Hindi,    SOV, IE, Indic,             HDTB, news
+* Urdu,     SOV, IE, Indic,             UDTB, news
+* Japanese, SOV, Japanese,              GSD, blog, news
+* Danish,   SVO, IE, Germanic,          DDT, fiction, news, non-fiction, spoken
+* Norwegian,SVO, IE, Germanic,          Bokmaal, blog, news, non-fiction
+* Russian,  SVO, IE, Slavic,            SynTagRus, fiction, news, non-fiction
+
+The distribution of tokens, labels, etc.\ is given in appendix.
+
+For the training, validation and test-sets the data was simply split, as
+following. First 4000 sentences for training, next 500 for validation, and next
+500 for testing. Since the datasets from~\ref{}{UniversalDependencies.org} comes
+pre-split, these were concatenated before splitting. Some datasets, such as the
+Norwegian dataset, contains contractions for some words in
+the~\ref{}{UniversalDependencies.org} as well as the individual words. Since the
+contration is usually unlabelled in the datasets these were simply removed from
+the data for easy of parsing.
+
+As each framework handles the data in different ways, more detail as to how the
+data was further pre-processed is given in their respective chapters.
+
 
 \subsubsection{Languages}
 
@@ -26,26 +101,22 @@ This the `magic' framework.
 \textbf{The learning proccess}
 
 My general approach to learning dynet was to ease myself into it, following
-simple tutorials like an XOR example, and building from there.
-With an understanding of how a simple network works I could try to create my own
-on a toy problem and see if I really understood how stuff worked.
-One of the nice things about Dynet is how close it feels to creating
-computational graphs.
+simple tutorials like an XOR example, and building from there. With an
+understanding of how a simple network works I could try to create my own on a
+toy problem and see if I really understood how stuff worked. One of the nice
+things about Dynet is how close it feels to creating computational graphs.
 Creating parameters and linking them together by applying mathematical
 operations on them, made it easy to reason about the behavior of the model.
 After the small examples it was simple to learn how to work an LSTM layer into
-the model.
-LSTM in dynet hides a lot of the complexity associated with the computations,
-but the interface was still intuitive to use.
-Get the initial state, compute the next state based on input, get the output for
-the next layer and save the state for the next part of the sequence.
-Working out how to add a CRF layer on top was mostly a matter of understanding
-CRF rather than Dynet. 
+the model. LSTM in dynet hides a lot of the complexity associated with the
+computations, but the interface was still intuitive to use. Get the initial
+state, compute the next state based on input, get the output for the next layer
+and save the state for the next part of the sequence. Working out how to add a
+CRF layer on top was mostly a matter of understanding CRF rather than Dynet.
 Figuring out that what we needed for CRF was simply a transformation matrix,
 made it obvious that this matrix should just be added asa a parameter similar to
-other parts of a model.
-From there I could take inspiration from a complete model implemented in dynet
-and reuse their code for the CRF.\
+other parts of a model. From there I could take inspiration from a complete
+model implemented in dynet and reuse their code for the CRF.
 
 \subsubsection*{PyTorch}
 
