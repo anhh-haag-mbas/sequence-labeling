@@ -89,12 +89,14 @@ languages such as German which has alternating word orderings.
 
 Language families are groupings of languages based on some common ancestral
 language. Languages from the same family often share similarities such as word
-orderings and individual words. For word orderings with many languages to choose
-from, we picked two languages from the same langauge family, and one language
-from a different family. Language families were similarly based
-on~\ref{}{https://wals.info/languoid}. We split languages based on both their
-family and genus, meaning a language such as German (indo-european, germanic) is
-considered different from Italian (indo-european, romance).
+orderings and some words. 
+
+For word orderings with many languages to choose from, we picked two languages
+from the same langauge family, and one language from a different family.
+Language families were similarly based on~\ref{}{https://wals.info/languoid}. We
+split languages based on both their family and genus, meaning a language such as
+German (indo-european, germanic) is considered different from Italian
+(indo-european, romance).
 
 Sadly due to limited availability of data, we couldn't find data on more than 3
 different word orderings, subject-object-verb, subject-verb-object, and a single
@@ -116,20 +118,6 @@ The concern of availability of data and the origin is elaporated on in
 \ref{}{Another chapter}.
 
 
-We wanted the same languages for both tasks and also required that there was a
-pre-trained polyglot word embedding for the langauge. This left us with around
-60 languages to choose from. We also wanted to train or models on the same
-number of sentences in each language to avoid any language performing much
-better solely because of more training. Due to the nature of the languages each
-sentence might contain a greater or lesser amount of words in each sentence, we
-didn't do anything to equalize this, since the word count wouldn't affect the
-number of updates when training. There is an argument to be made that since the
-language would also be tested on longer sentences, and we might assume it is
-harder to correctly label longer sentences than shorter ones, the accuracy might
-be lower for these languages than others. 
-
-
-
 \subsubsection{Frameworks}
 
 All experiments have been conducted across three popular and open source machine
@@ -149,18 +137,37 @@ DyNet is an open source dynamic neural network framework, where the
 computational graphs is recreated for each input. This is particularly useful
 for natural language processing where sentences don't have a fixed length so the
 unique structure of each sentence's graph can be made without having to add
-padding to match the longest sentence in the dataset.
+padding to match the longest sentence in the dataset. A downside of dynamic
+frameworks is that they are generally slower than their static counterparts,
+the creators of DyNet though mention that it performs comparable or faster than
+similar static declaration frameworks ~\ref{DyNet report}.   
 
 DyNet further allows for what they call auto-batching which means that sentences
 don't have to be manually batched when training on batches of sentences
 ~\ref{On-the-fly Operation Batching in Dynamic Computation Graphs}. In other
-frameworks, dynamic or not, users have to add the a dimension to their input
-which represents the batches.
+frameworks, dynamic or not, users have to add a dimension to their input which
+represents the batches.
 
 DyNet doesn't support multi-threading in their python implementation yet, so we
 all the experiments were run on a single core. This had some unforseen
 consequences on the runnning time which is further elaporated in the discussion
 chapter ~\ref{discussion}.
+
+A consequence of the framework being dynamic is that the structure of the model
+is mixed with the processing and training on input. The model parameters are
+defined by themselves, but since the input is an integral part of the graph, the
+structure is defined by the mathematical operations performed on the specific
+input values instead of a more general structure which works on any input. This
+only has an impact on the structure of the source code, and in extension how
+easy it is to understand it. The input is processed in the same way as it would
+be in a static framework. This also means that instead of thinking of the model
+as layers it is often better to think about the underlying operations of the
+layers. The exception is the LSTM layer which has been implemented in a complete
+package.
+
+DyNet doesn't have a CRF layer implemented as part of their library so we based
+our implementation on the work of ~\ref{Barbara}, which in turn based some of
+their implementation on ~\ref{Someone else}. 
 
 % Wait! How the f does DyNet gain a speed increase when using mini-batching if
 % it doesn't utilize multiple cores!!???!?!
@@ -177,6 +184,19 @@ Haha, good luck
 
 
 \subsubsection{Experimental setup}
+
+We wanted the same languages for both tasks and also required that there was a
+pre-trained polyglot word embedding for the langauge. This left us with around
+60 languages to choose from. We also wanted to train or models on the same
+number of sentences in each language to avoid any language performing much
+better solely because of more training. Due to the nature of the languages each
+sentence might contain a greater or lesser amount of words in each sentence, we
+didn't do anything to equalize this, since the word count wouldn't affect the
+number of updates when training. There is an argument to be made that since the
+language would also be tested on longer sentences, and we might assume it is
+harder to correctly label longer sentences than shorter ones, the accuracy might
+be lower for these languages than others. 
+
 
 
 \pagebreak
