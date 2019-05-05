@@ -22,32 +22,7 @@ Mini-batch-size: 1, 8, 32
 
 Epochs: 1, 5, 50 using early stopping patience 3
 
-%The first part of the data gathering process was to find pre-existing annotated
-%data for our two tasks, part-of-speech (POS), and named entitiy recognition
-%(NER). We wanted pre-existing datasets since it would be {too complicated (Jeg
-%ved der eksisterer et bedre ord her men jeg kan ikke huske hvad det er lige nu)}
-%to annotated data for the languages ourselves. For the POS task we used datasets
-%from~\ref{}{UniversalDependencies.org} which has a broad selection of languages
-%with multiple datasets in each. For the NER task we used auto-annotated
-%wikipedia data from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} created for the
-%paper~\ref{}{Cross-lingual Name Tagging and Linking for 282 Languages}. As the
-%title suggests, this dataset contains annotated data for 282 languages in
-%varying sizes.
 
-%The datasets from~\ref{}{UniversalDependencies.org} are all in the CoNNL-U
-%format, but are created from different types of sources. The source types are
-%given as tags such as news, legal, blog, wiki, etc.\ The datasets
-%from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} are all in BIO format, and since
-%they were created based on wikipedia we didn't have to take varying sources into
-%considerations.
-
-%The cutoff we made on the number of sentences was 5000, where 4000 was used for
-%training and the last 1000 was split evenly between validation and testing.
-%Based on this we had data for three languages for the two most common word
-%orderings subject-object-verb and subject-verb-object. For the less common
-%verb-subject-object word ordering we didn't have sufficient data for more than a
-%single language, and for even rarer word orderings we didn't have any data.
-%
 %The treebanks we selected from~\ref{}{UniversalDependencies.org} were all made
 %from news, where some used additional sources such as non-fiction and spoken. A
 %list of the languages as well as the word-ordering, language family, treebank,
@@ -98,9 +73,12 @@ split languages based on both their family and genus, meaning a language such as
 German (indo-european, germanic) is considered different from Italian
 (indo-european, romance).
 
-Sadly due to limited availability of data, we couldn't find data on more than 3
-different word orderings, subject-object-verb, subject-verb-object, and a single
-language for verb-subject-object. 
+Sadly due to limited availability of pre-existing annotated datasets, we
+couldn't find data on more than 3 different word orderings. For the more common
+word orderings, subject-object-verb and subject-verb-object, there was a descent
+range of languages to choose from. But for the less common word orderings we
+could only find a single verb-subject-object language with enough data. There
+was no data for the remaining languages. 
 
 The 7 languages we picked, along with their word ordering, language family and
 genus is given in \ref{} below.
@@ -185,18 +163,73 @@ Haha, good luck
 
 \subsubsection{Experimental setup}
 
-We wanted the same languages for both tasks and also required that there was a
-pre-trained polyglot word embedding for the langauge. This left us with around
-60 languages to choose from. We also wanted to train or models on the same
-number of sentences in each language to avoid any language performing much
-better solely because of more training. Due to the nature of the languages each
-sentence might contain a greater or lesser amount of words in each sentence, we
-didn't do anything to equalize this, since the word count wouldn't affect the
-number of updates when training. There is an argument to be made that since the
-language would also be tested on longer sentences, and we might assume it is
-harder to correctly label longer sentences than shorter ones, the accuracy might
-be lower for these languages than others. 
+For all languages, frameworks, and tasks we ran experiments on three different
+mini-batch sizes, three epoch settings, and with five seeds. Additional
+consideration were also made in regards to the training data to make for as fair
+comparisons as possible.
 
+The three mini-batch sizes were motivated by ~\ref{Reymer and gurevych} who
+reported worse accuracy for larger sizes of mini-batches with a sweet spot
+between 8 and 32. As will be expanded on in the discussion, this seems counter
+intuitive to the general idea behind the use of mini-batches. % TODO: discuss
+
+The three epochs is to see how well the models perform based on very limited
+training, on some reasonable amout of training, and the upper limit of the model
+for the task. The expectation is that a single epoch of training gives very bad
+performance on the tasks. Five epochs is the baseline where we expect that none
+of the models have begun overfitting, while still able to produce some
+reasonable predictive power. The last epoch setting is early stopping with a
+patience of three, and a max of 50 epochs. Early testing suggests that models
+stopped improving before the max, so this setting reasonable represents the best
+of what the models can achieve. The 
+
+The different seeds are used to get a better idea of the performance of the
+models than a single run would give. This approach is based on the work of
+~\ref{Reimers+Gurevych, misconceptions in nsl yang zhang} who demonstrated how a
+single result comparison between two models is insufficient when randomness is
+involved. If one model performs better than average on a run, and another model
+performs worse than average, this might suggest that the model which performed
+better is truly better. But if more runs are used it is possible to compare the 
+average, minimum and maximum accuracy of models, along with the standard
+deviation to give a better perspective on the relative performance of the models. 
+
+%The first part of the data gathering process was to find pre-existing annotated
+%data for our two tasks, part-of-speech (POS), and named entitiy recognition
+%(NER). We wanted pre-existing datasets since it would be infeasible
+%to annotated data for the languages ourselves. For the POS task we used datasets
+%from~\ref{}{UniversalDependencies.org} which has a broad selection of languages
+%with multiple datasets in each. For the NER task we used auto-annotated
+%wikipedia data from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} created for the
+%paper~\ref{}{Cross-lingual Name Tagging and Linking for 282 Languages}. As the
+%title suggests, this dataset contains annotated data for 282 languages in
+%varying sizes.
+%
+%The datasets from~\ref{}{UniversalDependencies.org} are all in the CoNNL-U
+%format, but are created from different types of sources. The source types are
+%given as tags such as news, legal, blog, wiki, etc.\ The datasets
+%from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} are all in BIO format, and since
+%they were created based on wikipedia we didn't have to take varying sources into
+%considerations.
+
+To make comparisons between languages more fair, we limited the data on the
+number of sententes for training, testing, and validation. The cutoff made was
+5000 sentences, where 4000 is used for training and the last 1000 was split
+evenly between validation and testing. The numbers picked were based on
+availability of data. 
+
+Due to the nature of the languages each sentence might contain a differing number
+of words in each sentence, we didn't do anything to equalize this since the
+word count wouldn't affect the number of updates when training. There is an
+argument to be made that since the language would also be tested on longer
+sentences, and we might assume it is harder to correctly label longer sentences
+than shorter ones, the accuracy might be lower for these languages than others. 
+
+The datasets found are created from different types of sources, eg. news, blog
+posts, reviews, etc. We wanted the datasets for the different languages to be
+created from similar sources. It was infeasible to find datasets for both tasks
+which were created from similar sources, but within each task, the data is to
+some degree made from the same kind of source, the details are included in their
+respective chapters.
 
 
 \pagebreak
