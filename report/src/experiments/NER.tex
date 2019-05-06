@@ -8,6 +8,18 @@
 
 \subsubsection{Data}
 
+For the NER task we used auto-annotated wikipedia data
+from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} created for the
+paper~\ref{}{Cross-lingual Name Tagging and Linking for 282 Languages}. As the
+title suggests, this dataset contains annotated data for 282 languages in
+varying sizes. The datasets from~\ref{}{http://nlp.cs.rpi.edu/wikiann/} are all
+in BIO format, and since they were created based on wikipedia we didn't have to
+take varying sources into considerations.
+
+Since the data is auto-annotated it might not be of the same standard as the POS
+data. Ideally this shouldn't affect the experiments since the word orderings are
+still the same, and systematic errors in the data would happen for all languages
+in the datasets.
 
 \subsubsection{Results and analysis}
 
