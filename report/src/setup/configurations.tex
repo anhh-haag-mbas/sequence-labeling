@@ -85,11 +85,17 @@ genus is given in \ref{} below.
 
 % TODO: Make nice table
 * Arabic,   VSO, Afro-Asiatic, Semitic 
+
 * Hindi,    SOV, Indo-European, Indic
+
 * Urdu,     SOV, Indo-European, Indic
+
 * Japanese, SOV, Japanese
+
 * Danish,   SVO, Indo-European, Germanic
+
 * Norwegian,SVO, Indo-European, Germanic
+
 * Russian,  SVO, Indo-European, Slavic
 
 The concern of availability of data and the origin is elaporated on in
@@ -126,10 +132,10 @@ don't have to be manually batched when training on batches of sentences
 frameworks, dynamic or not, users have to add a dimension to their input which
 represents the batches.
 
-DyNet doesn't support multi-threading in their python implementation yet, so we
-all the experiments were run on a single core. This had some unforseen
-consequences on the runnning time which is further elaporated in the discussion
-chapter ~\ref{discussion}.
+DyNet doesn't support multi-threading in their python implementation yet, so all
+the experiments were run on a single core. This had some unforseen consequences
+on the runtime which is further elaporated in the discussion chapter
+~\ref{discussion}.
 
 A consequence of the framework being dynamic is that the structure of the model
 is mixed with the processing and training on input. The model parameters are
@@ -140,12 +146,12 @@ only has an impact on the structure of the source code, and in extension how
 easy it is to understand it. The input is processed in the same way as it would
 be in a static framework. This also means that instead of thinking of the model
 as layers it is often better to think about the underlying operations of the
-layers. The exception is the LSTM layer which has been implemented in a complete
-package.
+layers. The exception is the LSTM layer where much of the implementation detail
+has been hidden behind a concise interface.
 
 DyNet doesn't have a CRF layer implemented as part of their library so we based
-our implementation on the work of ~\ref{Barbara}, which in turn based some of
-their implementation on ~\ref{Someone else}. 
+our implementation on the work of ~\ref{Barbara}, which in turn based parts of
+theirs on ~\ref{Someone else, see their source code}. 
 
 % Wait! How the f does DyNet gain a speed increase when using mini-batching if
 % it doesn't utilize multiple cores!!???!?!
@@ -174,14 +180,18 @@ between 8 and 32. As will be expanded on in the discussion, this seems counter
 intuitive to the general idea behind the use of mini-batches. % TODO: discuss
 
 The three epochs is to see how well the models perform based on very limited
-training, on some reasonable amout of training, and the upper limit of the model
-for the task. The expectation is that a single epoch of training gives very bad
-performance on the tasks. Five epochs is the baseline where we expect that none
-of the models have begun overfitting, while still able to produce some
+training, on some reasonable amount of training, and the upper limits of the
+models for the tasks. The expectation is that a single epoch of training gives
+very bad performance on the tasks. Five epochs is the baseline where we expect
+that none of the models have begun overfitting, while still able to produce some
 reasonable predictive power. The last epoch setting is early stopping with a
-patience of three, and a max of 50 epochs. Early testing suggests that models
-stopped improving before the max, so this setting reasonable represents the best
-of what the models can achieve. The 
+patience of three, and a max of 50 epochs. This means that the model continues
+training intill it has made three updates which didn't improve the accuracy on
+some validation set. Early testing suggests that models stopped improving before
+the max, so this setting reasonable represents the best of what the models can
+achieve. It is possible that with a lot more training, or different
+hyperparameters, that the models can get an even better performance than our
+early stopping allows.
 
 The different seeds are used to get a better idea of the performance of the
 models than a single run would give. This approach is based on the work of
@@ -189,9 +199,11 @@ models than a single run would give. This approach is based on the work of
 single result comparison between two models is insufficient when randomness is
 involved. If one model performs better than average on a run, and another model
 performs worse than average, this might suggest that the model which performed
-better is truly better. But if more runs are used it is possible to compare the 
-average, minimum and maximum accuracy of models, along with the standard
-deviation to give a better perspective on the relative performance of the models. 
+better is a better model. But if more runs are used it is possible to compare
+the average, minimum and maximum accuracy of models, along with the standard
+deviation to give a better perspective on the relative performance of the
+models. This helps mitigate situations where we mistakenly conclude that one
+model is better than another.
 
 %The first part of the data gathering process was to find pre-existing annotated
 %data for our two tasks, part-of-speech (POS), and named entitiy recognition
@@ -212,17 +224,20 @@ deviation to give a better perspective on the relative performance of the models
 %considerations.
 
 To make comparisons between languages more fair, we limited the data on the
-number of sententes for training, testing, and validation. The cutoff made was
+number of sentences for training, testing, and validation. The cutoff made was
 5000 sentences, where 4000 is used for training and the last 1000 was split
 evenly between validation and testing. The numbers picked were based on
-availability of data. 
+availability of data with a preference for more sentences. 
 
-Due to the nature of the languages each sentence might contain a differing number
-of words in each sentence, we didn't do anything to equalize this since the
-word count wouldn't affect the number of updates when training. There is an
-argument to be made that since the language would also be tested on longer
-sentences, and we might assume it is harder to correctly label longer sentences
-than shorter ones, the accuracy might be lower for these languages than others. 
+Due to the nature of the languages each training set might contain a differing
+number of words in each sentence, we didn't do anything to equalize this since
+the word count wouldn't affect the number of updates when training. There is a
+risk that since the language would also be tested on longer sentences, and we
+might assume it is harder to correctly label longer sentences than shorter ones,
+the accuracy might be lower for these languages than others. The languages with
+longer sentences in their test set however is most likely also the languages
+with longer sentences in their training set this hopefully evens out the
+mistakes.
 
 The datasets found are created from different types of sources, eg. news, blog
 posts, reviews, etc. We wanted the datasets for the different languages to be
