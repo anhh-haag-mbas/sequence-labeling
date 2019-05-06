@@ -1,0 +1,65 @@
+% Our experiments ran on AWS EC2 machines. This allowed much computing power. One issue of importance here is how one does the task scheduling. We had our code set up in a way that assumed everything was going to run in a single process on a single server. We quickly realized that, that was not feasible, as dynet was not multithreaded. We then switched to a multiprocess model. We did however not run the same amount of processes concurrently for each framework, as some where multithreaded and some weren't. What one should do if they wish to compare the speed of each network is... We ran into computing issues, a single machine of type XX was simply not fast enough, as such we decided to launch several machines, this had a lot of manual work, of copying things from one machine to the next. If we instead had made a "master" server that had all of the configuration to run and stored all of the results, and then made several "slave" servers that queried the master server for configurations and the saved the results on the master server. Adding more computing power would have been trivial.
+
+The experiments were executed across several AWS EC2 machines, as they offer
+quite powerful virtual machines.
+
+The experiments ran concurrently in their own process with multithreading
+turned on for the frameworks that supported it. Most of the experiments ran on
+an instance of type \texttt{c5.9xlarge}, some ran on \texttt{c5.18xlarge}.
+Each machine had a 32 GiB magnetic harddisk attached as its primary storage.
+The key difference was the vCPU count, as the memory difference had no
+impact on execution.
+[ref: https://aws.amazon.com/ec2/instance-types/]
+
+For dynet 34 processes were executed concurrently on a \texttt{c5.9xlarge} EC2
+machine.
+For tensorflow 5 processes were executed concurrently on a \texttt{c5.9xlarge}
+EC2 machine.
+Pytorch initally ran 2 processes concurrently with multithreading enabled on a
+\texttt{c5.9xlarge} EC2 machine, but was switched to 61 processes with
+multithreading disabled on a \texttt{c5.18xlarge} EC2 machine midway through the
+execution of the experiments.
+
+% Furthermore we observed some odditites when running on AWS compared to our own machines.
+
+% Pytorch grinded to a halt on a 32 core machine, and as such we switched the machine runnning pytorch with a 72 core machine. This made pytorch even slower. It turns out [ref] that pytorch's multithreading has problems when run on a high number of cores.
+
+% Tensorflows multithreading caused no issues but it did not seem to utilize the cores very efficiently, and as such we ran multiple processes at the same time.
+
+% Dynet had no multithreading and as such we run many multiple processes at the same time. Dynet did seem to perform significantly slower on some configurations (took days), that were quite fast on our local development machines (took minutes).
+
+Notable differences between execution in the development environment and on the
+EC2 servers were:
+
+Pytorch grinded to a halt on the 36 core EC2 machine. Switching to a 72 core EC2
+machine without disabling multithreading only exacerbated the problem. It turns
+out that pytorch's multithreading does not support a high amount of cores [ref].
+
+Tensorflow had no noticable differences between the development environment and
+the EC2 machines.
+
+Some dynet configurations took several days to complete on the EC2 machine,
+whereas it completed in a matter of minutes in the local development
+environment. The exact cause is not known to us. 
+
+%This obviously means that the speed results aren't comparable. 
+%We have used 2 different AWS machine archetypes [ref1][ref2], where one is faster than the other, or ine pytorch's case slower.
+%We did not run a single process at a time, but instead ran multiple processes at the same time.
+%If we wanted reasonably comparable results, but still within the limits of our computing power, we could have turned off multithreading for pytorch and tensorfor and jut ran everything on its own core.
+
+As such none of the speed results are truly comparable. This a result of
+several factors.
+One being that 2 different EC2 instance types was used, where one was faster
+than the other, or in pytorch's case slower.
+Another is the fact that each experiment was run concurrently with others. This
+would have only had a minor impact, if multithreading had not been enabled for
+some of the frameworks.
+Lastly dynet behaved unexpectedly with regards to execution time, compared to the
+development environment.
+
+%We cannot make any conclusion on speed deviations between the frameworks other than hint at the fact that for some configurations further reasearch might be required across frameworks.
+
+Ideally each experiment would be run one at a time, or with multithreading
+disabled, on identical EC2 machines. Seeing as that was not the case, no
+conclusions can be made with regards to the speed of the frameworks, only hints
+at where further experimentation with tighter control might be warranted.

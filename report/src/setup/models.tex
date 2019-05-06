@@ -39,7 +39,7 @@ significant increase in accuracy for sequence labeling tasks (~\ref{}).
 We picked pretrained Polyglot embeddings since there exists models in a lot of
 different languages, and Polyglot seems to outperform its competitors like
 FastText (~\ref{} to FastText + comparison), even though FastText's embeddings are
-significantly larget than Polyglot's.
+significantly larger than Polyglot's.
 
 
 \subsubsection{Bi-LSTM}
@@ -78,7 +78,7 @@ where $i_{t}$, $f_{t}$ and $o_{t}$ are the input gate, the forget gate and the
 output gate respectively at time $t$, $c$ is the cell state and $h$ is the
 hidden state. The weight matrices $W$ maps from either an input $x$ of size $m$
 to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m*n}$ is the
-input-forget gate matrix), or between to internal components (ie. $W_{hi} \in
+input-forget gate matrix), or between two internal components (ie. $W_{hi} \in
 \mathbb{R}^{n*n}$ is the hidden-input gate matrix). (~\ref{} Huang et al. 2015)
 
 The activation function $\sigma$ is the sigmoid function, which squishes the
