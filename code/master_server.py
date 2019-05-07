@@ -31,7 +31,7 @@ def append_sent_config(config):
 
 def save_result(result):
     with open('master_server_results', 'a') as f:
-        f.write(repr(result) + "\n")
+        f.write(result)
 
 app = Flask(__name__)
 
@@ -52,4 +52,4 @@ def post_result():
         return 'No JSON got', 500
     else:
         save_result(json)
-        return "Saved: " + str(json)
+        return "Saved: " + json
