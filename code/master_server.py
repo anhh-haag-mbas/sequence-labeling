@@ -52,4 +52,5 @@ def post_result():
         return 'No JSON got', 500
     else:
         save_result(json)
+        print("Saved: " + json)
         return "Saved: " + json
