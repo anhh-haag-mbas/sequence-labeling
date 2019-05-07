@@ -43,7 +43,6 @@ def get_conf():
 def get_configuration():
     config = get_config()
     append_sent_config(config)
-    app.logger.info('Sent: %s', json.dumps(config))
     return json.dumps(config)
 
 @app.route("/result", methods=['POST'])
@@ -53,5 +52,4 @@ def post_result():
         return 'No JSON got', 500
     else:
         save_result(json)
-        app.logger.info('Saved: %s', json)
         return "Saved: " + json
