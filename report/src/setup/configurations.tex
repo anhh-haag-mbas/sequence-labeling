@@ -1,8 +1,77 @@
 
 \subsection{Configurations}
 
+There are a total of 3780 different combinations of configurations based on the
+7 parameters we decided to work with. 
+
+A short list of the parameters are given below, and are explained more in detail
+in the subsequent chapters.
+
+%TODO: Make nice table or something
+Frameworks: Dynet, PyTorch, TensorFlow
+
+Languages: Arabic, Danish, Hindi, Japanese, Norwegian, Russian, Urdu
+
+Tasks: Part-of-speech, Named Enitity Recognition
+
+Models: Bi-LSTM, Bi-LSTM-CRF
+
+Seeds: 322233, 521403, 421213, 5123, 613321
+
+Mini-batch-size: 1, 8, 32
+
+Epochs: 1, 5, 50 using early stopping patience 3
+
 
 \subsubsection{Languages}
+
+The rationale behind the languages picked is a combination of word ordering,
+language family and genus, availability of data, and the origin of the data.
+
+The word ordering is the relative ordering of verbs, subjects, and objects (eg.
+verb-object-subject or alternatively VOS). We used
+~\ref{}{https://wals.info/chapter/81} to determine the word ordering of
+languages and picked languages with one dominant word ordering, ignoring
+languages such as German which has alternating word orderings. 
+
+Language families are groupings of languages based on some common ancestral
+language. Languages from the same family often share similarities such as word
+orderings and some words. 
+
+For word orderings with many languages to choose from, we picked two languages
+from the same langauge family, and one language from a different family.
+Language families were similarly based on~\ref{}{https://wals.info/languoid}. We
+split languages based on both their family and genus, meaning a language such as
+German (indo-european, germanic) is considered different from Italian
+(indo-european, romance).
+
+Sadly due to limited availability of pre-existing annotated datasets, we
+couldn't find data on more than 3 different word orderings. For the more common
+word orderings, subject-object-verb and subject-verb-object, there was a descent
+range of languages to choose from. But for the less common word orderings we
+could only find a single verb-subject-object language with enough data. There
+was no data for the remaining languages. 
+
+The 7 languages we picked, along with their word ordering, language family and
+genus is given in \ref{} below.
+
+% TODO: Make nice table
+* Arabic,   VSO, Afro-Asiatic, Semitic 
+
+* Hindi,    SOV, Indo-European, Indic
+
+* Urdu,     SOV, Indo-European, Indic
+
+* Japanese, SOV, Japanese
+
+* Danish,   SVO, Indo-European, Germanic
+
+* Norwegian,SVO, Indo-European, Germanic
+
+* Russian,  SVO, Indo-European, Slavic
+
+The concern of availability of data and the origin is elaporated on in
+\ref{}{Another chapter}.
 
 
 \subsubsection{Frameworks}
@@ -20,32 +89,44 @@ and evaluation of each framework, refer to Section~\ref{subsec:frameworks}.
 
 \subsubsection*{DyNet}
 
-This the `magic' framework.
+DyNet is an open source dynamic neural network framework, where the
+computational graphs is recreated for each input. This is particularly useful
+for natural language processing where sentences don't have a fixed length so the
+unique structure of each sentence's graph can be made without having to add
+padding to match the longest sentence in the dataset. A downside of dynamic
+frameworks is that they are generally slower than their static counterparts,
+the creators of DyNet though mention that it performs comparable or faster than
+similar static declaration frameworks ~\ref{DyNet report}.   
 
+DyNet further allows for what they call auto-batching which means that sentences
+don't have to be manually batched when training on batches of sentences
+~\ref{On-the-fly Operation Batching in Dynamic Computation Graphs}. In other
+frameworks, dynamic or not, users have to add a dimension to their input which
+represents the batches.
 
-\textbf{The learning proccess}
+DyNet doesn't support multi-threading in their python implementation yet, so all
+the experiments were run on a single core. This had some unforseen consequences
+on the runtime which is further elaporated in the discussion chapter
+~\ref{discussion}.
 
-My general approach to learning dynet was to ease myself into it, following
-simple tutorials like an XOR example, and building from there.
-With an understanding of how a simple network works I could try to create my own
-on a toy problem and see if I really understood how stuff worked.
-One of the nice things about Dynet is how close it feels to creating
-computational graphs.
-Creating parameters and linking them together by applying mathematical
-operations on them, made it easy to reason about the behavior of the model.
-After the small examples it was simple to learn how to work an LSTM layer into
-the model.
-LSTM in dynet hides a lot of the complexity associated with the computations,
-but the interface was still intuitive to use.
-Get the initial state, compute the next state based on input, get the output for
-the next layer and save the state for the next part of the sequence.
-Working out how to add a CRF layer on top was mostly a matter of understanding
-CRF rather than Dynet. 
-Figuring out that what we needed for CRF was simply a transformation matrix,
-made it obvious that this matrix should just be added asa a parameter similar to
-other parts of a model.
-From there I could take inspiration from a complete model implemented in dynet
-and reuse their code for the CRF.\
+A consequence of the framework being dynamic is that the structure of the model
+is mixed with the processing and training on input. The model parameters are
+defined by themselves, but since the input is an integral part of the graph, the
+structure is defined by the mathematical operations performed on the specific
+input values instead of a more general structure which works on any input. This
+only has an impact on the structure of the source code, and in extension how
+easy it is to understand it. The input is processed in the same way as it would
+be in a static framework. This also means that instead of thinking of the model
+as layers it is often better to think about the underlying operations of the
+layers. The exception is the LSTM layer where much of the implementation detail
+has been hidden behind a concise interface.
+
+DyNet doesn't have a CRF layer implemented as part of their library so we based
+our implementation on the work of ~\ref{Barbara}, which in turn based parts of
+theirs on ~\ref{Someone else, see their source code}. 
+
+% Wait! How the f does DyNet gain a speed increase when using mini-batching if
+% it doesn't utilize multiple cores!!???!?!
 
 \subsubsection*{PyTorch}
 
@@ -59,6 +140,67 @@ Haha, good luck
 
 
 \subsubsection{Experimental setup}
+
+For all languages, frameworks, and tasks we ran experiments on three different
+mini-batch sizes, three epoch settings, and with five seeds. Additional
+consideration were also made in regards to the training data to make for as fair
+comparisons as possible.
+
+The three mini-batch sizes were motivated by ~\ref{Reymer and gurevych} who
+reported worse accuracy for larger sizes of mini-batches with a sweet spot
+between 8 and 32. As will be expanded on in the discussion, this seems counter
+intuitive to the general idea behind the use of mini-batches. % TODO: discuss
+
+The three epochs is to see how well the models perform based on very limited
+training, on some reasonable amount of training, and the upper limits of the
+models for the tasks. The expectation is that a single epoch of training gives
+very bad performance on the tasks. Five epochs is the baseline where we expect
+that none of the models have begun overfitting, while still able to produce some
+reasonable predictive power. The last epoch setting is early stopping with a
+patience of three, and a max of 50 epochs. This means that the model continues
+training intill it has made three updates which didn't improve the accuracy on
+some validation set. Early testing suggests that models stopped improving before
+the max, so this setting reasonable represents the best of what the models can
+achieve. It is possible that with a lot more training, or different
+hyperparameters, that the models can get an even better performance than our
+early stopping allows.
+
+The different seeds are used to get a better idea of the performance of the
+models than a single run would give. This approach is based on the work of
+~\ref{Reimers+Gurevych, misconceptions in nsl yang zhang} who demonstrated how a
+single result comparison between two models is insufficient when randomness is
+involved. If one model performs better than average on a run, and another model
+performs worse than average, this might suggest that the model which performed
+better is a better model. But if more runs are used it is possible to compare
+the average, minimum and maximum accuracy of models, along with the standard
+deviation to give a better perspective on the relative performance of the
+models. This helps mitigate situations where we mistakenly conclude that one
+model is better than another.
+
+To make comparisons between languages more fair, we limited the data on the
+number of sentences for training, testing, and validation. The cutoff made was
+5000 sentences, where 4000 is used for training and the last 1000 was split
+evenly between validation and testing. The numbers picked were based on
+availability of data with a preference for more sentences. From the datasets,
+the first 4000 sentences were used for training, next 500 for validation, and
+next 500 for testing. Any remaining sentences in the data were discarded.
+
+Due to the nature of the languages each training set might contain a differing
+number of words in each sentence, we didn't do anything to equalize this since
+the word count wouldn't affect the number of updates when training. There is a
+risk that since the language would also be tested on longer sentences, and we
+might assume it is harder to correctly label longer sentences than shorter ones,
+the accuracy might be lower for these languages than others. The languages with
+longer sentences in their test set however is most likely also the languages
+with longer sentences in their training set this hopefully evens out the
+mistakes.
+
+The datasets found are created from different types of sources, eg. news, blog
+posts, reviews, etc. We wanted the datasets for the different languages to be
+created from similar sources. It was infeasible to find datasets for both tasks
+which were created from similar sources, but within each task, the data is to
+some degree made from the same kind of source, the details are included in their
+respective chapters.
 
 
 \pagebreak
