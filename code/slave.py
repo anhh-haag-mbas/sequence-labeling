@@ -116,4 +116,4 @@ results = run_experiment(config)
 validate_results(results)
 with open("out.csv", "a", encoding = "utf-8") as of:
     of.write(experiment_to_str(config, results))
-requests.post(URL + "/result", json=results)
+requests.post(URL + "/result", json=experiment_to_str(config, results))
