@@ -100,7 +100,7 @@ config = {
         "framework"     : sys.argv[1],
         "language"      : sys.argv[2],
         "task"          : sys.argv[3],
-        "crf"           : bool(sys.argv[4]),
+        "crf"           : sys.argv[4] == "True",
         "seed"          : int(sys.argv[5]),
         "batch_size"    : int(sys.argv[6]),
         "epochs"        : int(sys.argv[7]),
