@@ -3,3 +3,22 @@
 
 \input{src/experiments/POS}
 \input{src/experiments/NER}
+
+\subsection{OOV results}
+
+Comparing the two-layer \texttt{Bi-LSTM-CRF} of DyNet and the one-layer
+\texttt{Bi-LSTM-CRF} of PyTorch on their ability to correctly classify
+out-of-vocabulary (OOV) words, we see once again that the two-layer model of
+DyNet performs slightly better. On average across languages, batch sizes, epochs
+and seeds, the two-layer model has an OOV accuracy (ie.\ the percentage of
+correctly classified OOV words) of 86.2\% for NER data, where as the one-layer
+model only achieves an OOV accuracy 81.0\%.
+
+For POS data, this is not the case, as the average accuracy actually tips in
+favour of the one-layer model of PyTorch (88.4\% against 90.2\%). However, when
+training using patience to determine when to stop, the upper hand is again with
+the two-layer model, which achieves an OOV accuracy of 92.8\% against 91.8\%.
+This is a small difference, and it could very well be the result of the PyTorch
+implementation, in which it is not the optimal model, that is returned, but the
+optimal model after three extra epochs of declining accuracy on the validation
+set (see Section~\ref{} for more details).
