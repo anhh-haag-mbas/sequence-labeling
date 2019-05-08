@@ -12,7 +12,7 @@ Frameworks: Dynet, PyTorch, TensorFlow
 
 Languages: Arabic, Danish, Hindi, Japanese, Norwegian, Russian, Urdu
 
-Tasks: Part-of-speech, Named Enitity Recognition
+Tasks: Part-of-speech, Named Entity Recognition
 
 Models: Bi-LSTM, Bi-LSTM-CRF
 
@@ -29,7 +29,7 @@ The rationale behind the languages picked is a combination of word ordering,
 language family and genus, availability of data, and the origin of the data.
 
 The word ordering is the relative ordering of verbs, subjects, and objects (eg.
-verb-object-subject or alternatively VOS). We used
+verb-object-subject or VOS). We used
 ~\ref{}{https://wals.info/chapter/81} to determine the word ordering of
 languages and picked languages with one dominant word ordering, ignoring
 languages such as German which has alternating word orderings. 
@@ -39,7 +39,7 @@ language. Languages from the same family often share similarities such as word
 orderings and some words. 
 
 For word orderings with many languages to choose from, we picked two languages
-from the same langauge family, and one language from a different family.
+from the same language family, and one language from a different family.
 Language families were similarly based on~\ref{}{https://wals.info/languoid}. We
 split languages based on both their family and genus, meaning a language such as
 German (indo-european, germanic) is considered different from Italian
@@ -89,8 +89,9 @@ and evaluation of each framework, refer to Section~\ref{subsec:frameworks}.
 
 \subsubsection*{DyNet}
 
+% Some general stuff about dynamic frameworks which might work better elsewhere?
 DyNet is an open source dynamic neural network framework, where the
-computational graphs is recreated for each input. This is particularly useful
+computational graphs are recreated for each input. This is particularly useful
 for natural language processing where sentences don't have a fixed length so the
 unique structure of each sentence's graph can be made without having to add
 padding to match the longest sentence in the dataset. A downside of dynamic
@@ -111,15 +112,16 @@ on the runtime which is further elaporated in the discussion chapter
 
 A consequence of the framework being dynamic is that the structure of the model
 is mixed with the processing and training on input. The model parameters are
-defined by themselves, but since the input is an integral part of the graph, the
-structure is defined by the mathematical operations performed on the specific
-input values instead of a more general structure which works on any input. This
-only has an impact on the structure of the source code, and in extension how
-easy it is to understand it. The input is processed in the same way as it would
-be in a static framework. This also means that instead of thinking of the model
-as layers it is often better to think about the underlying operations of the
-layers. The exception is the LSTM layer where much of the implementation detail
-has been hidden behind a concise interface.
+defined by themselves, but since the input is an integral part of the
+computation graph, the structure is defined by the mathematical operations
+performed on the specific input values instead of a more general structure which
+works on any input. This only has an impact on the structure of the source code,
+and in extension how easy it is to understand it. The input should be processed
+in the same way as it would be in a static framework, assuming the same
+structure has been defined. This also means that instead of thinking of the
+model as layers it is often better to think about the underlying operations of
+the layers. The exception is the LSTM layer where much of the
+implementation detail has been hidden behind a concise interface.
 
 DyNet doesn't have a CRF layer implemented as part of their library so we based
 our implementation on the work of ~\ref{Barbara}, which in turn based parts of
