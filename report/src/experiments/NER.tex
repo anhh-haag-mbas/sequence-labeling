@@ -17,6 +17,12 @@ into consideration before running the experiments so our results are on a word
 by word basis and doesn't tell us if the whole entity was correctly classified
 or not.
 
+The same entity might never show up in the dataset twice so it's important for
+the classifier to be able to figure out based on context of the other words in
+the sentence if there is an entity or not. It is impossible to simply remember
+that a word refers to an entity since the word was most likely not seen during
+training.
+
 Usually the performance of a classifier for the NER task is measured by a $F_1$
 Score, which considers the classifier's precision and recall. The precision is
 the classifier's ability to correctly classify an entity given all attempts, and
