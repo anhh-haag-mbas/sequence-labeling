@@ -12,7 +12,31 @@ out-of-vocabulary (OOV) words, we see once again that the two-layer model of
 DyNet performs slightly better. On average across languages, batch sizes, epochs
 and seeds, the two-layer model has an OOV accuracy (ie.\ the percentage of
 correctly classified OOV words) of 86.2\% for NER data, where as the one-layer
-model only achieves an OOV accuracy 81.0\%.
+model only achieves an OOV accuracy 81.0\%. The results are shown in
+Table~\ref{table:oov-accuracy-crf}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c c}
+     \toprule
+     \multirow{2}{*}{\bfseries Epochs}
+     & \multicolumn{2}{c}{\bfseries NER}
+     & \multicolumn{2}{c}{\bfseries POS} \\
+              & DyNet  & PyTorch & DyNet  & PyTorch \\ \cmidrule(lr){1-5}
+     1        & 81.8\% & 76.4\%  & 81.8\% & 87.8\%  \\
+     5        & 87.5\% & 82.8\%  & 91.3\% & 91.0\%  \\
+     patience & 89.3\% & 83.9\%  & 92.8\% & 91.8\%  \\ \cmidrule(lr){1-5}
+     \bfseries Total & 86.2\% & 81.0\%  & 88.4\% & 90.2\% \mdseries \\
+     \bottomrule
+    \end{tabular}
+    \caption{OOV accuracy for the \texttt{Bi-LSTM-CRF} models implemented in
+        DyNet (two-layer model) and in PyTorch (one-layer model). The rows
+        indicate the number of epochs run during training, where `patience'
+        refers to a training session with early stopping after 3 consecutive
+        epochs of declining accuracy in the validation set.
+    }\label{table:oov-accuracy-crf}
+\end{table}
+ 
 
 For POS data, this is not the case, as the average accuracy actually tips in
 favour of the one-layer model of PyTorch (88.4\% against 90.2\%). However, when
