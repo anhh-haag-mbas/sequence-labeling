@@ -31,27 +31,51 @@ output is instead treated as emission scores that is passed as input to the CRF
 layer, which then compute the most likely sequence of tags.
 
 
-
 \subsubsection{Embeddings}
 
 We use a pretrained embedding since they have been shown to provide a
-significant increase in accuracy for sequence labeling tasks (~\ref{}).
-We picked pretrained Polyglot embeddings since there exists models in a lot of
-different languages, and Polyglot seems to outperform its competitors like
-FastText (~\ref{} to FastText + comparison), even though FastText's embeddings are
-significantly larger than Polyglot's.
+significant increase in accuracy for sequence labeling tasks (~\ref{}). We
+picked pretrained Polyglot embeddings \ref{Polyglot} since there exists models
+in a lot of different languages, and Polyglot seems to outperform its
+competitors like FastText\ref{FastText} (~\ref{} to FastText + comparison), even though
+FastText embeddings are significantly larger than Polyglot's.
 
-Skrive noget mere om brugen af pretrained embeddings. Theory og osv.
-Hvorfor, "multitask learning", første lag er generalt en type embedding.
+The use of word embeddings can be considered a case of multi-task learning.
+Multi-task learning is where multiple tasks are solved to improve the prediction
+accuracy. The different tasks would let the model learn some shared structure
+between the two tasks which allows for better generalization. This is a
+regularization technique which works well because it introduces more data for
+the models to train on as well as prevent the model from overfitting on one task
+\ref{Deep learning 7.7}. 
+
+For our case, the word embedding is trained on one set of data to learn
+representations of words where similar words have similar representations.
+Afterwards the word embedding as well as the rest of the model is trained on a
+new task where the model learns task specific representations. But since the
+word embeddings start from a useful initial configuration it is unlikely to
+forget much of the previous representation and is therefore better able to
+generalize.
+
+Another way to think about the word embedding is as a linear layer where the
+input is a one-hot vector representation of the word \ref{Neural Network Methods
+for Natural Language Processing chapter 8.3???}. A one-hot vector is a vector
+where all but a single value in the vector are zero and the element
+corresponding to a word would be one. Similar to a word embedding where we make
+a lookup of a word and return a vector representation, the matrix-vector
+multiplication of the one-hot vector and the linear layer matrix would return a
+row from the matrix. The bias vector usually found in linear layers could simply
+be ignored. The difference between a word embedding and a linear layer would
+then for the most parts be that word embeddings are pretrained.
 
 \subsubsection{Bi-LSTM}
 
 Long Short-Term Memory (LSTM) networks are a particular type of Recurrent Neural
-Networks (RNN), that was originally proposed by (~\ref{} Hochreiter 199X) as a way of
-dealing with defiencies of normal RNNs. For machine learning tasks concerned
-with sequential data it is more often than not necessary to let information
-about an input at a timestep $t$ get carried over to the processing of an input
-at timestep $t+1$. This is the motivation of RNN (see Figure~\ref{}).
+Networks (RNN), that was originally proposed by (~\ref{} Hochreiter 199X) as a
+way of dealing with defiencies of normal RNNs. For machine learning tasks
+concerned with sequential data it is more often than not necessary to let
+information about an input at a timestep $t$ get carried over to the processing
+of an input at timestep $t+1$. This is the motivation of RNN (see
+Figure~\ref{}).
 
 However, the standard RNN suffers from the problems of exponential decay or blow
 up of error signals that are backpropagated through the network --- a situation
@@ -79,19 +103,20 @@ working with and are not something, we have implemented ourselves}
 where $i_{t}$, $f_{t}$ and $o_{t}$ are the input gate, the forget gate and the
 output gate respectively at time $t$, $c$ is the cell state and $h$ is the
 hidden state. The weight matrices $W$ maps from either an input $x$ of size $m$
-to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m*n}$ is the
-input-forget gate matrix), or between two internal components (ie. $W_{hi} \in
-\mathbb{R}^{n*n}$ is the hidden-input gate matrix). (~\ref{} Huang et al. 2015)
+to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m*n}$ is
+the input-forget gate matrix), or between two internal components (ie. $W_{hi}
+\in \mathbb{R}^{n*n}$ is the hidden-input gate matrix). (~\ref{} Huang et al.
+2015)
 
 The activation function $\sigma$ is the sigmoid function, which squishes the
 values of the gate matrices into the interval $[0,1]$. This means, that the
 gates determine which and how much information is passed through and stored in
-the memory cell. For example, the forget gate $f_{t}$ at timestep $t$ is 
+the memory cell. For example, the forget gate $f_{t}$ at timestep $t$ is
 multiplied with the previous cell state $c_{t-1}$ to determine what to remember
 and what to forget when $c_{t}$ is computed. A value of $1$ in the gate matrix
-means `keep all' where a $0$ means `forget all'.
-\footnote{This particular forget mechanism was not
-    introduced by Hochreiter in his original LSTM paper and according to
+means `keep all' where a $0$ means `forget all'. \footnote{This particular
+forget mechanism was not introduced by Hochreiter in his original LSTM paper and
+according to
     \url{https://r2rt.com/written-memories-understanding-deriving-and-extending-the-lstm.html}
     `led the original [\ldots] model to have trouble with simple tasks involving
     long sequences'. This solution was introduced by (~\ref{} Gers et al. 2000)
