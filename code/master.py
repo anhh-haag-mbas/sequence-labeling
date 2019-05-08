@@ -3,13 +3,13 @@ import os
 import subprocess
 import time
 import signal
+import requests
 
-if len(sys.argv) not in [2]:
-    print("usage: master.py configs")
-    exit(1)
+URL = os.environ["URL"]
+assert URL is not None
 
 processes = []
-max_process_count = 60
+max_process_count = 30
 
 def signal_handler(sig, frame):
     print("Killing subprocesses")
@@ -18,15 +18,9 @@ def signal_handler(sig, frame):
     sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
-def load_configs(path):
-    configs = []
-    with open(path, "r") as f:
-        for line in f:
-            configs += [line.strip().split(", ")]
-    return configs
-
 try:
-    for config in load_configs(sys.argv[1]):
+    config = requests.get(URL + "/configuration").json()
+    while config is not None:
         framework = config[2]
         if len(processes) > max_process_count:
             print(f"Running the max {len(processes)} processes, now waiting...")
@@ -40,6 +34,7 @@ try:
             processes = [p for p in processes if p.returncode is None]
         processes += [subprocess.Popen(config)]
         print(" ".join(config))
+        config = requests.get(URL + "/configuration").json()
 except:
     print("Killing subprocesses")
     for process in processes:

@@ -22,13 +22,14 @@ def split_count():
 
 tasks       = ["pos", "ner"]
 seeds       = [613321, 5123, 421213, 521403, 322233]
-models      = [False, True]
+#models      = [False, True]
+models      = [False]
 epochs      = [{"max": 50, "patience": 3}, 5, 1]
 languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 data_root   = "../data/"
-# frameworks  = ["dynet", "pytorch", "tensorflow"]
+frameworks  = ["dynet", "pytorch", "tensorflow"]
 # frameworks  = ["dynet"]
-frameworks  = ["pytorch"]
+# frameworks  = ["pytorch"]
 # frameworks  = ["tensorflow"]
 batch_sizes = [32, 8, 1]
 
@@ -58,7 +59,7 @@ config_count   = f * s * b * e * t * m * l
 def save_configs(configs, output_f):
     with open(output_f, "w") as f:
         for config in configs:
-            f.write(", ".join(config) + "\n")
+            f.write(repr(config) + "\n")
 
 def load_already_run():
     configs = []

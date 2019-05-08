@@ -1,5 +1,9 @@
 import sys
 import os
+import requests
+
+URL = os.environ["URL"]
+assert URL is not None
 
 if sys.argv[1] == "pytorch":
     import pytorch.main as pyt
@@ -96,7 +100,7 @@ config = {
         "framework"     : sys.argv[1],
         "language"      : sys.argv[2],
         "task"          : sys.argv[3],
-        "crf"           : bool(sys.argv[4]),
+        "crf"           : sys.argv[4] == "True",
         "seed"          : int(sys.argv[5]),
         "batch_size"    : int(sys.argv[6]),
         "epochs"        : int(sys.argv[7]),
@@ -112,3 +116,4 @@ results = run_experiment(config)
 validate_results(results)
 with open("out.csv", "a", encoding = "utf-8") as of:
     of.write(experiment_to_str(config, results))
+requests.post(URL + "/result", json=experiment_to_str(config, results))
