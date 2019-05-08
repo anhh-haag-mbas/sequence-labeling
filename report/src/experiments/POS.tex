@@ -1,9 +1,23 @@
 
 \subsection{Part-of-speech tagging}
 
+This section will go into the details of the Part-of-speech task, what the
+specifics are, considerations in regards to the data used, any issues we came
+across, and the results of our experiments.
 
 \subsubsection{Task definition}
 
+The Part-of-Speech task is a classification task where the objective is to label
+each word in a sentence with it's corresponding part-of-speech label such as
+noun, verb, adjective, etc. Some languages have more of labels than other. The
+same words can have different labels in different context, so the classifier
+should be able to figure out the which label is a better fit on a sentence by
+sentence basis. Simply remembering that word $X$ has label $Y$ wouldn't be able
+to generalize very well.
+
+The performance of a classifier for the POS task is the simple accuracy of the
+predictions. Since there are no label which is a lot more common than others
+guessing randomly would very rarely give a better accuracy than perhaps 10\%.
 
 \subsubsection{Data}
 
@@ -49,7 +63,7 @@ given below.
 
 * Russian,  SynTagRus, fiction, news, non-fiction
 
-The distribution of tokens, labels, etc.\ is given in appendix.
+The distribution of tokens, labels, etc. is given in appendix.
 
 \subsubsection{Results and analysis}
 
