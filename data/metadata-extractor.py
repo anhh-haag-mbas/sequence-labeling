@@ -1,5 +1,6 @@
 import sys
 from collections import defaultdict
+from polyglot import Embedding
 
 if len(sys.argv) < 2:
     raise ValueError("No filepath given")
@@ -38,15 +39,11 @@ for i, filepath in enumerate(filepaths):
     if len(labels) == 0: print(filepath)
 
     values = [filepath,len(tokens), sum(tokens.values()), len(distinct), sum(tokens.values()) / len(tokens)]
-    values = values + list(map(lambda k: labels[k], keys))
+    values = values + keys + list(map(lambda k: labels[k], keys))
     values = map(str, values)
     output.append(",".join(values))
  
-longest_label_set = []
-for label_set in label_sets:
-    if len(label_set) > len(longest_label_set):
-        longest_label_set = label_set
 
-print(",".join(["file", "sentences", "tokens", "distinct tokens", "average tokens"] + longest_label_set))
+print(",".join(["file", "sentences", "tokens", "distinct tokens", "average tokens"] ))
 for o in output:
     print(o)

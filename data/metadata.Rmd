@@ -22,6 +22,7 @@ testing_data <- subset(data, subset = substring(file, 8, 11) == "test")
 training_data <- subset(data, subset = substring(file, 8, 12) == "train")
 validation_data <- subset(data, subset = substring(file, 8, 10) == "val")
 
+testing_data
 
 
 par(mar=c(2, 2, 4.1, 3.0), xpd=TRUE)

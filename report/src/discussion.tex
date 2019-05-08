@@ -15,6 +15,18 @@ each. The polyglot embedding for japanese though might also be single character.
 Pros and cons of each framework.
 
 \subsubsection{Dynet}
+
+The performance gain when running on batches may be because of fewer
+backpropogations rather than any form of parallelization.
+
+DyNet performs significantly slower when run with a CRF layer, this may suggest
+that the implementation used isn't optimized. 
+
+Due to miscomunication the DyNet model used two layers Bi-LSTM, this might
+explain why it differs for data such as 1 epochs 32 batxch size.
+
+% nvprof for profilling
+
 \textbf{The learning proccess}
 
 My general approach to learning dynet was to ease myself into it, following
