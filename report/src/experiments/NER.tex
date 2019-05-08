@@ -74,6 +74,11 @@ tasks as other languages. Since it turns out that our Polyglot embedding has a
 somewhat similar way to split words it can have a positive effect on the
 performance.
 
+As the data used for training the model is the same data used for training the
+polyglot word embeddings, the models don't have the same kind of variety from
+the data as is the case for the POS task. This may result in worse performance
+since the models might be more likely to overfit.
+
 A table of the languages with the number of entities in their respective dataset
 is given below in table \ref{}.
 
