@@ -9,7 +9,7 @@ URL = os.environ["URL"]
 assert URL is not None
 
 processes = []
-max_process_count = 30
+max_process_count = 1
 
 def signal_handler(sig, frame):
     print("Killing subprocesses")
