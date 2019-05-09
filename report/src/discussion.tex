@@ -56,4 +56,27 @@ and the japanese??
 Character embedding (either lstm or cnn), different optimizer perhaps, dynet manual batching as
 opposed to auto batching, 2 layers bi-lstm, 
 
+\subsection{Other stuff}
+
+\begin{itemize}
+    \item Handling, analyzing and presenting large amounts of data was
+        something, that we had no prior experience in. This was evident in the
+        final phase of our project, where we struggled with the tools and
+        techniques to properly work with the data we had created.
+    \item Choosing to implement the same models in three different frameworks
+        had more of an educational purpose than a scientific one. Due to
+        complications in understanding the inner work of each of our one
+        frameworks, the task of synchronizing the implementations became
+        disproportionally difficult. Our results are therefore burdened by the
+        uncertainty of wether our programs actually the work, as they are
+        intended to.
+    \item It seems the Tensorflow implementation does not handle increasing
+        batch sizes well. This is seen in Figure~\ref{chart:ner-acc-epo} and in
+        Figure~\ref{chart:pos-acc-epo}. When training with early stopping using
+        a patience of 3, Tensorflow looses accuracy for arabic, danish, hindu
+        and urdu as the batch size increase from 1 to 8 and from 8 to 32. And
+        except for japanese, a batch size of 1 yields the best accuracy on all
+        other languages 
+\end{itemize}
+
 \pagebreak

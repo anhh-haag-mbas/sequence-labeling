@@ -9,8 +9,7 @@ START_IX,  STOP_IX    = 0, 1
 START_TAG, STOP_TAG   = "<START>", "<STOP>"
 
 
-FORM, UPOS = 1, 3
-def read_conllu(path):
+def read_from_file(path):
     X, y = [], []
     words, tags = [], []
     with open(path, "r", encoding="utf-8") as f:
@@ -26,38 +25,38 @@ def read_conllu(path):
                 words, tags = [], []
                 continue
 
-            line = line.split("\t")
-            if len(line) == 2:
-                words.append(line[0])
-                tags.append(line[1])
-            else:
-                words.append(line[FORM])
-                tags.append(line[UPOS])
+            w, t = line.split("\t")
+            words.append(w.strip())
+            tags.append(t.strip())
 
     return X, y
 
+
+def read_conllu(path):
+    return read_from_file(path)
 
 def read_bio(path):
-    X, y = [], []
-    words, tags = [], []
-    with open(path, "r", encoding="utf-8") as f:
-        for line in f.readlines():
-            line.strip()
+    return read_from_file(path)
+    # X, y = [], []
+    # words, tags = [], []
+    # with open(path, "r", encoding="utf-8") as f:
+    #     for line in f.readlines():
+    #         line.strip()
 
-            if line.startswith("#"):
-                continue
+    #         if line.startswith("#"):
+    #             continue
 
-            if line.isspace():
-                X.append(words)
-                y.append(tags)
-                words, tags = [], []
+    #         if line.isspace():
+    #             X.append(words)
+    #             y.append(tags)
+    #             words, tags = [], []
 
-            else:
-                w, t = line.split("\t")
-                words.append(w)
-                tags.append(t)
+    #         else:
+    #             w, t = line.split("\t")
+    #             words.append(w)
+    #             tags.append(t)
 
-    return X, y
+    # return X, y
 
 
 
