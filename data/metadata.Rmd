@@ -13,6 +13,36 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 data <- read.csv("ner-metadata.csv", header = T)
+
+testing_data <- subset(data, subset = substring(file, 8, 11) == "test") 
+training_data <- subset(data, subset = substring(file, 8, 12) == "train")
+validation_data <- subset(data, subset = substring(file, 8, 10) == "val")
+
+names <- sapply(testing_data$file, function(x) {
+  substring(x,5,6)
+})
+names
+
+hist(testing_data[6:12])
+barplot(testing_data[6:12][,1], col = rainbow(length(testing_data)), legend = rownames(testing_data)) 
+
+testing_data          
+          
+?barplot
+
+testing_data[1:12]
+
+hist(testing_data[6:12])
+
+barplot(data[6:12][,1])
+
+data[6:12] 
+data[1]
+```
+
+
+```{r}
+data <- read.csv("ner_metadata.csv", header = T)
 data
 legend_names <- lapply(training_data$file, function(x) {
   substring(x, 5, 6)  
@@ -69,7 +99,7 @@ barplot(data$sentences / sum(data$sentences), col = rainbow(9), legend.text = le
 summary(data$sentences)
 ```
 ```{r}
-data <- read.csv("conllu-metadata.csv", header = T)
+data <- read.csv("pos_metadata.csv", header = T)
 data
 
 subset(data, subset = grepl("Chi", file))

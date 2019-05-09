@@ -63,9 +63,10 @@ where all but a single value in the vector are zero and the element
 corresponding to a word would be one. Similar to a word embedding where we make
 a lookup of a word and return a vector representation, the matrix-vector
 multiplication of the one-hot vector and the linear layer matrix would return a
-row from the matrix. The bias vector usually found in linear layers could simply
-be ignored. The difference between a word embedding and a linear layer would
-then for the most parts be that word embeddings are pretrained.
+row from the matrix, which can be considered the representation of the word. The
+bias vector usually found in linear layers could simply be ignored. The
+difference between a word embedding and a linear layer would then for the most
+parts be that word embeddings are pretrained.
 
 \subsubsection{Bi-LSTM}
 

@@ -9,33 +9,34 @@ across, and the results of our experiments.
 
 The Part-of-Speech task is a classification task where the objective is to label
 each word in a sentence with it's corresponding part-of-speech label such as
-noun, verb, adjective, etc. Some languages have more of labels than other. The
-same words can have different labels in different context, so the classifier
-should be able to figure out the which label is a better fit on a sentence by
-sentence basis. Simply remembering that word $X$ has label $Y$ wouldn't be able
-to generalize very well.
+noun, verb, adjective, etc. There are around 17 different labels, but some
+languages don't use all of them. The same words can have different labels in
+different context, so the classifier should be able to figure out which label is
+a better fit on a sentence by sentence basis. Simply remembering that word $X$
+has label $Y$ wouldn't be able to generalize very well.
 
 The performance of a classifier for the POS task is the simple accuracy of the
-predictions. Since there are no label which is a lot more common than others
-guessing randomly would very rarely give a better accuracy than perhaps 10\%.
+predictions. Since there is no label which is a lot more common than others,
+guessing randomly would very rarely give a better accuracy than 10\%.
 
 \subsubsection{Data}
 
 For this task we used datasets from~\ref{}{UniversalDependencies.org} which has
 a broad selection of languages with multiple datasets (called treebanks) in
-each. The datasets from~\ref{}{UniversalDependencies.org} are all in the CoNNL-U
-format, but are created from different types of sources. The source types are
-given as tags such as news, legal, blog, wiki, etc.
+each. The datasets are all in the CoNNL-U format, but are created from different
+types of sources. The source types are given as tags such as news, legal, blog,
+wiki, etc.
 
-Since the datasets from~\ref{}{UniversalDependencies.org} comes pre-split, these
-were concatenated before splitting into our own sizes. Concatenation happened
-using the command ``cat *.conllu > combined.conllu'', since the convention for
-the datasets is to name the files something with train, test, and dev, the
-assumed order of the files is dev, test, and train. Meaning that if the dev set
-(eg. the validation set) contains 5000 sentence, only these were used in our
-datasets, and none of the sentences from the test or training-sets would be
-used. No guarantees however were made to guarantee this ordering, so depending
-on the naming conventions used in the specific treebanks this might differ.
+Since the datasets are already split, these were concatenated before splitting
+into our own sizes. Concatenation happened using the command ``cat *.conllu >
+combined.conllu'', since the convention for the datasets is to name the files
+something with train, test, and dev, the assumed order of the files is dev,
+test, and train. Meaning that if the dev set (eg.\ the validation set) contains
+5000 sentence, only these were used in our datasets, and none of the sentences
+from the test or training-sets would be used. No guarantees however were made to
+guarantee this ordering, so depending on the naming conventions used in the
+specific treebanks this might differ. This shouldn't matter however since there
+shouldn't be any difference between the data in the different files.
 
 Some datasets, such as the Norwegian dataset, contains contractions as well as
 the individual words. Since the contration is usually unlabelled in the datasets
@@ -44,10 +45,9 @@ obvious consequence that the models are not trained on the contractions of words
 which are often more commonly used, this however shouldn't affect the
 comparisons between word orderings since contractions shouldn't affect these.
 
-The treebanks we selected from~\ref{}{UniversalDependencies.org} were all made
-from news, where some used additional sources such as non-fiction and spoken. A
-list of the languages, their respective treebank selected, and their tags is
-given below.
+The treebanks we selected were all made from news, where some used additional
+sources such as non-fiction and spoken. A list of the languages, their
+respective treebank selected, and their tags is given below.
 
 * Arabic,   PADT, news
 

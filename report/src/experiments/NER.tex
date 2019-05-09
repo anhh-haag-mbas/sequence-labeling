@@ -1,5 +1,4 @@
 
-
 \subsection{Named Entity Recognition}
 
 This section will go into the details of the Named Entity Recognition task, what
@@ -10,7 +9,7 @@ came across, and the results of our experiments.
 
 Named Entity Recognition is a classification task of different types of
 entities, such as places, people, organisation, times, and more. Entities can
-consist of one or more words (and/or numbers), eg. ``Eurovision Song Contest
+consist of one or more words (and/or numbers), eg.\ ``Eurovision Song Contest
 2019'' is a single entity of 3 words and a number. The classifier should
 correctly identify the whole entity and not just part of it. We didn't take this
 into consideration before running the experiments so our results are on a word
@@ -29,12 +28,11 @@ the classifier's ability to correctly classify an entity given all attempts, and
 recall is the ability to correctly classify an element given how many elements
 exists. Say there are 100 entities in a document, the classifier finds 90
 entities, 80 of them are correct, 10 of them are wrong, and 20 were not found.
-From this we get the precision $P = {80 \over 80 + 10} = 0.88...$, and recall $R
+From this we get the precision $P = {80 \over 80 + 10} = 0.88\ldots$, and recall $R
 = {80 \over 80 + 20} = 0.8$. The $F_1$ score is simply the harmonic mean between
 the precision and recall given by $F_1 = 2 \cdot {precision \cdot recall \over
-precision + recall}$. Based on our example this would be $F_1 = 2 \cdot {0.88...
-\cdot 0.8 \over 0.88... + 0.8} = 0.8421$.
-\ref{https://www.toyota-ti.ac.jp/Lab/Denshi/COIN/people/yutaka.sasaki/F-measure-YS-26Oct07.pdf}.
+precision + recall}$. Based on our example this would be $F_1 = 2 \cdot
+{0.88 \ldots \cdot 0.8 \over 0.88\ldots + 0.8} = 0.8421$.~\ref{https://www.toyota-ti.ac.jp/Lab/Denshi/COIN/people/yutaka.sasaki/F-measure-YS-26Oct07.pdf}.
 
 The rationale behind using the $F_1$ score is that usually a lot of the data is
 non-entities. A classifier which classified nothing as an entity would have a
@@ -46,10 +44,9 @@ comparing with models outside our own this shouldn't be an issue.
 
 \subsubsection{Data}
 
-For the NER task we used auto-annotated wikipedia data from
-~\ref{}{Cross-lingual Name Tagging and Linking for 282 Languages}. As the title
-suggests, this dataset contains annotated data for 282 languages in varying
-sizes. 
+For the NER task we used auto-annotated wikipedia data from~\ref{}{Cross-lingual
+Name Tagging and Linking for 282 Languages}. As the title suggests, this dataset
+contains annotated data for 282 languages in varying sizes. 
 
 The datasets are all in the BIO (or IOB) format, which has three different
 entities, organisations, people, and locations. The BIO format uses the
@@ -83,6 +80,12 @@ A table of the languages with the number of entities in their respective dataset
 is given below in table \ref{}.
 
 \subsubsection{Results and analysis}
+
+\begin{figure}[h]
+    \includegraphics[width=\textwidth]{ner-acc-epo.png}
+    \caption{NER accuracy and epochs run --- by batch size and language
+    }\label{chart:ner-acc-epo}
+\end{figure}
 
 
 \pagebreak
