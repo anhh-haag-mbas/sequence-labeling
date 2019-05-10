@@ -29,10 +29,10 @@ The rationale behind the languages picked is a combination of word ordering,
 language family and genus, availability of data, and the origin of the data.
 
 The word ordering is the relative ordering of verbs, subjects, and objects (eg.\
-verb-object-subject or VOS). We used
-~\ref{}{https://wals.info/chapter/81} to determine the word ordering of
-languages and picked languages with one dominant word ordering, ignoring
-languages such as German which has alternating word orderings. 
+verb-object-subject or VOS). We used~\ref{}{https://wals.info/chapter/81} to
+determine the word ordering of languages and picked languages with one dominant
+word ordering, ignoring languages such as German which has alternating word
+orderings.
 
 Language families are groupings of languages based on some common ancestral
 language. Languages from the same family often share similarities such as word
@@ -53,7 +53,7 @@ could only find a single verb-subject-object language with enough data. There
 was no data for the remaining languages. 
 
 The 7 languages we picked, along with their word ordering, language family and
-genus is given in \ref{} below.
+genus is given in~\ref{} below.
 
 % TODO: Make nice table
 * Arabic,   VSO, Afro-Asiatic, Semitic 
@@ -70,11 +70,11 @@ genus is given in \ref{} below.
 
 * Russian,  SVO, Indo-European, Slavic
 
-The concern of availability of data and the origin is elaporated on in
-\ref{}{3.1}
+The concern of availability of data and the origin is elaporated on
+in~\ref{}{3.1}
 
 
-\subsubsection{Frameworks}
+\subsubsection{Model implementations}
 
 All experiments have been conducted across three popular and open source machine
 learning frameworks, two dynamic and one static. Each member of the project
@@ -99,19 +99,19 @@ unique structure of each sentence's graph can be made without having to add
 padding to match the longest sentence in the dataset. A downside of dynamic
 frameworks is that they are generally slower than their static counterparts,
 the creators of DyNet though mention that it performs comparable or faster than
-similar static declaration frameworks ~\ref{DyNet report}.   
+similar static declaration frameworks~\ref{DyNet report}.   
 
 DyNet further allows for what they call auto-batching which means that sentences
-don't have to be manually batched when training on batches of sentences
-~\ref{On-the-fly Operation Batching in Dynamic Computation Graphs}. In other
-frameworks, dynamic or not, users have to add a dimension to their input which
-represents the batches.
+don't have to be manually batched when training on batches of
+sentences~\ref{On-the-fly Operation Batching in Dynamic Computation Graphs}. In
+other frameworks, dynamic or not, users have to add a dimension to their input
+which represents the batches.
 
 % Perhaps the single core thing was just CRF
 DyNet doesn't support multi-threading in their python implementation as of the
 time of this report, so all the experiments were run on a single core. This had
 some unforseen consequences on the runtime which is further elaporated in the
-discussion chapter ~\ref{discussion}.
+discussion Section~\ref{discussion}.
 
 A consequence of the framework being dynamic is that the structure of the model
 is mixed with the processing and training on input. The model parameters are
@@ -127,8 +127,8 @@ the layers. The exception is the LSTM layer where much of the
 implementation detail has been hidden behind a concise interface.
 
 DyNet doesn't have a CRF layer implemented as part of their library so we based
-our implementation on the work of ~\ref{Barbara}, which in turn based parts of
-theirs on ~\ref{Someone else, see their source code}. 
+our implementation on the work of~\ref{Barbara}, which in turn based parts of
+theirs on~\ref{Someone else, see their source code}. 
 
 Due to miscomunication the DyNet model used two Bi-LSTM layers, this gives has
 been shown to give better accuracy at the cost of longer training times. We
@@ -158,7 +158,7 @@ mini-batch sizes, three epoch settings, and with five seeds. Additional
 consideration were also made in regards to the training data to make for as fair
 comparisons as possible.
 
-The three mini-batch sizes were motivated by ~\ref{Reymer and gurevych} who
+The three mini-batch sizes were motivated by~\ref{Reymer and gurevych} who
 reported worse accuracy for larger sizes of mini-batches with a sweet spot
 between 8 and 32. As will be expanded on in the discussion, this seems counter
 intuitive to the general idea behind the use of mini-batches. % TODO: discuss
@@ -178,9 +178,9 @@ hyperparameters, that the models can get an even better performance than our
 early stopping allows.
 
 The different seeds are used to get a better idea of the performance of the
-models than a single run would give. This approach is based on the work of
-~\ref{Reimers+Gurevych, misconceptions in nsl yang zhang} who demonstrated how a
-single result comparison between two models is insufficient when randomness is
+models than a single run would give. This approach is based on the work
+of~\ref{Reimers+Gurevych, misconceptions in nsl yang zhang} who demonstrated how
+a single result comparison between two models is insufficient when randomness is
 involved. If one model performs better than average on a run, and another model
 performs worse than average, this might suggest that the model which performed
 better is a better model. But if more runs are used it is possible to compare
