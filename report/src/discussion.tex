@@ -8,11 +8,14 @@ based on some ``smart'' method, whereas our BIO data is just single character
 each. The polyglot embedding for japanese though might also be single character.
 
 Differences in implementations of batching between framework. Autobatching
-Mean vs sum of losses
+Mean vs sum of losses.
 
 Takes different number of epochs to converge, some actually gets 50 epochs.
 
 Differences in implementation of CRF.
+
+The issue in PyTorch where not every sentence is used doesn't affect the
+training since 1, 8, and 32 are whole dividers of the 4000 training sentences.
 
 Different way to count number of epochs run
 
@@ -22,12 +25,16 @@ Especially as the batch size increases.
 As expected, for a single epoch and 32 batch size, the models perform worse, 
 but we see that dynet performs significantly worse than pytorch. This may be 
 because of the 2-Layer Bi-LSTM in DyNet which requires more training before 
-performing reasonably.
+performing reasonably. It can also be explained by the issue where pytorch
+doesn't pick the best model but rather the latest one.
 
 Batch size have less influence on the performance given more training.
 With higher batch size there are fewer updates (backpropogations) per epcoh,
 this may also be interesting to research.
 
+DyNet doesn't train as much when adding a CRF layer, possibly because of a bad
+implementation or integration. Tensorflow similarly changes behaviour when using
+CRF, but it can't stop training.
 
 \subsection{Frameworks evaluation}
 \label{subsec:frameworks}
@@ -86,10 +93,20 @@ or not, will also help the model make better predictions.
 
 Character embeddings like word embeddings work by mapping a character to a
 vector representation. Unlike word embeddings, can character embeddings contain
-a mapping from every character to a vector representation. Usually a character
-embedding contains a mapping from not just a single character, but combinations
-of two or more characters or so call k-grams. Since a lot of languages use a
-relative small alphabet, a three character embedding could contain  
+a mapping from every character to a vector representation. 
+
+A character embedding can contain a mapping from not just a single
+character, but combinations of two or more characters or so call n-grams. Since
+a lot of languages use a relative small alphabet, a three character embedding
+could be less than 1,000,000 values, which while big is still manageable.
+
+The general idea is to map each character in a word to its own vector
+representation and use an additional layer to read the sequence of character
+representations and return a single vector. This is similar to the way we use an
+LSTM to read the sequence of words in a sentence, but instead we only use a
+single value. The most commonly used way to read the sequence of characters is
+LSTM and CNN layers. \ref{misconceptions yang zhang}
+
 
 Character embedding (either lstm or cnn), different optimizer perhaps, dynet manual batching as
 opposed to auto batching, 2 layers bi-lstm, Auxiliary loss thingy magic
