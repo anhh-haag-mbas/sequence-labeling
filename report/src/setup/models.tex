@@ -30,6 +30,19 @@ through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
 output is instead treated as emission scores that is passed as input to the CRF
 layer, which then compute the most likely sequence of tags.
 
+We use Stochastic Gradiant descent for training since it seems to perform the
+best \ref{Yang_liang_zhang}. We use a learning rate of 0.1.
+
+The size of the embedding layer is 100000 x 100??. 
+
+The size of the lstm layer is 100 x 100?
+
+The size of the simple linear layer is 100 x number of tags depending on the task.
+
+With CRF the last layer contains 2 additional tags because of an implementation
+detail. 
+
+Loss function is Categorical cross entropy loss???.
 
 \subsubsection{Embeddings}
 

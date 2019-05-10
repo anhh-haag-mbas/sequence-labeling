@@ -81,6 +81,17 @@ is given below in table \ref{}.
 
 \subsubsection{Results and analysis}
 
+Urdu has a very high score but also notable a very low number of distinct tokens
+which may be the reason.
+
+It would have been better to count OOV on entities and not just on everything,
+since unknown non-entity words may be easy to classify.
+
+The data from Urdu has a very high number of OOV words, considering the number
+of distrinct tokens. This points to the data being out of the ordinary since
+polyglot has trained on a lot more data and uses the most common words, but 
+most of the words in our data is not found in the polyglot embeddings.
+
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{ner-acc-epo.png}
     \caption{NER accuracy and epochs run --- by batch size and language

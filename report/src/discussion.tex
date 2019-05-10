@@ -1,13 +1,33 @@
 
 \section{Discussion}
 
-\subsection{Possible sources of error}
-
-There might be and index error in my implementation of the Viterbi Algorithm.
+\subsection{Possible sources of Discrepencies}
 
 Different ways of splitting japanese (and others?) data, CoNNL-U seem to split
 based on some ``smart'' method, whereas our BIO data is just single character
 each. The polyglot embedding for japanese though might also be single character.
+
+Differences in implementations of batching between framework. Autobatching
+Mean vs sum of losses
+
+Takes different number of epochs to converge, some actually gets 50 epochs.
+
+Differences in implementation of CRF.
+
+Different way to count number of epochs run
+
+Without CRF we see that 2-layer Bi-LSTM performs better. With CRF the difference is negligible.
+Especially as the batch size increases.
+
+As expected, for a single epoch and 32 batch size, the models perform worse, 
+but we see that dynet performs significantly worse than pytorch. This may be 
+because of the 2-Layer Bi-LSTM in DyNet which requires more training before 
+performing reasonably.
+
+Batch size have less influence on the performance given more training.
+With higher batch size there are fewer updates (backpropogations) per epcoh,
+this may also be interesting to research.
+
 
 \subsection{Frameworks evaluation}
 \label{subsec:frameworks}
