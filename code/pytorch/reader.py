@@ -37,27 +37,6 @@ def read_conllu(path):
 
 def read_bio(path):
     return read_from_file(path)
-    # X, y = [], []
-    # words, tags = [], []
-    # with open(path, "r", encoding="utf-8") as f:
-    #     for line in f.readlines():
-    #         line.strip()
-
-    #         if line.startswith("#"):
-    #             continue
-
-    #         if line.isspace():
-    #             X.append(words)
-    #             y.append(tags)
-    #             words, tags = [], []
-
-    #         else:
-    #             w, t = line.split("\t")
-    #             words.append(w)
-    #             tags.append(t)
-
-    # return X, y
-
 
 
 def create_mapping(words, tags):
