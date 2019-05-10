@@ -78,10 +78,10 @@ def parse_and_fix_matrix(line):
         rest[8] = 0
         # total_errors
         rest[9] = 0
-        # total_oov
-        rest[10] = "-1"
-        # total_oov_errors
-        rest[11] = "-1"
+        # # total_oov
+        # rest[10] = "-1"
+        # # total_oov_errors
+        # rest[11] = "-1"
         for expected, actual in product(all_keys, all_keys):
             if expected == "<PAD>": continue
             count = int(matrix[expected][actual])
