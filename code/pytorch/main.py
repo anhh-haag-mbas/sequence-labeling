@@ -127,8 +127,6 @@ def run_experiment(config):
         } for i in range(tag_sz) if not i == padix
     }
 
-    import ipdb; ipdb.set_trace()
-
     # Return dict of results
     return {
         "total_values"      : total,
