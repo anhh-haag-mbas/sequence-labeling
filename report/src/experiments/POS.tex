@@ -9,17 +9,18 @@ across, and the results of our experiments.
 
 The Part-of-Speech task is a classification task where the objective is to label
 each word in a sentence with it's corresponding part-of-speech label such as
-noun, verb, adjective, etc. There are around 17 different labels, but some
-languages don't use all of them. The same words can have different labels in
-different context, so the classifier should be able to figure out which label is
-a better fit on a sentence by sentence basis. Simply remembering that word $X$
-has label $Y$ wouldn't be able to generalize very well.
+noun, verb, adjective, etc. Eg. the sentence ``Our work is done'' would be
+labeled ``determiner noun auxiliary verb''.
 
-Include example of a sentence which is labeled.
+For our dataset, there are around 17 different labels, but some languages don't
+use all of them. The same words can have different labels in different context,
+so the classifier should be able to figure out which label is a better fit on a
+sentence by sentence basis. Simply remembering that word $X$ has label $Y$
+wouldn't be able to generalize very well.
 
 The performance of a classifier for the POS task is the simple accuracy of the
 predictions. Since there is no label which is a lot more common than others,
-guessing randomly would very rarely give a better accuracy than 10\%.
+guessing randomly would result in a very poor score. 
 
 \subsubsection{Data}
 
@@ -35,17 +36,21 @@ combined.conllu'', since the convention for the datasets is to name the files
 something with train, test, and dev, the assumed order of the files is dev,
 test, and train. Meaning that if the dev set (eg.\ the validation set) contains
 5000 sentence, only these were used in our datasets, and none of the sentences
-from the test or training-sets would be used. No guarantees however were made to
+from the test or training sets would be used. No guarantees however were made to
 guarantee this ordering, so depending on the naming conventions used in the
-specific treebanks this might differ. This shouldn't matter however since there
+specific treebanks this may differ. This shouldn't matter however since there
 shouldn't be any difference between the data in the different files.
 
-Some datasets, such as the Norwegian dataset, contains contractions as well as
+Some datasets, such as the Norwegian dataset, contains contractions alongside
 the individual words. Since the contration is usually unlabelled in the datasets
 these were simply removed from the data for ease of parsing. This has the
 obvious consequence that the models are not trained on the contractions of words
 which are often more commonly used, this however shouldn't affect the
-comparisons between word orderings since contractions shouldn't affect these.
+comparisons between word orderings since contractions shouldn't affect these and
+the test data would also be using the same convention where contractions are
+split. An alternative approach would be to create two sentences, one using the
+contraction and another without. This would be a way to extend the dataset and
+learn to properbly tag both the individual words and their contraction.
 
 The treebanks we selected were all made from news, where some used additional
 sources such as non-fiction and spoken. A list of the languages, their
@@ -65,7 +70,7 @@ respective treebank selected, and their tags is given below.
 
 * Russian,  SynTagRus, fiction, news, non-fiction
 
-The distribution of tokens, labels, etc. is given in appendix.
+The distribution of tokens, labels, etc. is given in figure \ref{}.
 
 \subsubsection{Results and analysis}
 
