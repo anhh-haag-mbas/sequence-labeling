@@ -22,15 +22,11 @@ def split_count():
 
 tasks       = ["pos", "ner"]
 seeds       = [613321, 5123, 421213, 521403, 322233]
-#models      = [False, True]
-models      = [False]
+models      = [False, True]
 epochs      = [{"max": 50, "patience": 3}, 5, 1]
 languages   = ["da", "no", "ru", "hi", "ur", "ja", "ar"]
 data_root   = "../data/"
 frameworks  = ["dynet", "pytorch", "tensorflow"]
-# frameworks  = ["dynet"]
-# frameworks  = ["pytorch"]
-# frameworks  = ["tensorflow"]
 batch_sizes = [32, 8, 1]
 
 def make_configs(params):
