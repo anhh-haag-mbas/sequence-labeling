@@ -9,7 +9,7 @@ URL = os.environ["URL"]
 assert URL is not None
 
 processes = []
-max_process_count = 1
+max_process_count = 5
 
 def signal_handler(sig, frame):
     print("Killing subprocesses")
@@ -35,6 +35,7 @@ try:
                         of.write(", ".join(config) + " == " + str(process.returncode) + "\n")
             processes = [p for p in processes if p.returncode is None]
         config = requests.get(URL + "/configuration").json()
+    [p.wait() for p in processes]
 except:
     print("Killing subprocesses")
     for process in processes:
