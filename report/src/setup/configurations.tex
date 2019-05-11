@@ -142,7 +142,57 @@ experiments.
 
 \subsubsection*{PyTorch}
 
-This was the dynamic framework that couldn't handle different sized batches.
+PyTorch is an open source, dynamic deep learning toolkit build on top of Torch
+and developed by the Facebook research team (~\ref{}
+\url{https://www.infoworld.com/article/3159120/facebook-brings-gpu-powered-machine-learning-to-python.html}).
+PyTorch provides a \code{tensor} object, that is nearly identical to NumPys
+\code{ndarray} but has two important advantages:
+
+\begin{itemize}
+    \item It allows for seamless computation through the GPU instead of the CPU
+    \item It records the computational graph on the fly, allowing for easy
+        backpropagation
+\end{itemize}
+
+As opposed to DyNet, PyTorch does not have any auto-batching feature. It does
+support mini-batches through its API and most of its models and functions accept
+a \code{batch\_first} argument where relevant, which indicate whether the first
+dimension of the input corresponds to the batch size or not.
+
+However, batching is rather poorly described by the documenation of the
+framework, and there seem to be only sparse official description of how
+mini-batches are expected to be arranged\footnote{\url{https://towardsdatascience.com/taming-lstms-variable-sized-mini-batches-and-why-pytorch-is-good-for-your-health-61d35642972e}}.
+As an example, working with sequential data of variable length (such as
+sentences), each input element has to padded so as to make the lengths uniform.
+This may be common knowledge to an experienced ML researcher, but neither the
+PyTorch documentation or official tutorials (at least not under the topic of
+NLP) touch on this aspect.
+
+Furthermore, to handle these batches of inputs of variable lengths, some modules
+require the client to pass a masking tensor as argument (ie.\ a matrix of ones
+and zeroes) to mask out padded values. Most ill-explained, however, is using
+mini-batches together with the \code{LSTM} layer provided by the framework
+itself. Here, it is necessary to pass the mini-batch of padded input sequences
+(ordered by original sequence length in descending order) through
+\code{pack\_padded\_sequence} function provided by the \code{torch.nn.utils.rnn}
+module together with a list of the original lengths of each sequence. This
+transforms the input so it can be handled properly by the \code{LSTM} layer, but
+afterwards it has to be unpacked again using \code{pad\_packed\_sequence}. Not
+only is this a rather intricate API, it is also only sparsely documented
+considering how normal an operation training on mini-batches is.
+
+As for the actual implementation of the two models in PyTorch, as much
+pre-existing code within the framework as possible was used. This includes the
+\code{Embedding}, \code{Dropout}, \code{LSTM} and \code{Linear} layer (all
+provided through the \code{torch.nn} module), aswell as the
+\code{CrossEntropyLoss} function for calculating the loss on the
+\texttt{Bi-LSTM} model. The general structure of the model, the training
+function and the evaluation function were created from tutorials, examples and
+existing applications.\footnote{\url{https://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html}}\footnote{\url{https://github.com/jiesutd/NCRFpp}}\footnote{\url{https://github.com/pytorch/examples}}
+
+The CRF layer was implemented using the existing PyPi package
+\texttt{pytorch-crf} (v.0.7.2) by Kemal Kurniawan under the MIT
+license.\footnote{\url{https://github.com/kmkurn/pytorch-crf}}
 
 
 \subsubsection*{TensorFlow}
