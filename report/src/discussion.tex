@@ -121,11 +121,30 @@ a word embedding may not learn. As an example, words which are capitalized are
 more likely to be named entities, than words which are uncapitalized, and words
 which ends in ``ing'' are likely verbs.
 
+\subsubsection{Stacked Bi-LSTM}
 
+As has been mentioned before, the DyNet implementation uses a 2 layer Bi-LSTM.
+This is sometimes refered to as a stacked Bi-LSTM \ref{Neural Network Methods
+for Natural Language Proccessing ch. 14.5}. While not clear how exactly this
+gives a better model accuracy, it has been shown empirically to help
+\ref{Papers using 2 layer}.
 
-Character embedding (either lstm or cnn), different optimizer perhaps, dynet
-manual batching as opposed to auto batching, 2 layers bi-lstm, Auxiliary loss
-thingy magic
+An explanation could simply be that adding additional Bi-LSTM layers increases
+the complexity of the model which allows it to represent more complicated
+functions. Similar to the way adding additional linear layers to a model can
+improve a model. While stacked linear layers is in many cases equivalent to
+increasing the dimensionality of the weights and biases \ref{Deep learning 199,
+Barron 1993} this may or may not be the case for Bi-LSTMs.
+
+\subsubsection{DyNet manual batching}
+
+For DyNet, we used autobatching to implement mini-batches. This is an algorithm
+which based on the computational graph build, can create batches for optimized
+training time. This shouldn't have any impact on the accuracy of the model, but
+it improves the speed compared to running without. It is however still slower
+than creating the batches manually and as such the DyNet implementation could be
+improved in this sense if reducing the training time is important.
+
 
 \subsection{Other stuff}
 

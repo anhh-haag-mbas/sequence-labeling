@@ -9,17 +9,18 @@ across, and the results of our experiments.
 
 The Part-of-Speech task is a classification task where the objective is to label
 each word in a sentence with it's corresponding part-of-speech label such as
-noun, verb, adjective, etc. There are around 17 different labels, but some
-languages don't use all of them. The same words can have different labels in
-different context, so the classifier should be able to figure out which label is
-a better fit on a sentence by sentence basis. Simply remembering that word $X$
-has label $Y$ wouldn't be able to generalize very well.
+noun, verb, adjective, etc. Eg. the sentence ``Our work is done'' would be
+labeled ``determiner noun auxiliary verb''.
 
-Include example of a sentence which is labeled.
+For our dataset, there are around 17 different labels, but some languages don't
+use all of them. The same words can have different labels in different context,
+so the classifier should be able to figure out which label is a better fit on a
+sentence by sentence basis. Simply remembering that word $X$ has label $Y$
+wouldn't be able to generalize very well.
 
 The performance of a classifier for the POS task is the simple accuracy of the
 predictions. Since there is no label which is a lot more common than others,
-guessing randomly would very rarely give a better accuracy than 10\%.
+guessing randomly would result in a very poor score. 
 
 \subsubsection{Data}
 
@@ -27,7 +28,9 @@ For this task we used datasets from~\ref{}{UniversalDependencies.org} which has
 a broad selection of languages with multiple datasets (called treebanks) in
 each. The datasets are all in the CoNNL-U format, but are created from different
 types of sources. The source types are given as tags such as news, legal, blog,
-wiki, etc.
+wiki, etc. As it is unclear how much of the data is made from each of the
+sources given, we prefered datasets made from single source types to keep the
+datasets similar to the best of our abilities.
 
 Since the datasets are already split, these were concatenated before splitting
 into our own sizes. Concatenation happened using the command ``cat *.conllu >
@@ -35,17 +38,21 @@ combined.conllu'', since the convention for the datasets is to name the files
 something with train, test, and dev, the assumed order of the files is dev,
 test, and train. Meaning that if the dev set (eg.\ the validation set) contains
 5000 sentence, only these were used in our datasets, and none of the sentences
-from the test or training-sets would be used. No guarantees however were made to
+from the test or training sets would be used. No guarantees however were made to
 guarantee this ordering, so depending on the naming conventions used in the
-specific treebanks this might differ. This shouldn't matter however since there
+specific treebanks this may differ. This shouldn't matter however since there
 shouldn't be any difference between the data in the different files.
 
-Some datasets, such as the Norwegian dataset, contains contractions as well as
+Some datasets, such as the Norwegian dataset, contains contractions alongside
 the individual words. Since the contration is usually unlabelled in the datasets
 these were simply removed from the data for ease of parsing. This has the
 obvious consequence that the models are not trained on the contractions of words
 which are often more commonly used, this however shouldn't affect the
-comparisons between word orderings since contractions shouldn't affect these.
+comparisons between word orderings since contractions shouldn't affect these and
+the test data would also be using the same convention where contractions are
+split. An alternative approach would be to create two sentences, one using the
+contraction and another without. This would be a way to extend the dataset and
+learn to properbly tag both the individual words and their contraction.
 
 The treebanks we selected were all made from news, where some used additional
 sources such as non-fiction and spoken. A list of the languages, their
@@ -65,9 +72,66 @@ respective treebank selected, and their tags is given below.
 
 * Russian,  SynTagRus, fiction, news, non-fiction
 
-The distribution of tokens, labels, etc. is given in appendix.
+The distribution of tokens, labels, etc. is given in figure \ref{}.
 
 \subsubsection{Results and analysis}
+
+Looking at the results of the experiments, we mainly focus on the case where the
+models trained with early stopping and a maximum of 50 epochs. As such, we where
+interested in seeing how the models converged with different batch sizes aswell
+as with and without the CRF layer. The average number of epochs run for each
+framework implementation is shown in Table~\ref{table:epochs-run-pos}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c|c c c}
+        \toprule
+        \multirow{2}{*}{\bfseries Batch size}     &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM}     &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM-CRF} \\
+        \cmidrule(lr){2-7}
+        & DyNet & PyTorch & TensorFlow
+        & DyNet & PyTorch & TensorFlow \\
+        \cmidrule(lr){1-7}
+         1 & 13.60 & 21.44 & 34.04 & 13.26 &  8.09 &  5.23 \\
+         8 & 17.31 & 39.86 & 49.71 & 16.55 & 16.20 &  7.91 \\
+        32 & 22.57 & 48.83 & 50.00 & 24.09 & 22.40 & 10.66 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Average of epochs run across all seeds and languages when trained
+        with early stopping.
+    }\label{table:epochs-run-pos}
+\end{table}
+
+From the data it is clear, that an increase in batch size also means that the
+model takes longer to converge. This is expected, as the number of
+backpropagation operations decrease when the input data is split into larger
+mini-batches (eg.\ when working with 4000 sentences and a batch size of 1, each
+epoch will update its weights 4000 times. This number drops to
+$\frac{4000}{32}=125$ when the batch size is 32).
+
+We also see, that adding a CRF layer dramatically decrease the time it takes for
+the models to converge. With the standard \texttt{Bi-LSTM} model implemented in
+TensorFlow, none of our experiments reached a point of convergence within the
+upper bound on the number epochs, and for PyTorch with batch size 32 and
+TensorFlow with batch size 8 the average number also indicate that only very few
+training sessions reached the point of convergence before the epoch limit. This
+also suggests, that we set the upper bound to strict.
+
+It is a completely different story for the \texttt{Bi-LSTM-CRF} models. Here,
+all experiments terminated early and the relation between the frameworks
+changed.  DyNet had an almost identical epoch average, but PyTorch saw a more
+than 50\% drop and for TensorFlow the drop was more than 80\%. The explanation
+for this could be, that the 2 layer \texttt{Bi-LSTM} of the DyNet implementation
+is a more efficient model than the regular \texttt{Bi-LSTM} with only 1 layer,
+and that the addition of a CRF layer is insignificant (in terms of the time it
+takes to find a convergence point). For the PyTorch and TensorFlow
+implementation, however, it seems that the CRF layer greatly helps the
+sequential model to converge.
+
+We do find it odd, though, that the TensorFlow implementation on average across
+batch sizes takes less than 10 epochs to find a satisfying convergence point.
+
 
 
 \pagebreak
