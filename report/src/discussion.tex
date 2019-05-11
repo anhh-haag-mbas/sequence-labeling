@@ -89,27 +89,43 @@ of.
 
 Similar to the way that pretrained word embeddings like Polyglot can be used to
 significantly improve performance, including a character embedding, pretrained
-or not, will also help the model make better predictions.
+or not, will also help the model make better predictions \ref{misconceptions
+yang zhang}.
 
-Character embeddings like word embeddings work by mapping a character to a
-vector representation. Unlike word embeddings, can character embeddings contain
-a mapping from every character to a vector representation. 
+Character embeddings, like word embeddings, work by mapping a character to a
+vector representation. But character embeddings can contain a mapping from every
+character to a vector representation since there are generally not a lot of
+different characters in a language. Even languages like Chinese with thousands
+of different characters is not an issue. This gives the model better predictive
+power on words which are not part of the word embedding.
 
-A character embedding can contain a mapping from not just a single
-character, but combinations of two or more characters or so call n-grams. Since
-a lot of languages use a relative small alphabet, a three character embedding
-could be less than 1,000,000 values, which while big is still manageable.
-
-The general idea is to map each character in a word to its own vector
+There are a lot of different ways to include a character embedding into a model.
+The general approach is to map each character in a word to its own vector
 representation and use an additional layer to read the sequence of character
 representations and return a single vector. This is similar to the way we use an
 LSTM to read the sequence of words in a sentence, but instead we only use a
-single value. The most commonly used way to read the sequence of characters is
-LSTM and CNN layers. \ref{misconceptions yang zhang}
+single value. The most commonly used way to read the sequence of characters are
+LSTM or CNN layers. They perform very similarly, but CNN are a lot faster to
+train \ref{misconceptions yang zhang}.
+
+A character embedding can contain a mapping from not just a single character,
+but combinations of two or more characters or so call n-grams. Since a lot of
+languages use a relative small alphabet, a three character embedding could be
+less than a million different values, which while big is still manageable.
+
+The benefit of using a character embedding is that a model will always be able
+to learn a unique representation for each word, whereas a word embedding can
+only learn as many representations as the number of words it knows. An
+additional benefit is that many words contain character level information which
+a word embedding may not learn. As an example, words which are capitalized are
+more likely to be named entities, than words which are uncapitalized, and words
+which ends in ``ing'' are likely verbs.
 
 
-Character embedding (either lstm or cnn), different optimizer perhaps, dynet manual batching as
-opposed to auto batching, 2 layers bi-lstm, Auxiliary loss thingy magic
+
+Character embedding (either lstm or cnn), different optimizer perhaps, dynet
+manual batching as opposed to auto batching, 2 layers bi-lstm, Auxiliary loss
+thingy magic
 
 \subsection{Other stuff}
 
