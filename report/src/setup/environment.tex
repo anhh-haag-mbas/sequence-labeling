@@ -6,20 +6,31 @@ quite powerful virtual machines.
 \subsubsection{Detailed description of machine environemnt}
 
 The experiments ran concurrently in their own process with multithreading
-turned on for the frameworks that supported it. Most of the experiments ran on
-an instance of type \texttt{c5.9xlarge}, some ran on \texttt{c5.18xlarge}.
+turned on for the frameworks that supported it. The experiments ran on a
+mixture of instances of type \texttt{c5.9xlarge} and
+\texttt{c5.18xlarge}.\footnote{For the difference between instance types see
+\url{https://aws.amazon.com/ec2/instance-types/}}
 Each machine had a 32 GiB magnetic harddisk attached as its primary storage.
-The key difference was the vCPU count, as the memory difference had no
-impact on execution.
-[ref: https://aws.amazon.com/ec2/instance-types/]
+The key difference between the machines was the vCPU count, the memory
+difference had no impact on execution.
 
-For dynet 34 processes were executed concurrently on a \texttt{c5.9xlarge} EC2
-machine.
-For tensorflow 5 processes were executed concurrently on a \texttt{c5.9xlarge}
-EC2 machine.
-Pytorch initally ran 2 processes concurrently with multithreading enabled on a
-\texttt{c5.9xlarge} EC2 machine, but was switched to 61 processes with
-multithreading disabled on a \texttt{c5.18xlarge} EC2 machine midway through the
+Each machine ran software with the following versions:
+\begin{itemize}
+  \item{Ubuntu 18.04.2 LTS}
+  \item{Python 3.6.7}
+  \begin{itemize}
+    \item{NumPy 1.16.2}
+    \item{Keras 2.2.4 / TensorFlow 1.13.1}
+    \item{dyNET 2.1}
+    \item{PyTorch 1.0.1.post2}
+  \end{itemize}
+\end{itemize}
+
+For dynet 34 processes were executed concurrently depending on the
+instance type.
+For tensorflow 5 processes were executed concurrently.
+Pytorch initally ran 2 processes concurrently with multithreading enabled, but
+was changed to 34 processes with multithreading disabled midway through the
 execution of the experiments.
 
 \subsubsection{Differences between AWS and development environment}
@@ -29,7 +40,8 @@ EC2 servers were noticed and are summarised by the following:
 
 Pytorch grinded to a halt on the 36 core EC2 machine. Switching to a 72 core EC2
 machine without disabling multithreading only exacerbated the problem. It turns
-out that pytorch's multithreading does not support a high amount of cores [ref].
+out that pytorch's multithreading does not support a high amount of
+cores\footnote{As evidenced in this Github issue \url{https://github.com/pytorch/pytorch/issues/9873}}.
 
 Tensorflow had no noticable differences between the development environment and
 the EC2 machines.
@@ -40,8 +52,8 @@ environment. The exact cause is not known to us.
 
 \subsubsection{Comparability of speed results}
 
-As such none of the speed results are truly comparable. This a result of
-several factors.
+Given the complications stated in the above sections, none of the speed results
+are truly comparable. This a result of several factors.
 One being that 2 different EC2 instance types was used, where one was faster
 than the other, or in pytorch's case slower.
 Another is the fact that each experiment was run concurrently with others. This
@@ -54,6 +66,6 @@ Ideally each experiment would be run one at a time, or with multithreading
 disabled, on identical EC2 machines. Seeing as that was not the case, no
 conclusions can be made with regards to the speed of the frameworks, only hints
 at where further experimentation with tighter control might be warranted.
-
 % Here we could add something about master/slave pattern og maybe how utilising
-% AWS Batch would have been "oplagt"
+% AWS Batch would have been "oplagt", sorta, tror ogsaa det ville have vaeret
+% lidt besvaerligt :/
