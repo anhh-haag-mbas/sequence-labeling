@@ -28,11 +28,12 @@ the classifier's ability to correctly classify an entity given all attempts, and
 recall is the ability to correctly classify an element given how many elements
 exists. Say there are 100 entities in a document, the classifier finds 90
 entities, 80 of them are correct, 10 of them are wrong, and 20 were not found.
-From this we get the precision $P = {80 \over 80 + 10} = 0.88\ldots$, and recall $R
-= {80 \over 80 + 20} = 0.8$. The $F_1$ score is simply the harmonic mean between
-the precision and recall given by $F_1 = 2 \cdot {precision \cdot recall \over
-precision + recall}$. Based on our example this would be $F_1 = 2 \cdot
-{0.88 \ldots \cdot 0.8 \over 0.88\ldots + 0.8} = 0.8421$.~\ref{https://www.toyota-ti.ac.jp/Lab/Denshi/COIN/people/yutaka.sasaki/F-measure-YS-26Oct07.pdf}.
+From this we get the precision $P = {80 \over 80 + 10} = 0.88\ldots$, and recall
+$R = {80 \over 80 + 20} = 0.8$. The $F_1$ score is simply the harmonic mean
+between the precision and recall given by $F_1 = 2 \cdot {precision \cdot recall
+\over precision + recall}$. Based on our example this would be $F_1 = 2 \cdot
+{0.88 \ldots \cdot 0.8 \over 0.88\ldots + 0.8} = 0.8421$
+~\ref{https://www.toyota-ti.ac.jp/Lab/Denshi/COIN/people/yutaka.sasaki/F-measure-YS-26Oct07.pdf}.
 
 The rationale behind using the $F_1$ score is that usually a lot of the data is
 non-entities. A classifier which classified nothing as an entity would have a
@@ -40,6 +41,15 @@ great accuracy on datasets with few entities. Since we didn't evaluate if whole
 entities were classified correctly, we will base our score on the individual
 words and the score might therefore be higher than otherwise. Since we aren't
 comparing with models outside our own this shouldn't be an issue.
+
+The reason the NER task is relevant is its usefulness in handling huge data
+sizes, since the task is inherently about extracting information from text.
+Extracting entities from a text would allow for easy tagging, comparisons
+between documents, and linking to a knowledge base. A document mentioning
+different locations and capital cities such as ``France'', ``Tokyo'', and ``New
+Zealand'', could be about geografi or traveling. And similar a document
+mentioning people associated with economy could be about that
+\ref{https://www.aclweb.org/anthology/W03-0419}. 
 
 
 \subsubsection{Data}
