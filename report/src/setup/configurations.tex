@@ -241,10 +241,28 @@ batch size}
 
 
 \subsubsection*{TensorFlow}
+TensorFlow is an open source static deep learning framework developed primarily
+by Google. Keras is a high-level API for frameworks like TensorFlow, CNTK and
+Theano.
 
-Haha, good luck
+A significant effort has been spent to align TensorFlow with Keras, so much so
+that it is sometimes hard to tell if you are dealing with pure TensorFlow
+functionality or a Keras API\@. This topic is expanded on in Section~\ref{TODO}.
 
+As such our implementation is based on Keras with TensorFlow as its
+backend.
 
+While the API allows manual control over how batching is done, it defaults to
+just handling batching automatically.
+
+Because the framework is static padding the input data is required, however
+since we are using recurrent neural networks we can deal with dynamically sized
+input. We do this by setting a mask value in the RNN layer to the padding
+value, as such the padding should not affect the quality of the training.
+
+LSTM is implemented using the implementation provided by Keras.
+The CRF implementation is based upon a CRF layer by
+Hironsan.\footnote{\url{https://github.com/Hironsan/keras-crf-layer}}
 
 \subsubsection{Experimental setup}
 
