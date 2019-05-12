@@ -31,6 +31,29 @@ the sentence ``She saw a bear'' and ``Your efforts will bear fruits''
 Achieving better results on this task results in machines better able to
 understand us.
 
+The state of the art model for POS based off of
+~\ref{https://aclweb.org/aclwiki/POS_Tagging_(State_of_the_art)} is
+~\ref{https://github.com/zalandoresearch/flair/} which is a Bi-LSTM-CRF model
+similar to what we have made. Based on the defaults we can see from their source
+code they use an embedding size of 100, a single layer Bi-LSTM, mini-batch of
+32, patience of 3, SGD with a learning rate of 0.1, and dropout 0.5, however the
+specifics hidden size is unclear. Many of their hyperparameters are the same as
+what we use, but they could use other values for their state of the art model. 
+
+Where their model definetely stands out is their use of what they call
+``contextual string embeddings'', which are character embeddings, but they use
+characters from not just the target word, but words before and after it in the
+sentence. Every character from the beginning of the sentence, to the end of the
+word is given to a forward language model. And every character from the end of
+the sentence, to the beginning of the word is given to a backwards language
+model. These language models are pre-trained, and the result of each model is
+concatenated to form the complete embedding. 
+
+Their model is evaluated on the Wall Streets Journal datasets achieves a
+97.85\% accuracy, 0.21\% percent points above the previous best model by
+~\ref{Choi, 2016}. Meaning the new model would make ~8.9\% fewer errors on the
+test set.
+
 \subsubsection{Data}
 
 For this task we used datasets from~\ref{}{UniversalDependencies.org} which has
