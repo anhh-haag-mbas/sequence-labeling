@@ -87,9 +87,42 @@ the data as is the case for the POS task. This may result in worse performance
 since the models might be more likely to overfit.
 
 A table of the languages with the number of entities in their respective dataset
-is given below in table \ref{}.
+is given below in Table~\ref{}.
 
 \subsubsection{Results and analysis}
+
+The results for the NER tasks once again shows the DyNet implementation
+outperforming the two others. However, the general accuracies achieved are
+significantly lower than for POS, and the addition of a CRF layer don't seem to
+increase performance in the scale we expected.
+
+Starting by looking at number of epochs trained
+(Table~\ref{table:epochs-run-ner}), we see that all models terminated training
+some time before hitting the upper bound, with the TensorFlow implementation of
+\texttt{Bi-LSTM} with a batch size of 8 being the slowest to converge (36.8
+epochs on average). Also, we see that \texttt{Bi-LSTM-CRF} models converged
+faster for most every batch size and implementation.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c|c c c}
+        \toprule
+        \multirow{2}{*}{\bfseries Batch size}     &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM}     &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM-CRF} \\
+        \cmidrule(lr){2-7}
+        & DyNet & PyTorch & TensorFlow
+        & DyNet & PyTorch & TensorFlow \\
+        \cmidrule(lr){1-7}
+         1 &  9.49 & 13.43 & 21.00 &  8.14 &  7.66 &  6.43 \\
+         8 &  9.86 & 22.43 & 36.80 &  9.97 & 11.46 &  8.69 \\
+        32 & 12.57 & 29.06 & 31.51 & 11.57 & 14.63 & 10.91 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Average of epochs run across all seeds and languages when trained
+        with early stopping.
+        }\label{table:epochs-run-ner}
+\end{table}
 
 Urdu has a very high score but also notable a very low number of distinct tokens
 which may be the reason.
