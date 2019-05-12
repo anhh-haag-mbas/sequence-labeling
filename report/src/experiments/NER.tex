@@ -285,10 +285,22 @@ batch sizes. However, we might see a small tendency for the larger batch sizes
 to benefit from the CRF, as the DyNet \texttt{Bi-LSTM-CRF} model highest score
 in arabic, danish, russian and urdu.
 
+Another observation concerning applying CRF is how much it helps an increasing
+batch size. For the pure \texttt{Bi-LSTM} models, a batch size of 32 drops the
+performance by 36.4\% for the PyTorch implementation and by a whooping 61.9\%
+for the TensorFlow implementation when compared to a batch size of 1. For the
+\texttt{Bi-LSTM-CRF} models, these numbers go down to 3.2\% and 20.0\%
+respectively. It should be noted, that the \textit{F1} scores for the DyNet
+implementation actually experience a slight increase in the perfomance drop from
+the larger batch size when CRF is applied (the drop goes from 7.5\% to 8.1\%).
+
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{f1-no-crf}
     \includegraphics[width=\textwidth]{f1-with-crf}
-    \caption{
+    \caption{\textit{F1} scores for each framework implementation by batch size
+        and language. Notice drops in performance when the batch size increases
+        in models that does not utilize a CRF model. Top: the \texttt{Bi-LSTM}
+        implementations. Bottom: the \texttt{Bi-LSTM-CRF} implemenations.
     }\label{chart:f1-by-batch-and-lang}
 \end{figure}
 
