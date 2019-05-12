@@ -62,7 +62,7 @@ They achieve an F1 score of 93.5 on the CoNLL 2003 English dataset, which is
 ~\ref{https://www.aclweb.org/anthology/C18-1139}, the same model mentioned in
 the previous section with state of the art results for POS.
 
-\subsubsection{Data}
+\subsubsection{Data}\label{sec:experiments-ner-data}
 
 For the NER task we used auto-annotated wikipedia data from~\ref{}{Cross-lingual
 Name Tagging and Linking for 282 Languages}. As the title suggests, this dataset
@@ -101,11 +101,6 @@ is given below in Table~\ref{}.
 
 \subsubsection{Results and analysis}
 
-The results for the NER tasks once again shows the DyNet implementation
-outperforming the two others. However, the general accuracies achieved are
-significantly lower than for POS, and the addition of a CRF layer don't seem to
-increase performance in the scale we expected.
-
 Starting by looking at number of epochs trained
 (Table~\ref{table:epochs-run-ner}), we see that all models terminated training
 some time before hitting the upper bound, with the TensorFlow implementation of
@@ -134,22 +129,15 @@ faster for most every batch size and implementation.
         }\label{table:epochs-run-ner}
 \end{table}
 
-Urdu has a very high score but also notable a very low number of distinct tokens
-which may be the reason.
-
-It would have been better to count OOV on entities and not just on everything,
-since unknown non-entity words may be easy to classify.
-
-The data from Urdu has a very high number of OOV words, considering the number
-of distrinct tokens. This points to the data being out of the ordinary since
-polyglot has trained on a lot more data and uses the most common words, but 
-most of the words in our data is not found in the polyglot embeddings.
-
-\begin{figure}[h]
-    \includegraphics[width=\textwidth]{ner-acc-epo.png}
-    \caption{NER accuracy and epochs run --- by batch size and language
-    }\label{chart:ner-acc-epo}
-\end{figure}
+However, when turning our attention to the \textit{F1} scores
+(Table~\ref{table:f1-total-ner}), the models are performing very poorly, which
+does not fit with the expected results of a well converged model. We suspect the
+main reason for this, is the fact that our models did the same \textit{accuracy}
+test during training to decide when to stop as was done in the POS task. But
+since we for the NER task want to optimize our \textit{F1} score, the accuracy
+test is really not the optimal paramater to use in early stopping --- it would
+of course had made more sense to test if the \textit{F1} score had stopped
+improving.
 
 % F1 SCORE
 \begin{table}[h!]
@@ -255,6 +243,66 @@ most of the words in our data is not found in the polyglot embeddings.
     }\label{table:f1-total-ner}
 \end{table}
 
+
+Furthermore, the loss function should also have been utilized differently. The
+motivation for using the \textit{F1} score, is to focus attention on the models
+ability to classify entities and not reward it too much for identifying
+`O'-tokens. But for our cross-entropy loss, a true prediction of a tag `O' has
+had the same influence as the true prediction of an entity tag. Since there are
+a lot more non-entities than entities, it is reasonable to suggest, that the
+models will have tuned their parameters to correctly classify non-entities and
+accepted a lower accuracy rate for entity tags. This is also supported by the
+results shown in Figure~\ref{chart:tag-acc-ner}.
+
+\begin{figure}[h!]
+    \includegraphics[width=\textwidth]{tag-acc-ner}
+    \caption{Column diagram of averaged accuracy percentages for NER tags
+        (B-<tag> and I-<tag> are combined in PER, LOC and ORG)
+    }\label{chart:tag-acc-ner}
+\end{figure}
+
+Despite this design flaw, we still get some notable observations from the
+obtained \texttt{F1} scores, depicted in
+Figure~\ref{chart:f1-by-batch-and-lang}.  First of all, we once again see that
+the DyNet implementations are by far the most succesfull, having the highest
+score in all but one experiment. This is again attributed to its 2 layer
+implementation of the bidirectional LSTM network. We also see the same pattern
+as for POS, where the PyTorch implementation has the second best results and
+TensorFlow is falling severely behind.
+
+We also see, that the \texttt{Bi-LSTM-CRF} models in PyTorch and TensorFlow
+outperforms their \texttt{Bi-LSTM} counterparts at almost every batch size and
+language (the notable exceptions being cases for japanase and norwegian, where
+the scores are extraordinarily low. See Section~\ref{sec:experiments-ner-data}
+for more). This is interesting, as it confirms the expectation that the CRF
+layer is able to significantly improve the performance in performing NER tasks
+(~\ref{}).
+
+We still don't see a consistent improvement on the DyNet implementations from
+the CRF layer. This again indicate, that the addition of a CRF
+layer to a 2 layer \texttt{Bi-LSTM} model is of negligible effect for these
+batch sizes. However, we might see a small tendency for the larger batch sizes
+to benefit from the CRF, as the DyNet \texttt{Bi-LSTM-CRF} model highest score
+in arabic, danish, russian and urdu.
+
+\begin{figure}[h!]
+    \includegraphics[width=\textwidth]{f1-no-crf}
+    \includegraphics[width=\textwidth]{f1-with-crf}
+    \caption{
+    }\label{chart:f1-by-batch-and-lang}
+\end{figure}
+
+For completeness sake, we also include the data for our results on general
+accuracy on the NER data in Table~\ref{table:acc-total-ner}. This was the actual
+score our models trained to optimize and are as such relevant. 
+
+Overall they align pretty well with the pattern found in the rest of the data,
+but they are expectetly higher. The best results are generally either achieved
+by the lowest batch size or by the \texttt{Bi-LSTM-CRF} and always by the DyNet
+implementation. The best results reaches pretty impressive heights with
+97.3\% for russian and 98.5\% for urdu. However since these accuracy scores can
+get pretty high by just being really good at identifying non-entities, the
+accuracy may not reflect the practical success of the models.
 
 \begin{table}[h!]
     \centering
