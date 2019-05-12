@@ -10,10 +10,12 @@ embeddings.
 
 \subsubsection{General structure of the models}
 
-We used two different models to run our experiments. The first one is a standard
-bidirectional LSTM network, \texttt{Bi-LSTM}, and the second one is a
-\texttt{Bi-LSTM} with an added CRF layer, \texttt{Bi-LSTM-CRF}. Both models has
-the same fundamental structure, which consist of:
+We used two different models to run our experiments. The base structure of the
+models are inspired by the models used by other authors on similar tasks
+\ref{ALL THE PAPERS!}. The first one is a standard bidirectional LSTM network,
+\texttt{Bi-LSTM}, and the second one is a \texttt{Bi-LSTM} with an added CRF
+layer, \texttt{Bi-LSTM-CRF}. Both models has the same fundamental structure,
+which consist of:
 
 \begin{itemize}
     \item An embedding layer with a fixed embedding dimension size
@@ -30,19 +32,19 @@ through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
 output is instead treated as emission scores that is passed as input to the CRF
 layer, which then compute the most likely sequence of tags.
 
-We use Stochastic Gradiant descent for training since it seems to perform the
-best \ref{Yang_liang_zhang}. We use a learning rate of 0.1.
+The size of the embedding layer is 100004 x 64. The size of each LSTM in the
+Bi-LSTM layer is 64 x 100, the output of each LSTM is concatenated giving us a
+200 dimensional output. The size of the simple linear layer is 200 x number of
+tags depending on the task. With CRF the last layer contains 2 additional tags
+because of an implementation detail. 
 
-The size of the embedding layer is 100000 x 100??. 
+For training we use the stochastic gradient descent (SGD) optimizer since it
+seems to perform the best \ref{Yang_liang_zhang}. We use a learning rate of 0.1
+and no weight decay or momentum.
 
-The size of the lstm layer is 100 x 100?
+The loss function for the softmax model is the4 negative log likelihood of the
+correct tag. For CRF we use ???
 
-The size of the simple linear layer is 100 x number of tags depending on the task.
-
-With CRF the last layer contains 2 additional tags because of an implementation
-detail. 
-
-Loss function is Categorical cross entropy loss???.
 
 \subsubsection{Embeddings}
 
@@ -50,8 +52,10 @@ We use a pretrained embedding since they have been shown to provide a
 significant increase in accuracy for sequence labeling tasks (~\ref{}). We
 picked pretrained Polyglot embeddings \ref{Polyglot} since there exists models
 in a lot of different languages, and Polyglot seems to outperform its
-competitors like FastText\ref{FastText} (~\ref{} to FastText + comparison), even though
-FastText embeddings are significantly larger than Polyglot's.
+competitors like FastText\ref{FastText} (~\ref{} to FastText + comparison), even
+though FastText embeddings are significantly larger than Polyglot's. Polyglot
+contains vector representations for 100.000 different words, as well as 4
+special tokens. Each vector representation has a size of 64.
 
 The use of word embeddings can be considered a case of multi-task learning.
 Multi-task learning is where multiple tasks are solved to improve the prediction
@@ -292,8 +296,21 @@ upon be value for hidden layers in the model \ref{}. If we had included dropout
 on the input \ref{} suggests that a dropout of 80\% is the best for this.
 
 
+\subsubsection{Optimizer}
 
+The optimizer is the algorithm used to update the weights and biases in the
+network. After computing a loss by forward propogation of results, followed by
+back-propogation to calculate the gradient, we need an algorithm to decide how
+to update the network based on the gradient. The goto algorithm is the
+stochastic gradient descent (SGD), not only is it simple, it also works very
+well and competes against newer algorithms with more sofisticated ways to decide
+how to update the network.
 
-
-
-
+SGD updates based on a fixed learning rate. After calculating the gradient, the
+update rule is to subtract the weights by the gradient scaled by the learning
+rate. Using a fixed learning rate would suggest that the network can't converge
+to a local minimum, and one would have to gradually decrease the value over
+time. To our knowledge the frameworks used don't automatically implement any
+kind of weight decay or momentum for the default SGD, this would have to be
+manually specified. As such the models may not be able to converge to a local
+minimum before they stop training.

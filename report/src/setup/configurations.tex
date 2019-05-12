@@ -86,6 +86,46 @@ This subsection will give a descriptive introduction to each framework, how it
 works and the implementation details relevant for this project. For a discussion
 and evaluation of each framework, refer to Section~\ref{subsec:frameworks}.
 
+\subsubsection*{A note on computational graphs}
+
+% TODO: Move to relevant section
+When describing neural networks the goto abstraction is that of neurons which
+are linked to each other and arranged in layers. A neuron receives the output of
+each neuron from the previous layer, computes its own value, and sends it to the
+next layer alongside all the other neurons in its layer. Since it would be too
+computationally expensive to calculate the result of each neuron individually
+the neural network abstraction is discarded in favour of a matrix and vector
+based representation which is closer to how the results are calculated in the
+computer. The concept of layers however remains, so a simple layer could be
+represented as the calculation $\sigma(W \cdot X + B)$, where $\sigma$ would be
+the activation function sidmoid. 
+
+\ref{Deep learning 6.5.1, NNM for NLP ???}
+
+When neural networks are implemented in frameworks the layer abstraction is also
+ignored in favor of so called computational graphs. In a computational graph
+each node in the graph represents a single mathematical operation, or an input
+value. As such the simple layer from before would be split into three distinct
+nodes connected in succession. The values for $W$ and $X$ would be input into a
+matrix multiplication node. The result of this node would be the input alongside
+$B$ to a vector addition node, which would be the only input value to the
+sigmoid node. 
+
+Computational graphs as such don't provide much of an advantage over the layer
+abstraction. Conceptionally we are still doing the same mathematical operations
+on the input the performance of this model is not better than the layer based
+representation, since we are still taking advantage of the same performance
+gains from doing working with vectors and matricies. The reason behind the use
+of computational graphs is because it simplifies calculating the gradients of
+the network through the backpropagation algorithm. 
+
+The backpropagation algorithm uses the chain rule of derivatives to calculate
+the derivative of input values wherever they may be in the computational graph.
+Since the chain rules is used for computing the derivative of arbitrarily many
+functions, and computational graphs represents each function by its own node,
+the graph abstraction simplifies calculating derivatives since each node only
+needs to know the rules for computing the derivate of itself.
+ 
 
 \subsubsection*{DyNet}
 
@@ -225,7 +265,7 @@ very bad performance on the tasks. Five epochs is the baseline where we expect
 that none of the models have begun overfitting, while still able to produce some
 reasonable predictive power. The last epoch setting is early stopping with a
 patience of three, and a max of 50 epochs. This means that the model continues
-training intill it has made three updates which didn't improve the accuracy on
+training intill it has made three updates, which didn't improve the accuracy on
 the validation set. Early testing suggests that models stopped improving before
 the max, so this setting reasonable represents the best of what the models can
 achieve. It is possible that with a lot more training, or different
