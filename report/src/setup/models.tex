@@ -32,30 +32,33 @@ through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
 output is instead treated as emission scores that is passed as input to the CRF
 layer, which then compute the most likely sequence of tags.
 
-The size of the embedding layer is 100004 x 64. The size of each LSTM in the
-Bi-LSTM layer is 64 x 100, the output of each LSTM is concatenated giving us a
-200 dimensional output. The size of the simple linear layer is 200 x number of
-tags depending on the task. With CRF the last layer contains 2 additional tags
-because of an implementation detail. 
+The size of the embedding layer is 100004 x 64, meaning it has an input size of
+100004 and produces an output of 64. The size of each LSTM in the Bi-LSTM layer
+is 64 x 100, the output of each LSTM is concatenated giving us a 200 dimensional
+output. The size of the simple linear layer is 200 x number of tags, depending
+on the task. With CRF the last layer contains 2 additional tags because of an
+implementation detail. 
 
 For training we use the stochastic gradient descent (SGD) optimizer since it
-seems to perform the best \ref{Yang_liang_zhang}. We use a learning rate of 0.1
-and no weight decay or momentum.
+seems to give the best results, but with slower convergence during training
+~\ref{Yang_liang_zhang}. We use a learning rate of 0.1 and no weight decay or
+momentum.
 
-The loss function for the softmax model is the4 negative log likelihood of the
+The loss function for the softmax model is the negative log likelihood of the
 correct tag. For CRF we use ???
-
 
 \subsubsection{Embeddings}
 
 We use a pretrained embedding since they have been shown to provide a
-significant increase in accuracy for sequence labeling tasks (~\ref{}). We
-picked pretrained Polyglot embeddings \ref{Polyglot} since there exists models
-in a lot of different languages, and Polyglot seems to outperform its
-competitors like FastText\ref{FastText} (~\ref{} to FastText + comparison), even
-though FastText embeddings are significantly larger than Polyglot's. Polyglot
-contains vector representations for 100.000 different words, as well as 4
-special tokens. Each vector representation has a size of 64.
+significant increase in accuracy for sequence labeling tasks (~\ref{Yang liang
+zhang}). We picked pretrained Polyglot embeddings \ref{Polyglot} since there
+exists models in a lot of different languages, and Polyglot seems to outperform
+the only alternative we were aware of FastText ~\ref{FastText} (~\ref{} to
+FastText + comparison), even though FastText embeddings are significantly larger
+than Polyglot's. There are exist many different algorithms for training word
+embeddings, but not many with trained models in a wide range of languages
+available. Polyglot contains vector representations for 100.000 different words,
+as well as 4 special tokens. Each vector representation has a size of 64.
 
 The use of word embeddings can be considered a case of multi-task learning.
 Multi-task learning is where multiple tasks are solved to improve the prediction
@@ -95,7 +98,25 @@ information about an input at a timestep $t$ get carried over to the processing
 of an input at timestep $t+1$. This is the motivation of RNN (see
 Figure~\ref{}).
 
-Can include discription of how a general RNN works here. % TODO
+Standard Recurrent Neural Networks calculates two values, a hidden value, which
+is used to carry information from one timestep to the next, and the output. The
+values are calculated as follows: \ref{Deep learning}
+
+\begin{align*}
+    & \textbf{a}_t = \textbf{b} + \textbf{W} \textbf{h}_{t-1} + \textbf{U} \textbf{x}_t \\
+    & \textbf{h}_t = tanh(\textbf{a}_t) \\
+    & \textbf{o}_t = \textbf{c} + \textbf{V} \textbf{h}_t \\
+    & \textbf{y}_t = softmax(\textbf{o}_t)
+\end{align*}
+
+Its not much more complicated than a simple linear layer. There are two
+additional matricies and an additional bias vector. The input $x_t$ is used
+along with the hidden value calculated from the previous input value $x_{t-1}$,
+to calculate the new hidden value. The tanh function is used to squeeze the
+hidden value between 0 and 1, which will be used for the next timestep, but is
+also used for the output after a linear transformation and a softmax activation.
+This way the output of the layer is not just dependent on the input, but also
+all the previous input values seen.
 
 However, the standard RNN suffers from the problems of exponential decay or blow
 up of error signals that are backpropagated through the network --- a situation
@@ -103,12 +124,11 @@ that only gets worse as the time dependencies increase (~\ref{} Hochreiter,
 Graves). To remedy this, LSTM networks are used instead.
 
 An LSTM network is compposed of carefully designed memory cells containing
-% TODO: Alternative phrasing
-% multiple special purpose weight matricies call gates, ... 
-multiple gates, that determines what information to remember, what to forget,
-what to do with the input and the output of the network. In addition, a main
-state, $c$, of the network cell is maintained and used to compute a hidden
-state, $h$, which is passed on to be used at the next timestep.
+multiple special purpose weight matricies called gates, that determines what
+information to remember, what to forget, what to do with the input and the
+output of the network. In addition, a main state, $c$, of the network cell is
+maintained and used to compute a hidden state, $h$, which is passed on to be
+used at the next timestep.
 
 The gates and states are calculated in the following manner:\footnote{Note that
     these calculations are done by the respective frameworks we have been
@@ -242,7 +262,7 @@ most likely tag $y^{*}$ at each time step $k$.
 
 In short, our \texttt{Bi-LSTM-CRF} model is simply an extension of the
 \texttt{Bi-LSTM} with an added CRF layer for modelling the conditional
-dependencies between each successive tag in the sequence. 
+dependencies between each successive tag in the sequence.
 
 \subsubsection{Dropout layers}
 
