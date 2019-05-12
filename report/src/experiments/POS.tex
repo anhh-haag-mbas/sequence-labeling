@@ -72,9 +72,11 @@ respective treebank selected, and their tags is given below.
 
 * Russian,  SynTagRus, fiction, news, non-fiction
 
-The distribution of tokens, labels, etc. is given in figure \ref{}.
+The distribution of tokens, labels, etc.\ is given in Figure~\ref{}.
 
 \subsubsection{Results and analysis}
+
+\subsubsection*{Early stopping}
 
 Looking at the results of the experiments, we mainly focus on the case where the
 models trained with early stopping and a maximum of 50 epochs. As such, we where
@@ -132,6 +134,8 @@ sequential model to converge.
 We do find it odd, though, that the TensorFlow implementation on average across
 batch sizes takes less than 10 epochs to find a satisfying convergence point.
 
+\subsubsection*{Accuracy}
+
 When we turn our attention to the accuracy achieved by the models, we see the
 results reflect the epoch numbers. In
 Figure~\ref{chart:acc-by-batch-and-lang-pos} the results are plotted
@@ -148,36 +152,7 @@ Table~\ref{table:acc-total-pos}.
     }\label{chart:acc-by-batch-and-lang-pos}
 \end{figure}
 
-The results show that the non-CRF models perform quite simiar for most languages
-when the batch size is 1 (except for the TensorFlow implementation, which
-underperforms severely for arabic, danish and russian). This is in compliance
-with the fact, that all models terminated training before reaching the maximum
-number of epochs and as such found a state where the accuracy on the validation
-set stopped increasing. The similarities in performance is a good measurement
-that these models found a somewhat optimal tuning of their respective weights.
-
-This seems even more obvious when looking at the results for the
-\texttt{Bi-LSTM-CRF} models. Here, the DyNet and the PyTorch implementation are
-near identical, with a small advantage for DyNet in most cases. Furthermore,
-larger batch sizes mostly seem to erradicate the small difference in performance
-between the two, which also corresponds to what we would expect from the models
-since both the PyTorch and the DyNet implementation converged within less than
-25 epochs.
-
-In the cases where the models did not get to properly converge (ie.\ the
-implementation of \texttt{Bi-LSTM} in TensorFlow with batch size 8 and 32 and in
-PyTorch with batch size 32), the accuracy achieved is also considerably worse
-than the DyNet implementation, which terminated training before 25 epochs for
-all batch sizes. Its also worth noticing, that the PyTorch implementation with
-batch size 8 is also doing notably worse even though it did seem to converge,
-albeit at a higher epoch number of 39.86. Since TensorFlow with a batch size of
-1 is also doing worse on average and spent more than 30 epochs converging, we
-may see that the eventual convergence after 30 epochs is in risk of ending up in
-a sub-optimal state (ie.\ gets stuck in a local minima that is not optimal).
-
-The outlier here is the TensorFlow implementation. 
-
-\begin{table}[h!]
+\begin{table}[h]
     \centering
     \begin{tabular}{c l c c c|c c c}
         \toprule
@@ -234,6 +209,79 @@ The outlier here is the TensorFlow implementation.
     \caption{Table with a lot of exciting data.
     }\label{table:acc-total-pos}
 \end{table}
+
+
+There is a clear outlier in the data and that is the TensorFlow implementation.
+Especially for the \texttt{Bi-LSTM-CRF} model, the this yields significantly
+lower results and a pattern that does not resemble that of the other two. A good
+example is the fact that for japanese, both the DyNet and the PyTorch
+implementation perform worse than they do for any other language, whereas the
+TensorFlow one has its best accuracy on japanase with a batch size of 1 and  a
+consitently above-average score for batch size 8 and 32, though all 3 results
+are more than 10\% lower than those of DyNet and PyTorch.
+
+Taking into account the unusually low number of epochs it trained before
+seemingly converging, these irregularities in our TensorFlow
+\texttt{Bi-LSTM-CRF} combined with how similar the DyNet and PyTorch
+implementations behave, leads us to suspect that there is an error in the CRF
+implementation in TensorFlow. Section~\ref{} elaborates on this.
+
+For the rest of the results, there seem to be a correlation beween accuracy and
+number of epochs trained.
+
+For example, the results show that the non-CRF models perform quite simiar for
+most languages when the batch size is 1 (except for the TensorFlow
+implementation, which underperforms severely for arabic, danish and russian).
+This is in compliance with the finding that for a batch size of 1, all models
+terminated training before reaching the maximum number of epochs. The
+similarities in performance is a good measurement that these models found a
+somewhat optimal tuning of their respective weights.
+
+In the cases where the models did not get to properly converge (ie.\ the
+implementation of \texttt{Bi-LSTM} in TensorFlow with batch size 8 and 32 and in
+PyTorch with batch size 32), the accuracies achieved are not as good as those of
+the DyNet implementation, which terminated training before 25 epochs for
+all batch sizes. Its also worth noticing, that the PyTorch implementation with
+batch size 8 is also doing notably worse than the corresponding DyNet one, even
+though it did seem to converge, albeit at a higher epoch number of 39.86. Since
+TensorFlow with a batch size of 1 is also doing worse on average and spent more
+than 30 epochs converging, we may see that the eventual convergence after 30
+epochs is in higher risk of ending up in a sub-optimal state (ie.\ gets stuck in
+a local minima that is not optimal).
+
+For the \texttt{Bi-LSTM-CRF} models, the DyNet and the PyTorch implementation
+performs nearly identical, with a small advantage for DyNet in most cases. It is
+however interesting to see, that PyTorch gets a significant improvement from the
+CRF layer and outperforms its \texttt{Bi-LSTM} model for all batch sizes of 8
+and 32. On the other hand, a batch size of 1 performs worse in all cases with
+the CRF layer. This could mean that in training a CRF model, backpropagation
+hurts from updating on too small a sample size at a time. A larger batch size
+should generally make the model less dependent on singular cases and thus better
+generalizing the tuning of its weights (~\cite{falcon2018lstms}).
+
+The same pattern is not seen for the DyNet implementation, however. Here, the
+\texttt{Bi-LSTM-CRF} actually performs marginally worse than the regular
+\texttt{Bi-LSTM}. But this does not change the fact, that for all but one
+experiment, the DyNet implementation achieves the highest accuracy of all (the
+exception being urdu at batch size 32 where \texttt{Bi-LSTM-CRF} in PyTorch
+beats it by 0.02\%). We believe this is an indication, that a 2 layer
+bidirectional LSTM model performs comparably to single layer bidirectional LSTM
+model with CRF, and that adding a CRF layer to a 2 layer bidirectional LSTM
+model has negligible effect but increases training time.
+
+Summing up:
+
+\begin{itemize}
+    \item The TensorFlow implementation of CRF is buggy
+    \item The single layer implementations of \texttt{Bi-LSTM} requires
+        significantly more epochs to converge during trainer than the 2 layer
+        model when the batch size increase
+    \item CRF makes the models converge faster during training
+    \item CRF improves the accuracy on the single layer \texttt{Bi-LSTM}
+        implementation of PyTorch, but has negligible effect on the DyNet
+        implementation
+    \item PyTorch and DyNet performs very similar for \texttt{Bi-LSTM-CRF}
+\end{itemize}
 
 
 
