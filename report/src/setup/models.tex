@@ -10,10 +10,12 @@ embeddings.
 
 \subsubsection{General structure of the models}
 
-We used two different models to run our experiments. The first one is a standard
-bidirectional LSTM network, \texttt{Bi-LSTM}, and the second one is a
-\texttt{Bi-LSTM} with an added CRF layer, \texttt{Bi-LSTM-CRF}. Both models has
-the same fundamental structure, which consist of:
+We used two different models to run our experiments. The base structure of the
+models are inspired by the models used by other authors on similar tasks
+\ref{ALL THE PAPERS!}. The first one is a standard bidirectional LSTM network,
+\texttt{Bi-LSTM}, and the second one is a \texttt{Bi-LSTM} with an added CRF
+layer, \texttt{Bi-LSTM-CRF}. Both models has the same fundamental structure,
+which consist of:
 
 \begin{itemize}
     \item An embedding layer with a fixed embedding dimension size
@@ -30,19 +32,19 @@ through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
 output is instead treated as emission scores that is passed as input to the CRF
 layer, which then compute the most likely sequence of tags.
 
-We use Stochastic Gradiant descent for training since it seems to perform the
-best \ref{Yang_liang_zhang}. We use a learning rate of 0.1.
+The size of the embedding layer is 100004 x 64. The size of each LSTM in the
+Bi-LSTM layer is 64 x 100, the output of each LSTM is concatenated giving us a
+200 dimensional output. The size of the simple linear layer is 200 x number of
+tags depending on the task. With CRF the last layer contains 2 additional tags
+because of an implementation detail. 
 
-The size of the embedding layer is 100000 x 100??. 
+For training we use the stochastic gradient descent (SGD) optimizer since it
+seems to perform the best \ref{Yang_liang_zhang}. We use a learning rate of 0.1
+and no weight decay or momentum.
 
-The size of the lstm layer is 100 x 100?
+The loss function for the softmax model is the4 negative log likelihood of the
+correct tag. For CRF we use ???
 
-The size of the simple linear layer is 100 x number of tags depending on the task.
-
-With CRF the last layer contains 2 additional tags because of an implementation
-detail. 
-
-Loss function is Categorical cross entropy loss???.
 
 \subsubsection{Embeddings}
 
@@ -50,8 +52,10 @@ We use a pretrained embedding since they have been shown to provide a
 significant increase in accuracy for sequence labeling tasks (~\ref{}). We
 picked pretrained Polyglot embeddings \ref{Polyglot} since there exists models
 in a lot of different languages, and Polyglot seems to outperform its
-competitors like FastText\ref{FastText} (~\ref{} to FastText + comparison), even though
-FastText embeddings are significantly larger than Polyglot's.
+competitors like FastText\ref{FastText} (~\ref{} to FastText + comparison), even
+though FastText embeddings are significantly larger than Polyglot's. Polyglot
+contains vector representations for 100.000 different words, as well as 4
+special tokens. Each vector representation has a size of 64.
 
 The use of word embeddings can be considered a case of multi-task learning.
 Multi-task learning is where multiple tasks are solved to improve the prediction
@@ -91,12 +95,16 @@ information about an input at a timestep $t$ get carried over to the processing
 of an input at timestep $t+1$. This is the motivation of RNN (see
 Figure~\ref{}).
 
+Can include discription of how a general RNN works here. % TODO
+
 However, the standard RNN suffers from the problems of exponential decay or blow
 up of error signals that are backpropagated through the network --- a situation
 that only gets worse as the time dependencies increase (~\ref{} Hochreiter,
 Graves). To remedy this, LSTM networks are used instead.
 
 An LSTM network is compposed of carefully designed memory cells containing
+% TODO: Alternative phrasing
+% multiple special purpose weight matricies call gates, ... 
 multiple gates, that determines what information to remember, what to forget,
 what to do with the input and the output of the network. In addition, a main
 state, $c$, of the network cell is maintained and used to compute a hidden
@@ -236,12 +244,73 @@ In short, our \texttt{Bi-LSTM-CRF} model is simply an extension of the
 \texttt{Bi-LSTM} with an added CRF layer for modelling the conditional
 dependencies between each successive tag in the sequence. 
 
+\subsubsection{Dropout layers}
+
+The dropout layers are not part of the model besides training. Dropout is a
+regularization technique which helps prevent the model from overfitting \ref{NNM
+for NLP, Deep Learning ch 7.12}. Regularization is when we make changes to
+reduce a models generalization error, ie. the errors on the test data, possibly
+introducing more errors on the training data. Many different regularization
+techniques exist and dropout is just one of these.
+
+Dropout is about introducing variance in the model trained by randomly removing
+output values. When thinking of the model as a network of neurons, dropout is
+like randomly removing neurons from this network. What this means in relation to
+the computational graph built, is that some of the elements in the vector output
+of a node in the graph, is set to 0. To make up for randomly setting values to
+0, some work has to be done. There are two different ways to handle this, one
+which requires updating all other values in the output during training, and
+another where we update the weights after training \ref{Deep learning}. Since
+this feature is common in every framework we used, we didn't have to choose
+between one or the other method, and simply used the framework defaults. In
+theory there shouldn't be any difference between the two different methods.
+
+Dropout works by preventing the model from relying on specific element values in
+the output of a layer. If the model is reliant on a single value, it would
+completely fail when this value is set to zero, thus requiring it to learn a
+different representation without this flaw. Another way \ref{Deep learning 7.12}
+of reasoning about dropout is to view it as an ensemple method. Ensemple methods
+are about training different multiple networks and using their collective
+results to best predict the correct values. Since dropout removes neurons from
+the network for a single example, this is in a sense equivalent to training a
+model without those neurons. A simple network of five neurons, two input, two
+hidden, and one output neuron, could become 16 different networks. One extreme
+being all five neurons remaining in the network, and the other extreme the
+network consisting of only the output neuron. Since the number of networks
+increase exponentially with the number of neurons in the network, not all of
+these will be trained on, but depending on the dropout rate, some sample of the
+networks will be used. This is different from ensemple methods since we only
+have a single network, but since we are training on many different subsets of
+the network, these subsets have been trained to solve the task without relying
+on other parts of the network. 
+
+We could have included dropout on the training input instead of just the output
+of some of the layers. This would make sure the model trained on unknown as well
+as known words. Since we are using a polyglot embedding for the input which
+doesn't contain all words from our training data, we already do this to some
+extend and we therefore decided against adding explicit dropout on this data as
+well.
+
+We picked a dropout rate of 50\% since this seems to be the generally agreed
+upon be value for hidden layers in the model \ref{}. If we had included dropout
+on the input \ref{} suggests that a dropout of 80\% is the best for this.
 
 
+\subsubsection{Optimizer}
 
+The optimizer is the algorithm used to update the weights and biases in the
+network. After computing a loss by forward propogation of results, followed by
+back-propogation to calculate the gradient, we need an algorithm to decide how
+to update the network based on the gradient. The goto algorithm is the
+stochastic gradient descent (SGD), not only is it simple, it also works very
+well and competes against newer algorithms with more sofisticated ways to decide
+how to update the network.
 
-
-
-
-
-
+SGD updates based on a fixed learning rate. After calculating the gradient, the
+update rule is to subtract the weights by the gradient scaled by the learning
+rate. Using a fixed learning rate would suggest that the network can't converge
+to a local minimum, and one would have to gradually decrease the value over
+time. To our knowledge the frameworks used don't automatically implement any
+kind of weight decay or momentum for the default SGD, this would have to be
+manually specified. As such the models may not be able to converge to a local
+minimum before they stop training.
