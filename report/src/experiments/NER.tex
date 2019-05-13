@@ -60,7 +60,7 @@ They achieve an F1 score of 93.5 on the CoNLL 2003 English dataset, which is
 ~\ref{https://www.aclweb.org/anthology/C18-1139}, the same model mentioned in
 the previous section with state of the art results for POS.
 
-\subsubsection{Data}
+\subsubsection{Data}\label{sec:experiments-ner-data}
 
 For the NER task we used auto-annotated wikipedia data from~\ref{}{Cross-lingual
 Name Tagging and Linking for 282 Languages}. As the title suggests, this dataset
@@ -95,26 +95,290 @@ the data as is the case for the POS task. This may result in worse performance
 since the models might be more likely to overfit.
 
 A table of the languages with the number of entities in their respective dataset
-is given below in table \ref{}.
+is given below in Table~\ref{table:token-distribution-ner}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c c c c c c c}
+        \toprule
+        \multicolumn{10}{l}{\bfseries Training} \\
+        Language & Tokens & Distinct &
+        B-PER & I-PER & B-LOC & I-LOC & B-ORG & I-ORG & O \\
+        
+        \cmidrule(lr){1-10}
+
+        ar   &  27159 &  8567 &
+        1929 &   3919 &  1835 &  2526 & 1112 &  2237 & 13601 \\
+
+        da   &  35498 & 10247 &
+        1419 &   1802 &  3385 &   991 &  974 &  1264 & 25663 \\
+
+        hi   &  23276 &  4667 &
+        3502 &   4021 &   700 &   830 & 1105 &  2943 & 10175 \\
+
+        ja   & 122377 &  2429 &
+        1644 &   6853 &  1663 &  4420 & 2575 & 10970 & 94252 \\
+
+        no   &  41172 & 10988 &
+        1525 &   2076 &  3229 &   943 & 1302 &  1506 & 30591 \\
+
+        ru   &  26232 &  9817 &
+        2483 &   5341 &   973 &   711 & 1109 &  2269 & 13346 \\
+
+        ur   &  21391 &  3048 &
+         502 &   1549 &   3012 & 10024 & 527 &  1500 &  4177 \\
+
+        \cmidrule(lr){1-10}
+        \multicolumn{10}{l}{\bfseries Testing} \\
+        Language & Tokens & Distinct &
+        B-PER & I-PER & B-LOC & I-LOC & B-ORG & I-ORG & O \\
+        
+        \cmidrule(lr){1-10}
+
+        ar  & 2991 & 1039 &
+         91 &  211 &  230 &  525 &  237 &  652 & 1045 \\
+
+        da  & 4523 & 1682 &
+        248 &  352 &  333 &  191 &  138 &  255 & 3006 \\
+
+        hi  & 2884 & 1234 &
+        180 &  288 &  110 &  177 &  268 &  892 &  969 \\
+
+        ja  &14723 & 1176 &
+        299 & 1730 &  155 &  471 &  229 & 1342 &10497 \\
+
+        no  & 5574 & 1549 &
+         25 &   31 &  492 &   65 &  155 &  243 & 4563 \\
+
+        ru  & 2280 &  989 &
+        456 & 1095 &   31 &   15 &   33 &   60 &  590 \\
+
+        ur  & 2813 &  310 &
+          0 &    0 &  487 & 1745 &   19 &   62 &  500 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Distribution of tokens on the NER data sets for each language.
+    }\label{table:token-distribution-ner}
+\end{table}
+
+        
 
 \subsubsection{Results and analysis}
 
-Urdu has a very high score but also notable a very low number of distinct tokens
-which may be the reason.
+Starting by looking at number of epochs trained
+(Table~\ref{table:epochs-run-ner}), we see that all models terminated training
+some time before hitting the upper bound, with the TensorFlow implementation of
+\texttt{Bi-LSTM} with a batch size of 8 being the slowest to converge (36.8
+epochs on average). Also, we see that \texttt{Bi-LSTM-CRF} models converged
+faster for most every batch size and implementation.
 
-It would have been better to count OOV on entities and not just on everything,
-since unknown non-entity words may be easy to classify.
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c|c c c}
+        \toprule
+        \multirow{2}{*}{\bfseries Batch size}     &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM}     &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM-CRF} \\
+        \cmidrule(lr){2-7}
+        & DyNet & PyTorch & TensorFlow
+        & DyNet & PyTorch & TensorFlow \\
+        \cmidrule(lr){1-7}
+         1 &  9.49 & 13.43 & 21.00 &  8.14 &  7.66 &  6.43 \\
+         8 &  9.86 & 22.43 & 36.80 &  9.97 & 11.46 &  8.69 \\
+        32 & 12.57 & 29.06 & 31.51 & 11.57 & 14.63 & 10.91 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Average of epochs run across all seeds and languages when trained
+        with early stopping.
+        }\label{table:epochs-run-ner}
+\end{table}
 
-The data from Urdu has a very high number of OOV words, considering the number
-of distrinct tokens. This points to the data being out of the ordinary since
-polyglot has trained on a lot more data and uses the most common words, but 
-most of the words in our data is not found in the polyglot embeddings.
+However, when turning our attention to the \textit{F1} scores
+(Table~\ref{table:f1-total-ner}), the models are performing very poorly, which
+does not fit with the expected results of a well converged model. We suspect the
+main reason for this, is the fact that our models did the same \textit{accuracy}
+test during training to decide when to stop as was done in the POS task. But
+since we for the NER task want to optimize our \textit{F1} score, the accuracy
+test is really not the optimal paramater to use in early stopping --- it would
+of course had made more sense to test if the \textit{F1} score had stopped
+improving.
 
-\begin{figure}[h]
-    \includegraphics[width=\textwidth]{ner-acc-epo.png}
-    \caption{NER accuracy and epochs run --- by batch size and language
-    }\label{chart:ner-acc-epo}
+% F1 SCORE
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c l c c c|c c c}
+        \toprule
+        \multirow{2}{*}{\bfseries Language} &
+        \multirow{2}{*}{\bfseries Batch size} &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM} &
+        \multicolumn{3}{c}{\bfseries Bi-LSTM-CRF} \\
+        \cmidrule(lr){3-8}
+        && DyNet & PyTorch & Tensorflow & DyNet & PyTorch & Tensorflow \\
+
+        \cmidrule(lr){1-8}
+        \multirow{3}{*}{\bfseries ar}
+        &  1 & 
+        \underline{\textbf{83.5}} & 78.6 & 74.3 &
+        82.6 & \underline{78.7} & \underline{75.0} \\
+        &  8 & 
+        \underline{\textbf{82.4}} & 62.5 & 47.4 &
+        80.8 & \underline{77.3} & \underline{66.2} \\
+        & 32 & 
+        79.2 & 42.4 & 27.8 &
+        \underline{\textbf{79.3}} & \underline{70.0} & \underline{48.9} \\
+
+        \cmidrule(lr){1-8}
+        \multirow{3}{*}{\bfseries da}
+        &  1 &
+        \underline{\textbf{77.0}} & 70.5 & \underline{54.0} &
+        76.9 & \underline{71.8} & 49.9 \\
+        &  8 &
+        \underline{\textbf{74.9}} & 48.1 & 23.5 &
+        74.6 & \underline{69.3} & \underline{35.1} \\
+        & 32 &
+        68.0 & 27.7 &  0.0 &
+        \underline{\textbf{69.2}} & \underline{61.4} & \underline{20.8} \\
+
+        \cmidrule(lr){1-8}
+        \multirow{3}{*}{\bfseries hi}
+        &  1 &
+        \underline{\textbf{69.7}} & \underline{65.3} & 52.2 &
+        69.4 & 62.8 & \underline{55.5} \\
+        &  8 &
+        \underline{\textbf{68.3}} & 55.1 & 26.2 &
+        67.3 & \underline{63.4} & \underline{51.2} \\
+        & 32 &
+        \underline{\textbf{64.0}} & 33.6 &  1.2 &
+        62.6 & \underline{56.9} & \underline{37.9} \\
+
+        \cmidrule(lr){1-8}
+        \multirow{3}{*}{\bfseries ja}
+        &  1 &
+        \underline{\textbf{58.1}} & \underline{34.9} & \underline{35.4} &
+        52.6 &  8.1 & 14.8 \\
+        &  8 &
+        \underline{\textbf{54.3}} & \underline{24.9} & 13.6 &
+        47.6 & 11.7 & \underline{47.3} \\
+        & 32 &
+        \underline{\textbf{47.9}} & 22.5 &  9.3 &
+        44.5 & \underline{27.8} & \underline{45.2} \\
+
+        \cmidrule(lr){1-8}
+        \multirow{3}{*}{\bfseries no}
+        &  1 &
+        65.2 & \underline{49.7} & 29.9 &
+        \underline{\textbf{67.1}} & 44.5 & \underline{47.1} \\
+        &  8 &
+        \underline{\textbf{63.2}} & 25.4 & \underline{11.8} &
+        61.4 & \underline{48.1} &  3.4 \\
+        & 32 &
+        \underline{\textbf{56.0}} & 18.2 &  \underline{8.3 }&
+        50.1 & \underline{37.2} &  2.2 \\
+
+        \cmidrule(lr){1-8}
+        \multirow{3}{*}{\bfseries ru}
+        &  1 &
+        \underline{\textbf{96.6}} & 95.3 & 81.2 &
+        96.6 & \underline{95.8} & \underline{93.3} \\
+        &  8 &
+        96.2 & 93.5 & 68.7 &
+        \underline{\textbf{96.4}} & \underline{95.9} & \underline{93.0} \\
+        & 32 &
+        95.5 & 83.5 & 43.3 &
+        \underline{\textbf{95.7}} & \underline{95.2} & \underline{87.2} \\
+
+        \cmidrule(lr){1-8}
+        \multirow{3}{*}{\bfseries ur}
+        &  1 &
+        \underline{97.8} & 96.8 & 95.2 &
+        97.4 & \underline{\textbf{98.0}} & \underline{97.6} \\
+        &  8 &
+        \underline{\textbf{97.8}} & 93.6 & 82.9 &
+        97.6 & \underline{97.7} & \underline{96.9} \\
+        & 32 &
+        96.3 & 84.5 & 71.1 &
+        \underline{\textbf{97.4}} & \underline{96.5} & \underline{96.3} \\
+        \bottomrule
+    \end{tabular}
+    \caption{F1 scores for NER experiments by language and batch
+        size. Bold: highest accuracy for batch size plus language. Underline:
+        highest accuracy for framework between \texttt{Bi-LSTM} and
+        \texttt{Bi-LSTM-CRF}.
+    }\label{table:f1-total-ner}
+\end{table}
+
+
+Furthermore, the loss function should also have been utilized differently. The
+motivation for using the \textit{F1} score, is to focus attention on the models
+ability to classify entities and not reward it too much for identifying
+`O'-tokens. But for our cross-entropy loss, a true prediction of a tag `O' has
+had the same influence as the true prediction of an entity tag. Since there are
+a lot more non-entities than entities, it is reasonable to suggest, that the
+models will have tuned their parameters to correctly classify non-entities and
+accepted a lower accuracy rate for entity tags. This is also supported by the
+results shown in Figure~\ref{chart:tag-acc-ner}.
+
+\begin{figure}[h!]
+    \includegraphics[width=\textwidth]{tag-acc-ner}
+    \caption{Column diagram of averaged accuracy percentages for NER tags
+        (B-<tag> and I-<tag> are combined in PER, LOC and ORG)
+    }\label{chart:tag-acc-ner}
 \end{figure}
+
+Despite this design flaw, we still get some notable observations from the
+obtained \texttt{F1} scores, depicted in
+Figure~\ref{chart:f1-by-batch-and-lang}.  First of all, we once again see that
+the DyNet implementations are by far the most succesfull, having the highest
+score in all but one experiment. This is again attributed to its 2 layer
+implementation of the bidirectional LSTM network. We also see the same pattern
+as for POS, where the PyTorch implementation has the second best results and
+TensorFlow is falling severely behind.
+
+We also see, that the \texttt{Bi-LSTM-CRF} models in PyTorch and TensorFlow
+outperforms their \texttt{Bi-LSTM} counterparts at almost every batch size and
+language (the notable exceptions being cases for japanase and norwegian, where
+the scores are extraordinarily low. See Section~\ref{sec:experiments-ner-data}
+for more). This is interesting, as it confirms the expectation that the CRF
+layer is able to significantly improve the performance in performing NER tasks
+(~\ref{}).
+
+We still don't see a consistent improvement on the DyNet implementations from
+the CRF layer. This again indicate, that the addition of a CRF
+layer to a 2 layer \texttt{Bi-LSTM} model is of negligible effect for these
+batch sizes. However, we might see a small tendency for the larger batch sizes
+to benefit from the CRF, as the DyNet \texttt{Bi-LSTM-CRF} model highest score
+in arabic, danish, russian and urdu.
+
+Another observation concerning applying CRF is how much it helps an increasing
+batch size. For the pure \texttt{Bi-LSTM} models, a batch size of 32 drops the
+performance by 36.4\% for the PyTorch implementation and by a whooping 61.9\%
+for the TensorFlow implementation when compared to a batch size of 1. For the
+\texttt{Bi-LSTM-CRF} models, these numbers go down to 3.2\% and 20.0\%
+respectively. It should be noted, that the \textit{F1} scores for the DyNet
+implementation actually experience a slight increase in the perfomance drop from
+the larger batch size when CRF is applied (the drop goes from 7.5\% to 8.1\%).
+
+\begin{figure}[h!]
+    \includegraphics[width=\textwidth]{f1-no-crf}
+    \includegraphics[width=\textwidth]{f1-with-crf}
+    \caption{\textit{F1} scores for each framework implementation by batch size
+        and language. Notice drops in performance when the batch size increases
+        in models that does not utilize a CRF model. Top: the \texttt{Bi-LSTM}
+        implementations. Bottom: the \texttt{Bi-LSTM-CRF} implemenations.
+    }\label{chart:f1-by-batch-and-lang}
+\end{figure}
+
+For completeness sake, we also include the data for our results on general
+accuracy on the NER data in Table~\ref{table:acc-total-ner}. This was the actual
+score our models trained to optimize and are as such relevant. 
+
+Overall they align pretty well with the pattern found in the rest of the data,
+but they are expectetly higher. The best results are generally either achieved
+by the lowest batch size or by the \texttt{Bi-LSTM-CRF} and always by the DyNet
+implementation. The best results reaches pretty impressive heights with
+97.3\% for russian and 98.5\% for urdu. However since these accuracy scores can
+get pretty high by just being really good at identifying non-entities, the
+accuracy may not reflect the practical success of the models.
 
 \begin{table}[h!]
     \centering

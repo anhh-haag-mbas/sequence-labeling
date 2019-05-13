@@ -31,3 +31,10 @@ code/out.csv
 
 # IDE files
 .idea
+
+# Excel crap
+*~$*
+
+# Personal
+nlp_results/
+test_runner.py
