@@ -89,6 +89,15 @@ tasks as other languages. Since it turns out that our Polyglot embedding has a
 somewhat similar way to split words it can have a positive effect on the
 performance.
 
+Another issue with the Japanese NER dataset we used is that we ignored many of
+the tokens in the dataset by mistake. For the CoNLL-U datasets, the \# symbol is
+used for comments. When reading the datasets we simply skipped files starting
+with the \# symbol and continued reading normally. This is only an issue for the
+Japanese dataset since it was the only one using these symbols, however these
+symbols constitudes around 5\% of the data. This is another issue with the
+Japanese dataset, and it's hard to say if ignoring these symbols is beneficial
+to the experiment or not.
+
 As the data used for training the model is the same data used for training the
 polyglot word embeddings, the models don't have the same kind of variety from
 the data as is the case for the POS task. This may result in worse performance
