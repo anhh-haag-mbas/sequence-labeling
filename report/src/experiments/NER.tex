@@ -170,31 +170,6 @@ is given below in Table~\ref{table:token-distribution-ner}.
     }\label{table:token-distribution-ner}
 \end{table}
 
-Some of the distributions in the tables are noticable weird which we only
-noticed after looking at the results. Besides Japanese which has a lot of tokens
-because of the reasons mentioned earlier, the data for Norwegian, Russian, and
-Urdu are also strange in one way or another. Before presenting the results, we
-descripe the problems since we believe they may be the cause of some of the
-strange values we get.
-
-The training data for Norwegian looks reasonable when comparing with the other
-languages, but for the test data there are very few entities. More than 80\% of
-the tokens are O tags which is noticably different from the other languages and
-we believe the cause of the low scores we get, Japanese has the second highest
-number of O tags with slightly above 70\%. Arguably the tagger should still be
-able to identify the entities correctly, no matter how few there are. Russian
-similar had training data reasonable training data compared to other languages,
-there are a lot of people entities compared to other types, but the testing data
-is mostly of people which we think makes the results very inflated. Urdu is
-similar to Russian in the sense that it is mostly a single type of entity in the
-test data which we believe inflates the results, this may be exacerbated by the
-very low number of distinct tokens the data also had. 
-
-\subsubsection{Language comparison}
-
-Some of them were bad, some of them were good.
-
-
 \subsubsection{Model comparison}
 
 Starting by looking at number of epochs trained
@@ -399,6 +374,65 @@ the larger batch size when CRF is applied (the drop goes from 7.5\% to 8.1\%).
         implementations. Bottom: the \texttt{Bi-LSTM-CRF} implemenations.
     }\label{chart:f1-by-batch-and-lang}
 \end{figure}
+
+\subsubsection{Language comparison}
+
+Looking at the tag distributions in Table~\ref{table:token-distribution-ner}, we
+notice several oddities, that are worth mentioning. As we consider the results,
+we therefore first describe some potential problems related to the data, since
+we believe they may be the cause of some of the strange values we get. The
+results for each language are presented in Table~\ref{table:f1-total-ner} and
+plottet in Figure~\ref{chart:f1-by-batch-and-lang}.
+
+The training data for Norwegian looks reasonable when comparing with the other
+languages, but for the test data there are very few entities (ie.\ non-`O'
+tags). More than 80\% of the tokens are `O' tags which is noticably different
+from the other languages. Since the \textit{F1} scores is calculated only on
+entities, a large part of the test data is disregarded in this respect, and the
+models \textit{F1} score will quickly be punished for misclassifications as each
+prediction has a relatively higher weight compared to test data with more
+entities.
+
+Arguably the tagger should still be able to identify the entities correctly, no
+matter how few there are. However, when looking at the results, we see
+significantly lower scores than for most other languages. Adding the CRF layer,
+we also observe that the PyTorch and TensorFlow models behave irregularly. For
+the PyTorch implementation, the score improves by 3.6 when increasing the
+batch size from 1 to 8, but then drops by 10.9 when it is increased to 32. For
+TensorFlow, the score for a batch size of 1 is 47.1, but drops to 3.4 and 2.2
+for batch size 8 and 32 respectively. In general, the increase in batch size
+either leads to a steady decay or improvement of the scores (or only a very
+small change one way or the other), so this behaviour is highly irregular.
+
+Japanese has the second highest number of `O' tags which constitute slightly
+above 70\% of the total test data. The results are not the same kind of
+irregular as for Norwegian, but we do observe an unprecedented and sudden boost
+in the perfomance of the TensorFlow \textit{Bi-LSTM-CRF} model over the others.
+It especially seems odd, that this implementation --- that in all other cases
+gets worse with an increasing batch size --- actually outperforms the
+corresponding DyNet implementation at batch size 32. Further, as the only example
+of this, the PyTorch \textit{Bi-LSTM-CRF} goes from 8.1 through 11.7 to 27.8 for
+increasing batch sizes. Last but not least, the Japanese scores are overall by
+far the worst, so with these irregularities in mind aswell as the data issues
+mentioned in Section~\ref{sec:experiments-ner-data}, we assume that there are
+flaws in this experiment.
+
+For Russian and Urdu, we observe that the test data almost solely consists of a
+single entity type, which believe can make the results very inflated. For the
+training data (and not counting `O' tags), Russian had 60.1\% person tags
+(either `B-PER' or `I-PER') but for the test data, these tag types made up
+91.8\% of the entity tags. For Urdu, the uneven distribution was even more
+extreme: during training, 75.7\% of the entity tags were of type `B-LOC' or
+`I-LOC' against a massive 96.5\% in the test data.
+
+Add to that, that these two languages both have the lowest number of tokens and
+the lowest number of distinct tokens. These facts may have an influence on why
+the \textit{F1} scores for Russian and Urdu outperforms every other language.
+All three framework implemenations achieve scores of more than 90\%, and the for
+a batch size of 1, the PyTorch \texttt{Bi-LSTM-CRF} model reaches a stunning
+score of 98.0.
+
+\subsubsection*{Accuracy}
 
 For completeness sake, we also include the data for our results on general
 accuracy on the NER data in Table~\ref{table:acc-total-ner}. This was the actual
