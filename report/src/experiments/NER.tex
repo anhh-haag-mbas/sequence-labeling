@@ -97,7 +97,73 @@ the data as is the case for the POS task. This may result in worse performance
 since the models might be more likely to overfit.
 
 A table of the languages with the number of entities in their respective dataset
-is given below in Table~\ref{}.
+is given below in Table~\ref{table:token-distribution-ner}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c c c c c c c}
+        \toprule
+        \multicolumn{10}{l}{\bfseries Training} \\
+        Language & Tokens & Distinct &
+        B-PER & I-PER & B-LOC & I-LOC & B-ORG & I-ORG & O \\
+        
+        \cmidrule(lr){1-10}
+
+        ar   &  27159 &  8567 &
+        1929 &   3919 &  1835 &  2526 & 1112 &  2237 & 13601 \\
+
+        da   &  35498 & 10247 &
+        1419 &   1802 &  3385 &   991 &  974 &  1264 & 25663 \\
+
+        hi   &  23276 &  4667 &
+        3502 &   4021 &   700 &   830 & 1105 &  2943 & 10175 \\
+
+        ja   & 122377 &  2429 &
+        1644 &   6853 &  1663 &  4420 & 2575 & 10970 & 94252 \\
+
+        no   &  41172 & 10988 &
+        1525 &   2076 &  3229 &   943 & 1302 &  1506 & 30591 \\
+
+        ru   &  26232 &  9817 &
+        2483 &   5341 &   973 &   711 & 1109 &  2269 & 13346 \\
+
+        ur   &  21391 &  3048 &
+         502 &   1549 &   3012 & 10024 & 527 &  1500 &  4177 \\
+
+        \cmidrule(lr){1-10}
+        \multicolumn{10}{l}{\bfseries Testing} \\
+        Language & Tokens & Distinct &
+        B-PER & I-PER & B-LOC & I-LOC & B-ORG & I-ORG & O \\
+        
+        \cmidrule(lr){1-10}
+
+        ar  & 2991 & 1039 &
+         91 &  211 &  230 &  525 &  237 &  652 & 1045 \\
+
+        da  & 4523 & 1682 &
+        248 &  352 &  333 &  191 &  138 &  255 & 3006 \\
+
+        hi  & 2884 & 1234 &
+        180 &  288 &  110 &  177 &  268 &  892 &  969 \\
+
+        ja  &14723 & 1176 &
+        299 & 1730 &  155 &  471 &  229 & 1342 &10497 \\
+
+        no  & 5574 & 1549 &
+         25 &   31 &  492 &   65 &  155 &  243 & 4563 \\
+
+        ru  & 2280 &  989 &
+        456 & 1095 &   31 &   15 &   33 &   60 &  590 \\
+
+        ur  & 2813 &  310 &
+          0 &    0 &  487 & 1745 &   19 &   62 &  500 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Distribution of tokens on the NER data sets for each language.
+    }\label{table:token-distribution-ner}
+\end{table}
+
+        
 
 \subsubsection{Results and analysis}
 
