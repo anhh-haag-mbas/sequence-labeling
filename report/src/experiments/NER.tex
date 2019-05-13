@@ -95,7 +95,7 @@ the data as is the case for the POS task. This may result in worse performance
 since the models might be more likely to overfit.
 
 A table of the languages with the number of entities in their respective dataset
-is given below in Table~\ref{table:token-distribution-ner}.
+is given below in Table~\ref{table:token-distribution-ner}. 
 
 \begin{table}[h!]
     \centering
@@ -161,9 +161,32 @@ is given below in Table~\ref{table:token-distribution-ner}.
     }\label{table:token-distribution-ner}
 \end{table}
 
-        
+Some of the distributions in the tables are noticable weird which we only
+noticed after looking at the results. Besides Japanese which has a lot of tokens
+because of the reasons mentioned earlier, the data for Norwegian, Russian, and
+Urdu are also strange in one way or another. Before presenting the results, we
+descripe the problems since we believe they may be the cause of some of the
+strange values we get.
 
-\subsubsection{Results and analysis}
+The training data for Norwegian looks reasonable when comparing with the other
+languages, but for the test data there are very few entities. More than 80\% of
+the tokens are O tags which is noticably different from the other languages and
+we believe the cause of the low scores we get, Japanese has the second highest
+number of O tags with slightly above 70\%. Arguably the tagger should still be
+able to identify the entities correctly, no matter how few there are. Russian
+similar had training data reasonable training data compared to other languages,
+there are a lot of people entities compared to other types, but the testing data
+is mostly of people which we think makes the results very inflated. Urdu is
+similar to Russian in the sense that it is mostly a single type of entity in the
+test data which we believe inflates the results, this may be exacerbated by the
+very low number of distinct tokens the data also had. 
+
+\subsubsection{Language comparison}
+
+Some of them were bad, some of them were good.
+
+
+\subsubsection{Model comparison}
 
 Starting by looking at number of epochs trained
 (Table~\ref{table:epochs-run-ner}), we see that all models terminated training

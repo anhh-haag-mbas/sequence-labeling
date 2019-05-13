@@ -32,12 +32,21 @@ through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
 output is instead treated as emission scores that is passed as input to the CRF
 layer, which then compute the most likely sequence of tags.
 
+% TODO: Reconsider embedding size
 The size of the embedding layer is 100004 x 64, meaning it has an input size of
-100004 and produces an output of 64. The size of each LSTM in the Bi-LSTM layer
-is 64 x 100, the output of each LSTM is concatenated giving us a 200 dimensional
-output. The size of the simple linear layer is 200 x number of tags, depending
-on the task. With CRF the last layer contains 2 additional tags because of an
-implementation detail. 
+100004 and produces an output vector of size 64. The size of each LSTM in the
+Bi-LSTM layer is 64 x 100, the output of each LSTM is concatenated giving us a
+200 dimensional output. The size of the simple linear layer is 200 x number of
+tags, depending on the task. With CRF the last layer contains 2 additional tags
+because of an implementation detail. 
+
+By simple linear layer we mean a layer which takes an input vector $x$ and makes
+a linear transformation on the input using a weight matrix $W$ and a bias vector
+$b$. The input vector is then transformed as follows $W \cdot x + b$. Where $W
+\cdot x$ is a matrix vector multiplication, meaning the vector is treated as a
+matrix with dimensions $n,1$ and standard matrix multiplication is used,
+producing a new vector with the same size as the numer of rows in the weight
+matrix.
 
 For training we use the stochastic gradient descent (SGD) optimizer since it
 seems to give the best results, but with slower convergence during training
@@ -55,7 +64,7 @@ zhang}). We picked pretrained Polyglot embeddings \ref{Polyglot} since there
 exists models in a lot of different languages, and Polyglot seems to outperform
 the only alternative we were aware of FastText ~\ref{FastText} (~\ref{} to
 FastText + comparison), even though FastText embeddings are significantly larger
-than Polyglot's. There are exist many different algorithms for training word
+than Polyglot's. There exists many different algorithms for training word
 embeddings, but not many with trained models in a wide range of languages
 available. Polyglot contains vector representations for 100.000 different words,
 as well as 4 special tokens. Each vector representation has a size of 64.
@@ -69,7 +78,7 @@ the models to train on as well as prevent the model from overfitting on one task
 \ref{Deep learning 7.7}. 
 
 For our case, the word embedding is trained on one set of data to learn
-representations of words where similar words have similar representations.
+representations of words, where similar words have similar representations.
 Afterwards the word embedding as well as the rest of the model is trained on a
 new task where the model learns task specific representations. But since the
 word embeddings start from a useful initial configuration it is unlikely to
@@ -80,13 +89,13 @@ Another way to think about the word embedding is as a linear layer where the
 input is a one-hot vector representation of the word \ref{Neural Network Methods
 for Natural Language Processing chapter 8.3???}. A one-hot vector is a vector
 where all but a single value in the vector are zero and the element
-corresponding to a word would be one. Similar to a word embedding where we make
-a lookup of a word and return a vector representation, the matrix-vector
-multiplication of the one-hot vector and the linear layer matrix would return a
-row from the matrix, which can be considered the representation of the word. The
-bias vector usually found in linear layers could simply be ignored. The
-difference between a word embedding and a linear layer would then for the most
-parts be that word embeddings are pretrained.
+corresponding to a word is one. Similar to word embeddings where we lookup a
+word and return a vector representation, the matrix-vector multiplication of the
+one-hot vector and the linear layer matrix would return a row from the matrix,
+which can be considered the representation of the word. The bias vector usually
+found in linear layers could simply be ignored. The difference between a word
+embedding and a linear layer would then for the most parts be that word
+embeddings are pretrained.
 
 \subsubsection{Bi-LSTM}
 
