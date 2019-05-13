@@ -129,29 +129,27 @@ needs to know the rules for computing the derivate of itself.
 
 \subsubsection*{DyNet}
 
-% Some general stuff about dynamic frameworks which might work better elsewhere?
-% Also is the comparison of difference between dynamic and static frameworks
-% even correct?
-DyNet is an open source dynamic neural network framework, where the
-computational graphs are recreated for each input. This is particularly useful
-for natural language processing where sentences don't have a fixed length so the
-unique structure of each sentence's graph can be made without having to add
-padding to match the longest sentence in the dataset. A downside of dynamic
-frameworks is that they are generally slower than their static counterparts,
-the creators of DyNet though mention that it performs comparable or faster than
-similar static declaration frameworks~\ref{DyNet report}.   
+DyNet is an open source dynamic neural network framework developed by Garnegie
+Mellon University and many others \ref{https://github.com/clab/dynet}. The
+framework being dynamic means the computational graphs are recreated for each
+input. This is particularly useful for natural language processing where
+sentences don't have a fixed length so the unique structure of each sentence's
+graph can be made without having to add padding to match the longest sentence in
+the dataset. A downside of dynamic frameworks is that they are generally slower
+than their static counterparts, the creators of DyNet though mention that it
+performs comparable or faster than similar static declaration
+frameworks~\ref{https://arxiv.org/pdf/1701.03980.pdf}.   
 
 DyNet further allows for what they call auto-batching which means that sentences
 don't have to be manually batched when training on batches of
 sentences~\ref{On-the-fly Operation Batching in Dynamic Computation Graphs}. In
 other frameworks, dynamic or not, users have to add a dimension to their input
-which represents the batches.
-
-% Perhaps the single core thing was just CRF
-DyNet doesn't support multi-threading in their python implementation as of the
-time of this report, so all the experiments were run on a single core. This had
-some unforseen consequences on the runtime which is further elaporated in the
-discussion Section~\ref{discussion}.
+which represents the batches. In DyNet this can be done by implicitly creating a
+graph for each input in the batch and aggregating the losses, creating a
+combined computational graph, which can be optimized to run parts in parallel.
+The DyNet implementation aggregated using the sum of the losses, however this
+was not possible for the other frameworks due to what we suspect was overflow
+errors, which wasn't experienced in DyNet. 
 
 A consequence of the framework being dynamic is that the structure of the model
 is mixed with the processing and training on input. The model parameters are
@@ -166,6 +164,15 @@ model as layers it is often better to think about the underlying operations of
 the layers. The exception is the LSTM layer where much of the
 implementation detail has been hidden behind a concise interface.
 
+For training the \code{SimpleSGDTrainer} was used. For the embedding layer, the
+polyglot embedding was converted to could be used to initialize a
+\code{LookupParameter}. The Bi-LSTM was implemented using the
+\code{LSTMBuilder}, and the \code{BiRNNBuilder}. Dropout could be implemented
+using the \code{dropout} method. Early stopping was implemented by saving the
+currently best seen model each time the model was improved upon. This creates
+some overhead, but nothing noticable. If no improvements were seen for three
+epochs, the model was loaded and training terminated.
+
 DyNet doesn't have a CRF layer implemented as part of their library so we based
 our implementation on the work of~\ref{Barbara}, which in turn based parts of
 theirs on~\ref{Someone else, see their source code}. 
@@ -176,9 +183,9 @@ decided to prefer the shorter training over the better accuracy, but didn't make
 this clear. As a result, we would expect DyNet to perform better in the
 experiments.
 
-
-% Wait! How the f does DyNet gain a speed increase when using mini-batching if
-% it doesn't utilize multiple cores!!???!?!
+% TODO: Move to environment?
+DyNet doesn't support multi-threading in their python implementation as of the
+time of this report, so all the experiments were run on a single core. 
 
 \subsubsection*{PyTorch}
 
