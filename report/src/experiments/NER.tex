@@ -206,7 +206,7 @@ does not fit with the expected results of a well converged model. We suspect the
 main reason for this, is the fact that our models did the same \textit{accuracy}
 test during training to decide when to stop as was done in the POS task. But
 since we for the NER task want to optimize our \textit{F1} score, the accuracy
-test is really not the optimal paramater to use in early stopping --- it would
+test is really not the optimal parameter to use in early stopping --- it would
 of course had made more sense to test if the \textit{F1} score had stopped
 improving.
 
@@ -339,22 +339,22 @@ the DyNet implementations are by far the most succesfull, having the highest
 score in all but one experiment. This is again attributed to its 2 layer
 implementation of the bidirectional LSTM network. We also see the same pattern
 as for POS, where the PyTorch implementation has the second best results and
-TensorFlow is falling severely behind.
+the TensorFlow implementation is falling severely behind.
 
 We also see, that the \texttt{Bi-LSTM-CRF} models in PyTorch and TensorFlow
 outperforms their \texttt{Bi-LSTM} counterparts at almost every batch size and
-language (the notable exceptions being cases for japanase and norwegian, where
+language (the notable exceptions being cases for Japanese and Norwegian, where
 the scores are extraordinarily low. See Section~\ref{sec:experiments-ner-data}
 for more). This is interesting, as it confirms the expectation that the CRF
 layer is able to significantly improve the performance in performing NER tasks
 (~\ref{}).
 
 We still don't see a consistent improvement on the DyNet implementations from
-the CRF layer. This again indicate, that the addition of a CRF
-layer to a 2 layer \texttt{Bi-LSTM} model is of negligible effect for these
-batch sizes. However, we might see a small tendency for the larger batch sizes
-to benefit from the CRF, as the DyNet \texttt{Bi-LSTM-CRF} model highest score
-in arabic, danish, russian and urdu.
+the CRF layer. This again indicate, that the addition of a CRF layer to a 2
+layer \texttt{Bi-LSTM} model is of negligible effect for these batch sizes.
+However, we might see a small tendency for the larger batch sizes to benefit
+from the CRF, as the DyNet \texttt{Bi-LSTM-CRF} model highest score in Arabic,
+Danish, Russian and Urdu.
 
 Another observation concerning applying CRF is how much it helps an increasing
 batch size. For the pure \texttt{Bi-LSTM} models, a batch size of 32 drops the
@@ -439,7 +439,7 @@ accuracy on the NER data in Table~\ref{table:acc-total-ner}. This was the actual
 score our models trained to optimize and are as such relevant. 
 
 Overall they align pretty well with the pattern found in the rest of the data,
-but they are expectetly higher. The best results are generally either achieved
+but they are expectedly higher. The best results are generally either achieved
 by the lowest batch size or by the \texttt{Bi-LSTM-CRF} and always by the DyNet
 implementation. The best results reaches pretty impressive heights with
 97.3\% for russian and 98.5\% for urdu. However since these accuracy scores can
