@@ -273,8 +273,23 @@ comparisons as possible.
 
 The three mini-batch sizes were motivated by~\ref{Reymer and gurevych} who
 reported worse accuracy for larger sizes of mini-batches with a sweet spot
-between 8 and 32. As will be expanded on in the discussion, this seems counter
-intuitive to the general idea behind the use of mini-batches. % TODO: discuss
+between 8 and 32. Similar low values are used by
+\ref{https://arxiv.org/pdf/1508.01991.pdf}. While this emperically seems to
+work, it is a bit counter to the theory. Ideally we would train on the whole
+training set to get the most accurate loss values, which would in turn allow us
+to make the optimal update to the model to reduce the loss. We don't have to use
+the whole training set and can do fine with an estimate of the true loss by
+using mini-batches, however we would still expect bigger mini-batch sizes to
+improve the estimate and result in better, but slower training \ref{Deep
+Learning}. 
+
+The fact that bigger mini-batch sizes leads to worse results, suggests that a
+better estimate is not necessarily better for training. While a better estimate
+of the true loss results in a more optimal update to lower the loss, the greater
+variance in the loss estimate can also work as a regularization technique which
+results in better generalization ~\ref{Deep Learning}. The lower mini-batch
+sizes can then be explained as a way to avoid the model from getting stuck in
+local minima.
 
 The three epochs is to see how well the models perform based on very limited
 training, on some reasonable amount of training, and the upper limits of the
@@ -285,8 +300,8 @@ reasonable predictive power. The last epoch setting is early stopping with a
 patience of three, and a max of 50 epochs. This means that the model continues
 training intill it has made three updates, which didn't improve the accuracy on
 the validation set. Early testing suggests that models stopped improving before
-the max, so this setting reasonable represents the best of what the models can
-achieve. It is possible that with a lot more training, or different
+the max, so we expect this setting to reasonable represents the best of what the
+models can achieve. It is possible that with a lot more training, or different
 hyperparameters, that the models can get an even better performance than our
 early stopping allows.
 
