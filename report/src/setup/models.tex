@@ -32,7 +32,6 @@ through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
 output is instead treated as emission scores that is passed as input to the CRF
 layer, which then compute the most likely sequence of tags.
 
-% TODO: Reconsider embedding size
 The size of the embedding layer is 100004 x 64, meaning it has an input size of
 100004 and produces an output vector of size 64. The size of each LSTM in the
 Bi-LSTM layer is 64 x 100, the output of each LSTM is concatenated giving us a
@@ -132,16 +131,17 @@ up of error signals that are backpropagated through the network --- a situation
 that only gets worse as the time dependencies increase (~\ref{} Hochreiter,
 Graves). To remedy this, LSTM networks are used instead.
 
-An LSTM network is compposed of carefully designed memory cells containing
+An LSTM network is composed of carefully designed memory cells containing
 multiple special purpose weight matricies called gates, that determines what
 information to remember, what to forget, what to do with the input and the
 output of the network. In addition, a main state, $c$, of the network cell is
 maintained and used to compute a hidden state, $h$, which is passed on to be
-used at the next timestep.
+used at the next timestep, similar to the standard RNN.
 
 The gates and states are calculated in the following manner:\footnote{Note that
     these calculations are done by the respective frameworks we have been
 working with and are not something, we have implemented ourselves}
+
 
 \begin{align*}
     & i_{t} = \sigma(W_{xi}x_{t} + W_{hi}h_{t-1} + W_{ci}c_{t-1} + b_{i})    \\
@@ -154,10 +154,10 @@ working with and are not something, we have implemented ourselves}
 where $i_{t}$, $f_{t}$ and $o_{t}$ are the input gate, the forget gate and the
 output gate respectively at time $t$, $c$ is the cell state and $h$ is the
 hidden state. The weight matrices $W$ maps from either an input $x$ of size $m$
-to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m*n}$ is
-the input-forget gate matrix), or between two internal components (ie. $W_{hi}
-\in \mathbb{R}^{n*n}$ is the hidden-input gate matrix). (~\ref{} Huang et al.
-2015)
+to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m \cdot
+n}$ is the input-forget gate matrix), or between two internal components (ie.
+$W_{hi} \in \mathbb{R}^{n \cdot n}$ is the hidden-input gate matrix). (~\ref{}
+Huang et al. 2015)
 
 The activation function $\sigma$ is the sigmoid function, which squishes the
 values of the gate matrices into the interval $[0,1]$. This means, that the

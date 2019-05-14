@@ -94,8 +94,6 @@ may have resulted in higher scores since partially correctly labeled entities
 improve the score, it may also have lowered the score, since incorrectly labeled
 entities affect the score more negatively, depending on how long the entity is. 
 
-% TODO: Move under models?
-
 In PyTorch there was an issue where not all of the test datasets were used for
 evaluation. It's unclear if this had a negative effect on the results, since the
 accuracy is still correctly calculated, but on less data. If the sentences
