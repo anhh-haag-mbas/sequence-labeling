@@ -84,7 +84,11 @@ was a smaller subset of the data. Were the models evaluated on the $F_1$ score,
 and trained with this in mind, we believe we would get better results from the
 frameworks. 
 
-Something about TensorFlow % TODO
+TensorFlow models were trained on the both the data and the padding. This led
+to results with a very poor accuracy, as it split the training effort between
+the actual task and dealing with padding. Running a few TensorFlow models where
+the padding issue has been fixed, suggests that it would perform at around the
+same level as the PyTorch models if it wasn't misconfigured.
 
 \subsubsection{Results}
 
@@ -202,7 +206,7 @@ considering how normal an operation training on mini-batches is.
 
 
 
-\subsubsection{TensorFlow}
+\subsubsection{TensorFlow}\label{sec:discuss_tensorflow}
 
 \subsubsection*{Availability of information}
 
