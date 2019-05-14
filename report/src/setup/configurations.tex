@@ -262,7 +262,8 @@ Theano.
 
 A significant effort has been spent to align TensorFlow with Keras, so much so
 that it is sometimes hard to tell if you are dealing with pure TensorFlow
-functionality or a Keras API\@. This topic is expanded on in Section~\ref{TODO}.
+functionality or a Keras API\@. Further thoughts on this can be found in
+Section~\ref{sec:discuss_tensorflow}.
 
 As such our implementation is based on Keras with TensorFlow as its
 backend.
@@ -276,8 +277,12 @@ model.
 
 Because the framework is static padding the input data is required, however
 since we are using recurrent neural networks we can deal with dynamically sized
-input. We do this by setting a mask value in the LSTM layer to the padding
-value, as such the padding should not affect the quality of the training.
+input. This is done by setting \code{maskZero=True} in the RNN layer, which
+then prevents padding from affecting the quality of the training.
+
+However, the TensorFlow results are run with padding set to a non-zero value.
+This was not intentional and greatly affects the accuracy and comparability of
+the TensorFlow results.
 
 Whenever possible built-in compononts of Keras or Tensorflow was used, this
 includes \code{Dense}, \code{Dropout}, \code{Embedding} and \code{LSTM} layers.
