@@ -341,6 +341,17 @@ it improves the speed compared to running without. It is however still slower
 than creating the batches manually and as such the DyNet implementation could be
 improved in this sense if reducing the training or evaluation time is important.
 
+\subsubsection{Tagging Scheme}
+
+The tagging scheme used for NER was BIO and it gets the job done. However in a
+paper we read by \ref{Ma and Hovy}, they mention how the BIOES (or BILOU)
+tagging scheme has been reported to produce better results. BIOES includes two
+additional types of labels, `end', and `singleton'. These tokens allow for more
+detailed rules to be learned by the model since the transition from one tag to
+another is more nuanced. Worth noting is that one of the sources \ref{Lample}
+mention that they didn't see any improvements. The intuition that it allows the
+model to better learn naunce however stands, and it doesn't result in worse
+results it is worth trying.
 
 \subsection{Reflections}
 
