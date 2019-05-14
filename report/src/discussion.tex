@@ -295,9 +295,9 @@ of.
 
 Similar to the way that pretrained word embeddings like Polyglot can be used to
 significantly improve performance, including a character embedding, pretrained
-or not, will also help the model make better predictions~\ref{misconceptions
-yang zhang}. The state of the art model for POS only used a character embedding
-which indicates how useful they are.
+or not, will also help the model make better predictions~\cite{yang2018design}.
+The state of the art model for POS only used a character embedding which
+indicates how useful they are.
 
 Character embeddings, like word embeddings, work by mapping a character to a
 vector representation. But character embeddings can contain a mapping from every
@@ -313,7 +313,7 @@ representations and return a single vector. This is similar to the way we use an
 LSTM to read the sequence of words in a sentence, but instead we only use a
 single value. Two commonly used ways to read the sequence of characters are LSTM
 or CNN layers. They perform very similarly, but CNN are a lot faster to
-train~\ref{misconceptions yang zhang}.
+train~\cite{yang2018design}
 
 A character embedding can contain a mapping from not just a single character,
 but combinations of two or more characters or so call n-grams. Since a lot of
@@ -331,17 +331,18 @@ verbs.
 \subsubsection{Stacked Bi-LSTM}
 
 As has been mentioned before, the DyNet implementation uses a 2 layer Bi-LSTM.\
-This is sometimes refered to as a stacked Bi-LSTM~\ref{Neural Network Methods
-for Natural Language Proccessing ch. 14.5}. While not clear how exactly this
-gives a better model accuracy, it has been shown empirically to help~\ref{Papers
-using 2 layer}.
+This is sometimes refered to as a stacked
+Bi-LSTM~\cite[Chapter~14.5]{goldberg2017neural}. While not clear how exactly
+this gives a better model accuracy, it has been shown empirically to
+help~\cite{reimers2017reporting}.
 
 An explanation could simply be that adding additional Bi-LSTM layers increases
 the complexity of the model which allows it to represent more complicated
 functions. Similar to the way adding additional linear layers to a model can
 improve a model. While stacked linear layers is in many cases equivalent to
-increasing the dimensionality of the weights and biases~\ref{Deep learning 199,
-Barron 1993} this may or may not be the case for Bi-LSTMs.
+increasing the dimensionality of the weights and
+biases~\cite[pp.~199]{goodfellow2016deep} this may or may not be the case for
+Bi-LSTMs.
 
 \subsubsection{DyNet manual batching}
 
@@ -355,14 +356,14 @@ improved in this sense if reducing the training or evaluation time is important.
 \subsubsection{Tagging Scheme}
 
 The tagging scheme used for NER was BIO and it gets the job done. However in a
-paper we read by \ref{Ma and Hovy}, they mention how the BIOES (or BILOU)
+paper we read by \cite{ma2016endtoend}, they mention how the BIOES (or BILOU)
 tagging scheme has been reported to produce better results. BIOES includes two
 additional types of labels, `end', and `singleton'. These tokens allow for more
 detailed rules to be learned by the model since the transition from one tag to
-another is more nuanced. Worth noting is that one of the sources \ref{Lample}
-mention that they didn't see any improvements. The intuition that it allows the
-model to better learn naunce however stands, and it doesn't result in worse
-results it is worth trying.
+another is more nuanced. Worth noting is that one of the sources
+\cite{lample2016neural} mention that they didn't see any improvements. The
+intuition that it allows the model to better learn naunce however stands, and it
+doesn't result in worse results it is worth trying.
 
 \subsection{Reflections}
 
