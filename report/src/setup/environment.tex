@@ -26,7 +26,7 @@ Each machine ran software with the following versions:
   \end{itemize}
 \end{itemize}
 
-For dynet 34 processes were executed concurrently depending on the
+For DyNet 34 processes were executed concurrently depending on the
 instance type.
 For tensorflow 5 processes were executed concurrently.
 Pytorch initally ran 2 processes concurrently with multithreading enabled, but
@@ -46,7 +46,7 @@ cores\footnote{As evidenced in this Github issue \url{https://github.com/pytorch
 Tensorflow had no noticable differences between the development environment and
 the EC2 machines.
 
-Some dynet configurations took more than six times the time to complete on an
+Some DyNet configurations took more than six times the time to complete on an
 EC2 machine compared to the local development environment. The exact cause is
 not known to us.
 
@@ -59,7 +59,7 @@ than the other, or in pytorch's case slower.
 Another is the fact that each experiment was run concurrently with others. This
 would have only had a minor impact, if multithreading had not been enabled for
 some of the frameworks.
-Lastly dynet behaved unexpectedly with regards to execution time, compared to the
+Lastly DyNet behaved unexpectedly with regards to execution time, compared to the
 development environment.
 
 Ideally each experiment would be run one at a time, or with multithreading

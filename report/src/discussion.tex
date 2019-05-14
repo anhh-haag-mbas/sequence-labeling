@@ -62,8 +62,8 @@ The CRF implementations across the frameworks were based on various third party
 sources since nothing CRF wasn't built-in in any of the frameworks. We read that
 the layer could be implemented in various different ways, and the difference
 could have a significant influence on the training time. While our time results
-weren't part of this paper, we believe the DyNet CRF implementation was the
-cause of significant slower training.
+aren't part of this paper, we believe the DyNet CRF implementation was the cause
+of significant slower training.
 
 There was also a minor difference for the implementation of early stopping in
 the various frameworks. Early stopping is part of the TensorFlow API so we
@@ -116,36 +116,38 @@ particularly difficult sentences.
 The following sections are described by the respective member of the group who
 worked with the framework. 
 
-\subsubsection{Dynet}
+\subsubsection{DyNet}
 
-The performance gain when running on batches may be because of fewer
-backpropogations rather than any form of parallelization.
+DyNet was very nice to work with, despite how small of a following it has.
+Compared to PyTorch which was also dynamic, but required a lot of matrix
+manipulation, and didn't have autobatching, the API for DyNet was very simple
+and intuitive for my, at the time, limited understanding of computational graphs
+and general machine learning. The fact the I didn't have to do manual batching
+either simplified the implementation of the two models significantly. Compared
+to TensorFlow it seemed like DyNet was more low level. I had to have a better
+understanding of which operations the different layers were composed of, but it
+also felt like I was more in control of what happened in the model, when a
+single API call didn't do everything for me.
 
-DyNet performs significantly slower when run with a CRF layer, this may suggest
-that the implementation used isn't optimized. 
+\subsubsection*{The learning proccess}
 
-
-% nvprof for profilling
-
-\textbf{The learning proccess}
-
-My general approach to learning dynet was to ease myself into it, following
-simple tutorials like an XOR example, and building from there. With an
-understanding of how a simple network works I could try to create my own on a
-toy problem and see if I really understood how stuff worked. One of the nice
-things about Dynet is how close it feels to creating computational graphs.
-Creating parameters and linking them together by applying mathematical
-operations on them, made it easy to reason about the behavior of the model.
-After the small examples it was simple to learn how to work an LSTM layer into
-the model. LSTM in dynet hides a lot of the complexity associated with the
-computations, but the interface was still intuitive to use. Get the initial
-state, compute the next state based on input, get the output for the next layer
-and save the state for the next part of the sequence. Working out how to add a
-CRF layer on top was mostly a matter of understanding CRF rather than Dynet.
-Figuring out that what we needed for CRF was simply a transformation matrix,
-made it obvious that this matrix should just be added as a a parameter similar
-to other parts of a model. From there I could take inspiration from a complete
-model implemented in dynet and reuse their code for the CRF.\
+My general approach to learning DyNet was to take baby steps, following simple
+tutorials like an XOR example, and building from there. With an understanding of
+how a simple network works I could try to create my own on a toy problem and see
+if I really understood how the framework worked. One of the nice things about
+DyNet is how close it feels to creating computational graphs. Creating
+parameters and linking them together by applying mathematical operations on
+them, made it easy to reason about the behavior of the model. After the small
+examples it was simple to learn how to work an LSTM layer into the model. LSTM
+in DyNet hides a lot of the complexity associated with the computations, but the
+interface was still intuitive to use. Get the initial state, compute the next
+state based on input, get the output for the next layer and save the state for
+the next part of the sequence. Working out how to add a CRF layer on top was
+mostly a matter of understanding CRF rather than DyNet. Figuring out that what
+was needed for CRF was simply a transformation matrix, made it obvious that this
+matrix should just be added as a a parameter similar to other weights or biases
+in the model. From that point I could take inspiration from a complete model
+implemented in DyNet and reuse their code for the CRF.\
 
 \subsection{PyTorch}
 
