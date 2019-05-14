@@ -85,6 +85,54 @@ hurts the OOV accuracy significantly.
 This is especially evident for Japanese and Norwegian. We suspect this could
 have something to do with the data issues mentioned in
 Section~\ref{sec:experiments-ner-data}
-and~\ref{sec:experiments-ner-lang-comparison}.
+and~\ref{sec:experiments-ner-lang-comparison}. However, it might also be
+relevant to look at the actual number of OOV words in the test data and their
+percentage of the total number of words.\footnote{It would of course have been
+    even better to also consider these numbers for the training data, as this
+    would give an indication about language models would have had to
+    specifically train for better classifying of unknown words. However, we did
+not collect this data during training.} Those results can be seen in
+Table~\ref{table:oov-percentages-total}.
+
+Most notable is how many OOV words there exist in the Japanese POS test data.
+This is consistent with what we described in
+Section~\ref{sec:experiments-ner-data} about the way the Polyglot embeddings
+differed from the way the POS data was set up. For the NER data, however,
+Japanese show a very small percentage of OOV words, whereas Norwegian has
+the second highest percentage of 31.1\%. This can in itself not explain why
+Norwegian falls short on OOV accuracy for the \texttt{Bi-LSTM-CRF} models, but
+it may have had an influence. The high OOV percentages of Russian and Urdu is in
+contrast with their strong OOV accuracy, but we believe this can be attributed
+general tag distribution described in
+Section~\ref{sec:experiments-ner-lang-comparison}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c|c c c}
+        \toprule
+        \multirow{2}{*}{\bfseries Language} &
+        \multicolumn{2}{c}{\bfseries POS} &
+        \multicolumn{2}{c}{\bfseries NER} \\
+
+        \cmidrule(lr){2-7}
+        & Total words & OOV words & OOV \%
+        & Total words & OOV words & OOV \% \\
+
+        \cmidrule(lr){1-7}
+        ar & 19059 &  734 &  3.9\% &  2991 &  303 & 10.1\% \\
+        da &  9757 &  803 &  8.2\% &  4534 &  459 & 10.1\% \\
+        hi & 10149 &  441 &  4.3\% &  2884 &  382 & 13.2\% \\
+        ja & 11119 & 4694 & 42.2\% & 14723 &  795 &  6.5\% \\
+        no &  7904 &  514 &  6.5\% &  5574 & 1731 & 31.1\% \\
+        ru &  8476 &  889 & 10.5\% &  2280 &  507 & 22.2\% \\
+        ur & 13412 & 1110 &  8.3\% &  2813 & 1838 & 65.3\% \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Relation between total number of words and the number of OOV words
+        in the test data for every language accross tasks.
+    }\label{table:oov-percentages-total}
+\end{table}
+
 
 \pagebreak
