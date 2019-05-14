@@ -27,18 +27,16 @@ understand the same nuances in natural language as we can. While a lot of people
 would have a hard time performing better on the task than a machine would,
 everybody understand the difference between how the word ``bear'', functions in
 the sentence ``She saw a bear'' and ``Your efforts will bear fruits''
-\ref{https://medium.freecodecamp.org/an-introduction-to-part-of-speech-tagging-and-the-hidden-markov-model-953d45338f24}.
-Achieving better results on this task results in machines better able to
-understand us.
+\cite{medium-pos-intro} Achieving better results on this task results in
+machines better able to understand us.
 
-The state of the art model for POS based off of
-~\ref{https://aclweb.org/aclwiki/POS_Tagging_(State_of_the_art)} is
-~\ref{https://github.com/zalandoresearch/flair/} which is a Bi-LSTM-CRF model
-similar to what we have made. Based on the defaults we can see from their source
-code they use an embedding size of 100, a single layer Bi-LSTM, mini-batch of
-32, patience of 3, SGD with a learning rate of 0.1, and dropout 0.5, however the
-specifics hidden size is unclear. Many of their hyperparameters are the same as
-what we use, but they could use other values for their state of the art model. 
+The state of the art model for POS based off of ~\cite{aclweb-pos-state} is
+~\cite{akbik2018coling} which is a Bi-LSTM-CRF model similar to what we have
+made. Based on the defaults we can see from their source code they use an
+embedding size of 100, a single layer Bi-LSTM, mini-batch of 32, patience of 3,
+SGD with a learning rate of 0.1, and dropout 0.5, however the specifics hidden
+size is unclear. Many of their hyperparameters are the same as what we use, but
+they could use other values for their state of the art model. 
 
 Where their model definetely stands out is their use of what they call
 ``contextual string embeddings'', which are character embeddings, but they use
@@ -49,20 +47,20 @@ the sentence, to the beginning of the word is given to a backwards language
 model. These language models are pre-trained, and the result of each model is
 concatenated to form the complete embedding. 
 
-Their model is evaluated on the Wall Streets Journal datasets achieves a
-97.85\% accuracy, 0.21\% percent points above the previous best model by
-~\ref{Choi, 2016}. Meaning the new model would make ~8.9\% fewer errors on the
-test set.
+Their model is evaluated on the Wall Streets Journal datasets achieves a 97.85\%
+accuracy, 0.21\% percent points above the previous best model by
+~\cite{choi2016dynamic}. Meaning the new model would make ~8.9\% fewer errors on
+the test set.
 
 \subsubsection{Data} \label{sec:experiments-pos-data}
 
-For this task we used datasets from~\ref{}{UniversalDependencies.org} which has
-a broad selection of languages with multiple datasets (called treebanks) in
-each. The datasets are all in the CoNNL-U format, but are created from different
-types of sources. The source types are given as tags such as news, legal, blog,
-wiki, etc. As it is unclear how much of the data is made from each of the
-sources given, we prefered datasets made from single source types to keep the
-datasets similar to the best of our abilities.
+For this task we used datasets from~\cite{universal-dependencies} which has a
+broad selection of languages with multiple datasets (called treebanks) in each.
+The datasets are all in the CoNNL-U format, but are created from different types
+of sources. The source types are given as tags such as news, legal, blog, wiki,
+etc. As it is unclear how much of the data is made from each of the sources
+given, we prefered datasets made from single source types to keep the datasets
+similar to the best of our abilities.
 
 Since the datasets are already split, these were concatenated before splitting
 into our own sizes. Concatenation happened using the command ``cat *.conllu >
