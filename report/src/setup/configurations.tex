@@ -34,10 +34,9 @@ The rationale behind the languages picked is a combination of word ordering,
 language family and genus, availability of data, and the origin of the data.
 
 The word ordering is the relative ordering of verbs, subjects, and objects (eg.\
-verb-object-subject or VOS). We used~\ref{}{https://wals.info/chapter/81} to
-determine the word ordering of languages and picked languages with one dominant
-word ordering, ignoring languages such as German which has alternating word
-orderings.
+verb-object-subject or VOS). We used~\cite{wals-81} to determine the word
+ordering of languages and picked languages with one dominant word ordering,
+ignoring languages such as German which has alternating word orderings.
 
 Language families are groupings of languages based on some common ancestral
 language. Languages from the same family often share similarities such as word
@@ -45,10 +44,10 @@ orderings and some words.
 
 For word orderings with many languages to choose from, we picked two languages
 from the same language family, and one language from a different family.
-Language families were similarly based on~\ref{}{https://wals.info/languoid}. We
-split languages based on both their family and genus, meaning a language such as
-German (indo-european, germanic) is considered different from Italian
-(indo-european, romance).
+Language families were similarly based on~\cite{wals-languoid}. We split languages based
+on both their family and genus, meaning a language such as German
+(indo-european, germanic) is considered different from Italian (indo-european,
+romance).
 
 Sadly due to limited availability of pre-existing annotated datasets, we
 couldn't find data on more than 3 different word orderings. For the more common
@@ -79,7 +78,7 @@ genus is given table~\ref{table:langfam}.
 \end{table}
 
 The concern of availability of data and the origin is elaporated on
-in~\ref{}{3.1}
+in~\ref{sec:experiments-pos-data}.
 
 
 \subsubsection{Model implementations}
@@ -105,7 +104,7 @@ the neural network abstraction is discarded in favour of a matrix and vector
 based representation which is closer to how the results are calculated in the
 computer. The concept of layers however remains, so a simple layer could be
 represented as the calculation $\sigma(W \cdot X + B)$, where $\sigma$ would be
-the activation function sidmoid. 
+the activation function sidmoid.
 
 \ref{Deep learning 6.5.1, NNM for NLP ???}
 
@@ -137,7 +136,7 @@ needs to know the rules for computing the derivate of itself.
 \subsubsection*{DyNet}\label{sec:setup-implementations-dynet}
 
 DyNet is an open source dynamic neural network framework developed by Garnegie
-Mellon University and many others \ref{https://github.com/clab/dynet}. The
+Mellon University and many others \cite{dynet-git}. The
 framework being dynamic means the computational graphs are recreated for each
 input. This is particularly useful for natural language processing where
 sentences don't have a fixed length so the unique structure of each sentence's
@@ -145,18 +144,17 @@ graph can be made without having to add padding to match the longest sentence in
 the dataset. A downside of dynamic frameworks is that they are generally slower
 than their static counterparts, the creators of DyNet though mention that it
 performs comparable or faster than similar static declaration
-frameworks~\ref{https://arxiv.org/pdf/1701.03980.pdf}.   
+frameworks~\cite{dynet}.   
 
 DyNet further allows for what they call auto-batching which means that sentences
 don't have to be manually batched when training on batches of
-sentences~\ref{On-the-fly Operation Batching in Dynamic Computation Graphs}. In
-other frameworks, dynamic or not, users have to add a dimension to their input
-which represents the batches. In DyNet this can be done by implicitly creating a
-graph for each input in the batch and aggregating the losses, creating a
-combined computational graph, which can be optimized to run parts in parallel.
-The DyNet implementation aggregated using the sum of the losses, however this
-was not possible for the other frameworks due to what we suspect was overflow
-errors, which wasn't experienced in DyNet. 
+sentences~\cite{autobatching}. In other frameworks, dynamic or not, users have
+to add a dimension to their input which represents the batches. In DyNet this
+can be done by implicitly creating a graph for each input in the batch and
+aggregating the losses, creating a combined computational graph, which can be
+optimized to run parts in parallel. The DyNet implementation aggregated using
+the sum of the losses, however this was not possible for the other frameworks
+due to what we suspect was overflow errors, which wasn't experienced in DyNet. 
 
 A consequence of the framework being dynamic is that the structure of the model
 is mixed with the processing and training on input. The model parameters are
@@ -181,11 +179,11 @@ some overhead, but nothing noticable. If no improvements were seen for three
 epochs, the model was loaded and training terminated.
 
 DyNet doesn't have a CRF layer implemented as part of their library so we based
-our implementation on the work of~\ref{Barbara}, which in turn based parts of
-theirs on~\ref{Someone else, see their source code}. The loss function for the
-CRF model is not the negative log likelihood. The reference implementation used
-uses the instance score of the forward algorithm minus the gold score of the
-sentence. The influence this may have had one the results are unclear.
+our implementation on the work of~\cite{plank2016multilingual}. The loss
+function for the CRF model is not the negative log likelihood. The reference
+implementation uses the instance score of the forward algorithm minus the
+gold score of the sentence. The influence this may have had one the results are
+unclear.
 
 Due to miscomunication the DyNet model used two Bi-LSTM layers, this gives has
 been shown to give better accuracy at the cost of longer training times. We
@@ -299,23 +297,22 @@ mini-batch sizes, three epoch settings, and with five seeds. Additional
 consideration were also made in regards to the training data to make for as fair
 comparisons as possible.
 
-The three mini-batch sizes were motivated by~\ref{Reymer and gurevych} who
+The three mini-batch sizes were motivated by~\cite{reimers2017reporting} who
 reported worse accuracy for larger sizes of mini-batches with a sweet spot
 between 8 and 32. Similar low values are used by
-\ref{https://arxiv.org/pdf/1508.01991.pdf}. While this emperically seems to
+\cite{huang2015bidirectional}. While this emperically seems to
 work, it is a bit counter to the theory. Ideally we would train on the whole
 training set to get the most accurate loss values, which would in turn allow us
 to make the optimal update to the model to reduce the loss. We don't have to use
 the whole training set and can do fine with an estimate of the true loss by
 using mini-batches, however we would still expect bigger mini-batch sizes to
-improve the estimate and result in better, but slower training \ref{Deep
-Learning}. 
+improve the estimate and result in better, but slower training \cite{goldberg2016deep}.
 
 The fact that bigger mini-batch sizes leads to worse results, suggests that a
 better estimate is not necessarily better for training. While a better estimate
 of the true loss results in a more optimal update to lower the loss, the greater
 variance in the loss estimate can also work as a regularization technique which
-results in better generalization ~\ref{Deep Learning}. The lower mini-batch
+results in better generalization ~\cite{goldberg2016deep}. The lower mini-batch
 sizes can then be explained as a way to avoid the model from getting stuck in
 local minima.
 
@@ -335,8 +332,8 @@ early stopping allows.
 
 The different seeds are used to get a better idea of the performance of the
 models than a single run would give. This approach is based on the work
-of~\ref{Reimers+Gurevych, misconceptions in nsl yang zhang} who demonstrated how
-a single result comparison between two models is insufficient when randomness is
+of~\cite{reimers2017reporting}, and \cite{yang2018design} who demonstrated how a
+single result comparison between two models is insufficient when randomness is
 involved. If one model performs better than average on a run, and another model
 performs worse than average, this might suggest that the model which performed
 better is a better model. But if more runs are used it is possible to compare
@@ -374,16 +371,15 @@ To make model implementation easier, the datasets from the different tasks were
 standardized such that there was no need for task specific code.
 
 The size of our training sets are relatively small. The Penn Wall Streets
-journal treebank \ref{https://catalog.ldc.upenn.edu/LDC95T7} often used for the
-part of speech task, contains over 1.6 million words, where our datasets,
-depending on the language, contain around than 100.000 words split over
-training, testing, and validation files. As more data generally improves the
-accuracy of the models we would expect our models to do worse than models
-trained on a larger dataset, assuming similar network structure. The size is
-however not too small to learn a good representation.
-\ref{https://www.aclweb.org/anthology/P16-2067} found, when comparing the
-accuracy of different types of taggers, that when training on as little as 1000
-sentences their model could get over 90\% accuracy on a wide range of languages.
+journal treebank \cite{wsj} often used for the part of speech task, contains
+over 1.6 million words, where our datasets, depending on the language, contain
+around than 100.000 words split over training, testing, and validation files. As
+more data generally improves the accuracy of the models we would expect our
+models to do worse than models trained on a larger dataset, assuming similar
+network structure. The size is however not too small to learn a good
+representation. \cite{plank2016multilingual} found, when comparing the accuracy
+of different types of taggers, that when training on as little as 1000 sentences
+their model could get over 90\% accuracy on a wide range of languages.
 
 We used the polyglot package to load the word embeddings. Specifically the
 Embeddings class from the polyglot mappings library. There are a lot of
