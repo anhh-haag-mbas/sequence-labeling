@@ -63,7 +63,11 @@ sources since nothing CRF wasn't built-in in any of the frameworks. We read that
 the layer could be implemented in various different ways, and the difference
 could have a significant influence on the training time. While our time results
 aren't part of this paper, we believe the DyNet CRF implementation was the cause
-of significant slower training.
+of significant slower training. 
+
+The DyNet CRF implementation also uses a different loss function than the
+negative log likelihood. How and if this has had an effect on the results is
+unclear.
 
 There was also a minor difference for the implementation of early stopping in
 the various frameworks. Early stopping is part of the TensorFlow API so we

@@ -134,7 +134,7 @@ the graph abstraction simplifies calculating derivatives since each node only
 needs to know the rules for computing the derivate of itself.
  
 
-\subsubsection*{DyNet}
+\subsubsection*{DyNet}\label{sec:setup-implementations-dynet}
 
 DyNet is an open source dynamic neural network framework developed by Garnegie
 Mellon University and many others \ref{https://github.com/clab/dynet}. The
@@ -182,13 +182,16 @@ epochs, the model was loaded and training terminated.
 
 DyNet doesn't have a CRF layer implemented as part of their library so we based
 our implementation on the work of~\ref{Barbara}, which in turn based parts of
-theirs on~\ref{Someone else, see their source code}. 
+theirs on~\ref{Someone else, see their source code}. The loss function for the
+CRF model is not the negative log likelihood. The reference implementation used
+uses the instance score of the forward algorithm minus the gold score of the
+sentence. The influence this may have had one the results are unclear.
 
 Due to miscomunication the DyNet model used two Bi-LSTM layers, this gives has
 been shown to give better accuracy at the cost of longer training times. We
 decided to prefer the shorter training over the better accuracy, but didn't make
 this clear. As a result, we would expect DyNet to perform better in the
-experiments.
+experiments. 
 
 
 \subsubsection*{PyTorch}\label{sec:setup-implementations-pytorch}
