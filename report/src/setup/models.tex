@@ -325,7 +325,7 @@ In theory there shouldn't be any difference between the two different methods.
 Dropout works by preventing the model from relying on specific element values in
 the output of a layer. If the model is reliant on a single value, it would
 completely fail when this value is set to zero, thus requiring it to learn a
-different representation without this flaw. Another way~\ref{goodfellow2016deep}
+different representation without this flaw. Another way~\cite{goodfellow2016deep}
 of reasoning about dropout is to view it as an ensemple method. Ensemple methods
 are about training different multiple networks and using their collective
 results to best predict the correct values. Since dropout removes neurons from
