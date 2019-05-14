@@ -61,7 +61,7 @@ Mean vs sum of losses.
 
 Takes different number of epochs to converge, some actually gets 50 epochs.
 
-Differences in implementation of CRF.
+Differences in implementation of CRF.\
 
 The issue in PyTorch where not every sentence is used doesn't affect the
 training since 1, 8, and 32 are whole dividers of the 4000 training sentences.
@@ -85,8 +85,7 @@ DyNet doesn't train as much when adding a CRF layer, possibly because of a bad
 implementation or integration. Tensorflow similarly changes behaviour when using
 CRF, but it can't stop training.
 
-\subsection{Frameworks evaluation}
-\label{subsec:frameworks}
+\subsection{Frameworks evaluation}\label{subsec:frameworks}
 
 Pros and cons of each framework.
 
@@ -119,7 +118,61 @@ CRF layer on top was mostly a matter of understanding CRF rather than Dynet.
 Figuring out that what we needed for CRF was simply a transformation matrix,
 made it obvious that this matrix should just be added as a a parameter similar
 to other parts of a model. From there I could take inspiration from a complete
-model implemented in dynet and reuse their code for the CRF.
+model implemented in dynet and reuse their code for the CRF.\
+
+\subsection{PyTorch}
+
+\subsubsection*{The learning process}
+
+PyTorch comes with a variety of official tutorials that gives introductions to
+the fundamentals of PyTorch aswell as to how to use it in typical machine
+learning scenarios (such as computer vision and NLP). These are of varying
+quality and generally expects certain pre-existing knowledge of machine learning
+concepts and models. Also, since one of the prime features of PyTorch is the
+\code{tensor} object which is basically an NumPy \code{ndarray} that tracks its
+own computational graph, experience with and fluency in NumPy is, if not a
+pre-requisite, then at least a major advantage (I had no such thing).
+
+However, working with PyTorch felt very smooth as the API provides most all
+classes and functions needed to construct our models (and, obviously, a lot of
+much more complex models) without the user having to worry about backpropagation
+or any inner workings of the models. After a small time of getting used to the
+documentation and the design pattern of the classes and functions, my experience
+with PyTorch was that it was both intuitive and flexible to work with.
+
+Vital to my learning process was the good number of unofficial tutorials and
+walk-throughs, that has been created by the community on blogs and websites.
+Especially the website Medium has several pedagogical articles, that aided my
+understanding a lot (see~\cite{falcon2018lstms},~\cite{boulton2018conditional}
+and~\cite{treviso2019crf} for examples).
+
+\subsubsection*{A note on batching}
+
+I described how I implemented batching in
+Section~\ref{sec:setup-implementations-pytorch}, but I want to add a small point
+about the API for mini-batches in PyTorch here.
+
+Batching is rather poorly described by the documenation of the framework, and
+there seem to be only sparse official description of how mini-batches are
+expected to be arranged (~\cite{falcon2018lstms}).  As an example, working with
+sequential data of variable length (such as sentences), each input element has
+to padded so as to make the lengths uniform.  This may be common knowledge to an
+experienced ML researcher, but neither the PyTorch documentation or official
+tutorials (at least not under the topic of NLP) touch on this aspect.
+
+Furthermore, to handle these batches of inputs of variable lengths, some modules
+require the client to pass a masking tensor as argument (ie.\ a matrix of ones
+and zeroes) to mask out padded values. Most ill-explained, however, is using
+mini-batches together with the \code{LSTM} layer provided by the framework
+itself. Here, it is necessary to pass the mini-batch of padded input sequences
+(ordered by original sequence length in descending order) through
+\code{pack\_padded\_sequence} function provided by the \code{torch.nn.utils.rnn}
+module together with a list of the original lengths of each sequence. This
+transforms the input so it can be handled properly by the \code{LSTM} layer, but
+afterwards it has to be unpacked again using \code{pad\_packed\_sequence}. Not
+only is this a rather intricate API, it is also only sparsely documented
+considering how normal an operation training on mini-batches is.
+
 
 
 \subsection{TensorFlow}
@@ -127,36 +180,58 @@ model implemented in dynet and reuse their code for the CRF.
 \subsubsection{Availability of information}
 
 It is incredibly easy to find guides/blog posts/papers on how to use the Keras
-interface for TF. It is furthermore incredibly easy to find code examples and
-code for newer more experimental designs, such as CRF/LSTM, implementations for TF/Keras.
+interface for TensorFlow. It is furthermore incredibly easy to find code
+examples and code for newer more experimental designs, such as CRF/LSTM,
+implementations for TensorFlow/Keras.
 
-Finding guides/help for TF, and NOT Keras, is quite difficult.
+Finding guides/help for TensorFlow, and NOT Keras, is quite difficult.
 
 \subsubsection{High-level nature of Keras}
 
-Because of the high level nature of Keras, a lot of implementation details are hidden. This is fine if you are already perfectly familiar with the theory, but makes it harder to understand what the framework is actually doing if you are only somewhat familiar with the theory behind the different things  (LSTM, CRF, MLP, etc.).
+Because of the high level nature of Keras, a lot of implementation details are
+hidden. This is fine if you are already perfectly familiar with the theory, but
+makes it harder to understand what the framework is actually doing if you are
+only somewhat familiar with the theory behind the different things  (LSTM, CRF,
+MLP, etc.).
 
-Contrast this with other frameworks or just with using TF directly, where everything isn't conviently wrapped in high level "layers". Using these you are forced to understand what is actually going on, at least more than with Keras, just to get any result.
+Contrast this with other frameworks or just with using TF directly, where
+everything isn't conviently wrapped in high level `layers'. Using these you are
+forced to understand what is actually going on, at least more than with Keras,
+just to get any result.
 
-Coupling the high level nature of Keras with the abundance of guides, means that you could actually get started with working code within your given area, without understanding any of the code or theory.
+Coupling the high level nature of Keras with the abundance of guides, means that
+you could actually get started with working code within your given area, without
+understanding any of the code or theory.
 
 That is undesirable.
 
-On the other hand if you are intimatley familiar with the theory working with TF must be a breeze, as it abstracts all of the technical details away.
+On the other hand if you are intimatley familiar with the theory working with TF
+must be a breeze, as it abstracts all of the technical details away.
 
-Working with non-standard "layers" is also quite easy, but does require a deeper understanding of how TF works.
+Working with non-standard `layers' is also quite easy, but does require a deeper
+understanding of how TensorFlow works.
 
 \subsubsection{Workflow}
 
-I have worked a lot by finding examples on various blog posts and then copy pasting them into a jupyter notebook.
+I have worked a lot by finding examples on various blog posts and then copy
+pasting them into a jupyter notebook.
 
-I have then experimented with tweaking the examples and writing them together to gain a deeper understanding of TF works. I would often come across features of TF that I did not know existed, which would then prompt me to read the TF docs on that feature.
+I have then experimented with tweaking the examples and writing them together to
+gain a deeper understanding of TensorFlow works. I would often come across
+features of TF that I did not know existed, which would then prompt me to read
+the TensorFlow docs on that feature.
 
-This allowed me to quite quickly get working results, but it limited just how deeply I got to understand the theory. That is because I relied on existing implementations of bi-lstm/crf, and the way I got started was by looking at how other people had already tackled the problems.
+This allowed me to quite quickly get working results, but it limited just how
+deeply I got to understand the theory. That is because I relied on existing
+implementations of bi-lstm/crf, and the way I got started was by looking at how
+other people had already tackled the problems.
 
-Had I developed the lstm and crf by hand, I would have been forced to gain a much much deeper understanding of how they worked and of how TF worked. This would however have required a much greater time dedication.
+Had I developed the lstm and crf by hand, I would have been forced to gain a
+much much deeper understanding of how they worked and of how TensorFlow worked.
+This would however have required a much greater time dedication.
 
-It was thus a weighting between time and deep understanding of TF/Keras/CRF/LSTM.
+It was thus a weighting between time and deep understanding of
+TensorFlow/Keras/CRF/LSTM.\
 
 
 \subsection{Suggestions for further research}
@@ -175,7 +250,7 @@ of.
 
 Similar to the way that pretrained word embeddings like Polyglot can be used to
 significantly improve performance, including a character embedding, pretrained
-or not, will also help the model make better predictions \ref{misconceptions
+or not, will also help the model make better predictions~\ref{misconceptions
 yang zhang}.
 
 Character embeddings, like word embeddings, work by mapping a character to a
@@ -192,7 +267,7 @@ representations and return a single vector. This is similar to the way we use an
 LSTM to read the sequence of words in a sentence, but instead we only use a
 single value. The most commonly used way to read the sequence of characters are
 LSTM or CNN layers. They perform very similarly, but CNN are a lot faster to
-train \ref{misconceptions yang zhang}.
+train~\ref{misconceptions yang zhang}.
 
 A character embedding can contain a mapping from not just a single character,
 but combinations of two or more characters or so call n-grams. Since a lot of
@@ -209,17 +284,17 @@ which ends in ``ing'' are likely verbs.
 
 \subsubsection{Stacked Bi-LSTM}
 
-As has been mentioned before, the DyNet implementation uses a 2 layer Bi-LSTM.
-This is sometimes refered to as a stacked Bi-LSTM \ref{Neural Network Methods
+As has been mentioned before, the DyNet implementation uses a 2 layer Bi-LSTM.\
+This is sometimes refered to as a stacked Bi-LSTM~\ref{Neural Network Methods
 for Natural Language Proccessing ch. 14.5}. While not clear how exactly this
-gives a better model accuracy, it has been shown empirically to help
-\ref{Papers using 2 layer}.
+gives a better model accuracy, it has been shown empirically to help~\ref{Papers
+using 2 layer}.
 
 An explanation could simply be that adding additional Bi-LSTM layers increases
 the complexity of the model which allows it to represent more complicated
 functions. Similar to the way adding additional linear layers to a model can
 improve a model. While stacked linear layers is in many cases equivalent to
-increasing the dimensionality of the weights and biases \ref{Deep learning 199,
+increasing the dimensionality of the weights and biases~\ref{Deep learning 199,
 Barron 1993} this may or may not be the case for Bi-LSTMs.
 
 \subsubsection{DyNet manual batching}
@@ -232,7 +307,7 @@ than creating the batches manually and as such the DyNet implementation could be
 improved in this sense if reducing the training time is important.
 
 
-\subsection{Other stuff}
+\subsection{Reflections}
 
 \begin{itemize}
     \item Handling, analyzing and presenting large amounts of data was
@@ -246,13 +321,6 @@ improved in this sense if reducing the training time is important.
         disproportionally difficult. Our results are therefore burdened by the
         uncertainty of whether our programs actually the work, as they are
         intended to.
-    \item It seems the Tensorflow implementation does not handle increasing
-        batch sizes well. This is seen in Figure~\ref{chart:ner-acc-epo} and in
-        Figure~\ref{chart:pos-acc-epo}. When training with early stopping using
-        a patience of 3, Tensorflow looses accuracy for arabic, danish, hindu
-        and urdu as the batch size increase from 1 to 8 and from 8 to 32. And
-        except for japanese, a batch size of 1 yields the best accuracy on all
-        other languages 
 \end{itemize}
 
 \pagebreak
