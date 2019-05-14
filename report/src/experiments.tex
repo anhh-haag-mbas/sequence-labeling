@@ -77,7 +77,7 @@ picture even though the POS results does not significantly alter the pattern.
 
 These results show, that for all languages, except Hindi, Japanese and
 Norwegian, both the DyNet and the PyTorch implementation sees an overall
-improvement when applying CRF. The benefit is more evident for PyTorch and its
+improvement when applying CRF.\ The benefit is more evident for PyTorch and its
 single layer model, but the improvement is still consistent for DyNet aswell. On
 the other hand, the aforementioned languages shows the opposite: the CRF layer
 hurts the OOV accuracy significantly.
@@ -86,20 +86,19 @@ This is especially evident for Japanese and Norwegian. We suspect this could
 have something to do with the data issues mentioned in
 Section~\ref{sec:experiments-ner-data}
 and~\ref{sec:experiments-ner-lang-comparison}. However, it might also be
-relevant to look at the actual number of OOV words in the test data and their
-percentage of the total number of words.\footnote{It would of course have been
-    even better to also consider these numbers for the training data, as this
-    would give an indication about language models would have had to
-    specifically train for better classifying of unknown words. However, we did
-not collect this data during training.} Those results can be seen in
+relevant to look at the actual number of OOV words in the data and their
+percentage of the total number of words. Those results can be seen in
 Table~\ref{table:oov-percentages-total}.
 
-Most notable is how many OOV words there exist in the Japanese POS test data.
+Most notable is how many OOV words there exist in the Japanese test data.
 This is consistent with what we described in
 Section~\ref{sec:experiments-ner-data} about the way the Polyglot embeddings
 differed from the way the POS data was set up. For the NER data, however,
-Japanese show a very small percentage of OOV words, whereas Norwegian has
-the second highest percentage of 31.1\%. This can in itself not explain why
+Japanese show a very small percentage of OOV words.
+
+For Norwegian, there is a clear discrepancy between the testing and the training
+data. In the training data, it only encouters 10.1\% OOV words, but in the test
+data almost very third word is unknown. This can in itself not explain why
 Norwegian falls short on OOV accuracy for the \texttt{Bi-LSTM-CRF} models, but
 it may have had an influence. The high OOV percentages of Russian and Urdu is in
 contrast with their strong OOV accuracy, but we believe this can be attributed
@@ -119,6 +118,21 @@ Section~\ref{sec:experiments-ner-lang-comparison}.
         & Total words & OOV words & OOV \% \\
 
         \cmidrule(lr){1-7}
+        \multicolumn{7}{l}{\bfseries Training} \\
+
+        \cmidrule(lr){1-7}
+        ar & 150631 &  8433 &  5.6\% &  27159 & 2737 & 10.1\% \\
+        da &  72380 &  5600 &  7.7\% &  35498 & 4728 & 13.3\% \\
+        hi &  80940 &  3213 &  4.0\% &  23276 & 3142 & 13.5\% \\
+        ja &  88821 & 37767 & 42.5\% & 122377 & 5928 &  4.8\% \\
+        no &  60076 &  4184 &  7.0\% &  41172 & 4144 & 10.1\% \\
+        ru &  75458 &  7846 & 10.4\% &  26232 & 4871 & 18.6\% \\
+        ur & 107568 &  8070 &  7.5\% &  21391 & 9884 & 46.2\% \\
+
+        \cmidrule(lr){1-7}
+        \multicolumn{7}{l}{\bfseries Testing} \\
+
+        \cmidrule(lr){1-7}
         ar & 19059 &  734 &  3.9\% &  2991 &  303 & 10.1\% \\
         da &  9757 &  803 &  8.2\% &  4534 &  459 & 10.1\% \\
         hi & 10149 &  441 &  4.3\% &  2884 &  382 & 13.2\% \\
@@ -130,9 +144,10 @@ Section~\ref{sec:experiments-ner-lang-comparison}.
         \bottomrule
     \end{tabular}
     \caption{Relation between total number of words and the number of OOV words
-        in the test data for every language accross tasks.
+        in the training and the testing data for every language accross tasks.
     }\label{table:oov-percentages-total}
 \end{table}
+
 
 
 \pagebreak
