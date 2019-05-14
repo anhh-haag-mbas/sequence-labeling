@@ -3,10 +3,10 @@
 
 \subsection{Possible sources of Discrepancies}
 
-Throughout the report we have noted various odd results and possible causes. We
-here include an overview of these discrepancies.
+Throughout the report we have noted various unexpected results and possible
+causes. We here include an overview of these discrepancies.
 
-\textbf{Data}
+\subsubsection{Data}
 
 Our datasets for NER had some odd distributions of tags. When most of the
 testing data consists of a single type of entity the taggers performed almost
@@ -21,11 +21,12 @@ For the POS task we noticed significantly worse results on Japanese. Since our
 polyglot embedding was for the most parts a single character embedding for
 Japanese, but the data properly split for words, most of the tokens were out of
 vocabulary. The OOV-accuracy was among the best for the different languages, not
-a lot better or worse, but descent. But 42\% of the tokens were out of
+a lot better or worse, but decent. But 42\% of the tokens were out of
 vocabulary, whereas the other languages were around or below 10\%.
 
 It would be worth investigating if the lower results can be explained by the
-embedding or if other factors were in place.
+embedding or if other factors were in place. If we had measured the accuracy for
+in vocabulary words it may have been possible to 
 
 %Make sure the datasets are similar and that the testing, validation, and
 %training sets are representative of each other. 
@@ -41,7 +42,7 @@ embedding or if other factors were in place.
 %sure to shuffle the sentences before splitting the data. A deterministic
 %shuffling method can be used for reproducability.
 
-\textbf{Models}
+\subsubsection{Models}
 
 The implementations in the various frameworks differs in some ways which we
 believe could have an impact on the differences between their results. 
@@ -85,23 +86,22 @@ frameworks.
 
 Something about TensorFlow % TODO
 
-\textbf{Results}
+\subsubsection{Results}
 
 For the NER task we didn't count properly tagged entities and only calculated
 the our accuracy and $F_1$ score based on correctly labeled entity tags. This
-may result in a higher score since partially correctly labeled entities improve
-our score, it may also lower the score since incorrectly labeled entities affect
-the score more negatively. 
+may have resulted in higher scores since partially correctly labeled entities
+improve the score, it may also have lowered the score, since incorrectly labeled
+entities affect the score more negatively, depending on how long the entity is. 
 
 % TODO: Move under models?
 
 In PyTorch there was an issue where not all of the test datasets were used for
 evaluation. It's unclear if this had a negative effect on the results, since the
 accuracy is still correctly calculated, but on less data. If the sentences
-skipped was particularly trivial for the other models, it could negatively
-affect the scores relative to the other frameworks, and if vice versa for
+skipped were particularly trivial for the other models, it could negatively
+affect the scores relative to the other frameworks, and vice versa for
 particularly difficult sentences.
-
 
 % Different way to count number of epochs run (Believe they were done the same
 % way)
@@ -113,7 +113,8 @@ particularly difficult sentences.
 
 \subsection{Frameworks evaluation}\label{subsec:frameworks}
 
-Pros and cons of each framework.
+The following sections are described by the respective member of the group who
+worked with the framework. 
 
 \subsubsection{Dynet}
 
@@ -282,7 +283,8 @@ of.
 Similar to the way that pretrained word embeddings like Polyglot can be used to
 significantly improve performance, including a character embedding, pretrained
 or not, will also help the model make better predictions~\ref{misconceptions
-yang zhang}.
+yang zhang}. The state of the art model for POS only used a character embedding
+which indicates how useful they are.
 
 Character embeddings, like word embeddings, work by mapping a character to a
 vector representation. But character embeddings can contain a mapping from every
@@ -296,8 +298,8 @@ The general approach is to map each character in a word to its own vector
 representation and use an additional layer to read the sequence of character
 representations and return a single vector. This is similar to the way we use an
 LSTM to read the sequence of words in a sentence, but instead we only use a
-single value. The most commonly used way to read the sequence of characters are
-LSTM or CNN layers. They perform very similarly, but CNN are a lot faster to
+single value. Two commonly used ways to read the sequence of characters are LSTM
+or CNN layers. They perform very similarly, but CNN are a lot faster to
 train~\ref{misconceptions yang zhang}.
 
 A character embedding can contain a mapping from not just a single character,
@@ -310,8 +312,8 @@ to learn a unique representation for each word, whereas a word embedding can
 only learn as many representations as the number of words it knows. An
 additional benefit is that many words contain character level information which
 a word embedding may not learn. As an example, words which are capitalized are
-more likely to be named entities, than words which are uncapitalized, and words
-which ends in ``ing'' are likely verbs.
+more likely to be named entities, and words which ends in ``ing'' are likely
+verbs.
 
 \subsubsection{Stacked Bi-LSTM}
 
@@ -335,7 +337,7 @@ which based on the computational graph build, can create batches for optimized
 training time. This shouldn't have any impact on the accuracy of the model, but
 it improves the speed compared to running without. It is however still slower
 than creating the batches manually and as such the DyNet implementation could be
-improved in this sense if reducing the training time is important.
+improved in this sense if reducing the training or evaluation time is important.
 
 
 \subsection{Reflections}
