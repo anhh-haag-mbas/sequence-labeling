@@ -15,14 +15,18 @@ models are inspired by the models used by other authors on similar
 tasks~\cite{huang2015bidirectional}, ~\cite{plank2016multilingual},
 ~\cite{reimers2017reporting}, ~\cite{ma2016endtoend}. The first one is a
 standard bidirectional LSTM network, \texttt{Bi-LSTM}, and the second one is a
-\texttt{Bi-LSTM} with an added CRF layer, \texttt{Bi-LSTM-CRF}. Both models has
-the same fundamental structure, which consist of:
+\texttt{Bi-LSTM} with an added CRF layer, \texttt{Bi-LSTM-CRF} (LSTMs and CRFs
+are described in greater details in Section~\ref{sec:setup-models-lstm}
+and~\ref{sec:setup-models-crf} respectively). Both models has the same
+fundamental structure, which consist of:
 
 \begin{itemize}
     \item An embedding layer with a fixed embedding dimension size
     \item A dropout layer with a dropout rate of $0.5$
     \item Two LSTM layers, one for the forward pass and one for the backward
-        pass
+        pass\footnote{The DyNet implementation actually uses 4 LSTM layers, as
+            it has 2 bidirectional LSTM layers. See
+        Section~\ref{sec:setup-implementations-dynet} for more}
     \item Another dropout layer with the same dropout rate
     \item A simple linear layer mapping the LSTM output scores back into tag
         space
@@ -35,8 +39,8 @@ layer, which then compute the most likely sequence of tags.
 
 The size of the embedding layer is $100004 \times 64$, meaning it has an input
 size of 100004 and produces an output vector of size 64. The size of each LSTM
-in the Bi-LSTM layer is $64 \times 100$, the output of each LSTM is concatenated
-giving us a 200 dimensional output. The size of the simple linear layer is 200 x
+layer is $64 \times 100$, and since the output of each LSTM is concatenated, we
+get a 200 dimensional output. The size of the simple linear layer is 200 x
 number of tags, depending on the task. With CRF the last layer contains 2
 additional tags because of an implementation detail.
 
@@ -97,7 +101,7 @@ bias vector usually found in linear layers could simply be ignored. The
 difference between a word embedding and a linear layer would then for the most
 parts be that word embeddings are pretrained.
 
-\subsubsection{Bi-LSTM}
+\subsubsection{Bi-LSTM}\label{sec:setup-models-lstm}
 
 Long Short-Term Memory (LSTM) networks are a particular type of Recurrent Neural
 Networks (RNN), that was originally proposed by~\cite{hochreiter1997long} as a
@@ -222,7 +226,7 @@ output to be computed taking both past and future dependencies into
 consideration.
 
 
-\subsubsection{CRF}
+\subsubsection{CRF}\label{sec:setup-models-crf}
 
 When performing sequence labelling as we do in part-of-speech tagging and named
 entity recognition, we want to predict a sequence of output tags $\bm{y} \in
@@ -285,13 +289,13 @@ infeasable if implemented in a naive manner, but the whole crux of CRF is the
 \textbf{forward} (or \textbf{backward}) algorithm, which enables the computation
 to be done in time proportional to $O(CK^{2})$. A detailed description is out of
 scope for this report, but is explained in great detail
-in~\ref{sutton2012introduction}.
+in~\cite{sutton2012introduction}.
 
 Performing inference using a CRF model (ie.\ predicting the most likely sequence
 of tags $\bm{y^{*}} = \argmax_{y}p(\bm{y}|\bm{X})$) is done using the Viterbi
-algorithm (~\ref{} something). This exploits the same recursive feature of the
-model as the forward algorithm uncovers, and then stores backpointers to the
-most likely tag $y^{*}$ at each time step $k$.
+algorithm (~\cite{sutton2012introduction} something). This exploits the same
+recursive feature of the model as the forward algorithm uncovers, and then
+stores backpointers to the most likely tag $y^{*}$ at each time step $k$.
 
 In short, our \texttt{Bi-LSTM-CRF} model is simply an extension of the
 \texttt{Bi-LSTM} with an added CRF layer for modelling the conditional
