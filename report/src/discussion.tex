@@ -3,87 +3,113 @@
 
 \subsection{Possible sources of Discrepancies}
 
-Throughout the report we have noted various problems and possible causes. To
-give an overview and make it clear how to improve the validity of the results we
-got, have we compiled a list of the issues.
+Throughout the report we have noted various odd results and possible causes. We
+here include an overview of these discrepancies.
 
 \textbf{Data}
 
-Our datasets for NER were not great 
-Make sure the datasets are similar and that the testing, validation, and
-training sets are representative of each other. 
+Our datasets for NER had some odd distributions of tags. When most of the
+testing data consists of a single type of entity the taggers performed almost
+perfectly as was the case for Urdu and Russian, and was seen for all frameworks.
 
-Inspect the data to avoid datasets with glaring errors such as very low number
-of distinct tokens, badly balanced distribution of tags, or datasets such as the
-Japanese NER data where the tokens are split in unnatural ways.
+% TODO: Further research? 
+It would be interesting to see how well the tagger generalizes on more evenly
+distributed data and if the trend would continue, or if we only see these
+results for very specific data.
 
-If using the same NER dataset as we did in this project. There is no need to
-limit the size of the sets to be similar to POS unless a comparison between the
-tasks is made. Since we didn't compare the tasks we could have used more data
-for NER which may have mitigated some of the issues we encountered. Also make
-sure to shuffle the sentences before splitting the data. A deterministic
-shuffling method can be used for reproducability.
+For the POS task we noticed significantly worse results on Japanese. Since our
+polyglot embedding was for the most parts a single character embedding for
+Japanese, but the data properly split for words, most of the tokens were out of
+vocabulary. The OOV-accuracy was among the best for the different languages, not
+a lot better or worse, but descent. But 42\% of the tokens were out of
+vocabulary, whereas the other languages were around or below 10\%.
+
+It would be worth investigating if the lower results can be explained by the
+embedding or if other factors were in place.
+
+%Make sure the datasets are similar and that the testing, validation, and
+%training sets are representative of each other. 
+
+%Inspect the data to avoid datasets with glaring errors such as very low number
+%of distinct tokens, badly balanced distribution of tags, or datasets such as the
+%Japanese NER data where the tokens are split in unnatural ways.
+
+%If using the same NER dataset as we did in this project. There is no need to
+%limit the size of the sets to be similar to POS unless a comparison between the
+%tasks is made. Since we didn't compare the tasks we could have used more data
+%for NER which may have mitigated some of the issues we encountered. Also make
+%sure to shuffle the sentences before splitting the data. A deterministic
+%shuffling method can be used for reproducability.
 
 \textbf{Models}
 
-Our models were different on multiple fronts.
-DyNet used 2 layer Bi-LSTM.
-The loss for batching was mean vs sum.
-CRF implementations weren't aligned.
-We implemented early stopping differently between DyNet and PyTorch.
+The implementations in the various frameworks differs in some ways which we
+believe could have an impact on the differences between their results. 
 
-We encountered a problem for the word embedding where a lot of the tokens were
-out of vocabulary.
-Make sure the embedding works on the data. Either the data is bad, or you need a
-task specific embedding for your problem.
+DyNet as the only framework uses a two layer Bi-LSTM, one more than what is used
+in PyTorch and TensorFlow. We believe this improves the performance of the
+tagger and leads to DyNet getting a lot of the top results. 
 
-Be sure to agree on each parameter of the model to avoid situations where 
+For mini-batching the loss across the sentences could be aggregated in different
+ways. In DyNet the losses were summed, and in PyTorch and TensorFlow they were
+averaged. We are unsure if this could have an impact on the scores, but in
+theory there shouldn't be much difference between the different approaches. We
+believe PyTorch and TensorFlow uses averaging as an implementation detail to
+avoid overflows, which apparently isn't an issue in DyNet.
 
-We trained our models on accuracy, which isn't necessarily helpful when testing
-on F1. 
-Train on the thing you evaluate on.
+The CRF implementations across the frameworks were based on various third party
+sources since nothing CRF wasn't built-in in any of the frameworks. We read that
+the layer could be implemented in various different ways, and the difference
+could have a significant influence on the training time. While our time results
+weren't part of this paper, we believe the DyNet CRF implementation was the
+cause of significant slower training.
 
+There was also a minor difference for the implementation of early stopping in
+the various frameworks. Early stopping is part of the TensorFlow API so we
+assume it works, but for DyNet and PyTorch early stopping was implemented
+manually. In DyNet the best seen model was saved to disk during training, this
+may also have had an impact on training time, but during preliminary testing
+this wasn't noticed. However PyTorch doesn't save the best model and simply
+stops training if no improvements are seen. We believe this contributes to lower
+PyTorch results since the model performs worse on the validation set, than the
+model three epochs before. 
+
+For the NER task we evaluated on the $F_1$ score of the models, but trained on
+their accuracy. Since there are a lot of non-entities in the data which
+contributes to the accuracy of the model, but not it $F_1$ score, we believe the
+models may perform worse on the NER task because they learned to identify a lot
+of non-entities, but weren't improving much on entity identification since it
+was a smaller subset of the data. Were the models evaluated on the $F_1$ score,
+and trained with this in mind, we believe we would get better results from the
+frameworks. 
+
+Something about TensorFlow % TODO
 
 \textbf{Results}
 
-We didn't count correctly tagged entities for the NER task.
-We didn't log the loss of the trainer or the validation.
+For the NER task we didn't count properly tagged entities and only calculated
+the our accuracy and $F_1$ score based on correctly labeled entity tags. This
+may result in a higher score since partially correctly labeled entities improve
+our score, it may also lower the score since incorrectly labeled entities affect
+the score more negatively. 
+
+% TODO: Move under models?
+
+In PyTorch there was an issue where not all of the test datasets were used for
+evaluation. It's unclear if this had a negative effect on the results, since the
+accuracy is still correctly calculated, but on less data. If the sentences
+skipped was particularly trivial for the other models, it could negatively
+affect the scores relative to the other frameworks, and if vice versa for
+particularly difficult sentences.
 
 
+% Different way to count number of epochs run (Believe they were done the same
+% way)
 
-
-Different ways of splitting japanese (and others?) data, CoNNL-U seem to split
-based on some ``smart'' method, whereas our BIO data is just single character
-each. The polyglot embedding for japanese though might also be single character.
-
-Differences in implementations of batching between framework. Autobatching
-Mean vs sum of losses.
-
-Takes different number of epochs to converge, some actually gets 50 epochs.
-
-Differences in implementation of CRF.\
-
-The issue in PyTorch where not every sentence is used doesn't affect the
-training since 1, 8, and 32 are whole dividers of the 4000 training sentences.
-
-Different way to count number of epochs run
-
-Without CRF we see that 2-layer Bi-LSTM performs better. With CRF the difference is negligible.
-Especially as the batch size increases.
-
-As expected, for a single epoch and 32 batch size, the models perform worse, 
-but we see that dynet performs significantly worse than pytorch. This may be 
-because of the 2-Layer Bi-LSTM in DyNet which requires more training before 
-performing reasonably. It can also be explained by the issue where pytorch
-doesn't pick the best model but rather the latest one.
-
-Batch size have less influence on the performance given more training.
-With higher batch size there are fewer updates (backpropogations) per epcoh,
-this may also be interesting to research.
-
-DyNet doesn't train as much when adding a CRF layer, possibly because of a bad
-implementation or integration. Tensorflow similarly changes behaviour when using
-CRF, but it can't stop training.
+% (Findings more than discrepancies)
+% DyNet doesn't train as much when adding a CRF layer, possibly because of a bad
+% implementation or integration. Tensorflow similarly changes behaviour when using
+% CRF, but it can't stop training.
 
 \subsection{Frameworks evaluation}\label{subsec:frameworks}
 
@@ -238,6 +264,11 @@ TensorFlow/Keras/CRF/LSTM.\
 
 Someone should really look into that urdu language. Also, whats up the the arabs
 and the japanese??
+
+Batch size have less influence on the performance given more training.
+With higher batch size there are fewer updates (backpropogations) per epcoh,
+this may also be interesting to research.
+
 
 \subsection{Improvements}
 
