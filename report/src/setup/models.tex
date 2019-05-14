@@ -283,13 +283,13 @@ infeasable if implemented in a naive manner, but the whole crux of CRF is the
 \textbf{forward} (or \textbf{backward}) algorithm, which enables the computation
 to be done in time proportional to $O(CK^{2})$. A detailed description is out of
 scope for this report, but is explained in great detail
-in~\ref{sutton2012introduction}.
+in~\cite{sutton2012introduction}.
 
 Performing inference using a CRF model (ie.\ predicting the most likely sequence
 of tags $\bm{y^{*}} = \argmax_{y}p(\bm{y}|\bm{X})$) is done using the Viterbi
-algorithm (~\ref{} something). This exploits the same recursive feature of the
-model as the forward algorithm uncovers, and then stores backpointers to the
-most likely tag $y^{*}$ at each time step $k$.
+algorithm (~\cite{sutton2012introduction} something). This exploits the same
+recursive feature of the model as the forward algorithm uncovers, and then
+stores backpointers to the most likely tag $y^{*}$ at each time step $k$.
 
 In short, our \texttt{Bi-LSTM-CRF} model is simply an extension of the
 \texttt{Bi-LSTM} with an added CRF layer for modelling the conditional
