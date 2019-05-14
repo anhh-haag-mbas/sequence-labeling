@@ -3,6 +3,55 @@
 
 \subsection{Possible sources of Discrepancies}
 
+Throughout the report we have noted various problems and possible causes. To
+give an overview and make it clear how to improve the validity of the results we
+got, have we compiled a list of the issues.
+
+\textbf{Data}
+
+Our datasets for NER were not great 
+Make sure the datasets are similar and that the testing, validation, and
+training sets are representative of each other. 
+
+Inspect the data to avoid datasets with glaring errors such as very low number
+of distinct tokens, badly balanced distribution of tags, or datasets such as the
+Japanese NER data where the tokens are split in unnatural ways.
+
+If using the same NER dataset as we did in this project. There is no need to
+limit the size of the sets to be similar to POS unless a comparison between the
+tasks is made. Since we didn't compare the tasks we could have used more data
+for NER which may have mitigated some of the issues we encountered. Also make
+sure to shuffle the sentences before splitting the data. A deterministic
+shuffling method can be used for reproducability.
+
+\textbf{Models}
+
+Our models were different on multiple fronts.
+DyNet used 2 layer Bi-LSTM.
+The loss for batching was mean vs sum.
+CRF implementations weren't aligned.
+We implemented early stopping differently between DyNet and PyTorch.
+
+We encountered a problem for the word embedding where a lot of the tokens were
+out of vocabulary.
+Make sure the embedding works on the data. Either the data is bad, or you need a
+task specific embedding for your problem.
+
+Be sure to agree on each parameter of the model to avoid situations where 
+
+We trained our models on accuracy, which isn't necessarily helpful when testing
+on F1. 
+Train on the thing you evaluate on.
+
+
+\textbf{Results}
+
+We didn't count correctly tagged entities for the NER task.
+We didn't log the loss of the trainer or the validation.
+
+
+
+
 Different ways of splitting japanese (and others?) data, CoNNL-U seem to split
 based on some ``smart'' method, whereas our BIO data is just single character
 each. The polyglot embedding for japanese though might also be single character.
