@@ -12,10 +12,11 @@ embeddings.
 
 We used two different models to run our experiments. The base structure of the
 models are inspired by the models used by other authors on similar
-tasks~\cite{ALL THE PAPERS!}. The first one is a standard bidirectional LSTM
-network, \texttt{Bi-LSTM}, and the second one is a \texttt{Bi-LSTM} with an
-added CRF layer, \texttt{Bi-LSTM-CRF}. Both models has the same fundamental
-structure, which consist of:
+tasks~\cite{huang2015bidirectional}, ~\cite{plank2016multilingual},
+~\cite{reimers2017reporting}, ~\cite{ma2016endtoend}. The first one is a
+standard bidirectional LSTM network, \texttt{Bi-LSTM}, and the second one is a
+\texttt{Bi-LSTM} with an added CRF layer, \texttt{Bi-LSTM-CRF}. Both models has
+the same fundamental structure, which consist of:
 
 \begin{itemize}
     \item An embedding layer with a fixed embedding dimension size
@@ -49,7 +50,7 @@ matrix.
 
 For training we use the stochastic gradient descent (SGD) optimizer since it
 seems to give the best results, but with slower convergence during
-training~\cite{Yang_liang_zhang}. We use a learning rate of 0.1 and no weight
+training~\cite{yang2018design}. We use a learning rate of 0.1 and no weight
 decay or momentum.
 
 The loss function for the softmax model is the negative log likelihood of the
@@ -58,10 +59,11 @@ correct tag.
 \subsubsection{Embeddings}
 
 We use a pretrained embedding since they have been shown to provide a
-significant increase in accuracy for sequence labeling tasks (~\cite{Yang liang
-zhang}). We picked pretrained Polyglot embeddings~\cite{Polyglot} since there
-exists models in a lot of different languages, and Polyglot seems to outperform
-the only alternative we were aware of FastText~\cite{FastText} (~\cite{} to
+significant increase in accuracy for sequence labeling tasks
+(~\cite{yang2018design}). We picked pretrained Polyglot
+embeddings~\cite{polyglot:2013:ACL-CoNLL} since there exists models in a lot of
+different languages, and Polyglot seems to outperform the only alternative we
+were aware of FastText~\cite{joulin2016bagoftricks} (~\cite{plank2018distant} to
 FastText + comparison), even though FastText embeddings are significantly larger
 than Polyglot's. There exists many different algorithms for training word
 embeddings, but not many with trained models in a wide range of languages
@@ -343,8 +345,9 @@ extend and we therefore decided against adding explicit dropout on this data as
 well.
 
 We picked a dropout rate of 50\% since this seems to be the generally agreed
-upon be value for hidden layers in the model~\cite{}. If we had included dropout
-on the input~\cite{} suggests that a dropout of 80\% is the best for this.
+upon be value for hidden layers in the model~\cite{yang2018design}. If we had
+included dropout on the input~\cite{goodfellow2016deep} suggests that a dropout
+of 80\% is the best for this.
 
 
 \subsubsection{Optimizer}
