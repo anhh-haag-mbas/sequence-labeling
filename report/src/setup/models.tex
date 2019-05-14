@@ -165,11 +165,11 @@ working with and are not something, we have implemented ourselves}
 where $i_{t}$, $f_{t}$ and $o_{t}$ are the input gate, the forget gate and the
 output gate respectively at time $t$, $c$ is the cell state and $h$ is the
 hidden state. The weight matrices $W$ maps from either an input $x$ of size $m$
-to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m \times n}$ is
-the input-forget gate matrix), or between two internal components (ie. $W_{hi}
-\in \mathbb{R}^{n \times n}$ is the hidden-input gate matrix)
-(~\cite{huang2015bidirectional}). A graphical
-representation of an LSTM Network is given in Figure~\ref{fig:lstm}.
+to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m \times
+n}$ is the input-forget gate matrix), or between two internal components (ie.
+$W_{hi} \in \mathbb{R}^{n \times n}$ is the hidden-input gate matrix)
+(~\cite{huang2015bidirectional}). A graphical representation of an LSTM Network
+is given in Figure~\ref{fig:lstm}.
 
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{lstm-figure}
@@ -239,7 +239,7 @@ part of a person entity (`B-PER', eg.\ `Claus') or a word inside a person entity
 (`I-PER', eg.\ `Madsen'). Here, we assume that there is a higher probability of
 transitioning from a tag `B-PER' to a tag `I-PER' than, say, from a tag `O' to a
 tag `B-PER'.  That means, that the probability of tag $y_{k}$ being of some tag
-type is conditioned on whater $y_{k-1}$ was.
+type is conditioned on whatever $y_{k-1}$ was.
 
 Knowing these transitioning scores, which will be the learnable parameters of
 the CRF model, we can compute the conditional probability of specific sequence
