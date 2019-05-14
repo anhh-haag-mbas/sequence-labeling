@@ -187,11 +187,10 @@ experiments.
 DyNet doesn't support multi-threading in their python implementation as of the
 time of this report, so all the experiments were run on a single core. 
 
-\subsubsection*{PyTorch}
+\subsubsection*{PyTorch}\label{sec:setup-implementations-pytorch}
 
 PyTorch is an open source, dynamic deep learning toolkit build on top of Torch
-and developed by the Facebook research team (~\ref{}
-\url{https://www.infoworld.com/article/3159120/facebook-brings-gpu-powered-machine-learning-to-python.html}).
+and developed by the Facebook research team (~\cite{yegulalp2017facebook}).
 PyTorch provides a \code{tensor} object, that is nearly identical to NumPys
 \code{ndarray} but has two important advantages:
 
@@ -205,6 +204,25 @@ As opposed to DyNet, PyTorch does not have any auto-batching feature. It does
 support mini-batches through its API and most of its models and functions accept
 a \code{batch\_first} argument where relevant, which indicate whether the first
 dimension of the input corresponds to the batch size or not.
+
+We create the input mini-batches for the model as a preprocessing step, by
+splitting the data into lists containing a number of data elements (ie.\
+sentences) as specified by the \code{batch\_size} parameter. Every sentence is
+padded with a special padding token \code{`<PAD>'} so it has the same length as
+the longest sentence in the batch. In addition, the batch is sorted by sentence
+length and in the process, a list of original sentence lengths as well as a
+masking matrix to mask out padding values are created. This is a requirement for
+several of the PyTorch modules.
+
+By mistake, the batching process was implemented in a way, so that some data is
+lost when the data is not evenly divisible by the batch size. For example, had
+the batch size been 3 and the number of data elements been 20, then the last
+$20\mod3 = 2$ sentences would be omitted. Luckily, since all our training data
+consists of excactly 4000 sentences, it is divisible by all 3 batch sizes we use
+(1, 8 and 32). When running our experiments, however, we use 500 sentences for
+testing, meaning that $500\mod8 = 4$ and $500\mod32 = 20$ sentences were omitted
+for the experiments with batch size 8 and 32 respectively. This is a minor note
+to keep in mind.
 
 As for the actual implementation of the two models in PyTorch, as much
 pre-existing code within the framework as possible was used. This includes the
@@ -220,10 +238,17 @@ The CRF layer was implemented using the existing PyPi package
 \texttt{pytorch-crf} (v.0.7.2) by Kemal Kurniawan under the MIT
 license.\footnote{\url{https://github.com/kmkurn/pytorch-crf}}
 
-\textit{Early stopping does not save the best model, but returns the third one
-after it} \\
-\textit{Batching ignores remaining data, when it is not evenly dividable with the
-batch size}
+To utilize early stopping with patience during training, we did not explore the
+built-in functionalities that do exist in PyTorch. Instead, this was implemented
+manually, by measuring the models accuracy in predicting tags on the validation
+data set after each epoch. A counter keeps track of how many epochs in a row the
+model hasn't seen any improvement in accuracy and if this counter gets to 3 the
+training stops.
+
+One caveat, though. The model that is returned after training is not the one
+that achieved the highest accuracy. Rather, it is the one that saw the third
+consequtive drop in accuracy which means that it is more likely a sub-optimal
+model. This is another note to keep in mind when analyzing the results.
 
 
 \subsubsection*{TensorFlow}
