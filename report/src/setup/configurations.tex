@@ -14,7 +14,7 @@ in the subsequent chapters.
   \end{tabular}
 }
 
-\conf{llll}{Frameworks & Dynet & PyTorch & TensorFlow}
+\conf{llll}{Frameworks & DyNet & PyTorch & TensorFlow}
 
 \conf{llllllll}{Languages & Arabic & Danish & Hindi & Japanese & Norwegian & Russian & Urdu}
 
@@ -96,7 +96,6 @@ and evaluation of each framework, refer to Section~\ref{subsec:frameworks}.
 
 \subsubsection*{A note on computational graphs}
 
-% TODO: Move to relevant section
 When describing neural networks the goto abstraction is that of neurons which
 are linked to each other and arranged in layers. A neuron receives the output of
 each neuron from the previous layer, computes its own value, and sends it to the
@@ -191,9 +190,6 @@ decided to prefer the shorter training over the better accuracy, but didn't make
 this clear. As a result, we would expect DyNet to perform better in the
 experiments.
 
-% TODO: Move to environment?
-DyNet doesn't support multi-threading in their python implementation as of the
-time of this report, so all the experiments were run on a single core. 
 
 \subsubsection*{PyTorch}\label{sec:setup-implementations-pytorch}
 
@@ -366,6 +362,9 @@ which were created from similar sources, but within each task, the data is to
 some degree made from the same kind of source, the details are included in their
 respective chapters.
 
+To make model implementation easier, the datasets from the different tasks were
+standardized such that there was no need for task specific code.
+
 The size of our training sets are relatively small. The Penn Wall Streets
 journal treebank \ref{https://catalog.ldc.upenn.edu/LDC95T7} often used for the
 part of speech task, contains over 1.6 million words, where our datasets,
@@ -377,11 +376,6 @@ however not too small to learn a good representation.
 \ref{https://www.aclweb.org/anthology/P16-2067} found, when comparing the
 accuracy of different types of taggers, that when training on as little as 1000
 sentences their model could get over 90\% accuracy on a wide range of languages.
-
-% TODO: Extra notes
-
-The datasets from the different tasks were standardizes such that there was no
-need for task specific code. 
 
 We used the polyglot package to load the word embeddings. Specifically the
 Embeddings class from the polyglot mappings library. There are a lot of
