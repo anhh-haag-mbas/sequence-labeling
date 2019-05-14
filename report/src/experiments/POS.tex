@@ -168,8 +168,8 @@ batch sizes takes less than 10 epochs to find a satisfying convergence point.
 
 When we turn our attention to the accuracy achieved by the models, we see the
 results reflect the epoch numbers. In
-Figure~\ref{chart:acc-by-batch-and-lang-pos} the results are plotted according
-to batch size and language. A table of all the data can be found in
+Figure~\ref{chart:acc-by-batch-and-lang-pos} the results are plotted
+according to batch size and language. A table of all the data can be found in
 Table~\ref{table:acc-total-pos}.
 
 \begin{figure}[h!]
@@ -254,7 +254,8 @@ Taking into account the unusually low number of epochs it trained before
 seemingly converging, these irregularities in our TensorFlow
 \texttt{Bi-LSTM-CRF} combined with how similar the DyNet and PyTorch
 implementations behave, leads us to suspect that there is an error in the CRF
-implementation in TensorFlow. Section~\ref{} elaborates on this.
+implementation in TensorFlow. Section~\ref{sec:tf_conf} and
+Section~\ref{sec:discuss_models} elaborates on this.
 
 For the rest of the results, there seem to be a correlation beween accuracy and
 number of epochs trained.
