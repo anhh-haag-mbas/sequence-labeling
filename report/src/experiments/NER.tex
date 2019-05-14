@@ -32,8 +32,7 @@ From this we get the precision $P = {80 \over 80 + 10} = 0.88\ldots$, and recall
 $R = {80 \over 80 + 20} = 0.8$. The $F_1$ score is simply the harmonic mean
 between the precision and recall given by $F_1 = 2 \cdot {precision \cdot recall
 \over precision + recall}$. Based on our example this would be $F_1 = 2 \cdot
-{0.88 \ldots \cdot 0.8 \over 0.88\ldots + 0.8} = 0.8421$
-~\ref{https://www.toyota-ti.ac.jp/Lab/Denshi/COIN/people/yutaka.sasaki/F-measure-YS-26Oct07.pdf}.
+{0.88 \ldots \cdot 0.8 \over 0.88\ldots + 0.8} = 0.8421$ \cite{f-measure}.
 
 The rationale behind using the $F_1$ score is that usually a lot of the data is
 non-entities. A classifier which classified nothing as an entity would have a
@@ -48,26 +47,24 @@ Extracting entities from a text would allow for easy tagging, comparisons
 between documents, and linking to a knowledge base. A document mentioning
 different locations and capital cities such as ``France'', ``Tokyo'', and ``New
 Zealand'', could be about geografi or traveling. And similar a document
-mentioning people associated with economy could be about that
-\ref{https://www.aclweb.org/anthology/W03-0419}. 
+mentioning people associated with economy could be about economy
+\cite{sang2003introduction}.
 
-The state of the art model for NER based off of
-~\ref{https://paperswithcode.com/sota/named-entity-recognition-ner-on-conll-2003}
-is ~\ref{https://arxiv.org/pdf/1903.07785v1.pdf}. They use a bidirectional
-self-attention cloze model which seems very disimilar to anything we are doing.
-They achieve an F1 score of 93.5 on the CoNLL 2003 English dataset, which is
-0.41 points above the previous state of the art by
-~\ref{https://www.aclweb.org/anthology/C18-1139}, the same model mentioned in
-the previous section with state of the art results for POS.
+The state of the art model for NER based off of \cite{ner-state} is
+\cite{baevski2019cloze}. They use a bidirectional self-attention cloze model
+which seems very disimilar to anything we are doing. They achieve an F1 score of
+93.5 on the CoNLL 2003 English dataset, which is 0.41 points above the previous
+state of the art by \cite{akbik2018coling}, the same model mentioned in the
+previous section with state of the art results for POS.
 
 \subsubsection{Data}\label{sec:experiments-ner-data}
 
-For the NER task we used auto-annotated wikipedia data from~\ref{}{Cross-lingual
-Name Tagging and Linking for 282 Languages}. As the title suggests, this dataset
-contains annotated data for 282 languages in varying sizes. 
+For the NER task we used auto-annotated wikipedia data from
+\cite{pan-etal-2017-cross}. This dataset contains annotated data for 282
+languages in varying sizes. 
 
 The datasets are all in the BIO (or IOB) format, which has three different
-entities, organisations, people, and locations. The BIO format uses the
+entities; organisations, people, and locations. The BIO format uses the
 convention that the beginning of an entity is prefixes with a B and the
 continuation of an entity is prefixed with an I (for inside). Tokens which are
 not part of an entity is labeled O (for other). This gives the 7 labels, B-ORG,
@@ -347,7 +344,7 @@ language (the notable exceptions being cases for Japanese and Norwegian, where
 the scores are extraordinarily low. See Section~\ref{sec:experiments-ner-data}
 for more). This is interesting, as it confirms the expectation that the CRF
 layer is able to significantly improve the performance in performing NER tasks
-(~\ref{}).
+(~\cite{huang2015bidirectional}).
 
 We still don't see a consistent improvement on the DyNet implementations from
 the CRF layer. This again indicate, that the addition of a CRF layer to a 2
