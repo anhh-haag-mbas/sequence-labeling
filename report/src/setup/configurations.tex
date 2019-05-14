@@ -306,13 +306,13 @@ training set to get the most accurate loss values, which would in turn allow us
 to make the optimal update to the model to reduce the loss. We don't have to use
 the whole training set and can do fine with an estimate of the true loss by
 using mini-batches, however we would still expect bigger mini-batch sizes to
-improve the estimate and result in better, but slower training \cite{goldberg2016deep}.
+improve the estimate and result in better, but slower training~\cite{goodfellow2016deep}.
 
 The fact that bigger mini-batch sizes leads to worse results, suggests that a
 better estimate is not necessarily better for training. While a better estimate
 of the true loss results in a more optimal update to lower the loss, the greater
 variance in the loss estimate can also work as a regularization technique which
-results in better generalization ~\cite{goldberg2016deep}. The lower mini-batch
+results in better generalization~\cite{goodfellow2016deep}. The lower mini-batch
 sizes can then be explained as a way to avoid the model from getting stuck in
 local minima.
 
