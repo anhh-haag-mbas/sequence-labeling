@@ -104,9 +104,8 @@ the neural network abstraction is discarded in favour of a matrix and vector
 based representation which is closer to how the results are calculated in the
 computer. The concept of layers however remains, so a simple layer could be
 represented as the calculation $\sigma(W \cdot X + B)$, where $\sigma$ would be
-the activation function sidmoid.
-
-\ref{Deep learning 6.5.1, NNM for NLP ???}
+the activation function sidmoid \cite[Chapter~6.5.1]{goodfellow2016deep},
+\cite[Chapter~5.1]{goldberg2017neural}.
 
 When neural networks are implemented in frameworks the layer abstraction is also
 ignored in favor of so called computational graphs. In a computational graph
@@ -299,22 +298,22 @@ comparisons as possible.
 
 The three mini-batch sizes were motivated by~\cite{reimers2017reporting} who
 reported worse accuracy for larger sizes of mini-batches with a sweet spot
-between 8 and 32. Similar low values are used by
-\cite{huang2015bidirectional}. While this emperically seems to
-work, it is a bit counter to the theory. Ideally we would train on the whole
-training set to get the most accurate loss values, which would in turn allow us
-to make the optimal update to the model to reduce the loss. We don't have to use
-the whole training set and can do fine with an estimate of the true loss by
-using mini-batches, however we would still expect bigger mini-batch sizes to
-improve the estimate and result in better, but slower training \cite{goldberg2016deep}.
+between 8 and 32. Similar low values are used by \cite{huang2015bidirectional}.
+While this emperically seems to work, it is a bit counter to the theory. Ideally
+we would train on the whole training set to get the most accurate loss values,
+which would in turn allow us to make the optimal update to the model to reduce
+the loss. We don't have to use the whole training set and can do fine with an
+estimate of the true loss by using mini-batches, however we would still expect
+bigger mini-batch sizes to improve the estimate and result in better, but slower
+convergence \cite[Chapter~8.1.3]{goodfellow2016deep}.
 
 The fact that bigger mini-batch sizes leads to worse results, suggests that a
 better estimate is not necessarily better for training. While a better estimate
 of the true loss results in a more optimal update to lower the loss, the greater
 variance in the loss estimate can also work as a regularization technique which
-results in better generalization ~\cite{goldberg2016deep}. The lower mini-batch
-sizes can then be explained as a way to avoid the model from getting stuck in
-local minima.
+results in better generalization ~\cite[pp.~279]{goodfellow2016deep}. The lower
+mini-batch sizes can then be explained as a way to avoid the model from getting
+stuck in local minima.
 
 The three epochs is to see how well the models perform based on very limited
 training, on some reasonable amount of training, and the upper limits of the
