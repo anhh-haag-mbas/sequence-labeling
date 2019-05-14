@@ -375,7 +375,7 @@ the larger batch size when CRF is applied (the drop goes from 7.5\% to 8.1\%).
     }\label{chart:f1-by-batch-and-lang}
 \end{figure}
 
-\subsubsection{Language comparison}
+\subsubsection{Language comparison}\label{sec:experiments-ner-lang-comparison}
 
 Looking at the tag distributions in Table~\ref{table:token-distribution-ner}, we
 notice several oddities, that are worth mentioning. As we consider the results,
@@ -412,10 +412,11 @@ It especially seems odd, that this implementation --- that in all other cases
 gets worse with an increasing batch size --- actually outperforms the
 corresponding DyNet implementation at batch size 32. Further, as the only example
 of this, the PyTorch \textit{Bi-LSTM-CRF} goes from 8.1 through 11.7 to 27.8 for
-increasing batch sizes. Last but not least, the Japanese scores are overall by
-far the worst, so with these irregularities in mind aswell as the data issues
-mentioned in Section~\ref{sec:experiments-ner-data}, we assume that there are
-flaws in this experiment.
+increasing batch sizes --- in all other cases, an increasing batch size for
+PyTorch leads to decreasing scores. Last but not least, the Japanese scores are
+overall by far the worst, so with these irregularities in mind aswell as the
+data issues mentioned in Section~\ref{sec:experiments-ner-data}, we assume that
+there are flaws in this experiment.
 
 For Russian and Urdu, we observe that the test data almost solely consists of a
 single entity type, which believe can make the results very inflated. For the

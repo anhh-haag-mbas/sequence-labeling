@@ -21,6 +21,7 @@
     style=authoryear-icomp,
     eprint=false
 ]{biblatex}
+\usepackage{xstring}
 \addbibresource{src/bibliography.bib}
 
 % Better inline directory listings
@@ -39,6 +40,7 @@ Bastholm}
 \date{2019--05--15}
 
 \begin{document}
+
 \pagenumbering{roman}
 \input{src/front_matter}
 \pagenumbering{arabic}
@@ -48,6 +50,9 @@ Bastholm}
 \input{src/experiments}
 \input{src/discussion}
 \input{src/conclusion}
-% \input{bibliography something something}
+
+\nocite{*}
+% \printbibliography[heading=bibnumbered]
+\printbibliography[heading=bibintoc]
 
 \end{document}

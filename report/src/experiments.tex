@@ -6,45 +6,148 @@
 
 \subsection{OOV results}
 
-Comparing the two-layer \texttt{Bi-LSTM-CRF} of DyNet and the one-layer
-\texttt{Bi-LSTM-CRF} of PyTorch on their ability to correctly classify
-out-of-vocabulary (OOV) words, we see once again that the two-layer model of
-DyNet performs slightly better. On average across languages, batch sizes, epochs
-and seeds, the two-layer model has an OOV accuracy (ie.\ the percentage of
-correctly classified OOV words) of 86.2\% for NER data, where as the one-layer
-model only achieves an OOV accuracy 81.0\%. The results are shown in
-Table~\ref{table:oov-accuracy-crf}.
+We now consider the out-of-vocabulary (OOV) accuracy of the models. Here, we
+focus our attention on the results of the DyNet and the PyTorch implementations,
+as the TensorFlow results unfortunately were corrupted. The overall results for
+both the POS and the NER task can be found in
+Table~\ref{table:oov-accuracy-total}.
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{l c c c c}
+    \begin{tabular}{c l c c|c c}
      \toprule
-     \multirow{2}{*}{\bfseries Epochs}
-     & \multicolumn{2}{c}{\bfseries NER}
-     & \multicolumn{2}{c}{\bfseries POS} \\
-              & DyNet  & PyTorch & DyNet  & PyTorch \\ \cmidrule(lr){1-5}
-     1        & 81.8\% & 76.4\%  & 81.8\% & 87.8\%  \\
-     5        & 87.5\% & 82.8\%  & 91.3\% & 91.0\%  \\
-     patience & 89.3\% & 83.9\%  & 92.8\% & 91.8\%  \\ \cmidrule(lr){1-5}
-     \bfseries Total & 86.2\% & 81.0\%  & 88.4\% & 90.2\% \mdseries \\
+       \multirow{2}{*}{\bfseries Task}
+     & \multirow{2}{*}{\bfseries Batch size}
+     & \multicolumn{2}{c}{\bfseries DyNet}
+     & \multicolumn{2}{c}{\bfseries PyTorch} \\
+
+      \cmidrule(lr){3-6}
+     && Bi-LSTM  & Bi-LSTM-CRF & Bi-LSTM  & Bi-LSTM-CRF \\ 
+
+      \cmidrule(lr){1-6}
+      \multirow{4}{*}{\textbf{POS}}
+      &  1 & 64.1\% & 63.9\%  & 58.4\% & 60.9\%  \\
+      &  8 & 62.2\% & 62.4\%  & 51.2\% & 59.3\%  \\
+      & 32 & 57.5\% & 58.4\%  & 44.0\% & 54.7\%  \\ \cmidrule(lr){2-6}
+      & \textbf{Total} &
+      \textbf{61.3\%} & \textbf{61.6\%}  & \textbf{51.2\%} & \textbf{59.1\%} \\
+
+      \cmidrule(lr){1-6}
+      \multirow{4}{*}{\textbf{NER}}
+     &  1 & 82.4\% & 81.8\%  & 70.9\% & 60.1\%  \\
+     &  8 & 81.7\% & 79.9\%  & 69.6\% & 72.0\%  \\
+     & 32 & 79.4\% & 78.1\%  & 65.5\% & 66.1\%  \\ \cmidrule(lr){2-6}
+     & \textbf{Total} &
+      \textbf{81.2\%} & \textbf{79.9\%}  & \textbf{68.7\%} & \textbf{66.1\%} \\
+
      \bottomrule
     \end{tabular}
-    \caption{OOV accuracy for the \texttt{Bi-LSTM-CRF} models implemented in
-        DyNet (two-layer model) and in PyTorch (one-layer model). The rows
-        indicate the number of epochs run during training, where `patience'
-        refers to a training session with early stopping after 3 consecutive
-        epochs of declining accuracy in the validation set.
-    }\label{table:oov-accuracy-crf}
+    \caption{OOV accuracy (percentage of correctly labelled OOV words) for the DyNet
+        and PyTorch implementations of \texttt{Bi-LSTM} and
+        \texttt{Bi-LSTM-CRF}. Only training with early stopping is considered. 
+    }\label{table:oov-accuracy-total}
 \end{table}
- 
 
-For POS data, this is not the case, as the average accuracy actually tips in
-favour of the one-layer model of PyTorch (88.4\% against 90.2\%). However, when
-training using patience to determine when to stop, the upper hand is again with
-the two-layer model, which achieves an OOV accuracy of 92.8\% against 91.8\%.
-This is a small difference, and it could very well be the result of the PyTorch
-implementation, in which it is not the optimal model, that is returned, but the
-optimal model after three extra epochs of declining accuracy on the validation
-set (see Section~\ref{} for more details).
+Once again, we see a pattern where the DyNet implementations achieves the
+overall best results. Especially for the NER task, DyNet is significantly
+better at classifying words that it has not yet seen. We also observe, that
+adding a CRF layer improves the OOV accuracy for the single layer model of
+PyTorch. However, it is only consistent for the batch sizes larger than 1.
+
+Furthermore, the effect of the CRF layers is most notable for the POS task.
+In this instance, even the DyNet implementation benefits from CRF for larger
+batch sizes and PyTorch sees an increase in accuracy for all batch sizes with a
+most significant improvement for batch size 32 (44.0\% without CRF against
+54.7\% for the CRF model). For the NER task, DyNet sees not improvement with
+CRF, whereas PyTorch still benefits for batch sizes of 8 and 32.
+
+If we turn of focus to the languages and compare the OOV accuracies achieved, we
+find an interesting correlation between the absolute benefit of CRF between the
+two framework implementations. Figure~\ref{chart:oov-accuracy-lang-ner} plots
+the OOV accuracies for the models, averaged across batch sizes. We stick to
+looking at the results for the NER data, as these results give a more consistent
+picture even though the POS results does not significantly alter the pattern.
+
+\begin{figure}[h!]
+    \includegraphics[width=\textwidth]{chart-oov-accuracy-lang-ner}
+    \caption{Averged OOV accuracies for the DyNet and PyTorch models with and
+        without CRF (TRUE and FALSE, respectively) across languages (NER only).
+    }\label{chart:oov-accuracy-lang-ner}
+\end{figure}
+
+These results show, that for all languages, except Hindi, Japanese and
+Norwegian, both the DyNet and the PyTorch implementation sees an overall
+improvement when applying CRF.\ The benefit is more evident for PyTorch and its
+single layer model, but the improvement is still consistent for DyNet aswell. On
+the other hand, the aforementioned languages shows the opposite: the CRF layer
+hurts the OOV accuracy significantly.
+
+This is especially evident for Japanese and Norwegian. We suspect this could
+have something to do with the data issues mentioned in
+Section~\ref{sec:experiments-ner-data}
+and~\ref{sec:experiments-ner-lang-comparison}. However, it might also be
+relevant to look at the actual number of OOV words in the data and their
+percentage of the total number of words. Those results can be seen in
+Table~\ref{table:oov-percentages-total}.
+
+Most notable is how many OOV words there exist in the Japanese test data.
+This is consistent with what we described in
+Section~\ref{sec:experiments-ner-data} about the way the Polyglot embeddings
+differed from the way the POS data was set up. For the NER data, however,
+Japanese show a very small percentage of OOV words.
+
+For Norwegian, there is a clear discrepancy between the testing and the training
+data. In the training data, it only encouters 10.1\% OOV words, but in the test
+data almost very third word is unknown. This can in itself not explain why
+Norwegian falls short on OOV accuracy for the \texttt{Bi-LSTM-CRF} models, but
+it may have had an influence. The high OOV percentages of Russian and Urdu is in
+contrast with their strong OOV accuracy, but we believe this can be attributed
+general tag distribution described in
+Section~\ref{sec:experiments-ner-lang-comparison}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l c c c|c c c}
+        \toprule
+        \multirow{2}{*}{\bfseries Language} &
+        \multicolumn{2}{c}{\bfseries POS} &
+        \multicolumn{2}{c}{\bfseries NER} \\
+
+        \cmidrule(lr){2-7}
+        & Total words & OOV words & OOV \%
+        & Total words & OOV words & OOV \% \\
+
+        \cmidrule(lr){1-7}
+        \multicolumn{7}{l}{\bfseries Training} \\
+
+        \cmidrule(lr){1-7}
+        ar & 150631 &  8433 &  5.6\% &  27159 & 2737 & 10.1\% \\
+        da &  72380 &  5600 &  7.7\% &  35498 & 4728 & 13.3\% \\
+        hi &  80940 &  3213 &  4.0\% &  23276 & 3142 & 13.5\% \\
+        ja &  88821 & 37767 & 42.5\% & 122377 & 5928 &  4.8\% \\
+        no &  60076 &  4184 &  7.0\% &  41172 & 4144 & 10.1\% \\
+        ru &  75458 &  7846 & 10.4\% &  26232 & 4871 & 18.6\% \\
+        ur & 107568 &  8070 &  7.5\% &  21391 & 9884 & 46.2\% \\
+
+        \cmidrule(lr){1-7}
+        \multicolumn{7}{l}{\bfseries Testing} \\
+
+        \cmidrule(lr){1-7}
+        ar & 19059 &  734 &  3.9\% &  2991 &  303 & 10.1\% \\
+        da &  9757 &  803 &  8.2\% &  4534 &  459 & 10.1\% \\
+        hi & 10149 &  441 &  4.3\% &  2884 &  382 & 13.2\% \\
+        ja & 11119 & 4694 & 42.2\% & 14723 &  795 &  6.5\% \\
+        no &  7904 &  514 &  6.5\% &  5574 & 1731 & 31.1\% \\
+        ru &  8476 &  889 & 10.5\% &  2280 &  507 & 22.2\% \\
+        ur & 13412 & 1110 &  8.3\% &  2813 & 1838 & 65.3\% \\
+
+        \bottomrule
+    \end{tabular}
+    \caption{Relation between total number of words and the number of OOV words
+        in the training and the testing data for every language accross tasks.
+    }\label{table:oov-percentages-total}
+\end{table}
+
+
 
 \pagebreak

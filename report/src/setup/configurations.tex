@@ -7,21 +7,26 @@ There are a total of 3780 different combinations of configurations based on the
 A short list of the parameters are given below, and are explained more in detail
 in the subsequent chapters.
 
-%TODO: Make nice table or something
-Frameworks: DyNet, PyTorch, TensorFlow
+\newcommand{\conf}[2]{%
+  \StrCut{#2}{&}\csA\csB
+  \begin{tabular}{#1}
+    \textbf{\csA} & \csB \\
+  \end{tabular}
+}
 
-Languages: Arabic, Danish, Hindi, Japanese, Norwegian, Russian, Urdu
+\conf{llll}{Frameworks & DyNet & PyTorch & TensorFlow}
 
-Tasks: Part-of-speech, Named Entity Recognition
+\conf{llllllll}{Languages & Arabic & Danish & Hindi & Japanese & Norwegian & Russian & Urdu}
 
-Models: Bi-LSTM, Bi-LSTM-CRF
+\conf{lll}{Tasks & Part-of-speech & Named Entity Recognition}
 
-Seeds: 322233, 521403, 421213, 5123, 613321
+\conf{lll}{Models & Bi-LSTM & Bi-LSTM-CRF}
 
-Mini-batch-size: 1, 8, 32
+\conf{llllll}{Seeds & 322233 & 521403 & 421213 & 5123 & 613321}
 
-Epochs: 1, 5, 50 using early stopping patience 3
+\conf{llll}{Mini-batch-size & 1 & 8 & 32}
 
+\conf{llll}{Epochs & 1 & 5 & 50 using early stopping with a patience of 3}
 
 \subsubsection{Languages}
 
@@ -53,22 +58,25 @@ could only find a single verb-subject-object language with enough data. There
 was no data for the remaining languages. 
 
 The 7 languages we picked, along with their word ordering, language family and
-genus is given in~\ref{} below.
+genus is given table~\ref{table:langfam}.
 
-% TODO: Make nice table
-* Arabic,   VSO, Afro-Asiatic, Semitic 
-
-* Hindi,    SOV, Indo-European, Indic
-
-* Urdu,     SOV, Indo-European, Indic
-
-* Japanese, SOV, Japanese
-
-* Danish,   SVO, Indo-European, Germanic
-
-* Norwegian,SVO, Indo-European, Germanic
-
-* Russian,  SVO, Indo-European, Slavic
+\begin{table}[!ht]
+  \centering
+  \begin{tabular}{llll}
+    \textbf{Language} & \textbf{Word ordering} & \textbf{Family} & \textbf{Genus} \\
+    \midrule
+    Arabic    & VSO & Afro-Asiatic  & Semitic \\
+    Hindi     & SOV & Indo-European & Indic \\
+    Urdu      & SOV & Indo-European & Indic \\
+    Japanese  & SOV & Japanese      & \\
+    Danish    & SVO & Indo-European & Germanic \\
+    Norwegian & SVO & Indo-European & Germanic \\
+    Russian   & SVO & Indo-European & Slavic \\
+  \end{tabular}
+  \caption{Overview over picked languages, their word ordering, language
+  family and genus}
+  \label{table:langfam}
+\end{table}
 
 The concern of availability of data and the origin is elaporated on
 in~\ref{}{3.1}
