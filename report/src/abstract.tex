@@ -1,3 +1,21 @@
 \begin{abstract}
-This is where we will write the abstract
+Sequence labelling is a fundamental task in natural language processing and
+there exists several renowned machine learning models that achieve
+state-of-the-art results on such tasks. In this thesis, we examine two such
+models, the bidirectional LSTM and the Conditional Random Field, and see how the
+perform on a number of different languages. We limit the scope to include the
+part-of-speech tagging task and the named entity recognition task, and we
+implement and review the models in three different machine learning frameworks,
+DyNet, Pytorch and TensorFlow. We define several configurations and perform a
+total of 3780 experiments, and we give an introductory description of the
+theoretical and empirical background of the models used and the parameters used
+in our configurations. Our results show, that it is possible to achieve
+strong performance by applying CRF to the standard bidirectional LSTM, but also
+that this advantage diminishes if 2 bidirectional LSTMs are combined. We also
+observe, that batch sizes have an impact on both the accuracies of the models
+and the time it takes for the models to converge. Furthermore, we find that the
+pretrained Polyglot word embeddings is ill-suited for certain data sources for
+Japanese part-of-speech data. Finally, we give suggestions for improvements
+based on our findings, and we give individual reviews of the frameworks used for
+implemenations.
 \end{abstract}
