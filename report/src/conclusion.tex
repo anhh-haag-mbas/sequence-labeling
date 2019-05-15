@@ -17,6 +17,10 @@ Our implementations perform quite poorly on the NER task, despite converging
 quite quickly. This is likely a result of doing early stopping on accuracy
 instead of $F_1$ score.
 
+Our TensorFlow implementation did not mask out padding, which caused a
+significant drop in accuracy, as such our results mostly apply to PyTorch and
+DyNet.
+
 % Polyglot has problems
 The Japanese word embeddings for Polyglot has not been properly split on words.
 It is only properly split on hiragana and katakana, kanji is just split
