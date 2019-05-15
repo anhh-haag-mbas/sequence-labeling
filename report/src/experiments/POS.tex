@@ -13,7 +13,7 @@ noun, verb, adjective, etc. For example, the sentence ``Our work is done'' would
 labeled ``determiner noun auxiliary verb''.
 
 For our dataset, there are around 17 different labels, but some languages don't
-use all of them. The same words can have different labels in different context,
+use all of them. The same words can have different labels in different contexts,
 so the classifier should be able to figure out which label is a better fit on a
 sentence by sentence basis. Simply remembering that word $X$ has label $Y$
 wouldn't be able to generalize very well.
@@ -34,55 +34,55 @@ The state of the art model for POS based off of (\cite{aclweb-pos-state}) is
 (\cite{akbik2018coling}) which is a Bi-LSTM-CRF model similar to what we have
 made. Based on the defaults we can see from their source code that they use an
 embedding size of 100, a single layer Bi-LSTM, mini-batch of 32, patience of 3,
-SGD with a learning rate of 0.1, and dropout 0.5, however the specifics for the
+SGD with a learning rate of 0.1, and dropout 0.5, however, the specifics for the
 hidden size is unclear. Many of their hyperparameters are the same as what we
 use, but they could use other values for their state of the art model. 
 
-Where their model definetely stands out is their use of what they call
+Where their model definetely stands out are their use of what they call
 ``contextual string embeddings'', which are character embeddings, but they use
 characters from not just the target word, but words before and after it in the
 sentence. Every character from the beginning of the sentence, to the end of the
-word is given to a forward language model. And every character from the end of
-the sentence, to the beginning of the word is given to a backwards language
+word, is given to a forward language model. And every character from the end of
+the sentence, to the beginning of the word is given to a backward language
 model. These language models are pre-trained, and the result of each model is
 concatenated to form the complete embedding. 
 
 Their model is evaluated on the Wall Streets Journal datasets achieves a 97.85\%
-accuracy, 0.21\% percent points above the previous best model by
+accuracy, 0.21\% percentage points above the previous best model by
 (\cite{choi2016dynamic}). Meaning the new model would make $\sim8.9\%$ fewer
 errors on the test set.
 
 \subsubsection{Data}\label{sec:experiments-pos-data}
 
-For this task we used datasets from (\cite{universaldependencies}) which has a
+For this task, we used datasets from (\cite{universaldependencies}) which has a
 broad selection of languages with multiple datasets (called treebanks) in each.
-The datasets are all in the CoNNL-U format, but are created from different types
+The datasets are all in the CoNNL-U format but are created from different types
 of sources. The source types are given as tags such as news, legal, blog, wiki,
 etc. As it is unclear how much of the data is made from each of the sources
-given, we prefered datasets made from single source types to keep the datasets
+given, we preferred datasets made from single source types to keep the datasets
 similar to the best of our abilities.
 
 Since the datasets are already split, these were concatenated before splitting
-into our own sizes. Concatenation happened using the command \code{cat *.conllu >
-combined.conllu}, since the convention for the datasets is to name the files
-something with train, test, and dev, the assumed order of the files is dev,
-test, and train. Meaning that if the dev set (eg.\ the validation set) contains
-5000 sentence, only these were used in our datasets, and none of the sentences
-from the test or training sets would be used. No guarantees however were made to
+into our own sizes. Concatenation happened using the command \code{cat *.conllu
+> combined.conllu}, since the convention for the datasets, is to name the files
+something with `train', `test', and `dev', the assumed order of the files is `dev',
+`test', and `train'. Meaning that if the `dev' set (eg.\ the validation set) contains
+5000 sentences, only these were used in our datasets, and none of the sentences
+from the test or training sets would be used. No guarantees were made to
 guarantee this ordering, so depending on the naming conventions used in the
-specific treebanks this may differ. This shouldn't matter however since there
-shouldn't be any difference between the data in the different files.
+specific treebanks this may differ. This shouldn't matter since there shouldn't
+be any difference between the data in the different files.
 
 Some datasets, such as the Norwegian dataset, contains contractions alongside
-the individual words. Since the contration is usually unlabelled in the datasets
+the individual words. Since the contraction is usually unlabelled in the datasets
 these were simply removed from the data for ease of parsing. This has the
 obvious consequence that the models are not trained on the contractions of words
-which are often more commonly used. This however shouldn't affect the
-comparisons between word orderings since contractions shouldn't affect these and
-the test data would also be using the same convention where contractions are
-split. An alternative approach would be to create two sentences, one using the
-contraction and another without. This would be a way to extend the dataset and
-learn to properly tag both the individual words and their contraction.
+which are often more commonly used. This shouldn't affect the comparisons
+between word orderings since contractions shouldn't affect these and the test
+data would also be using the same convention where contractions are split. An
+alternative approach would be to create two sentences, one using the contraction
+and another without. This would be a way to extend the dataset and learn to
+properly tag both the individual words and their contraction.
 
 The treebanks we selected were all made from news, where some used additional
 sources such as non-fiction and spoken. A list of the languages, their
@@ -145,8 +145,8 @@ Figure~\ref{table:token-distribution-pos}.
 \subsubsection{Model convergence}
 
 Looking at the results of the experiments, we mainly focus on the case where the
-models were trained with early stopping. As such, we where
-interested in seeing how the models converged with different batch sizes aswell
+models were trained with early stopping. As such, we were
+interested in seeing how the models converged with different batch sizes as well
 as with and without the CRF layer. The average number of epochs run for each
 framework implementation is shown in Table~\ref{table:epochs-run-pos}.
 
@@ -171,9 +171,9 @@ framework implementation is shown in Table~\ref{table:epochs-run-pos}.
     }\label{table:epochs-run-pos}
 \end{table}
 
-From the data it is clear, that an increase in batch size also means that the
+From the data, it is clear, that an increase in batch size also means that the
 model takes longer to converge. This is expected, as the number of
-backpropagation operations decrease when the input data is split into larger
+backpropagation operations decreases when the input data is split into larger
 mini-batches (eg.\ when working with 4000 sentences and a batch size of 1, each
 epoch will update its weights 4000 times. This number drops to
 $\frac{4000}{32}=125$ when the batch size is 32).
@@ -184,14 +184,14 @@ TensorFlow, none of our experiments reached a point of convergence within the
 upper bound on the number epochs, and for PyTorch with batch size 32 and
 TensorFlow with batch size 8 the average number also indicate that only very few
 training sessions reached the point of convergence before the epoch limit. This
-also suggests, that we set the upper bound too strict.
+also suggests that we set the upper bound too strict.
 
 It is a completely different story for the \texttt{Bi-LSTM-CRF} models. Here,
 all experiments terminated early and the relation between the frameworks
 changed.  DyNet had an almost identical epoch average, but PyTorch saw a more
 than 50\% drop and for TensorFlow the drop was more than 80\%. The explanation
 for this could be, that the 2 layer \texttt{Bi-LSTM} of the DyNet implementation
-is a more efficient model than the regular \texttt{Bi-LSTM} with only 1 layer,
+is a more efficient model than the regular \texttt{Bi-LSTM} with only 1 layer
 and that the addition of a CRF layer is insignificant (in terms of the time it
 takes to find a convergence point). For the PyTorch and TensorFlow
 implementation, however, it seems that the CRF layer greatly helps the
@@ -282,13 +282,13 @@ Table~\ref{table:acc-total-pos}.
 
 
 There is a clear outlier in the data and that is the TensorFlow implementation.
-Especially for the \texttt{Bi-LSTM-CRF} model, the this yields significantly
-lower results and a pattern that does not resemble that of the other two. A good
-example is the fact that for Japanese, both the DyNet and the PyTorch
-implementation perform worse than they do for any other language, whereas the
-TensorFlow one has its best accuracy on Japanese with a batch size of 1 and  a
-consitently above-average score for batch size 8 and 32, though all 3 results
-are more than 10\% lower than those of DyNet and PyTorch.
+Especially for the \texttt{Bi-LSTM-CRF} model, this yields significantly lower
+results and a pattern that does not resemble that of the other two. A good
+example is that for Japanese, both the DyNet and the PyTorch implementation
+perform worse than they do for any other language, whereas the TensorFlow one
+has its best accuracy on Japanese with a batch size of 1 and  a consistently
+above-average score for batch size 8 and 32, though all 3 results are more than
+10\% lower than those of DyNet and PyTorch.
 
 Taking into account the unusually low number of epochs it trained before
 seemingly converging, these irregularities in our TensorFlow
@@ -296,10 +296,10 @@ seemingly converging, these irregularities in our TensorFlow
 implementations behave, leads us to suspect that there is an error in our CRF
 implementation in TensorFlow. Section~\ref{sec:discuss_models} elaborates on this.
 
-For the rest of the results, there seem to be a correlation beween accuracy and
+For the rest of the results, there seems to be a correlation between accuracy and
 number of epochs trained.
 
-For example, the results show that the non-CRF models perform quite simiar for
+For example, the results show that the non-CRF models perform quite similar for
 most languages when the batch size is 1 (except for the TensorFlow
 implementation, which underperforms severely for Arabic, Danish, and Russian).
 This is in compliance with the finding that for a batch size of 1, all models
@@ -311,17 +311,17 @@ In the cases where the models did not get to properly converge (ie.\ the
 implementation of \texttt{Bi-LSTM} in TensorFlow with batch size 8 and 32 and in
 PyTorch with batch size 32), the accuracies achieved are not as good as those of
 the DyNet implementation, which terminated training before 25 epochs for
-all batch sizes. Its also worth noticing, that the PyTorch implementation with
+all batch sizes. It's also worth noticing, that the PyTorch implementation with
 batch size 8 is also doing notably worse than the corresponding DyNet one, even
 though it did seem to converge, albeit at a higher epoch number of 39.86. Since
 TensorFlow with a batch size of 1 is also doing worse on average and spent more
 than 30 epochs converging, we may see that the eventual convergence after 30
-epochs is in higher risk of ending up in a sub-optimal state (ie.\ gets stuck in
+epochs is in a higher risk of ending up in a sub-optimal state (ie.\ gets stuck in
 a local minima that is not optimal).
 
 For the \texttt{Bi-LSTM-CRF} models, the DyNet and the PyTorch implementation
-performs nearly identical, with a small advantage for DyNet in most cases. It is
-however interesting to see, that PyTorch gets a significant improvement from the
+performs nearly identical, with a small advantage for DyNet in most cases. It is,
+however, interesting to see, that PyTorch gets a significant improvement from the
 CRF layer and outperforms its \texttt{Bi-LSTM} model for all batch sizes of 8
 and 32. On the other hand, a batch size of 1 performs worse in all cases with
 the CRF layer. This could mean that in training a CRF model, backpropagation
@@ -337,6 +337,6 @@ exception being Urdu at batch size 32 where \texttt{Bi-LSTM-CRF} in PyTorch
 beats it by 0.02\%). We believe this is an indication, that a 2 layer
 bidirectional LSTM model performs comparably to single layer bidirectional LSTM
 model with CRF, and that adding a CRF layer to a 2 layer bidirectional LSTM
-model has negligible effect but increases training time.
+model has a negligible effect but increases training time.
 
 \pagebreak

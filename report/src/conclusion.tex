@@ -18,6 +18,10 @@ implementation for larger batch size, while the DyNet implementation generally
 did best without CRF.\ For TensorFlow, CRF hurt the accuracy to a degree that
 make us believe, that there is some error in the implementation.
 
+Also, our TensorFlow implementation did not mask out padding, which caused a
+significant drop in accuracy, as such our results mostly apply to PyTorch and
+DyNet.
+
 Our implementations perform quite poorly on the NER task, despite converging
 quite quickly. This is likely a result of doing early stopping on accuracy
 instead of $F_1$ score. On the POS task however, we were able to consistently
