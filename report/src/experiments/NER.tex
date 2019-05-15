@@ -419,6 +419,10 @@ All three framework implemenations achieve scores of more than 90, and the for
 a batch size of 1, the PyTorch \texttt{Bi-LSTM-CRF} model reaches a stunning
 score of 98.0.
 
+Since the datasets were very large there may exist some ordering of the
+sentences which results in these distributions. As such we may have seen more
+comparable datasets had we shuffled the data before splitting.
+
 \subsubsection*{Accuracy}
 
 For completeness sake, we also include the data for our results on general
