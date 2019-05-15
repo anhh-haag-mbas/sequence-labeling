@@ -2,61 +2,52 @@
 
 \section{Conclusion}
 
+Our experiments have yielded widely different results for the different
+configurations.
+
 % # factual things #
 The \texttt{Bi-LSTM-CRF} model seems to generally converge faster than the
-\texttt{LSTM-CRF} models. Single layer implementations of \texttt{Bi-LSTM}
+\texttt{Bi-LSTM} models. Single layer implementations of \texttt{Bi-LSTM}
 seem to converge much slower than the 2 layer implementations, as batch size
 increases.
 
 Adding CRF seems to improve accuracy of the NER task as expected. CRF seems to
 have a very little impact on our DyNet implementation compared to our PyTorch
-implementation.
+implementation. On the POS task, CRF consistently improved the PyTorch
+implementation for larger batch size, while the DyNet implementation generally
+did best without CRF.\ For TensorFlow, CRF hurt the accuracy to a degree that
+make us believe, that there is some error in the implementation.
 
-% # fuckups ours or others discovered #
 Our implementations perform quite poorly on the NER task, despite converging
 quite quickly. This is likely a result of doing early stopping on accuracy
-instead of $F_1$ score.
+instead of $F_1$ score. On the POS task however, we were able to consistently
+get accuracies over 90\% for our best models.
 
-% Polyglot has problems
-The Japanese word embeddings for Polyglot has not been properly split on words.
-It is only properly split on hiragana and katakana, kanji is just split
-characterwise.
+Throughout our results, we find that the 2 layered Bi-LSTM implementation in
+DyNet had the best performance of all our implemenations. The
+\texttt{Bi-LSTM-CRF} model of PyTorch had the second best results, similar to
+(albeit a bit lower) the DyNet implemenations.
 
-% Extracted wikidata has problems.
-The automaticlly extracted Wikipedia data for the NER task has several
-problems.
-The Japanese data is split per character and not per word.
-Some languages have problems with the distribution of tags.
-Either by missing certain tags or by having a very skewed distribution between
-entities and other tags.
+Another general tendency in the results, is that increasing batch sizes hurt
+performance. There are some exceptions, but overall this seem to be the case.
 
-% TODO: Write something summing things up
+For Japanese, we observed a worse performance than for the other languages, both
+in the POS and in the NER task. We found that, for the POS case, this can
+probably be attributed to the fact, that Polyglot embedding for Japanese is
+mostly character based, whereas the POS data exposed multi-character words. For
+this reason, Japanese had a much higher OOV percentage than the other languages.
 
-% POS findings:
+The tag distribution on the language data seems to play a part in the resulting
+scores. For the NER data, we see that the languages with the most uneven tag
+distribution or an exceptionally high number of non-entities performs more
+irregularly. Also, we anticipate that we could have had better and more
+comparable results, had the training, testing and validation data been more
+aligned in terms of tag distribution.
 
-% \begin{itemize}
-%     \item Our TensorFlow implementation of CRF is buggy
-%     \item The single layer implementations of \texttt{Bi-LSTM} requires
-%         significantly more epochs to converge during trainer than the 2 layer
-%         model when the batch size increase
-%     \item CRF makes the models converge faster during training
-%     \item CRF improves the accuracy on the single layer \texttt{Bi-LSTM}
-%         implementation of PyTorch, but has negligible effect on the DyNet
-%         implementation
-%     \item PyTorch and DyNet performs very similar for \texttt{Bi-LSTM-CRF}
-% \end{itemize}
-
-% NER findings:
-
-% \begin{itemize}
-%     \item CRF makes the models converge faster during training
-%     \item Our models perform poorly despite fast convergence, probably a result
-%       of using accuracy instead of $F_1$ for early stopping.
-%     \item Adding CRF to the models seems to help, which is in line with our
-%       expectations.
-%     \item We identified several problems with the Wikipedia extracted NER data.
-%       Some languages were missing or almost missing some tags.
-%       The Japanese data was split per character and not per word.
-% \end{itemize}
+In working with the frameworks, we experienced less inconvenience in working
+with the two dynamic frameworks (DyNet and PyTorch) compared to the static one
+(TensorFlow). Though TensorFlow has a richer community and a larger set of
+online ressources, the level of abstraction was less suited for machine learning
+beginners than that of DyNet and Pytorch were.
 
 \pagebreak
