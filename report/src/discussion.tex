@@ -3,20 +3,20 @@
 
 \subsection{Possible sources of Discrepancies}
 
-Throughout the report we have noted various unexpected results and possible
+Throughout the report, we have noted various unexpected results and possible
 causes. We here include an overview of these discrepancies.
 
 \subsubsection{Data}
 
 Our datasets for NER had some odd distributions of tags. When most of the
-testing data consists of a single type of entity the taggers performed almost
+testing data consist of a single type of entity the taggers performed almost
 perfectly as was the case for Urdu and Russian, and was seen for all frameworks.
 
 It would be interesting to see how well the tagger generalizes on more evenly
 distributed data and if the trend would continue, or if we only see these
 results for very specific data.
 
-For the POS task we noticed significantly worse results on Japanese. Since our
+For the POS task, we noticed significantly worse results on Japanese. Since our
 polyglot embedding was for the most parts a single character embedding for
 Japanese, but the data properly split for words, most of the tokens were out of
 vocabulary. The OOV-accuracy was among the best for the different languages, not
@@ -30,21 +30,21 @@ and $F_1$ score based on different numbers of OOV words.
 
 \subsubsection{Models}\label{sec:discuss_models}
 
-The implementations in the various frameworks differs in some ways which we
+The implementations in the various frameworks differ in some ways which we
 believe could have an impact on the differences between their results. 
 
-DyNet as the only framework uses a two layer Bi-LSTM, one more than what is used
+DyNet as the only framework uses a two-layer Bi-LSTM, one more than what is used
 in PyTorch and TensorFlow. We believe this improves the performance of the
 tagger and leads to DyNet getting a lot of the top results. 
 
-For mini-batching the loss across the sentences could be aggregated in different
+For mini-batching, the loss across the sentences could be aggregated in different
 ways. In DyNet the losses were summed, and in PyTorch and TensorFlow they were
 averaged. We are unsure if this could have an impact on the scores, but in
-theory there shouldn't be much difference between the different approaches. We
-believe PyTorch and TensorFlow uses averaging as an implementation detail to
+theory, there shouldn't be much difference between the different approaches. We
+believe PyTorch and TensorFlow use averaging as an implementation detail to
 avoid overflows, which apparently isn't an issue in DyNet.
 
-The CRF implementations across the frameworks were based on various third party
+The CRF implementations across the frameworks were based on various third-party
 sources since nothing CRF wasn't built-in in any of the frameworks. We read that
 the layer could be implemented in various different ways, and the difference
 could have a significant influence on the training time. While our time results
@@ -58,14 +58,14 @@ unclear.
 There was also a minor difference for the implementation of early stopping in
 the various frameworks. Early stopping is part of the TensorFlow API so we
 assume it works, but for DyNet and PyTorch early stopping was implemented
-manually. In DyNet the best seen model was saved to disk during training, this
-may also have had an impact on training time, but during preliminary testing
-this wasn't noticed. However PyTorch doesn't save the best model and simply
+manually. In DyNet the best-seen model was saved to disk during training, this
+may also have had an impact on training time, but during preliminary testing,
+this wasn't noticed. However, PyTorch doesn't save the best model and simply
 stops training if no improvements are seen. We believe this contributes to lower
-PyTorch results since the model performs worse on the validation set, than the
+PyTorch results since the model performs worse on the validation set than the
 model three epochs before. 
 
-For the NER task we evaluated on the $F_1$ score of the models, but trained on
+For the NER task, we evaluated on the $F_1$ score of the models but trained on
 their accuracy. Since there are a lot of non-entities in the data which
 contributes to the accuracy of the model, but not it $F_1$ score, we believe the
 models may perform worse on the NER task because they learned to identify a lot
@@ -94,14 +94,14 @@ models if it wasn't misconfigured.
 
 \subsubsection{Results}
 
-For the NER task we didn't count properly tagged entities and only calculated
-the our accuracy and $F_1$ score based on correctly labeled entity tags. This
+For the NER task, we didn't count properly tagged entities and only calculated
+the accuracy and $F_1$ score based on correctly labeled entity tags. This
 may have resulted in higher scores since partially correctly labeled entities
 improve the score, it may also have lowered the score, since incorrectly labeled
 entities affect the score more negatively, depending on how long the entity is. 
 
-In PyTorch there was an issue where not all of the test datasets were used for
-evaluation. It's unclear if this had a negative effect on the results, since the
+In PyTorch, there was an issue where not all of the test datasets were used for
+evaluation. It's unclear if this had a negative effect on the results since the
 accuracy is still correctly calculated, but on less data. If the sentences
 skipped were particularly trivial for the other models, it could negatively
 affect the scores relative to the other frameworks, and vice versa for
@@ -124,16 +124,16 @@ worked with the framework.
 
 DyNet was very nice to work with, despite how small of a following it has.
 Compared to PyTorch which was also dynamic, but required a lot of matrix
-manipulation, and didn't have autobatching, the API for DyNet was very simple
-and intuitive for my, at the time, limited understanding of computational graphs
+manipulation, and didn't have auto-batching, the API for DyNet was very simple
+and intuitive for my at the time, limited understanding of computational graphs
 and general machine learning. The fact that I didn't have to do manual batching
 either simplified the implementation of the two models significantly. Compared
 to TensorFlow it seemed like DyNet was more low level. I had to have a better
 understanding of which operations the different layers were composed of, but it
-also felt like I was more in control of what happened in the model, when a
+also felt like I was more in control of what happened in the model when a
 single API call didn't do everything for me.
 
-\subsubsection*{The learning proccess}
+\subsubsection*{The learning process}
 
 My general approach to learning DyNet was to take baby steps, following simple
 tutorials like an XOR example, and building from there. With an understanding of
@@ -142,8 +142,8 @@ if I really understood how the framework worked.
 
 One of the nice things about DyNet is how close it feels to creating
 computational graphs. Creating parameters and linking them together by applying
-mathematical operations on them, made it easy to reason about the behavior of
-the model. After the small examples it was simple to learn how to work an LSTM
+mathematical operations on them made it easy to reason about the behavior of
+the model. After the small examples, it was simple to learn how to work an LSTM
 layer into the model. LSTM in DyNet hides a lot of the complexity associated
 with the computations, but the interface was still intuitive to use. Get the
 initial state, compute the next state based on input, get the output for the
@@ -152,14 +152,14 @@ next layer and save the state for the next part of the sequence.
 Working out how to add a CRF layer on top was mostly a matter of understanding
 CRF rather than DyNet. Figuring out that what was needed for CRF was simply a
 transformation matrix, made it obvious that this matrix should just be added as
-a a parameter similar to other weights or biases in the model. From that point I
+a parameter similar to other weights or biases in the model. From that point, I
 could take inspiration from a complete model implemented in DyNet and reuse
 their code for the CRF.\
 
 \subsubsection{PyTorch}
 
 PyTorch comes with a variety of official tutorials that gives introductions to
-the fundamentals of PyTorch aswell as to how to use it in typical machine
+the fundamentals of PyTorch as well as to how to use it in typical machine
 learning scenarios (such as computer vision and NLP). These are of varying
 quality and generally expects certain pre-existing knowledge of machine learning
 concepts and models. Also, since one of the prime features of PyTorch is the
@@ -186,8 +186,8 @@ I described how I implemented batching in
 Section~\ref{sec:setup-implementations-pytorch}, but I want to add a small point
 about the API for mini-batches in PyTorch here.
 
-Batching is rather poorly described by the documenation of the framework, and
-there seem to be only sparse official description of how mini-batches are
+Batching is rather poorly described by the documentation of the framework, and
+there seems to only be sparse official description of how mini-batches are
 expected to be arranged (\cite{falcon2018lstms}).  As an example, working with
 sequential data of variable length (such as sentences), each input element has
 to be padded so as to make the lengths uniform. This may be common knowledge to an
@@ -203,8 +203,8 @@ itself. Here, it is necessary to pass the mini-batch of padded input sequences
 \code{pack\_padded\_sequence} function provided by the \code{torch.nn.utils.rnn}
 module together with a list of the original lengths of each sequence. This
 transforms the input so it can be handled properly by the \code{LSTM} layer, but
-afterwards it has to be unpacked again using \code{pad\_packed\_sequence}. Not
-only is this a rather intricate API, it is also only sparsely documented
+afterward, it has to be unpacked again using \code{pad\_packed\_sequence}. Not
+only is this a rather intricate API, but it is also only sparsely documented
 considering how normal an operation training on mini-batches is.
 
 
@@ -220,29 +220,29 @@ been implemented into the framework itself, such as CRF\@.
 The same cannot be said for TensorFlow without Keras. Finding guides on using
 TensorFlow without using Keras is quite hard, and the official TensorFlow
 documentation mostly consists of Keras examples. If one is searching for code
-examples without any guidance though, then more examples are availables.
+examples without any guidance though, then more examples are available.
 
 \subsubsection*{High-level nature of Keras}
 
-Because of the high level nature of Keras, a lot of implementation details are
+Because of the high-level nature of Keras, a lot of implementation details are
 hidden. This is fine if you are already perfectly familiar with the theory, but
 makes it harder to understand what the framework is actually doing if you are
 only somewhat familiar with the theory behind the different concepts
-(mini-bacthing, LSTM, CRF, etc.).
+(mini-batching, LSTM, CRF, etc.).
 
 Contrast this with other frameworks or just with using TF directly, where
-everything isn't conviently wrapped in high level `layers'. Using these you are
+everything isn't conveniently wrapped in high level `layers'. Using these you are
 forced to understand what is actually going on, at least more than with Keras,
 as you otherwise won't produce any results.
 
-Coupling the high level nature of Keras with the abundance of guides, means that
+Coupling the high-level nature of Keras with the abundance of guides means that
 you could actually get started with working code within your given area, without
 understanding any of the code or theory.
 
 The above scenario is undesirable, as it limits any further development or
 customization.
 
-On the other hand if you are intimatley familiar with ML/NLP theory then
+On the other hand, if you are intimately familiar with ML/NLP theory then
 working with TF is in all likelihood a breeze, as it abstracts all of the
 technical details away.
 
@@ -261,12 +261,12 @@ the TensorFlow docs on that feature.
 
 This allowed me to quite quickly get working results, but it limited just how
 deeply I got to understand the theory. That is because I relied on existing
-implementations of bi-lstm/crf, and the way I got started was by looking at how
+implementations of Bi-LSTM/CRF, and the way I got started was by looking at how
 other people had already tackled the problems.
 
 Had I developed the LSTM and CRF by hand, I would have been forced to gain a
 much much deeper understanding of how they and TensorFlow worked.
-This would however have required a much greater time dedication, which was also
+This would, however, have required a much greater time dedication, which was also
 the primary reason this approach was not chosen.
 
 \subsection{Improvements}
@@ -278,8 +278,8 @@ of.
 
 \subsubsection{Character embedding}
 
-Similar to the way that pretrained word embeddings like Polyglot can be used to
-significantly improve performance, including a character embedding, pretrained
+Similar to the way that pre-trained word embeddings like Polyglot can be used to
+significantly improve performance, including a character embedding, pre-trained
 or not, will also help the model make better predictions
 (\cite{yang2018design}).  The state of the art model for POS only used a
 character embedding which indicates how powerful they are.
@@ -295,13 +295,13 @@ There are a lot of different ways to include a character embedding into a model.
 The general approach is to map each character in a word to its own vector
 representation and use an additional layer to read the sequence of character
 representations and return a single vector. This is similar to the way we use an
-LSTM to read the sequence of words in a sentence, but instead we only use a
+LSTM to read the sequence of words in a sentence, but instead, we only use a
 single value. Two commonly used ways to read the sequence of characters are LSTM
-or CNN layers. They perform very similarly, but CNN are a lot faster to
+or CNN layers. They perform very similarly, but CNNs are a lot faster to
 train~\cite{yang2018design}
 
 A character embedding can contain a mapping from not just a single character,
-but combinations of two or more characters or so called \texttt{n-grams}. Since
+but combinations of two or more characters or so-called \texttt{n-grams}. Since
 a lot of languages use a relative small alphabet, a three character embedding
 could be less than a million different values, which while big is still
 manageable.
@@ -311,13 +311,13 @@ to learn a unique representation for each word, whereas a word embedding can
 only learn as many representations as the number of words it knows. An
 additional benefit is that many words contain character level information which
 a word embedding may not learn. As an example, words which are capitalized are
-more likely to be named entities, and words which ends in ``ing'' are likely
+more likely to be named entities, and words which end in ``ing'' are likely
 verbs.
 
 \subsubsection{Stacked Bi-LSTM}
 
 As has been mentioned before, the DyNet implementation uses a 2 layer Bi-LSTM.\
-This is sometimes refered to as a stacked
+This is sometimes referred to as a stacked
 Bi-LSTM (\cite[Chapter~14.5]{goldberg2017neural}). While not clear how exactly
 this gives a better model accuracy, it has been shown empirically to
 help (\cite{reimers2017reporting}).
@@ -332,7 +332,7 @@ Bi-LSTMs.
 
 \subsubsection{DyNet manual batching}
 
-For DyNet, we used autobatching to implement mini-batches. This is an algorithm
+For DyNet, we used auto-batching to implement mini-batches. This is an algorithm
 which based on the computational graph build, can create batches for optimized
 training time. This shouldn't have any impact on the accuracy of the model, but
 it improves the speed compared to running without. It is however still slower
@@ -341,14 +341,14 @@ improved in this sense if reducing the training or evaluation time is important.
 
 \subsubsection{Tagging Scheme}
 
-The tagging scheme used for NER was BIO and it gets the job done. However in a
+The tagging scheme used for NER was BIO and it gets the job done. However, in a
 paper we read by (\cite{ma2016endtoend}), they mention how the BIOES (or BILOU)
 tagging scheme has been reported to produce better results. BIOES includes two
 additional types of labels, `end', and `singleton'. These tokens allow for more
 detailed rules to be learned by the model since the transition from one tag to
 another is more nuanced. Worth noting is that one of the sources
 (\cite{lample2016neural}) mention that they didn't see any improvements. The
-intuition that it allows the model to better learn naunce however stands, and if
+intuition that it allows the model to better learn nuance however stands, and if
 it doesn't result in worse results it is worth trying.
 
 \subsection{Reflections}
