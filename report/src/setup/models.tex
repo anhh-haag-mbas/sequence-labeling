@@ -4,7 +4,7 @@
 This section will cover the main theoretical aspects of the project and give a
 general description of the mathematical principles behind the machine learning
 models used in this project. It will also describe the different configurations
-for our experiments and models, aswell as it will motivate the use of Polyglot
+for our experiments and models, as well as it will motivate the use of Polyglot
 embeddings.
 
 
@@ -17,7 +17,7 @@ tasks~\cite{huang2015bidirectional}, ~\cite{plank2016multilingual},
 standard bidirectional LSTM network, \texttt{Bi-LSTM}, and the second one is a
 \texttt{Bi-LSTM} with an added CRF layer, \texttt{Bi-LSTM-CRF} (LSTMs and CRFs
 are described in greater details in Section~\ref{sec:setup-models-lstm}
-and~\ref{sec:setup-models-crf} respectively). Both models has the same
+and~\ref{sec:setup-models-crf} respectively). Both models have the same
 fundamental structure, which consist of:
 
 \begin{itemize}
@@ -35,24 +35,24 @@ fundamental structure, which consist of:
 In the \texttt{Bi-LSTM} model, the output of the final linear layer is run
 through a softmax activation function. In the \texttt{Bi-LSTM-CRF} model, the
 output is instead treated as emission scores that is passed as input to the CRF
-layer, which then compute the most likely sequence of tags.
+layer, which then computes the most likely sequence of tags.
 
 The size of the embedding layer is $100004 \times 64$, meaning it has an input
 size of 100004 and produces an output vector of size 64. The size of each LSTM
 layer is $64 \times 100$, and since the output of each LSTM is concatenated, we
-get a 200 dimensional output. The size of the simple linear layer is 200 x
+get a 200-dimensional output. The size of the simple linear layer is 200 x
 number of tags, depending on the task. With CRF the last layer contains 2
 additional tags because of an implementation detail.
 
-By simple linear layer we mean a layer which takes an input vector $x$ and makes
-a linear transformation on the input using a weight matrix $W$ and a bias vector
-$b$. The input vector is then transformed as follows $W \cdot x + b$. Where $W
-\cdot x$ is a matrix vector multiplication, meaning the vector is treated as a
-matrix with dimensions $n,1$ and standard matrix multiplication is used,
-producing a new vector with the same size as the numer of rows in the weight
-matrix.
+By simple linear layer, we mean a layer which takes an input vector $x$ and
+makes a linear transformation on the input using a weight matrix $W$ and a bias
+vector $b$. The input vector is then transformed as follows $W \cdot x + b$.
+Where $W \cdot x$ is a matrix-vector multiplication, meaning the vector is
+treated as a matrix with dimensions $n,1$ and standard matrix multiplication is
+used, producing a new vector with the same size as the number of rows in the
+weight matrix.
 
-For training we use the stochastic gradient descent (SGD) optimizer since it
+For training, we use the stochastic gradient descent (SGD) optimizer since it
 seems to give the best results, but with slower convergence during
 training~\cite{yang2018design}. We use a learning rate of 0.1 and no weight
 decay or momentum.
@@ -61,20 +61,20 @@ The loss function used is the negative log likelihood of the correct tag.
 
 \subsubsection{Embeddings}
 
-We use a pretrained embedding since they have been shown to provide a
+We use a pre-trained embedding since they have been shown to provide a
 significant increase in accuracy for sequence labeling tasks
-(\cite{yang2018design}). We picked pretrained Polyglot embeddings
+(\cite{yang2018design}). We picked pre-trained Polyglot embeddings
 (\cite{polyglot:2013:ACL-CoNLL}) since there exists models in a lot of different
 languages, and Polyglot seems to outperform the only alternative we were aware
 of FastText \textbf{(\cite{joulin2016bagoftricks},~\cite{plank2018distant})},
 even though FastText embeddings are significantly larger than Polyglot's. There
-exists many different algorithms for training word embeddings, but not many with
+exist many different algorithms for training word embeddings, but not many with
 trained models in a wide range of languages available. Polyglot contains vector
 representations for 100.000 different words, as well as 4 special tokens. Each
 vector representation has a size of 64.
 
 The use of word embeddings can be considered a case of multi-task learning.
-Multi-task learning is where multiple tasks are solved to improve the prediction
+Multi-task learning is where multiple tasks are solved to improve prediction
 accuracy. The different tasks would let the model learn some shared structure
 between the two tasks which allows for better generalization. This is a
 regularization technique which works well because it introduces more data for
@@ -83,10 +83,10 @@ task (\cite{goodfellow2016deep}).
 
 For our case, the word embedding is trained on one set of data to learn
 representations of words, where similar words have similar representations.
-Afterwards the word embedding as well as the rest of the model is trained on a
-new task where the model learns task specific representations. But since the
+Afterward, the word embedding, as well as the rest of the model is trained on a
+new task where the model learns task-specific representations. But since the
 word embeddings start from a useful initial configuration it is unlikely to
-forget much of the previous representation and is therefore better able to
+forget much of the previous representation and is, therefore, better able to
 generalize.
 
 Another way to think about the word embedding is as a linear layer where the
@@ -99,16 +99,16 @@ multiplication of the one-hot vector and the linear layer matrix would return a
 row from the matrix, which can be considered the representation of the word. The
 bias vector usually found in linear layers could simply be ignored. The
 difference between a word embedding and a linear layer would then for the most
-parts be that word embeddings are pretrained.
+parts be that word embeddings are pre-trained.
 
 \subsubsection{Bi-LSTM}\label{sec:setup-models-lstm}
 
 Long Short-Term Memory (LSTM) networks are a particular type of Recurrent Neural
 Networks (RNN), that was originally proposed by (\cite{hochreiter1997long}) as a
 way of dealing with deficiencies of normal RNNs. For machine learning tasks
-concerned with sequential data it is more often than not necessary to let
-information about an input at a timestep $t$ get carried over to the processing
-of an input at timestep $t+1$. For example, when processing a sentence like
+concerned with sequential data, it is more often than not necessary to let
+information about input at a timestep $t$ get carried over to the processing
+of input at timestep $t+1$. For example, when processing a sentence like
 `Since Netta won the Eurovision Song Contest 2018 it will be hosted by Israel
 next year', the model will only be able to know what `it' refers to, if it
 remembers that the sentence is currently (ie.\ at the given time step $t$) about
@@ -126,8 +126,8 @@ values are calculated as follows (\cite[Chapter~10.2]{goodfellow2016deep}):
     & \textbf{y}_t = softmax(\textbf{o}_t)
 \end{align*}
 
-Its not much more complicated than a simple linear layer. There are two
-additional matricies and an additional bias vector. The input $x_t$ is used
+It's not much more complicated than a simple linear layer. There are two
+additional matrices and an additional bias vector. The input $x_t$ is used
 along with the hidden value calculated from the previous input value $x_{t-1}$,
 to calculate the new hidden value. The tanh function is used to squeeze the
 hidden value between 0 and 1, which will be used for the next timestep, but is
@@ -137,7 +137,7 @@ all the previous input values seen.
 
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{rnn-figure}
-    \caption{A graphical representation of a RNN.\ The right image shows the
+    \caption{A graphical representation of an RNN.\ The right image shows the
     model unfolded over a number of time steps. Source:~\cite{olah2015lstm}.
     }\label{fig:rnn}
 \end{figure}
@@ -148,7 +148,7 @@ that only gets worse as the time dependencies increase
 (\cite{hochreiter2001gradient}). To remedy this, LSTM networks are used instead.
 
 An LSTM network is composed of carefully designed memory cells containing
-multiple special purpose weight matricies called gates, that determines what
+multiple special purpose weight matrices called gates, that determines what
 information to remember, what to forget, what to do with the input and the
 output of the network. In addition, a main state, $c$, of the network cell is
 maintained and used to compute a hidden state, $h$, which is passed on to be
@@ -168,11 +168,11 @@ working with and are not something, we have implemented ourselves}
     & h_{t} = o_{t}\tanh(c_{t})
 \end{align*}
 
-where $i_{t}$, $f_{t}$ and $o_{t}$ are the input gate, the forget gate and the
+where $i_{t}$, $f_{t}$, and $o_{t}$ are the input gate, the forget gate and the
 output gate respectively at time $t$, $c$ is the cell state and $h$ is the
 hidden state. The weight matrices $W$ maps from either an input $x$ of size $m$
 to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m \times
-n}$ is the input-forget gate matrix), or between two internal components (ie.
+n}$ is the input-forget gate matrix) or between two internal components (ie.
 $W_{hi} \in \mathbb{R}^{n \times n}$ is the hidden-input gate matrix)
 (\cite{huang2015bidirectional}). A graphical representation of an LSTM Network
 is given in Figure~\ref{fig:lstm}.
@@ -196,7 +196,7 @@ means `keep all' where a $0$ means `forget all'.\footnote{This particular forget
     introduced by~\cite{gers1999learning} and is now standard in LSTM
 implementations.}
 
-Updating the cell state also entails adding the element wise product of the
+Updating the cell state also entails adding the element-wise product of the
 input gate $i_{t}$ and \textit{the candidate write} given by $\tanh(W_{xc}x_{t}
 + W_{hc}h_{t-1} + b_{c})$. Since the hidden state $h_{t} = o_{t}\tanh(c_{t})$
 the candidate write at timestep $t$ consists of not only the weighted current
@@ -228,7 +228,7 @@ consideration.
 
 \subsubsection{CRF}\label{sec:setup-models-crf}
 
-When performing sequence labelling as we do in part-of-speech tagging and named
+When performing sequence labeling as we do in part-of-speech tagging and named
 entity recognition, we want to predict a sequence of output tags $\bm{y} \in
 \mathbb{R}^{K}$, where $K$ is the sequence length, given a sequence of input
 features $\bm{X} \in \mathbb{R}^{K \times C}$ where $C$ is the number of
@@ -252,7 +252,7 @@ the CRF model, we can compute the conditional probability $p(\bm{y}|\bm{X})$ of
 a specific sequence of tags given an input sequence of feature vectors.
 
 The input sequence is often called the emission scores and that is what we will
-use here onwards. The emission scores in our model comes from the feature
+use here onwards. The emission scores in our model come from the feature
 representation generated by the Bi-LSTM network after they have been passed
 through the linear layer and transformed to tag space. 
 
@@ -272,7 +272,7 @@ where $W(y_{k}, \bm{x}_{k})$ is the emission scores generated by the LSTM
 network, here represented with a weight matrix $W$ to be consistent with general
 notation (\cite{treviso2019crf}).
 
-For a conditional random field model however, we want to include the
+For a conditional random field model, however, we want to include the
 dependency between label $y_{k-1}$ and $y_{k}$. This can be done by multiplying
 with the probability of $y_{k}$ given $y_{k-1}$, ie. $p(y_{k}|y_{k-1})$. For
 this, a transition matrix $T \in \mathbb{R}^{C \times C}$ is introduced, which 
@@ -289,7 +289,7 @@ transitioning from tag $y_{k}$ to tag $y_{k+1}$.
 
 The challenge from here is to calculate the partition function $Z(\bm{X})$ as
 this has to sum over all possible values of $y_{k}$ for all $1 \leq K$. This is
-infeasable if implemented in a naive manner, but the whole crux of CRF is the
+infeasible if implemented in a naive manner, but the whole crux of CRF is the
 \textbf{forward} (or \textbf{backward}) algorithm, which enables the computation
 to be done in time proportional to $O(CK^{2})$. A detailed description is out of
 scope for this report, but is explained in great detail
@@ -302,7 +302,7 @@ recursive feature of the model as the forward algorithm uncovers, and then
 stores backpointers to the most likely tag $y^{*}$ at each time step $k$.
 
 In short, our \texttt{Bi-LSTM-CRF} model is simply an extension of the
-\texttt{Bi-LSTM} with an added CRF layer for modelling the conditional
+\texttt{Bi-LSTM} with an added CRF layer for modeling the conditional
 dependencies between each successive tag in the sequence.
 
 \subsubsection{Dropout layers}
@@ -318,29 +318,29 @@ Dropout is about introducing variance in the model trained by randomly removing
 output values. When thinking of the model as a network of neurons, dropout is
 like randomly removing neurons from this network. What this means in relation to
 the computational graph built, is that some of the elements in the vector output
-of a node in the graph, is set to 0. To make up for randomly setting values to
-0, some work has to be done. There are two different ways to handle this, one
-which requires updating all other values in the output during training, and
-another where we update the weights after training (\cite{goodfellow2016deep}).
-Since this feature is common in every framework we used, we didn't have to
-choose between one or the other method, and simply used the framework defaults.
-In theory there shouldn't be any difference between the two different methods.
+of a node in the graph is set to 0. To make up for randomly setting values to 0,
+some work has to be done. There are two different ways to handle this, one which
+requires updating all other values in the output during training, and another
+where we update the weights after training (\cite{goodfellow2016deep}). Since
+this feature is common in every framework we used, we didn't have to choose
+between one or the other method, and simply used the framework defaults. In
+theory, there shouldn't be any difference between the two different methods.
 
 Dropout works by preventing the model from relying on specific element values in
 the output of a layer. If the model is reliant on a single value, it would
 completely fail when this value is set to zero, thus requiring it to learn a
 different representation without this flaw. Another way
 (\cite{goodfellow2016deep}) of reasoning about dropout is to view it as an
-ensemple method. Ensemple methods are about training multiple different networks
+ensemble method. Ensemble methods are about training multiple different networks
 and using their collective results to best predict the correct values. Since
 dropout removes neurons from the network for a single example, this is in a
 sense equivalent to training a model without those neurons. A simple network of
 five neurons, two input, two hidden, and one output neuron, could become 16
 different networks. One extreme being all five neurons remaining in the network,
 and the other extreme the network consisting of only the output neuron. Since
-the number of networks increase exponentially with the number of neurons in the
+the number of networks increases exponentially with the number of neurons in the
 network, not all of these will be trained on, but depending on the dropout rate,
-some sample of the networks will be used. This is different from ensemple
+some sample of the networks will be used. This is different from ensemble
 methods since we train weights and biases of only a single network, but since we
 are training on many different subsets of the network, these subsets have been
 trained to solve the task without relying on other parts of the network. 
@@ -349,13 +349,13 @@ We could have included dropout on the training input instead of just the output
 of some of the layers. This would make sure the model trained on unknown as well
 as known words. Since we are using a polyglot embedding for the input which
 doesn't contain all words from our training data, we already do this to some
-extend and we therefore decided against adding explicit dropout on this data as
-well.
+extent and we, therefore, decided against adding explicit dropout on this data
+as well.
 
 We picked a dropout rate of 50\% since this seems to be the generally agreed
-upon be value for hidden layers in the model (\cite{yang2018design}). If we had
-included dropout on the input (\cite{goodfellow2016deep}) suggests that a dropout
-of 80\% is the best for this.
+upon best value for hidden layers in the model (\cite{yang2018design}). If we
+had included dropout on the input (\cite{goodfellow2016deep}) suggests that a
+dropout of 80\% is the best for this.
 
 
 \subsubsection{Optimizer}
@@ -364,9 +364,9 @@ The optimizer is the algorithm used to update the weights and biases in the
 network. After computing a loss by forward propagation of results, followed by
 back-propogation to calculate the gradient, we need an algorithm to decide how
 to update the network based on the gradient. The goto algorithm is the
-stochastic gradient descent (SGD), not only is it simple, it also works very
-well and competes against newer algorithms with more sofisticated ways to decide
-how to update the network.
+stochastic gradient descent (SGD), not only is it simple, but it also works very
+well and competes against newer algorithms with more sophisticated ways to
+decide how to update the network.
 
 SGD updates based on a fixed learning rate. After calculating the gradient, the
 update rule is to subtract the weights by the gradient scaled by the learning
