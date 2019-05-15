@@ -2,31 +2,65 @@
 
 \section{Conclusion}
 
-POS findings:
+% # factual things #
+The \texttt{Bi-LSTM-CRF} model seems to generally converge faster than the
+\texttt{LSTM-CRF} models. Single layer implementations of \texttt{Bi-LSTM}
+seem to converge much slower than the 2 layer implementations, as batch size
+increases.
 
-\begin{itemize}
-    \item Our TensorFlow implementation of CRF is buggy
-    \item The single layer implementations of \texttt{Bi-LSTM} requires
-        significantly more epochs to converge during trainer than the 2 layer
-        model when the batch size increase
-    \item CRF makes the models converge faster during training
-    \item CRF improves the accuracy on the single layer \texttt{Bi-LSTM}
-        implementation of PyTorch, but has negligible effect on the DyNet
-        implementation
-    \item PyTorch and DyNet performs very similar for \texttt{Bi-LSTM-CRF}
-\end{itemize}
+Adding CRF seems to improve accuracy of the NER task as expected. CRF seems to
+have a very little impact on our DyNet implementation compared to our PyTorch
+implementation.
 
-NER findings:
+% # fuckups ours or others discovered #
+Our implementations perform quite poorly on the NER task, despite converging
+quite quickly. This is likely a result of doing early stopping on accuracy
+instead of $F_1$ score.
 
-\begin{itemize}
-    \item CRF makes the models converge faster during training
-    \item Our models perform poorly despite fast convergence, probably a result
-      of using accuracy instead of $F_1$ for early stopping.
-    \item Adding CRF to the models seems to help, which is in line with our
-      expectations.
-    \item We identified several problems with the Wikipedia extracted NER data.
-      Some languages were missing or almost missing some tags.
-      The Japanese data was split per character and not per word.
-\end{itemize}
+Our TensorFlow implementation did not mask out padding, which caused a
+significant drop in accuracy, as such our results mostly apply to PyTorch and
+DyNet.
+
+% Polyglot has problems
+The Japanese word embeddings for Polyglot has not been properly split on words.
+It is only properly split on hiragana and katakana, kanji is just split
+characterwise.
+
+% Extracted wikidata has problems.
+The automaticlly extracted Wikipedia data for the NER task has several
+problems.
+The Japanese data is split per character and not per word.
+Some languages have problems with the distribution of tags.
+Either by missing certain tags or by having a very skewed distribution between
+entities and other tags.
+
+% TODO: Write something summing things up
+
+% POS findings:
+
+% \begin{itemize}
+%     \item Our TensorFlow implementation of CRF is buggy
+%     \item The single layer implementations of \texttt{Bi-LSTM} requires
+%         significantly more epochs to converge during trainer than the 2 layer
+%         model when the batch size increase
+%     \item CRF makes the models converge faster during training
+%     \item CRF improves the accuracy on the single layer \texttt{Bi-LSTM}
+%         implementation of PyTorch, but has negligible effect on the DyNet
+%         implementation
+%     \item PyTorch and DyNet performs very similar for \texttt{Bi-LSTM-CRF}
+% \end{itemize}
+
+% NER findings:
+
+% \begin{itemize}
+%     \item CRF makes the models converge faster during training
+%     \item Our models perform poorly despite fast convergence, probably a result
+%       of using accuracy instead of $F_1$ for early stopping.
+%     \item Adding CRF to the models seems to help, which is in line with our
+%       expectations.
+%     \item We identified several problems with the Wikipedia extracted NER data.
+%       Some languages were missing or almost missing some tags.
+%       The Japanese data was split per character and not per word.
+% \end{itemize}
 
 \pagebreak
