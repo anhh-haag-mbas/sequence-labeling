@@ -15,26 +15,51 @@ The code, report and results of the project are avaible at the projects GitHub
 repository at \url{https://github.itu.dk/USS-NLterPrise/sequence-labelling}.
 
 
-\subsection{Problem description}
+\subsection{Project description}
 
-The project aim is to perform a large number of empirically based comparisons of
-the performance of different machine learning models with well-defined
-configurations and implemented in three different open source machine learning
-frameworks on a set of languages grouped based on their respective word
-ordering. A thorough comparative analysis of the results will be conducted to
-possibly identify strengths and weaknesses of the individual frameworks as well
-as of the models on different target languages.
+Some of the most fundamental machine learning applications in natural language
+processing (NLP) are performing sequence labelling on sentences by processing
+one word at a time and attribute it some label. A lot of ingenuity has been put
+into designing machine learning models that specializes in tasks like these and
+most every popular machine learning framework supports these models.
 
-A brief summary of the different configurations can be seen in figure (~\ref{}). A
-more thorough and motivated description is provided in section (~\ref{}).
+In this project, we aim to examine and compare the performance of two of the
+most succesfull such models, namely a bidirectional Long-Short Term Memory
+network (LSTM) and a bidirectional LSTM with an added Conditional Random Field
+(CRF) layer. We wwant to test how they manage part-of-speech tagging (POS) and
+named entity recognition (NER), two traditional sequence labelling tasks, and how
+different configurations of the training time and batch size affect this.
+We will implement the models in three different machine learning frameworks so
+as to compare the frameworks for ease of use, speed and performance.
 
-The hypothesis of the project is that\ldots
+Furthermore, we will run our tests across a number of languages that differ in
+word ordering and language family and see if we can discern any pattern in what
+kind of languages the models may be better or worse at processing.
 
 
 \subsection{Project plan}
 
-The project began in february, and according to the plan, we should have built a
-self-flying space rocket on the 21st of december. Also, it should be able to
-perform part-of-speech tagging on hindu languages.
+The project was initiated in February and planned to consist of 4 different
+phases
+
+In the first, the project group would get familiarized with concepts and theory of
+machine learning, natural language processing and their respective frameworks.
+As of the project group mostly had no prior knowledge of any of these concepts,
+this part was planned to stretch untill the midth of March.
+
+In the second phase, the experiments were created and the specific
+configurations were decided based on the studies in phase 1 and discussion with
+the project supervisor. Also in this phase, each project group member worked
+with his respective framework to implement the models and prepare the
+experiments.
+
+The third phase was set to begin in middle of April, but got a bit delayed due
+to longer time spent in phase 2 than expected. In this phase, the experiements
+were run, analyzed and, for some cases, run again to fix certain issues. During
+the experiments running, report writing was initiated.
+
+The fourth phase ran from the end of April to the submission deadline on May
+15th, and only consisted in writing the report and finishing the analysis of the
+results.
 
 \pagebreak
