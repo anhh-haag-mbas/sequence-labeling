@@ -111,46 +111,29 @@ Figure~\ref{table:token-distribution-pos}.
 
 \begin{table}[h!]
     \centering
-    \begin{tabular}{l c c }%c c c c c c c}
+    \begin{tabular}{l c c c c}%c c c c c c c}
         \toprule
-        \multicolumn{3}{l}{\bfseries Training} \\
-        Language & Tokens & Distinct \\
+        \multirow{2}{*}{\bfseries Language} &
+        \multicolumn{2}{c}{\bfseries Training} &
+        \multicolumn{2}{c}{\bfseries Testing} \\
+        \cmidrule(lr){2-5}
+        & Tokens & Distinct & Tokens & Distinct \\
         
-        \cmidrule(lr){1-3}
+        \cmidrule(lr){1-5}
 
-        ar   & 150631 & 18508 \\
+        ar   & 150631 & 18508 & 19059 & 4703 \\
 
-        da   &  72380 & 15206 \\
+        da   &  72380 & 15206 & 9757 & 3584 \\
 
-        hi   &  80940 &  9176 \\
+        hi   &  80940 &  9176 & 10149 & 2365 \\
 
-        ja   &  88821 & 15498 \\
+        ja   &  88821 & 15498 &11119 & 3543 \\
 
-        no   &  60076 & 11180 \\
+        no   &  60076 & 11180 & 7904 & 2393 \\
 
-        ru   &  75458 & 20464 \\
+        ru   &  75458 & 20464 & 8476 &  3654 \\
 
-        ur   & 107568 & 9520 \\
-
-        \cmidrule(lr){1-3}
-        \multicolumn{3}{l}{\bfseries Testing} \\
-        Language & Tokens & Distinct \\
-        
-        \cmidrule(lr){1-3}
-
-        ar  & 19059 & 4703 \\
-
-        da  & 9757 & 3584 \\
-
-        hi  & 10149 & 2365 \\
-
-        ja  &11119 & 3543 \\
-
-        no  & 7904 & 2393 \\
-
-        ru  & 8476 &  3654 \\
-
-        ur  & 13412 &  2724 \\
+        ur   & 107568 & 9520 & 13412 &  2724 \\
 
         \bottomrule
     \end{tabular}
