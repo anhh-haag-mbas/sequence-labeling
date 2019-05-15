@@ -8,8 +8,8 @@
 
 We now consider the out-of-vocabulary (OOV) accuracy of the models. Here, we
 focus our attention on the results of the DyNet and the PyTorch implementations,
-as the TensorFlow results unfortunately were corrupted. The overall results for
-both the POS and the NER task can be found in
+as the TensorFlow results, unfortunately, were corrupted. The overall results
+for both the POS and the NER task can be found in
 Table~\ref{table:oov-accuracy-total}.
 
 \begin{table}[h!]
@@ -42,13 +42,13 @@ Table~\ref{table:oov-accuracy-total}.
 
      \bottomrule
     \end{tabular}
-    \caption{OOV accuracy (percentage of correctly labelled OOV words) for the DyNet
+    \caption{OOV accuracy (percentage of correctly labeled OOV words) for the DyNet
         and PyTorch implementations of \texttt{Bi-LSTM} and
         \texttt{Bi-LSTM-CRF}. Only training with early stopping is considered. 
     }\label{table:oov-accuracy-total}
 \end{table}
 
-Once again, we see a pattern where the DyNet implementations achieves the
+Once again, we see a pattern where the DyNet implementations achieve the
 overall best results. Especially for the NER task, DyNet is significantly better
 than PyTorch at classifying words that it has not yet seen. We also observe,
 that adding a CRF layer improves the OOV accuracy for the single layer model of
@@ -66,11 +66,11 @@ find an interesting correlation between the absolute benefit of CRF between the
 two framework implementations. Figure~\ref{chart:oov-accuracy-lang-ner} plots
 the OOV accuracies for the models, averaged across batch sizes. We stick to
 looking at the results for the NER data, as these results give a more consistent
-picture even though the POS results does not significantly alter the pattern.
+picture even though the POS results do not significantly alter the pattern.
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{chart-oov-accuracy-lang-ner}
-    \caption{Averged OOV accuracies for the DyNet and PyTorch models with and
+    \caption{Averaged OOV accuracies for the DyNet and PyTorch models with and
         without CRF (TRUE and FALSE, respectively) across languages (NER only).
     }\label{chart:oov-accuracy-lang-ner}
 \end{figure}
@@ -94,15 +94,15 @@ Most notable is how many OOV words there exist in the Japanese test data.
 This is consistent with what we described in
 Section~\ref{sec:experiments-ner-data} about the way the Polyglot embeddings
 differed from the way the POS data was set up. For the NER data, however,
-Japanese show a very small percentage of OOV words.
+Japanese shows a very small percentage of OOV words.
 
 For Norwegian, there is a clear discrepancy between the testing and the training
-data. In the training data, it only encouters 10.1\% OOV words, but in the test
-data almost very third word is unknown. This can in itself not explain why
+data. In the training data, it only encounters 10.1\% OOV words, but in the test
+data, almost every third word is unknown. This can in itself not explain why
 Norwegian falls short on OOV accuracy for the \texttt{Bi-LSTM-CRF} models, but
-it may have had an influence. The high OOV percentages of Russian and Urdu are in
-contrast with their strong OOV accuracy, but we believe this can be attributed
-general tag distribution described in
+it may have had an influence. The high OOV percentages of Russian and Urdu are
+in contrast with their strong OOV accuracy, but we believe this can be
+attributed to general tag distribution described in
 Section~\ref{sec:experiments-ner-lang-comparison}.
 
 \begin{table}[h!]
