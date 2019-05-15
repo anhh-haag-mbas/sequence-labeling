@@ -32,7 +32,7 @@ From this we get the precision $P = {80 \over 80 + 10} = 0.88\ldots$, and recall
 $R = {80 \over 80 + 20} = 0.8$. The $F_1$ score is simply the harmonic mean
 between the precision and recall given by $F_1 = 2 \cdot {precision \cdot recall
 \over precision + recall}$. Based on our example this would be $F_1 = 2 \cdot
-{0.88 \ldots \cdot 0.8 \over 0.88\ldots + 0.8} = 0.8421$ \cite{f-measure}.
+{0.88 \ldots \cdot 0.8 \over 0.88\ldots + 0.8} = 0.8421$ (\cite{f-measure}).
 
 The rationale behind using the $F_1$ score is that usually a lot of the data is
 non-entities. A classifier which classified nothing as an entity would have a
@@ -48,19 +48,19 @@ between documents, and linking to a knowledge base. A document mentioning
 different locations and capital cities such as ``France'', ``Tokyo'', and ``New
 Zealand'', could be about geografi or traveling. And similar a document
 mentioning people associated with economy could be about economy
-\cite{sang2003introduction}.
+(\cite{sang2003introduction}).
 
-The state of the art model for NER based off of \cite{ner-state} is
-\cite{baevski2019cloze}. They use a bidirectional self-attention cloze model
-which seems very disimilar to anything we are doing. They achieve an F1 score of
+The state of the art model for NER based off of (\cite{ner-state}) is
+(\cite{baevski2019cloze}). They use a bidirectional self-attention cloze model
+which seems very disimilar to anything we are doing. They achieve an $F_{1}$ score of
 93.5 on the CoNLL 2003 English dataset, which is 0.41 points above the previous
-state of the art by \cite{akbik2018coling}, the same model mentioned in the
-previous section with state of the art results for POS.
+state of the art by (\cite{akbik2018coling}), the same model mentioned in the
+previous section with state of the art results for POS.\
 
 \subsubsection{Data}\label{sec:experiments-ner-data}
 
 For the NER task we used auto-annotated wikipedia data from
-\cite{pan-etal-2017-cross}. This dataset contains annotated data for 282
+(\cite{pan-etal-2017-cross}). This dataset contains annotated data for 282
 languages in varying sizes. 
 
 The datasets are all in the BIO (or IOB) format, which has three different
@@ -79,7 +79,7 @@ are still the same, and systematic errors in the data would hopefully happen for
 all languages in the datasets.
 
 For Japanese which doesn't use spaces to differentiate between the beginning and
-the end of words, the data is split and labeled character by character, this
+the end of words, the data is split and labeled character by character. This
 differs from the POS data where words are split in a more natural way. This has
 an influence on the results and means that Japanese isn't as comparable between
 tasks as other languages. Since it turns out that our Polyglot embedding has a
@@ -88,9 +88,9 @@ performance.
 
 Another issue with the Japanese NER dataset we used is that we ignored many of
 the tokens in the dataset by mistake. For the CoNLL-U datasets, the \# symbol is
-used for comments. When reading the datasets we simply skipped files starting
+used for comments. When reading the data sets we simply skipped lines starting
 with the \# symbol and continued reading normally. This is only an issue for the
-Japanese dataset since it was the only one using these symbols, however these
+Japanese data set since it was the only one using these symbols, however these
 symbols constitudes around 5\% of the data. This is another issue with the
 Japanese dataset, and it's hard to say if ignoring these symbols is beneficial
 to the experiment or not.
@@ -197,17 +197,17 @@ faster for most every batch size and implementation.
         }\label{table:epochs-run-ner}
 \end{table}
 
-However, when turning our attention to the \textit{F1} scores
+However, when turning our attention to the $F_{1}$ scores
 (Table~\ref{table:f1-total-ner}), the models are performing very poorly, which
 does not fit with the expected results of a well converged model. We suspect the
 main reason for this, is the fact that our models did the same \textit{accuracy}
 test during training to decide when to stop as was done in the POS task. But
-since we for the NER task want to optimize our \textit{F1} score, the accuracy
+since we for the NER task want to optimize our $F_{1}$ score, the accuracy
 test is really not the optimal parameter to use in early stopping --- it would
-of course had made more sense to test if the \textit{F1} score had stopped
+of course had made more sense to test if the $F_{1}$ score had stopped
 improving.
 
-% F1 SCORE
+% $F_{1}$ SCORE
 \begin{table}[h!]
     \centering
     \begin{tabular}{c l c c c|c c c}
@@ -304,23 +304,13 @@ improving.
         \underline{\textbf{97.4}} & \underline{96.5} & \underline{96.3} \\
         \bottomrule
     \end{tabular}
-    \caption{F1 scores for NER experiments by language and batch
+    \caption{$F_{1}$ scores for NER experiments by language and batch
         size. Bold: highest accuracy for batch size plus language. Underline:
         highest accuracy for framework between \texttt{Bi-LSTM} and
         \texttt{Bi-LSTM-CRF}.
     }\label{table:f1-total-ner}
 \end{table}
 
-
-Furthermore, the loss function should also have been utilized differently. The
-motivation for using the \textit{F1} score, is to focus attention on the models
-ability to classify entities and not reward it too much for identifying
-`O'-tokens. But for our cross-entropy loss, a true prediction of a tag `O' has
-had the same influence as the true prediction of an entity tag. Since there are
-a lot more non-entities than entities, it is reasonable to suggest, that the
-models will have tuned their parameters to correctly classify non-entities and
-accepted a lower accuracy rate for entity tags. This is also supported by the
-results shown in Figure~\ref{chart:tag-acc-ner}.
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{tag-acc-ner}
@@ -330,11 +320,10 @@ results shown in Figure~\ref{chart:tag-acc-ner}.
 \end{figure}
 
 Despite this design flaw, we still get some notable observations from the
-obtained \texttt{F1} scores, depicted in
+obtained $F_{1}$ scores, depicted in
 Figure~\ref{chart:f1-by-batch-and-lang}.  First of all, we once again see that
 the DyNet implementations are by far the most succesfull, having the highest
-score in all but one experiment. This is again attributed to its 2 layer
-implementation of the bidirectional LSTM network. We also see the same pattern
+score in all but one experiment. We also see the same pattern
 as for POS, where the PyTorch implementation has the second best results and
 the TensorFlow implementation is falling severely behind.
 
@@ -344,13 +333,13 @@ language (the notable exceptions being cases for Japanese and Norwegian, where
 the scores are extraordinarily low. See Section~\ref{sec:experiments-ner-data}
 for more). This is interesting, as it confirms the expectation that the CRF
 layer is able to significantly improve the performance in performing NER tasks
-(~\cite{huang2015bidirectional}).
+(\cite{huang2015bidirectional}).
 
 We still don't see a consistent improvement on the DyNet implementations from
 the CRF layer. This again indicate, that the addition of a CRF layer to a 2
 layer \texttt{Bi-LSTM} model is of negligible effect for these batch sizes.
 However, we might see a small tendency for the larger batch sizes to benefit
-from the CRF, as the DyNet \texttt{Bi-LSTM-CRF} model highest score in Arabic,
+from the CRF, as the DyNet \texttt{Bi-LSTM-CRF} model is outperforming in Arabic,
 Danish, Russian and Urdu.
 
 Another observation concerning applying CRF is how much it helps an increasing
@@ -358,14 +347,14 @@ batch size. For the pure \texttt{Bi-LSTM} models, a batch size of 32 drops the
 performance by 36.4\% for the PyTorch implementation and by a whooping 61.9\%
 for the TensorFlow implementation when compared to a batch size of 1. For the
 \texttt{Bi-LSTM-CRF} models, these numbers go down to 3.2\% and 20.0\%
-respectively. It should be noted, that the \textit{F1} scores for the DyNet
+respectively. It should be noted, that the $F_{1}$ scores for the DyNet
 implementation actually experience a slight increase in the perfomance drop from
 the larger batch size when CRF is applied (the drop goes from 7.5\% to 8.1\%).
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{f1-no-crf}
     \includegraphics[width=\textwidth]{f1-with-crf}
-    \caption{\textit{F1} scores for each framework implementation by batch size
+    \caption{$F_{1}$ scores for each framework implementation by batch size
         and language. Notice drops in performance when the batch size increases
         in models that does not utilize a CRF model. Top: the \texttt{Bi-LSTM}
         implementations. Bottom: the \texttt{Bi-LSTM-CRF} implemenations.
@@ -379,14 +368,14 @@ notice several oddities, that are worth mentioning. As we consider the results,
 we therefore first describe some potential problems related to the data, since
 we believe they may be the cause of some of the strange values we get. The
 results for each language are presented in Table~\ref{table:f1-total-ner} and
-plottet in Figure~\ref{chart:f1-by-batch-and-lang}.
+plotted in Figure~\ref{chart:f1-by-batch-and-lang}.
 
 The training data for Norwegian looks reasonable when comparing with the other
 languages, but for the test data there are very few entities (ie.\ non-`O'
 tags). More than 80\% of the tokens are `O' tags which is noticably different
-from the other languages. Since the \textit{F1} scores is calculated only on
+from the other languages. Since the $F_{1}$ scores is calculated only on
 entities, a large part of the test data is disregarded in this respect, and the
-models \textit{F1} score will quickly be punished for misclassifications as each
+models $F_{1}$ score will quickly be punished for misclassifications as each
 prediction has a relatively higher weight compared to test data with more
 entities.
 
@@ -404,11 +393,11 @@ small change one way or the other), so this behaviour is highly irregular.
 Japanese has the second highest number of `O' tags which constitute slightly
 above 70\% of the total test data. The results are not the same kind of
 irregular as for Norwegian, but we do observe an unprecedented and sudden boost
-in the perfomance of the TensorFlow \textit{Bi-LSTM-CRF} model over the others.
+in the perfomance of the TensorFlow \texttt{Bi-LSTM-CRF} model over the others.
 It especially seems odd, that this implementation --- that in all other cases
 gets worse with an increasing batch size --- actually outperforms the
 corresponding DyNet implementation at batch size 32. Further, as the only example
-of this, the PyTorch \textit{Bi-LSTM-CRF} goes from 8.1 through 11.7 to 27.8 for
+of this, the PyTorch \texttt{Bi-LSTM-CRF} goes from 8.1 through 11.7 to 27.8 for
 increasing batch sizes --- in all other cases, an increasing batch size for
 PyTorch leads to decreasing scores. Last but not least, the Japanese scores are
 overall by far the worst, so with these irregularities in mind aswell as the
@@ -416,7 +405,7 @@ data issues mentioned in Section~\ref{sec:experiments-ner-data}, we assume that
 there are flaws in this experiment.
 
 For Russian and Urdu, we observe that the test data almost solely consists of a
-single entity type, which believe can make the results very inflated. For the
+single entity type, which we believe can make the results very inflated. For the
 training data (and not counting `O' tags), Russian had 60.1\% person tags
 (either `B-PER' or `I-PER') but for the test data, these tag types made up
 91.8\% of the entity tags. For Urdu, the uneven distribution was even more
@@ -425,8 +414,8 @@ extreme: during training, 75.7\% of the entity tags were of type `B-LOC' or
 
 Add to that, that these two languages both have the lowest number of tokens and
 the lowest number of distinct tokens. These facts may have an influence on why
-the \textit{F1} scores for Russian and Urdu outperforms every other language.
-All three framework implemenations achieve scores of more than 90\%, and the for
+the $F_{1}$ scores for Russian and Urdu outperforms every other language.
+All three framework implemenations achieve scores of more than 90, and the for
 a batch size of 1, the PyTorch \texttt{Bi-LSTM-CRF} model reaches a stunning
 score of 98.0.
 

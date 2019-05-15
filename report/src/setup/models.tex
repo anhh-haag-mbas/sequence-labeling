@@ -64,11 +64,11 @@ correct tag.
 
 We use a pretrained embedding since they have been shown to provide a
 significant increase in accuracy for sequence labeling tasks
-(~\cite{yang2018design}). We picked pretrained Polyglot
-embeddings~\cite{polyglot:2013:ACL-CoNLL} since there exists models in a lot of
+(\cite{yang2018design}). We picked pretrained Polyglot
+embeddings (\cite{polyglot:2013:ACL-CoNLL}) since there exists models in a lot of
 different languages, and Polyglot seems to outperform the only alternative we
-were aware of FastText~\cite{joulin2016bagoftricks} (~\cite{plank2018distant} to
-FastText + comparison), even though FastText embeddings are significantly larger
+were aware of FastText \textbf{(\cite{joulin2016bagoftricks},~\cite{plank2018distant} to
+FastText + comparison)}, even though FastText embeddings are significantly larger
 than Polyglot's. There exists many different algorithms for training word
 embeddings, but not many with trained models in a wide range of languages
 available. Polyglot contains vector representations for 100.000 different words,
@@ -80,7 +80,7 @@ accuracy. The different tasks would let the model learn some shared structure
 between the two tasks which allows for better generalization. This is a
 regularization technique which works well because it introduces more data for
 the models to train on as well as prevent the model from overfitting on one
-task~\cite{goodfellow2016deep}. 
+task (\cite{goodfellow2016deep}).
 
 For our case, the word embedding is trained on one set of data to learn
 representations of words, where similar words have similar representations.
@@ -91,7 +91,8 @@ forget much of the previous representation and is therefore better able to
 generalize.
 
 Another way to think about the word embedding is as a linear layer where the
-input is a one-hot vector representation of the word~\cite{goldberg2017neural}.
+input is a one-hot vector representation of the word
+(\cite{goldberg2017neural}).
 A one-hot vector is a vector where all but a single value in the vector are zero
 and the element corresponding to a word is one. Similar to word embeddings where
 we lookup a word and return a vector representation, the matrix-vector
@@ -104,7 +105,7 @@ parts be that word embeddings are pretrained.
 \subsubsection{Bi-LSTM}\label{sec:setup-models-lstm}
 
 Long Short-Term Memory (LSTM) networks are a particular type of Recurrent Neural
-Networks (RNN), that was originally proposed by~\cite{hochreiter1997long} as a
+Networks (RNN), that was originally proposed by (\cite{hochreiter1997long}) as a
 way of dealing with deficiencies of normal RNNs. For machine learning tasks
 concerned with sequential data it is more often than not necessary to let
 information about an input at a timestep $t$ get carried over to the processing
@@ -117,7 +118,7 @@ Figure~\ref{fig:rnn}).
 
 Standard Recurrent Neural Networks calculates two values, a hidden value, which
 is used to carry information from one timestep to the next, and the output. The
-values are calculated as follows (~\cite{goodfellow2016deep}):
+values are calculated as follows (\cite{goodfellow2016deep}):
 
 \begin{align*}
     & \textbf{a}_t = \textbf{b} + \textbf{W} \textbf{h}_{t-1} + \textbf{U} \textbf{x}_t \\
@@ -145,17 +146,17 @@ all the previous input values seen.
 However, the standard RNN suffers from the problems of exponential decay or blow
 up of error signals that are backpropagated through the network --- a situation
 that only gets worse as the time dependencies increase
-(~\cite{hochreiter2001gradient}). To remedy this, LSTM networks are used instead.
+(\cite{hochreiter2001gradient}). To remedy this, LSTM networks are used instead.
 
 An LSTM network is composed of carefully designed memory cells containing
 multiple special purpose weight matricies called gates, that determines what
 information to remember, what to forget, what to do with the input and the
 output of the network. In addition, a main state, $c$, of the network cell is
 maintained and used to compute a hidden state, $h$, which is passed on to be
-used at the next timestep, similar to the standard RNN.
+used at the next timestep, similar to the standard RNN.\
 
 The gates and states are calculated in the following manner
-(~\cite{huang2015bidirectional}):\footnote{Note that
+(\cite{huang2015bidirectional}):\footnote{Note that
     these calculations are done by the respective frameworks we have been
 working with and are not something, we have implemented ourselves}
 
@@ -174,7 +175,7 @@ hidden state. The weight matrices $W$ maps from either an input $x$ of size $m$
 to an internal state or gate of size $n$ (ie. $W_{xf} \in \mathbb{R}^{m \times
 n}$ is the input-forget gate matrix), or between two internal components (ie.
 $W_{hi} \in \mathbb{R}^{n \times n}$ is the hidden-input gate matrix)
-(~\cite{huang2015bidirectional}). A graphical representation of an LSTM Network
+(\cite{huang2015bidirectional}). A graphical representation of an LSTM Network
 is given in Figure~\ref{fig:lstm}.
 
 \begin{figure}[h]
@@ -248,8 +249,8 @@ tag `B-PER'.  That means, that the probability of tag $y_{k}$ being of some tag
 type is conditioned on whatever $y_{k-1}$ was.
 
 Knowing these transitioning scores, which will be the learnable parameters of
-the CRF model, we can compute the conditional probability of specific sequence
-of tags given an input sequence of feature vectors $p(\bm{y}|\bm{X})$.
+the CRF model, we can compute the conditional probability $p(\bm{y}|\bm{X})$ of
+a specific sequence of tags given an input sequence of feature vectors.
 
 The input sequence is often called the emission scores and that is what we will
 use here onwards. The emission scores in our model comes from the feature
@@ -270,7 +271,7 @@ p(\bm{y}|\bm{X}) & = \prod_{k=1}^{K} \frac{\exp( W(\bm{x}_{k}, y_{k}) )}
 
 where $W(y_{k}, \bm{x}_{k})$ is the emission scores generated by the LSTM
 network, here represented with a weight matrix $W$ to be consistent with general
-notation (~\cite{treviso2019crf}).
+notation (\cite{treviso2019crf}).
 
 For a conditional random field model however, we want to include the
 dependency between label $y_{k-1}$ and $y_{k}$. This can be done by multiplying
@@ -283,6 +284,10 @@ p(\bm{y}|\bm{X}) = \frac{\exp( \sum_{k=1}^{K} W(\bm{x}_k, y_{k}) +
                     \sum_{k=1}^{K-1} T(y_{k+1}, y_{k}) )}{Z(\bm{X})}
 \end{equation*}
 
+where $T(y_{k+1}, y_{k}) = T_{k+1,k}$ is the value in the transition matrix T at
+the $k+1$th row and the $k$th column, representing the likelihood of
+transitioning from tag $y_{k}$ to tag $y_{k+1}$.
+
 The challenge from here is to calculate the partition function $Z(\bm{X})$ as
 this has to sum over all possible values of $y_{k}$ for all $1 \leq K$. This is
 infeasable if implemented in a naive manner, but the whole crux of CRF is the
@@ -293,7 +298,7 @@ in~\cite{sutton2012introduction}.
 
 Performing inference using a CRF model (ie.\ predicting the most likely sequence
 of tags $\bm{y^{*}} = \argmax_{y}p(\bm{y}|\bm{X})$) is done using the Viterbi
-algorithm (~\cite{sutton2012introduction} something). This exploits the same
+algorithm (\cite{sutton2012introduction} something). This exploits the same
 recursive feature of the model as the forward algorithm uncovers, and then
 stores backpointers to the most likely tag $y^{*}$ at each time step $k$.
 
@@ -305,7 +310,7 @@ dependencies between each successive tag in the sequence.
 
 The dropout layers are not part of the model besides training. Dropout is a
 regularization technique which helps prevent the model from
-overfitting~\cite{goodfellow2016deep}. Regularization is when we make changes to
+overfitting (\cite{goodfellow2016deep}). Regularization is when we make changes to
 reduce a models generalization error, ie.\ the errors on the test data, possibly
 introducing more errors on the training data. Many different regularization
 techniques exist and dropout is just one of these.
@@ -317,7 +322,7 @@ the computational graph built, is that some of the elements in the vector output
 of a node in the graph, is set to 0. To make up for randomly setting values to
 0, some work has to be done. There are two different ways to handle this, one
 which requires updating all other values in the output during training, and
-another where we update the weights after training~\cite{goodfellow2016deep}.
+another where we update the weights after training (\cite{goodfellow2016deep}).
 Since this feature is common in every framework we used, we didn't have to
 choose between one or the other method, and simply used the framework defaults.
 In theory there shouldn't be any difference between the two different methods.
@@ -325,21 +330,21 @@ In theory there shouldn't be any difference between the two different methods.
 Dropout works by preventing the model from relying on specific element values in
 the output of a layer. If the model is reliant on a single value, it would
 completely fail when this value is set to zero, thus requiring it to learn a
-different representation without this flaw. Another way~\cite{goodfellow2016deep}
-of reasoning about dropout is to view it as an ensemple method. Ensemple methods
-are about training different multiple networks and using their collective
-results to best predict the correct values. Since dropout removes neurons from
-the network for a single example, this is in a sense equivalent to training a
-model without those neurons. A simple network of five neurons, two input, two
-hidden, and one output neuron, could become 16 different networks. One extreme
-being all five neurons remaining in the network, and the other extreme the
-network consisting of only the output neuron. Since the number of networks
-increase exponentially with the number of neurons in the network, not all of
-these will be trained on, but depending on the dropout rate, some sample of the
-networks will be used. This is different from ensemple methods since we only
-have a single network, but since we are training on many different subsets of
-the network, these subsets have been trained to solve the task without relying
-on other parts of the network. 
+different representation without this flaw. Another way
+(\cite{goodfellow2016deep}) of reasoning about dropout is to view it as an
+ensemple method. Ensemple methods are about training different multiple networks
+and using their collective results to best predict the correct values. Since
+dropout removes neurons from the network for a single example, this is in a
+sense equivalent to training a model without those neurons. A simple network of
+five neurons, two input, two hidden, and one output neuron, could become 16
+different networks. One extreme being all five neurons remaining in the network,
+and the other extreme the network consisting of only the output neuron. Since
+the number of networks increase exponentially with the number of neurons in the
+network, not all of these will be trained on, but depending on the dropout rate,
+some sample of the networks will be used. This is different from ensemple
+methods since we only have a single network, but since we are training on many
+different subsets of the network, these subsets have been trained to solve the
+task without relying on other parts of the network. 
 
 We could have included dropout on the training input instead of just the output
 of some of the layers. This would make sure the model trained on unknown as well
@@ -349,15 +354,15 @@ extend and we therefore decided against adding explicit dropout on this data as
 well.
 
 We picked a dropout rate of 50\% since this seems to be the generally agreed
-upon be value for hidden layers in the model~\cite{yang2018design}. If we had
-included dropout on the input~\cite{goodfellow2016deep} suggests that a dropout
+upon be value for hidden layers in the model (\cite{yang2018design}). If we had
+included dropout on the input (\cite{goodfellow2016deep}) suggests that a dropout
 of 80\% is the best for this.
 
 
 \subsubsection{Optimizer}
 
 The optimizer is the algorithm used to update the weights and biases in the
-network. After computing a loss by forward propogation of results, followed by
+network. After computing a loss by forward propagation of results, followed by
 back-propogation to calculate the gradient, we need an algorithm to decide how
 to update the network based on the gradient. The goto algorithm is the
 stochastic gradient descent (SGD), not only is it simple, it also works very

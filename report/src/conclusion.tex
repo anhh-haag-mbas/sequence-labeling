@@ -4,4 +4,19 @@
 
 It turns out, that we were all wrong and our space craft crashed.
 
+POS findings:
+
+\begin{itemize}
+    \item The TensorFlow implementation of CRF is buggy
+    \item The single layer implementations of \texttt{Bi-LSTM} requires
+        significantly more epochs to converge during trainer than the 2 layer
+        model when the batch size increase
+    \item CRF makes the models converge faster during training
+    \item CRF improves the accuracy on the single layer \texttt{Bi-LSTM}
+        implementation of PyTorch, but has negligible effect on the DyNet
+        implementation
+    \item PyTorch and DyNet performs very similar for \texttt{Bi-LSTM-CRF}
+\end{itemize}
+
+
 \pagebreak

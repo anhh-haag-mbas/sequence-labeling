@@ -1,5 +1,5 @@
 
-\section{Experiments}
+\section{Experiments}\label{sec:experiments}
 
 \input{src/experiments/POS}
 \input{src/experiments/NER}
@@ -49,16 +49,16 @@ Table~\ref{table:oov-accuracy-total}.
 \end{table}
 
 Once again, we see a pattern where the DyNet implementations achieves the
-overall best results. Especially for the NER task, DyNet is significantly
-better at classifying words that it has not yet seen. We also observe, that
-adding a CRF layer improves the OOV accuracy for the single layer model of
+overall best results. Especially for the NER task, DyNet is significantly better
+than PyTorch at classifying words that it has not yet seen. We also observe,
+that adding a CRF layer improves the OOV accuracy for the single layer model of
 PyTorch. However, it is only consistent for the batch sizes larger than 1.
 
 Furthermore, the effect of the CRF layers is most notable for the POS task.
 In this instance, even the DyNet implementation benefits from CRF for larger
 batch sizes and PyTorch sees an increase in accuracy for all batch sizes with a
 most significant improvement for batch size 32 (44.0\% without CRF against
-54.7\% for the CRF model). For the NER task, DyNet sees not improvement with
+54.7\% for the CRF model). For the NER task, DyNet sees no improvement with
 CRF, whereas PyTorch still benefits for batch sizes of 8 and 32.
 
 If we turn of focus to the languages and compare the OOV accuracies achieved, we
@@ -100,7 +100,7 @@ For Norwegian, there is a clear discrepancy between the testing and the training
 data. In the training data, it only encouters 10.1\% OOV words, but in the test
 data almost very third word is unknown. This can in itself not explain why
 Norwegian falls short on OOV accuracy for the \texttt{Bi-LSTM-CRF} models, but
-it may have had an influence. The high OOV percentages of Russian and Urdu is in
+it may have had an influence. The high OOV percentages of Russian and Urdu are in
 contrast with their strong OOV accuracy, but we believe this can be attributed
 general tag distribution described in
 Section~\ref{sec:experiments-ner-lang-comparison}.

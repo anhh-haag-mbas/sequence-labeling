@@ -34,7 +34,7 @@ The rationale behind the languages picked is a combination of word ordering,
 language family and genus, availability of data, and the origin of the data.
 
 The word ordering is the relative ordering of verbs, subjects, and objects (eg.\
-verb-object-subject or VOS). We used~\cite{wals-81} to determine the word
+verb-object-subject or VOS). We used (\cite{wals-81}) to determine the word
 ordering of languages and picked languages with one dominant word ordering,
 ignoring languages such as German which has alternating word orderings.
 
@@ -44,10 +44,10 @@ orderings and some words.
 
 For word orderings with many languages to choose from, we picked two languages
 from the same language family, and one language from a different family.
-Language families were similarly based on~\cite{wals-languoid}. We split languages based
-on both their family and genus, meaning a language such as German
-(indo-european, germanic) is considered different from Italian (indo-european,
-romance).
+Language families were similarly based on (\cite{wals-languoid}). We split
+languages based on both their family and genus, meaning a language such as
+German (indo-european, germanic) is considered different from Italian
+(indo-european, romance).
 
 Sadly due to limited availability of pre-existing annotated datasets, we
 couldn't find data on more than 3 different word orderings. For the more common
@@ -73,11 +73,11 @@ genus is given table~\ref{table:langfam}.
     Russian   & SVO & Indo-European & Slavic \\
   \end{tabular}
   \caption{Overview over picked languages, their word ordering, language
-  family and genus}
-  \label{table:langfam}
+  family and genus.
+  }\label{table:langfam}
 \end{table}
 
-The concern of availability of data and the origin is elaporated on
+The concern of availability of data and the origin is elaborated on
 in~\ref{sec:experiments-pos-data}.
 
 
@@ -86,12 +86,10 @@ in~\ref{sec:experiments-pos-data}.
 All experiments have been conducted across three popular and open source machine
 learning frameworks, two dynamic and one static. Each member of the project
 group have had responsibility for the implementation of the models in one of the
-frameworks. This section will briefly describe the experience and caveates with
-working with each of the frameworks.
-
-This subsection will give a descriptive introduction to each framework, how it
-works and the implementation details relevant for this project. For a discussion
-and evaluation of each framework, refer to Section~\ref{subsec:frameworks}.
+frameworks. This section will give a descriptive introduction to each framework,
+how it works and the implementation details relevant for this project. For a
+discussion and evaluation of each framework, refer to
+Section~\ref{subsec:frameworks}.
 
 \subsubsection*{A note on computational graphs}
 
@@ -103,24 +101,24 @@ computationally expensive to calculate the result of each neuron individually
 the neural network abstraction is discarded in favour of a matrix and vector
 based representation which is closer to how the results are calculated in the
 computer. The concept of layers however remains, so a simple layer could be
-represented as the calculation $\sigma(W \cdot X + B)$, where $\sigma$ would be
-the activation function sidmoid \cite[Chapter~6.5.1]{goodfellow2016deep},
-\cite[Chapter~5.1]{goldberg2017neural}.
+represented as the calculation $\sigma(W \times \bm{x} + B)$, where $\sigma$ would be
+the activation function sigmoid
+(\cite[Chapter~6.5.1]{goodfellow2016deep},~\cite[Chapter~5.1]{goldberg2017neural}).
 
 When neural networks are implemented in frameworks the layer abstraction is also
 ignored in favor of so called computational graphs. In a computational graph
 each node in the graph represents a single mathematical operation, or an input
 value. As such the simple layer from before would be split into three distinct
-nodes connected in succession. The values for $W$ and $X$ would be input into a
+nodes connected in succession. The values for $W$ and $\bm{x}$ would be input into a
 matrix multiplication node. The result of this node would be the input alongside
 $B$ to a vector addition node, which would be the only input value to the
 sigmoid node. 
 
 Computational graphs as such don't provide much of an advantage over the layer
 abstraction. Conceptionally we are still doing the same mathematical operations
-on the input the performance of this model is not better than the layer based
+on the input and the performance of this model is not better than the layer based
 representation, since we are still taking advantage of the same performance
-gains from doing working with vectors and matricies. The reason behind the use
+gains from working with vectors and matricies. Instead, the reason behind the use
 of computational graphs is because it simplifies calculating the gradients of
 the network through the backpropagation algorithm. 
 
@@ -135,22 +133,21 @@ needs to know the rules for computing the derivate of itself.
 \subsubsection*{DyNet}\label{sec:setup-implementations-dynet}
 
 DyNet is an open source dynamic neural network framework developed by Garnegie
-Mellon University and many others \cite{dynet-git}. The
-framework being dynamic means the computational graphs are recreated for each
-input. This is particularly useful for natural language processing where
-sentences don't have a fixed length so the unique structure of each sentence's
-graph can be made without having to add padding to match the longest sentence in
-the dataset. A downside of dynamic frameworks is that they are generally slower
-than their static counterparts, the creators of DyNet though mention that it
-performs comparable or faster than similar static declaration
-frameworks~\cite{dynet}.   
+Mellon University and many others (\cite{dynet-git}). The framework being
+dynamic means the computational graphs are recreated for each input. This is
+particularly useful for natural language processing where sentences don't have a
+fixed length so the unique structure of the graph of each sentences can be made
+without having to add padding to match the longest sentence in the dataset. A
+downside of dynamic frameworks is that they are generally slower than their
+static counterparts. The creators of DyNet, though, claim that it performs
+comparable or faster than similar static declaration frameworks (\cite{dynet}).   
 
 DyNet further allows for what they call auto-batching which means that sentences
 don't have to be manually batched when training on batches of
-sentences~\cite{autobatching}. In other frameworks, dynamic or not, users have
+sentences (\cite{autobatching}). In other frameworks, dynamic or not, users have
 to add a dimension to their input which represents the batches. In DyNet this
 can be done by implicitly creating a graph for each input in the batch and
-aggregating the losses, creating a combined computational graph, which can be
+aggregate the losses, creating a combined computational graph, which can be
 optimized to run parts in parallel. The DyNet implementation aggregated using
 the sum of the losses, however this was not possible for the other frameworks
 due to what we suspect was overflow errors, which wasn't experienced in DyNet. 
@@ -174,8 +171,8 @@ polyglot embedding was converted to could be used to initialize a
 \code{LSTMBuilder}, and the \code{BiRNNBuilder}. Dropout could be implemented
 using the \code{dropout} method. Early stopping was implemented by saving the
 currently best seen model each time the model was improved upon. This creates
-some overhead, but nothing noticable. If no improvements were seen for three
-epochs, the model was loaded and training terminated.
+some overhead, but nothing noticable. If no improvements were seen for 3 epochs,
+the model was loaded and training terminated.
 
 DyNet doesn't have a CRF layer implemented as part of their library so we based
 our implementation on the work of~\cite{plank2016multilingual}. The loss
@@ -184,17 +181,16 @@ implementation uses the instance score of the forward algorithm minus the
 gold score of the sentence. The influence this may have had one the results are
 unclear.
 
-Due to miscomunication the DyNet model used two Bi-LSTM layers, this gives has
-been shown to give better accuracy at the cost of longer training times. We
-decided to prefer the shorter training over the better accuracy, but didn't make
-this clear. As a result, we would expect DyNet to perform better in the
-experiments. 
+Due to miscomunication the DyNet model used two Bi-LSTM layers. This has been
+shown to give better accuracy at the cost of longer training times. We decided
+to prefer the shorter training over the better accuracy, but didn't make this
+clear. As a result, we would expect DyNet to perform better in the experiments. 
 
 
 \subsubsection*{PyTorch}\label{sec:setup-implementations-pytorch}
 
 PyTorch is an open source, dynamic deep learning toolkit build on top of Torch
-and developed by the Facebook research team (~\cite{yegulalp2017facebook}).
+and developed by the Facebook research team (\cite{yegulalp2017facebook}).
 PyTorch provides a \code{tensor} object, that is nearly identical to NumPys
 \code{ndarray} but has two important advantages:
 
@@ -212,7 +208,7 @@ dimension of the input corresponds to the batch size or not.
 We create the input mini-batches for the model as a preprocessing step, by
 splitting the data into lists containing a number of data elements (ie.\
 sentences) as specified by the \code{batch\_size} parameter. Every sentence is
-padded with a special padding token \code{`<PAD>'} so it has the same length as
+padded with a special padding token \code{''<PAD>''} so it has the same length as
 the longest sentence in the batch. In addition, the batch is sorted by sentence
 length and in the process, a list of original sentence lengths as well as a
 masking matrix to mask out padding values are created. This is a requirement for
@@ -236,11 +232,11 @@ provided through the \code{torch.nn} module), aswell as the
 \texttt{Bi-LSTM} model. The general structure of the model, the training
 function and the evaluation function were created from tutorials, examples and
 existing applications (see~\cite{pytorch2017lstm},~\cite{yang2018ncrf},
-and~\cite{pytorch2018examples}).
+and \url{https://github.com/pytorch/examples}).
 
 The CRF layer was implemented using the existing PyPi package
 \texttt{pytorch-crf} (v.0.7.2) by Kemal Kurniawan under the MIT
-license.\footnote{\url{https://github.com/kmkurn/pytorch-crf}}
+license (available at \url{https://github.com/kmkurn/pytorch-crf}).
 
 To utilize early stopping with patience during training, we did not explore the
 built-in functionalities that do exist in PyTorch. Instead, this was implemented
@@ -288,7 +284,7 @@ the TensorFlow results.
 Whenever possible built-in compononts of Keras or Tensorflow was used, this
 includes \code{Dense}, \code{Dropout}, \code{Embedding} and \code{LSTM} layers.
 The CRF implementation is based upon a CRF layer by
-Hironsan.\footnote{\url{https://github.com/Hironsan/keras-crf-layer}}
+Hironsan (available at \url{https://github.com/Hironsan/keras-crf-layer}).
 
 \subsubsection{Experimental setup}
 
@@ -297,33 +293,33 @@ mini-batch sizes, three epoch settings, and with five seeds. Additional
 consideration were also made in regards to the training data to make for as fair
 comparisons as possible.
 
-The three mini-batch sizes were motivated by~\cite{reimers2017reporting} who
+The three mini-batch sizes were motivated by (\cite{reimers2017reporting}) who
 reported worse accuracy for larger sizes of mini-batches with a sweet spot
-between 8 and 32. Similar low values are used by \cite{huang2015bidirectional}.
+between 8 and 32. Similar low values are used by (\cite{huang2015bidirectional}).
 While this emperically seems to work, it is a bit counter to the theory. Ideally
 we would train on the whole training set to get the most accurate loss values,
 which would in turn allow us to make the optimal update to the model to reduce
 the loss. We don't have to use the whole training set and can do fine with an
 estimate of the true loss by using mini-batches, however we would still expect
 bigger mini-batch sizes to improve the estimate and result in better, but slower
-convergence \cite[Chapter~8.1.3]{goodfellow2016deep}.
+convergence (\cite[Chapter~8.1.3]{goodfellow2016deep}).
 
 The fact that bigger mini-batch sizes leads to worse results, suggests that a
 better estimate is not necessarily better for training. While a better estimate
 of the true loss results in a more optimal update to lower the loss, the greater
 variance in the loss estimate can also work as a regularization technique which
-results in better generalization ~\cite[pp.~279]{goodfellow2016deep}. The lower
+results in better generalization (\cite[pp.~279]{goodfellow2016deep}). The lower
 mini-batch sizes can then be explained as a way to avoid the model from getting
 stuck in local minima.
 
-The three epochs is to see how well the models perform based on very limited
+The 3 epochs is to see how well the models perform based on very limited
 training, on some reasonable amount of training, and the upper limits of the
 models for the tasks. The expectation is that a single epoch of training gives
-very bad performance on the tasks. Five epochs is the baseline where we expect
+very bad performance on the tasks. 5 epochs is the baseline where we expect
 that none of the models have begun overfitting, while still able to produce some
 reasonable predictive power. The last epoch setting is early stopping with a
-patience of three, and a max of 50 epochs. This means that the model continues
-training intill it has made three updates, which didn't improve the accuracy on
+patience of 3, and a max of 50 epochs. This means that the model continues
+training untill it has made 3 updates, which didn't improve the accuracy on
 the validation set. Early testing suggests that models stopped improving before
 the max, so we expect this setting to reasonable represents the best of what the
 models can achieve. It is possible that with a lot more training, or different
@@ -332,7 +328,7 @@ early stopping allows.
 
 The different seeds are used to get a better idea of the performance of the
 models than a single run would give. This approach is based on the work
-of~\cite{reimers2017reporting}, and \cite{yang2018design} who demonstrated how a
+of (\cite{reimers2017reporting}), and (\cite{yang2018design}) who demonstrated how a
 single result comparison between two models is insufficient when randomness is
 involved. If one model performs better than average on a run, and another model
 performs worse than average, this might suggest that the model which performed
@@ -351,33 +347,35 @@ the first 4000 sentences were used for training, next 500 for validation, and
 next 500 for testing. Any remaining sentences in the data were discarded.
 
 Due to the nature of the languages each training set might contain a differing
-number of words in each sentence, we didn't do anything to equalize this since
+number of words in each sentence. We didn't do anything to equalize this since
 the word count wouldn't affect the number of updates when training. There is a
 risk that since the language would also be tested on longer sentences, and we
 may assume it is harder to correctly label longer sentences than shorter ones,
 the accuracy might be lower for these languages than others. The languages with
-longer sentences in their test set however is most likely also the languages
-with longer sentences in their training set this hopefully evens out the
+longer sentences in their test set is, however, most likely also the languages
+with longer sentences in their training set. This hopefully evens out the
 mistakes.
 
 The datasets found are created from different types of sources, eg.\ news, blog
 posts, reviews, etc. We wanted the datasets for the different languages to be
 created from similar sources. It was infeasible to find datasets for both tasks
 which were created from similar sources, but within each task, the data is to
-some degree made from the same kind of source, the details are included in their
-respective chapters.
+some degree made from the same kind of source. The details of the data (ie.\ the
+tag distributions, the number of tokens, etc.) were not considered before
+examining the results of the experiments, and are therefore described and
+reviewed in Section~\ref{sec:experiments}.
 
 To make model implementation easier, the datasets from the different tasks were
 standardized such that there was no need for task specific code.
 
 The size of our training sets are relatively small. The Penn Wall Streets
-journal treebank \cite{wsj} often used for the part of speech task, contains
+journal treebank (\cite{wsj}), often used for the part of speech task, contains
 over 1.6 million words, where our datasets, depending on the language, contain
 around than 100.000 words split over training, testing, and validation files. As
 more data generally improves the accuracy of the models we would expect our
 models to do worse than models trained on a larger dataset, assuming similar
 network structure. The size is however not too small to learn a good
-representation. \cite{plank2016multilingual} found, when comparing the accuracy
+representation.~\cite{plank2016multilingual} found, when comparing the accuracy
 of different types of taggers, that when training on as little as 1000 sentences
 their model could get over 90\% accuracy on a wide range of languages.
 

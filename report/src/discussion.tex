@@ -88,7 +88,17 @@ was a smaller subset of the data. Were the models evaluated on the $F_1$ score,
 and trained with this in mind, we believe we would get better results from the
 frameworks. 
 
-TensorFlow models were trained on the both the data and the padding. This led
+Furthermore, we also consider wether the loss function should have been utilized
+differently. The motivation for using the $F_{1}$ score, is to focus attention
+on the models ability to classify entities and not reward it too much for
+identifying `O'-tokens. But for our cross-entropy loss, a true prediction of a
+tag `O' has had the same influence as the true prediction of an entity tag.
+Since there are a lot more non-entities than entities, it is reasonable to
+suggest, that the models will have tuned their parameters to correctly classify
+non-entities and accepted a lower accuracy rate for entity tags. This is also
+supported by the results shown in Figure~\ref{chart:tag-acc-ner}.
+
+\textit{TensorFlow models were trained on the both the data and the padding.} This led
 to results with a very poor accuracy, as it split the training effort between
 the actual task and dealing with padding. Running a few TensorFlow models where
 the padding issue has been fixed, suggests that it would perform at around the
@@ -128,7 +138,7 @@ DyNet was very nice to work with, despite how small of a following it has.
 Compared to PyTorch which was also dynamic, but required a lot of matrix
 manipulation, and didn't have autobatching, the API for DyNet was very simple
 and intuitive for my, at the time, limited understanding of computational graphs
-and general machine learning. The fact the I didn't have to do manual batching
+and general machine learning. The fact that I didn't have to do manual batching
 either simplified the implementation of the two models significantly. Compared
 to TensorFlow it seemed like DyNet was more low level. I had to have a better
 understanding of which operations the different layers were composed of, but it
@@ -139,25 +149,26 @@ single API call didn't do everything for me.
 
 My general approach to learning DyNet was to take baby steps, following simple
 tutorials like an XOR example, and building from there. With an understanding of
-how a simple network works I could try to create my own on a toy problem and see
-if I really understood how the framework worked. One of the nice things about
-DyNet is how close it feels to creating computational graphs. Creating
-parameters and linking them together by applying mathematical operations on
-them, made it easy to reason about the behavior of the model. After the small
-examples it was simple to learn how to work an LSTM layer into the model. LSTM
-in DyNet hides a lot of the complexity associated with the computations, but the
-interface was still intuitive to use. Get the initial state, compute the next
-state based on input, get the output for the next layer and save the state for
-the next part of the sequence. Working out how to add a CRF layer on top was
-mostly a matter of understanding CRF rather than DyNet. Figuring out that what
-was needed for CRF was simply a transformation matrix, made it obvious that this
-matrix should just be added as a a parameter similar to other weights or biases
-in the model. From that point I could take inspiration from a complete model
-implemented in DyNet and reuse their code for the CRF.\
+how a simple network works I could try to create my own toy problem and see
+if I really understood how the framework worked. 
+
+One of the nice things about DyNet is how close it feels to creating
+computational graphs. Creating parameters and linking them together by applying
+mathematical operations on them, made it easy to reason about the behavior of
+the model. After the small examples it was simple to learn how to work an LSTM
+layer into the model. LSTM in DyNet hides a lot of the complexity associated
+with the computations, but the interface was still intuitive to use. Get the
+initial state, compute the next state based on input, get the output for the
+next layer and save the state for the next part of the sequence.
+
+Working out how to add a CRF layer on top was mostly a matter of understanding
+CRF rather than DyNet. Figuring out that what was needed for CRF was simply a
+transformation matrix, made it obvious that this matrix should just be added as
+a a parameter similar to other weights or biases in the model. From that point I
+could take inspiration from a complete model implemented in DyNet and reuse
+their code for the CRF.\
 
 \subsubsection{PyTorch}
-
-\subsubsection*{The learning process}
 
 PyTorch comes with a variety of official tutorials that gives introductions to
 the fundamentals of PyTorch aswell as to how to use it in typical machine
@@ -189,9 +200,9 @@ about the API for mini-batches in PyTorch here.
 
 Batching is rather poorly described by the documenation of the framework, and
 there seem to be only sparse official description of how mini-batches are
-expected to be arranged (~\cite{falcon2018lstms}).  As an example, working with
+expected to be arranged (\cite{falcon2018lstms}).  As an example, working with
 sequential data of variable length (such as sentences), each input element has
-to padded so as to make the lengths uniform.  This may be common knowledge to an
+to be padded so as to make the lengths uniform. This may be common knowledge to an
 experienced ML researcher, but neither the PyTorch documentation or official
 tutorials (at least not under the topic of NLP) touch on this aspect.
 
@@ -200,14 +211,13 @@ require the client to pass a masking tensor as argument (ie.\ a matrix of ones
 and zeroes) to mask out padded values. Most ill-explained, however, is using
 mini-batches together with the \code{LSTM} layer provided by the framework
 itself. Here, it is necessary to pass the mini-batch of padded input sequences
-(ordered by original sequence length in descending order) through
+(ordered by original sequence length in descending order) through the
 \code{pack\_padded\_sequence} function provided by the \code{torch.nn.utils.rnn}
 module together with a list of the original lengths of each sequence. This
 transforms the input so it can be handled properly by the \code{LSTM} layer, but
 afterwards it has to be unpacked again using \code{pad\_packed\_sequence}. Not
 only is this a rather intricate API, it is also only sparsely documented
 considering how normal an operation training on mini-batches is.
-
 
 
 \subsubsection{TensorFlow}\label{sec:discuss_tensorflow}
@@ -276,12 +286,12 @@ TensorFlow, Keras, LSTM and CRF\@.
 
 \subsection{Suggestions for further research}
 
-Someone should really look into that urdu language. Also, whats up the the arabs
-and the japanese??
+\textit{Maybe some of the things in \emph{Discrepancies} could be moved here? Or
+it could be deleted/merged with \emph{Discrepancies}/\emph{Improvements}}.
 
 Batch size have less influence on the performance given more training.
 With higher batch size there are fewer updates (backpropogations) per epcoh,
-this may also be interesting to research.
+this may be interesting to research further.
 
 
 \subsection{Improvements}
@@ -295,9 +305,9 @@ of.
 
 Similar to the way that pretrained word embeddings like Polyglot can be used to
 significantly improve performance, including a character embedding, pretrained
-or not, will also help the model make better predictions~\cite{yang2018design}.
-The state of the art model for POS only used a character embedding which
-indicates how useful they are.
+or not, will also help the model make better predictions
+(\cite{yang2018design}).  The state of the art model for POS only used a
+character embedding which indicates how useful they are.
 
 Character embeddings, like word embeddings, work by mapping a character to a
 vector representation. But character embeddings can contain a mapping from every
@@ -316,9 +326,10 @@ or CNN layers. They perform very similarly, but CNN are a lot faster to
 train~\cite{yang2018design}
 
 A character embedding can contain a mapping from not just a single character,
-but combinations of two or more characters or so call n-grams. Since a lot of
-languages use a relative small alphabet, a three character embedding could be
-less than a million different values, which while big is still manageable.
+but combinations of two or more characters or so called \texttt{n-grams}. Since
+a lot of languages use a relative small alphabet, a three character embedding
+could be less than a million different values, which while big is still
+manageable.
 
 The benefit of using a character embedding is that a model will always be able
 to learn a unique representation for each word, whereas a word embedding can
@@ -332,9 +343,9 @@ verbs.
 
 As has been mentioned before, the DyNet implementation uses a 2 layer Bi-LSTM.\
 This is sometimes refered to as a stacked
-Bi-LSTM~\cite[Chapter~14.5]{goldberg2017neural}. While not clear how exactly
+Bi-LSTM (\cite[Chapter~14.5]{goldberg2017neural}). While not clear how exactly
 this gives a better model accuracy, it has been shown empirically to
-help~\cite{reimers2017reporting}.
+help (\cite{reimers2017reporting}).
 
 An explanation could simply be that adding additional Bi-LSTM layers increases
 the complexity of the model which allows it to represent more complicated
@@ -356,29 +367,32 @@ improved in this sense if reducing the training or evaluation time is important.
 \subsubsection{Tagging Scheme}
 
 The tagging scheme used for NER was BIO and it gets the job done. However in a
-paper we read by \cite{ma2016endtoend}, they mention how the BIOES (or BILOU)
+paper we read by (\cite{ma2016endtoend}), they mention how the BIOES (or BILOU)
 tagging scheme has been reported to produce better results. BIOES includes two
 additional types of labels, `end', and `singleton'. These tokens allow for more
 detailed rules to be learned by the model since the transition from one tag to
 another is more nuanced. Worth noting is that one of the sources
-\cite{lample2016neural} mention that they didn't see any improvements. The
+(\cite{lample2016neural}) mention that they didn't see any improvements. The
 intuition that it allows the model to better learn naunce however stands, and it
 doesn't result in worse results it is worth trying.
 
 \subsection{Reflections}
 
+This section includes some final reflections on our project and the work process
+around it.
+
 \begin{itemize}
+    \item Choosing to implement the same models in three different frameworks
+        had more of an educational purpose than a scientific one. Due to
+        complications in understanding the inner workings of each of our own
+        frameworks, the task of synchronizing the implementations became
+        disproportionally difficult. Our results are therefore burdened by the
+        uncertainty of whether our programs actually the work, as they are
+        intended to and the synchronicity between them
     \item Handling, analyzing and presenting large amounts of data was
         something, that we had no prior experience in. This was evident in the
         final phase of our project, where we struggled with the tools and
         techniques to properly work with the data we had created.
-    \item Choosing to implement the same models in three different frameworks
-        had more of an educational purpose than a scientific one. Due to
-        complications in understanding the inner work of each of our one
-        frameworks, the task of synchronizing the implementations became
-        disproportionally difficult. Our results are therefore burdened by the
-        uncertainty of whether our programs actually the work, as they are
-        intended to.
 \end{itemize}
 
 \pagebreak
