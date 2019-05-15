@@ -46,11 +46,10 @@ additional tags because of an implementation detail.
 
 By simple linear layer, we mean a layer which takes an input vector $x$ and
 makes a linear transformation on the input using a weight matrix $W$ and a bias
-vector $b$. The input vector is then transformed as follows $W \cdot x + b$.
-Where $W \cdot x$ is a matrix-vector multiplication, meaning the vector is
+vector $b$. The input vector is then transformed as follows $W x + b$.
+Where $W x$ is a matrix-vector multiplication, meaning the vector $x$ is
 treated as a matrix with dimensions $n,1$ and standard matrix multiplication is
-used, producing a new vector with the same size as the number of rows in the
-weight matrix.
+used, producing a new vector with the same size as the number of rows in $W$.
 
 For training, we use the stochastic gradient descent (SGD) optimizer since it
 seems to give the best results, but with slower convergence during
@@ -120,25 +119,28 @@ is used to carry information from one timestep to the next, and the output. The
 values are calculated as follows (\cite[Chapter~10.2]{goodfellow2016deep}):
 
 \begin{align*}
-    & \textbf{a}_t = \textbf{b} + \textbf{W} \textbf{h}_{t-1} + \textbf{U} \textbf{x}_t \\
-    & \textbf{h}_t = \tanh(\textbf{a}_t) \\
-    & \textbf{o}_t = \textbf{c} + \textbf{V} \textbf{h}_t \\
-    & \textbf{y}_t = softmax(\textbf{o}_t)
+    & a_t = b_h + W_{hh} h_{t-1} + W_{xh} x_t \\
+    & h_t = \tanh(a_t) \\
+    & o_t = b_o + W_{ho} h_t \\
+    & y_t = softmax(o_t)
 \end{align*}
 
 It's not much more complicated than a simple linear layer. There are two
-additional matrices and an additional bias vector. The input $x_t$ is used
-along with the hidden value calculated from the previous input value $x_{t-1}$,
-to calculate the new hidden value. The tanh function is used to squeeze the
-hidden value between 0 and 1, which will be used for the next timestep, but is
-also used for the output after a linear transformation and a softmax activation.
-This way the output of the layer is not just dependent on the input, but also
-all the previous input values seen.
+additional matrices and an additional bias vector. The matrices $W_{hh}, W_{xh}$
+and $W_{ho}$ are used for the hidden-to-hidden, input-to-hidden, and
+hidden-to-output transformations respectively. The input $x_t$ is used along
+with the hidden value calculated from the previous input value $x_{t-1}$, to
+calculate the new hidden value. The tanh function is used to squeeze the hidden
+value between 0 and 1, which will be used for the next timestep, but is also
+used for the output after a linear transformation and a softmax activation. This
+way the output of the layer is not just dependent on the input, but also all the
+previous input values seen.
 
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{rnn-figure}
     \caption{A graphical representation of an RNN.\ The right image shows the
-    model unfolded over a number of time steps. Source:~\cite{olah2015lstm}.
+    model unfolded over a number of time steps. Source: François Deloche [CC BY-SA
+    4.0 (\url{https://creativecommons.org/licenses/by-sa/4.0})]
     }\label{fig:rnn}
 \end{figure}
 
@@ -179,7 +181,8 @@ is given in Figure~\ref{fig:lstm}.
 
 \begin{figure}[h]
     \includegraphics[width=\textwidth]{lstm-figure}
-    \caption{A graphical representation of an LSTM unfolded. Source:~\cite{olah2015lstm}.
+    \caption{A graphical representation of an LSTM unfolded. Source: Guillaume
+        Chevalier [CC BY 4.0 (\url{https://creativecommons.org/licenses/by/4.0})].
     }\label{fig:lstm}
 \end{figure}
 
