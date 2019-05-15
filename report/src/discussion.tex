@@ -26,21 +26,8 @@ vocabulary, whereas the other languages were around or below 10\%.
 
 It would be worth investigating if the lower results can be explained by the
 embedding or if other factors were in place. If we had measured the accuracy for
-in vocabulary words it may have been possible to 
-
-%Make sure the datasets are similar and that the testing, validation, and
-%training sets are representative of each other. 
-
-%Inspect the data to avoid datasets with glaring errors such as very low number
-%of distinct tokens, badly balanced distribution of tags, or datasets such as the
-%Japanese NER data where the tokens are split in unnatural ways.
-
-%If using the same NER dataset as we did in this project. There is no need to
-%limit the size of the sets to be similar to POS unless a comparison between the
-%tasks is made. Since we didn't compare the tasks we could have used more data
-%for NER which may have mitigated some of the issues we encountered. Also make
-%sure to shuffle the sentences before splitting the data. A deterministic
-%shuffling method can be used for reproducability.
+in vocabulary words it may have been possible to calculate the expected accuracy
+and $F_1$ score based on different numbers of OOV words.
 
 \subsubsection{Models}\label{sec:discuss_models}
 
@@ -253,8 +240,8 @@ Coupling the high level nature of Keras with the abundance of guides, means that
 you could actually get started with working code within your given area, without
 understanding any of the code or theory.
 
-The above scenario is undesirable, as you it limits any further
-development or customization.
+The above scenario is undesirable, as it limits any further development or
+customization.
 
 On the other hand if you are intimatley familiar with ML/NLP theory then
 working with TF is in all likelihood a breeze, as it abstracts all of the
@@ -278,8 +265,8 @@ deeply I got to understand the theory. That is because I relied on existing
 implementations of bi-lstm/crf, and the way I got started was by looking at how
 other people had already tackled the problems.
 
-Had I developed the lstm and crf by hand, I would have been forced to gain a
-much much deeper understanding of how they worked and of how TensorFlow worked.
+Had I developed the LSTM and CRF by hand, I would have been forced to gain a
+much much deeper understanding of how they and TensorFlow worked.
 This would however have required a much greater time dedication, which was also
 the primary reason this approach was not chosen.
 
@@ -309,7 +296,7 @@ Similar to the way that pretrained word embeddings like Polyglot can be used to
 significantly improve performance, including a character embedding, pretrained
 or not, will also help the model make better predictions
 (\cite{yang2018design}).  The state of the art model for POS only used a
-character embedding which indicates how useful they are.
+character embedding which indicates how powerful they are.
 
 Character embeddings, like word embeddings, work by mapping a character to a
 vector representation. But character embeddings can contain a mapping from every
@@ -375,7 +362,8 @@ additional types of labels, `end', and `singleton'. These tokens allow for more
 detailed rules to be learned by the model since the transition from one tag to
 another is more nuanced. Worth noting is that one of the sources
 (\cite{lample2016neural}) mention that they didn't see any improvements. The
-intuition that it allows the model to better learn naunce however stands, and it
+intuition that it allows the model to better learn naunce however stands, and if
+it
 doesn't result in worse results it is worth trying.
 
 \subsection{Reflections}

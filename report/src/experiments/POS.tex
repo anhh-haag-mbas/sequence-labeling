@@ -8,7 +8,7 @@ across, and the results of our experiments.
 \subsubsection{Task definition}
 
 The Part-of-Speech task is a classification task where the objective is to label
-each word in a sentence with it's corresponding part-of-speech label such as
+each word in a sentence with its corresponding part-of-speech label such as
 noun, verb, adjective, etc. For example, the sentence ``Our work is done'' would be
 labeled ``determiner noun auxiliary verb''.
 
@@ -34,9 +34,9 @@ The state of the art model for POS based off of (\cite{aclweb-pos-state}) is
 (\cite{akbik2018coling}) which is a Bi-LSTM-CRF model similar to what we have
 made. Based on the defaults we can see from their source code that they use an
 embedding size of 100, a single layer Bi-LSTM, mini-batch of 32, patience of 3,
-SGD with a learning rate of 0.1, and dropout 0.5, however the specifics hidden
-size is unclear. Many of their hyperparameters are the same as what we use, but
-they could use other values for their state of the art model. 
+SGD with a learning rate of 0.1, and dropout 0.5, however the specifics for the
+hidden size is unclear. Many of their hyperparameters are the same as what we
+use, but they could use other values for their state of the art model. 
 
 Where their model definetely stands out is their use of what they call
 ``contextual string embeddings'', which are character embeddings, but they use
@@ -87,6 +87,8 @@ learn to properly tag both the individual words and their contraction.
 The treebanks we selected were all made from news, where some used additional
 sources such as non-fiction and spoken. A list of the languages, their
 respective treebank selected, and their tags is given below.
+
+
 
 * Arabic,   PADT, news
 
@@ -146,7 +148,7 @@ TensorFlow, none of our experiments reached a point of convergence within the
 upper bound on the number epochs, and for PyTorch with batch size 32 and
 TensorFlow with batch size 8 the average number also indicate that only very few
 training sessions reached the point of convergence before the epoch limit. This
-also suggests, that we set the upper bound to strict.
+also suggests, that we set the upper bound too strict.
 
 It is a completely different story for the \texttt{Bi-LSTM-CRF} models. Here,
 all experiments terminated early and the relation between the frameworks
@@ -263,7 +265,7 @@ number of epochs trained.
 
 For example, the results show that the non-CRF models perform quite simiar for
 most languages when the batch size is 1 (except for the TensorFlow
-implementation, which underperforms severely for arabic, danish and russian).
+implementation, which underperforms severely for Arabic, Danish, and Russian).
 This is in compliance with the finding that for a batch size of 1, all models
 terminated training before reaching the maximum number of epochs. The
 similarities in performance is a good measurement that these models found a
