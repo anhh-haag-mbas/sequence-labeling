@@ -1,8 +1,9 @@
 \subsection{Machine environment}
 
-The experiments were executed across several AWS EC2 machines.
+The experiments were executed across several Amazon Web Services Elastic Compute
+Cloud (AWS EC2) machines.
 
-\subsubsection{Detailed description of machine environemnt}
+\subsubsection{Detailed description of machine environment}
 
 The experiments ran concurrently in their own process with multithreading
 turned on for the frameworks that supported it. The experiments ran on a
@@ -26,11 +27,11 @@ Each machine ran software with the following versions:
 \end{itemize}
 
 DyNet doesn't support multi-threading in their python implementation as of the
-time of this report, so all the experiments were ran on a single core. 
+time of this report, so all the experiments were run on a single core. 
 For DyNet 34 processes were executed concurrently depending on the
 instance type.
-For tensorflow 5 processes were executed concurrently.
-Pytorch initally ran 2 processes concurrently with multithreading enabled, but
+For TensorFlow 5 processes were executed concurrently.
+PyTorch initially ran 2 processes concurrently with multithreading enabled but
 was changed to 34 processes with multithreading disabled midway through the
 execution of the experiments.
 
@@ -39,31 +40,30 @@ execution of the experiments.
 Notable differences between execution in the development environment and on the
 EC2 servers were noticed and are summarised by the following:
 
-PyTorch grinded to a halt on the 36 core EC2 machine. Switching to a 72 core EC2
+PyTorch ground to a halt on the 36 core EC2 machine. Switching to a 72 core EC2
 machine without disabling multithreading only exacerbated the problem. It turns
-out that pytorch's multithreading does not support a high amount of
+out that PyTorch's multithreading does not support a high amount of
 cores\footnote{As evidenced in this Github issue \url{https://github.com/pytorch/pytorch/issues/9873}}.
 
-TensorFlow had no noticable differences between the development environment and
+TensorFlow had no noticeable differences between the development environment and
 the EC2 machines.
 
-Some DyNet configurations took noticeably longer to complete on an
+DyNet configurations took noticeably longer to complete on an
 EC2 machine compared to the local development environment. The exact cause is
 not known to us.
 
 \subsubsection{Comparability of speed results}
 
 Given the complications stated in the above sections, none of the speed results
-are truly comparable. This a result of several factors.
-One being that 2 different EC2 instance types was used, where one was faster
-than the other, or in pytorch's case slower.
-Another is the fact that each experiment was run concurrently with others. This
-would have only had a minor impact, if multithreading had not been enabled for
-some of the frameworks.
-Lastly DyNet behaved unexpectedly with regards to execution time, compared to the
-development environment.
+are truly comparable. This a result of several factors. One being, that 2
+different EC2 instance types were used, where one was faster than the other, or
+in PyTorch's case slower. Another is the fact that each experiment was run
+concurrently with others. This would have only had a minor impact if
+multithreading had not been enabled for some of the frameworks. Lastly, DyNet
+behaved unexpectedly with regards to execution time, compared to the development
+environment.
 
-Ideally each experiment would be run one at a time, or with multithreading
+Ideally, each experiment would be run one at a time, or with multithreading
 disabled, on identical EC2 machines. Seeing as that was not the case, no
 conclusions can be made with regards to the speed of the frameworks, only hints
 at where further experimentation with tighter control might be warranted.
