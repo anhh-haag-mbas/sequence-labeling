@@ -2,8 +2,6 @@
 
 \section{Conclusion}
 
-It turns out, that we were all wrong and our space craft crashed.
-
 POS findings:
 
 \begin{itemize}
@@ -18,5 +16,17 @@ POS findings:
     \item PyTorch and DyNet performs very similar for \texttt{Bi-LSTM-CRF}
 \end{itemize}
 
+NER findings:
+
+\begin{itemize}
+    \item CRF makes the models converge faster during training
+    \item Our models perform poorly despite fast convergence, probably a result
+      of using accuracy instead of $F_1$ for early stopping.
+    \item Adding CRF to the models seems to help, which is in line with our
+      expectations.
+    \item We identified several problems with the Wikipedia extracted NER data.
+      Some languages were missing or almost missing some tags.
+      The Japanese data was split per character and not per word.
+\end{itemize}
 
 \pagebreak
