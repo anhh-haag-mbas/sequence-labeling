@@ -11,12 +11,12 @@ The \texttt{Bi-LSTM-CRF} model seems to generally converge faster than the
 seem to converge much slower than the 2 layer implementations, as batch size
 increases.
 
-Adding CRF seems to improve accuracy of the NER task as expected. CRF seems to
-have a very little impact on our DyNet implementation compared to our PyTorch
+Adding CRF seems to improve the accuracy of the NER task as expected. CRF seems
+to have a very little impact on our DyNet implementation compared to our PyTorch
 implementation. On the POS task, CRF consistently improved the PyTorch
 implementation for larger batch size, while the DyNet implementation generally
 did best without CRF.\ For TensorFlow, CRF hurt the accuracy to a degree that
-make us believe, that there is some error in the implementation.
+makes us believe, that there is some error in the implementation.
 
 Also, our TensorFlow implementation did not mask out padding, which caused a
 significant drop in accuracy, as such our results mostly apply to PyTorch and
@@ -28,9 +28,9 @@ instead of $F_1$ score. On the POS task however, we were able to consistently
 get accuracies over 90\% for our best models.
 
 Throughout our results, we find that the 2 layered Bi-LSTM implementation in
-DyNet had the best performance of all our implemenations. The
+DyNet had the best performance of all our implementations. The
 \texttt{Bi-LSTM-CRF} model of PyTorch had the second best results, similar to
-(albeit a bit lower) the DyNet implemenations.
+(albeit a bit lower) the DyNet implementations.
 
 Another general tendency in the results, is that increasing batch sizes hurt
 performance. There are some exceptions, but overall this seem to be the case.
