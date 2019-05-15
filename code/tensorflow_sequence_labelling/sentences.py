@@ -11,6 +11,16 @@ class Sentences:
         :param task: "pos", "ner"
         :param language_code: e.g. "da", "en", "ch", etc.
         """
+        
+        # The code below fixes the padding/masking issue with TensorFlow
+        # # Swap padding id with id 0
+        # org_pad_id = id_by_word["<PAD>"]
+        # for word, id in id_by_word.items():
+        #     if id == 0:
+        #         id_by_word[word] = org_pad_id
+        #         break
+        # id_by_word["<PAD>"] = 0
+
         self.task = task
         self.language_code = language_code
         self.sentence_length = self.calculate_sentence_length(
@@ -139,10 +149,10 @@ class Sentences:
             return self.ner_file_path(language_code, data_type)
 
     def pos_file_path(self, language_code, data_type):
-        return f"../data/pos/{language_code}/{data_type}.conllu"
+        return f"../../data/pos/{language_code}/{data_type}.conllu"
 
     def ner_file_path(self, language_code, data_type):
-        return f"../data/ner/{language_code}/{data_type}.bio"
+        return f"../../data/ner/{language_code}/{data_type}.bio"
 
     def calculate_sentence_length(self, items):
         longest_sentence = max(items, key=len)

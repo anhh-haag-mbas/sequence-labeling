@@ -98,11 +98,13 @@ suggest, that the models will have tuned their parameters to correctly classify
 non-entities and accepted a lower accuracy rate for entity tags. This is also
 supported by the results shown in Figure~\ref{chart:tag-acc-ner}.
 
-\textit{TensorFlow models were trained on the both the data and the padding.} This led
-to results with a very poor accuracy, as it split the training effort between
-the actual task and dealing with padding. Running a few TensorFlow models where
-the padding issue has been fixed, suggests that it would perform at around the
-same level as the PyTorch models if it wasn't misconfigured.
+Our TensorFlow implementation did not properly handle padding. We wanted to mask
+out padding when providing the LSTM layers with input, instead we supplied the
+original input with padding. This led to results with a very poor
+accuracy, as it split the training effort between the actual task and dealing
+with padding. Running a few TensorFlow models where the padding issue has been
+fixed, suggests that it would perform at around the same level as the PyTorch
+models if it wasn't misconfigured.
 
 \subsubsection{Results}
 
