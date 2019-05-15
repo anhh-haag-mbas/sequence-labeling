@@ -1,16 +1,16 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import time
 
 import keras
 from keras import Model, Input
 from keras.callbacks import EarlyStopping
-from keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout
+from keras.layers import Dense, LSTM, Embedding, Bidirectional, Dropout, TimeDistributed, Activation
 from keras.optimizers import SGD
 from polyglot.mapping import Embedding as PolyglotEmbedding
 
-from .crf import CRF
-from .sentences import Sentences
+from crf import CRF
+from sentences import Sentences
 
 
 # TODO: Seed
@@ -52,7 +52,7 @@ class TensorFlowSequenceLabelling:
         if self.c["dropout"] and self.c["dropout"] > 0:
             layer = Dropout(self.c["dropout"])(layer)
 
-        layer = Dense(self.sentences.tag_count, activation='softmax')(layer)
+        layer = Activation('softmax')(TimeDistributed(Dense(self.sentences.tag_count))(layer))
 
         unpadded_sentence_lengths = Input(shape=[1], dtype='int32')
         if self.c["crf"]:
@@ -114,7 +114,7 @@ class TensorFlowSequenceLabelling:
                                      [self.sentences.validation_word_ids, self.sentences.validation_lengths],
                                      keras.utils.to_categorical(self.sentences.validation_tag_ids,
                                                                 num_classes=self.sentences.tag_count)],
-                                 batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks, verbose=2)
+                                 batch_size=self.c["batch_size"], epochs=self.c["epochs"], callbacks=callbacks)
         self.epochs_run = len(history.epoch)
 
     def predict(self):
@@ -141,6 +141,9 @@ class TensorFlowSequenceLabelling:
         for predicted_sentences, actual_sentences, sentences in zip(self.predictions, actual_tags, words):
             errors_in_sentence = 0
             for predicted_tag, actual_tag, word in zip(predicted_sentences, actual_sentences, sentences):
+                if predicted_tag == self.sentences.tag_padding_id or actual_tag == self.sentences.tag_padding_id:
+                    continue
+
                 error = predicted_tag != actual_tag
                 oov = self.embedding.get(word) is None
 
